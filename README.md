@@ -99,6 +99,7 @@ o2-alerts-library/
 │   ├── openobserve-alert-library.md
 │   └── collected-metrics.md
 │
+├── openobserve/                       🔜 Coming soon
 ├── aws/                       🔜 Coming soon
 ├── databases/                 🔜 Coming soon
 └── applications/              🔜 Coming soon
