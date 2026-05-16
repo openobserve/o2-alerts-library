@@ -99,7 +99,7 @@ o2-alerts-library/
 │   ├── openobserve-alert-library.md
 │   └── collected-metrics.md
 │
-├── openobserve/                       🔜 Coming soon
+├── openobserve/               🔜 Coming soon — OpenObserve self-monitoring
 ├── aws/                       🔜 Coming soon
 ├── databases/                 🔜 Coming soon
 └── applications/              🔜 Coming soon
@@ -114,6 +114,10 @@ o2-alerts-library/
 Full observability of Kubernetes clusters — 76 verified alerts across 12 categories covering nodes, pods, containers, storage, networking, workloads, control plane, security, and more.
 
 → See [`k8s/README.md`](./k8s/README.md)
+
+### OpenObserve _(coming soon)_
+
+Alerts for monitoring OpenObserve itself — ingester memory and CPU pressure, compactor lag, query latency, WAL growth, storage backend errors, and ingestion pipeline failures. Collected via the built-in `zo_*` metrics exposed on each OpenObserve component's `/metrics` endpoint.
 
 ### AWS _(coming soon)_
 
