@@ -1,0 +1,186 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: alert-test
+
+# ============================================================
+# TEST 1: go_gc_pause_high + go_gc_rate_high
+#
+# Runs a Go program inside a container that continuously
+# allocates and releases large slices, forcing aggressive GC.
+# The tight memory limit (64Mi) with heavy allocation pushes
+# GC to run frequently with long pause times.
+#
+# ⚠️  go_gc_duration_seconds is only scraped from pods with:
+#     annotations:
+#       prometheus.io/scrape: "true"
+#       prometheus.io/port: "2112"
+#
+# The test pod below exposes Go runtime metrics on port 2112.
+# ============================================================
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-gc-pressure
+  namespace: alert-test
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "2112"
+    prometheus.io/path: "/metrics"
+spec:
+  containers:
+  - name: gc-stress
+    image: golang:1.22-alpine
+    command:
+    - sh
+    - -c
+    - |
+      cat > /tmp/gcstress.go << 'EOF'
+      package main
+
+      import (
+        "net/http"
+        _ "net/http/pprof"
+        "github.com/prometheus/client_golang/prometheus/promhttp"
+        "runtime"
+        "time"
+      )
+
+      func main() {
+        go func() {
+          http.Handle("/metrics", promhttp.Handler())
+          http.ListenAndServe(":2112", nil)
+        }()
+        buf := make([][]byte, 0)
+        for {
+          // Allocate 50MB slices rapidly
+          for i := 0; i < 10; i++ {
+            buf = append(buf, make([]byte, 5*1024*1024))
+          }
+          runtime.GC()
+          buf = buf[:0]
+          time.Sleep(100 * time.Millisecond)
+        }
+      }
+      EOF
+      cd /tmp
+      go mod init gcstress 2>/dev/null || true
+      go get github.com/prometheus/client_golang/prometheus/promhttp 2>/dev/null || true
+      go run gcstress.go
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "128Mi"
+      limits:
+        cpu: "200m"
+        memory: "200Mi"
+    ports:
+    - containerPort: 2112
+
+# ============================================================
+# SIMPLER ALTERNATIVE for go_gc_pause_high / go_gc_rate_high:
+#
+# OpenObserve's own pods (ingester, querier, compactor) are
+# Go applications that expose Prometheus metrics. If any are
+# already scraped via autodiscovery, their GC metrics will
+# already be collected.
+#
+# To test without custom code — just lower thresholds:
+#   go_gc_pause_high:  100ms → 0.1ms  (fires on any GC)
+#   go_gc_rate_high:   10/min → 0.1/min
+#
+# Verify the metric exists first:
+#   PromQL: rate(go_gc_duration_seconds_count[5m]) * 60
+#
+# ============================================================
+
+---
+# ============================================================
+# TEST 2: controller_queue_processing_slow
+#
+# Creates 300 ConfigMaps in rapid bursts.
+# Each burst triggers controller reconciliation, backing up
+# the work queue and causing items to wait >1s.
+# ============================================================
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: alert-test-sa
+  namespace: alert-test
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: alert-test-role
+  namespace: alert-test
+rules:
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["create", "delete", "list", "get"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: alert-test-rb
+  namespace: alert-test
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: alert-test-role
+subjects:
+- kind: ServiceAccount
+  name: alert-test-sa
+  namespace: alert-test
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: test-queue-pressure
+  namespace: alert-test
+spec:
+  template:
+    spec:
+      serviceAccountName: alert-test-sa
+      containers:
+      - name: queue-stressor
+        image: bitnami/kubectl:latest
+        command:
+        - /bin/sh
+        - -c
+        - |
+          echo "Creating 300 ConfigMaps in rapid bursts to stress work queue..."
+          for batch in 1 2 3; do
+            echo "Batch $batch..."
+            for i in $(seq 1 100); do
+              kubectl create configmap test-qcm-${batch}-${i} \
+                --from-literal=data="value-${batch}-${i}" \
+                -n alert-test > /dev/null 2>&1 &
+            done
+            wait
+            sleep 2
+          done
+          echo "Creation done. Sleeping 120s before cleanup..."
+          sleep 120
+          for batch in 1 2 3; do
+            for i in $(seq 1 100); do
+              kubectl delete configmap test-qcm-${batch}-${i} \
+                -n alert-test > /dev/null 2>&1 &
+            done
+          done
+          wait
+          echo "Cleanup complete."
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "64Mi"
+          limits:
+            cpu: "200m"
+            memory: "128Mi"
+      restartPolicy: Never
+  backoffLimit: 1

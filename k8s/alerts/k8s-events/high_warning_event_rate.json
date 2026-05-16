@@ -1,0 +1,52 @@
+{
+  "id": "3Dnq4ssNksWGUpRPiu3I4Ru3hLl",
+  "name": "high_warning_event_rate",
+  "org_id": "default",
+  "stream_type": "logs",
+  "stream_name": "k8s_events",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "sql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": "SELECT count(*) as event_count, k8s_cluster FROM \"k8s_events\" WHERE k8s_resource_name = 'events' AND body_object_type = 'Warning' GROUP BY k8s_cluster HAVING event_count > 100",
+    "promql": null,
+    "promql_condition": null,
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": null
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 30,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "destinations": [
+    "k8s_alert"
+  ],
+  "context_attributes": {},
+  "row_template": "*ClusterName:* {k8s_cluster} | Warning Events in 5min: {event_count}",
+  "row_template_type": "String",
+  "description": "Warning: >100 Kubernetes warning events in 5 minutes. Cluster may be unstable. Investigate the source.",
+  "enabled": true,
+  "tz_offset": 0,
+  "last_triggered_at": 1778933245266279,
+  "last_satisfied_at": null,
+  "owner": "introspectionroot@openobserve.ai",
+  "last_edited_by": "introspectionroot@openobserve.ai",
+  "creates_incident": false
+}

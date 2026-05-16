@@ -1,0 +1,109 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: alert-test
+
+# ============================================================
+# TEST 1: pod_missing_resource_limits
+# Container with no resource limits → triggers alert.
+# Alert checks every 30 min (low frequency to reduce noise).
+# ============================================================
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-no-limits
+  namespace: alert-test
+spec:
+  containers:
+  - name: no-limits
+    image: busybox
+    command: ["sleep", "3600"]
+    # No resources.limits defined → triggers alert
+
+# ============================================================
+# TEST 2: image_from_untrusted_registry
+# Pod using an image from an unrecognized registry.
+# ⚠️  Customize the alert query regex to match YOUR trusted
+#     registries before enabling this alert in production.
+# ============================================================
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-untrusted-image
+  namespace: alert-test
+spec:
+  containers:
+  - name: app
+    image: docker.io/someunknownorg/myapp:latest   # not in trusted list
+    command: ["sleep", "3600"]
+    resources:
+      requests:
+        cpu: "5m"
+        memory: "8Mi"
+      limits:
+        cpu: "20m"
+        memory: "16Mi"
+
+# ============================================================
+# TEST 3: namespace_without_network_policy
+# Create a new namespace with no NetworkPolicy → alert fires.
+# Alert checks every 60 min. To test quickly, lower frequency.
+# ============================================================
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: test-no-netpol
+
+# ============================================================
+# TEST 4: unauthorized_api_access_high
+# ServiceAccount with no RBAC trying to list cluster secrets
+# → generates 403 Forbidden responses to the API server.
+# ============================================================
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: test-unauth-sa
+  namespace: alert-test
+
+---
+# Job that repeatedly makes unauthorized API calls
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: test-unauthorized-access
+  namespace: alert-test
+spec:
+  template:
+    spec:
+      serviceAccountName: test-unauth-sa   # SA with no RBAC
+      containers:
+      - name: unauth-caller
+        image: bitnami/kubectl:latest
+        command:
+        - /bin/sh
+        - -c
+        - |
+          echo "Making unauthorized API calls for 5 minutes..."
+          END=$(($(date +%s) + 300))
+          while [ $(date +%s) -lt $END ]; do
+            # These will return 403 — SA has no permission
+            kubectl get secrets --all-namespaces > /dev/null 2>&1 &
+            kubectl get nodes > /dev/null 2>&1 &
+            kubectl get clusterroles > /dev/null 2>&1 &
+            sleep 1
+          done
+          echo "Done."
+        resources:
+          requests:
+            cpu: "10m"
+            memory: "16Mi"
+          limits:
+            cpu: "50m"
+            memory: "32Mi"
+      restartPolicy: Never
+  backoffLimit: 1

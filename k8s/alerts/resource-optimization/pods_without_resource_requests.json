@@ -1,0 +1,57 @@
+{
+  "id": "3DnoJ5ZhZgV54by9TJMZri3UVfl",
+  "name": "pods_without_resource_requests",
+  "org_id": "default",
+  "stream_type": "metrics",
+  "stream_name": "kube_pod_container_info",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "kube_pod_container_info unless on(namespace, pod, container, k8s_cluster) kube_pod_container_resource_requests{resource='memory'}",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 30,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 360,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "destinations": [
+    "k8s_alert"
+  ],
+  "context_attributes": {},
+  "row_template": "*ClusterName:* {k8s_cluster} | Namespace: {namespace} | Pod: {pod} | Container: {container}",
+  "row_template_type": "String",
+  "description": "Warning: Container running without resource requests. Affects scheduler decisions and cluster stability. Define CPU and memory requests.",
+  "enabled": true,
+  "tz_offset": 0,
+  "last_triggered_at": 1778927275265342,
+  "last_satisfied_at": 1778927275265342,
+  "owner": "introspectionroot@openobserve.ai",
+  "last_edited_by": "introspectionroot@openobserve.ai",
+  "creates_incident": false
+}

@@ -1,0 +1,57 @@
+{
+  "id": "3DnjV1XfSqvulIr8lEMrZD24wAV",
+  "name": "container_restarted",
+  "org_id": "default",
+  "stream_type": "metrics",
+  "stream_name": "kube_pod_container_status_restarts_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "round(increase(kube_pod_container_status_restarts_total[5m]))",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "destinations": [
+    "k8s_alert"
+  ],
+  "context_attributes": {},
+  "row_template": "*ClusterName:* {k8s_cluster} | Namespace: {namespace} | Pod: {pod} | Container: {container} | Restarts: {value}",
+  "row_template_type": "String",
+  "description": "Info: Container has restarted. Monitor for pattern; investigate if restarts are frequent.",
+  "enabled": true,
+  "tz_offset": 0,
+  "last_triggered_at": 1778932305265448,
+  "last_satisfied_at": 1778932305265448,
+  "owner": "introspectionroot@openobserve.ai",
+  "last_edited_by": "introspectionroot@openobserve.ai",
+  "creates_incident": false
+}

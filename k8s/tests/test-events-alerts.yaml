@@ -1,0 +1,275 @@
+---
+# Tests for k8s_events-based alerts
+# These trigger real Kubernetes events which appear in the k8s_events log stream
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: alert-test
+
+# ============================================================
+# TEST 1: oom_killing_events
+# Container tries to allocate more memory than its limit.
+# Kernel OOM killer fires → generates OOMKilling event.
+# ============================================================
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-oom-killing
+  namespace: alert-test
+spec:
+  containers:
+  - name: oom-trigger
+    image: polinux/stress
+    command: ["stress"]
+    args: ["--vm", "1", "--vm-bytes", "512M", "--timeout", "60"]
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "64Mi"
+      limits:
+        cpu: "200m"
+        memory: "128Mi"
+  restartPolicy: Never
+
+# ============================================================
+# TEST 2: pod_unhealthy_probe_events
+# Failing readiness + liveness probe → Unhealthy events.
+# ============================================================
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-unhealthy-probe
+  namespace: alert-test
+spec:
+  containers:
+  - name: app
+    image: busybox
+    command: ["sleep", "3600"]
+    livenessProbe:
+      httpGet:
+        path: /healthz
+        port: 9999
+      initialDelaySeconds: 5
+      periodSeconds: 5
+      failureThreshold: 2
+    readinessProbe:
+      httpGet:
+        path: /ready
+        port: 9999
+      initialDelaySeconds: 5
+      periodSeconds: 5
+    resources:
+      requests:
+        cpu: "5m"
+        memory: "8Mi"
+      limits:
+        cpu: "20m"
+        memory: "16Mi"
+
+# ============================================================
+# TEST 3: job_backoff_limit_exceeded_events
+# Job always exits 1, backoffLimit=2 → BackoffLimitExceeded.
+# ============================================================
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: test-backoff-exceeded
+  namespace: alert-test
+spec:
+  backoffLimit: 2
+  template:
+    spec:
+      containers:
+      - name: fail
+        image: busybox
+        command: ["sh", "-c", "exit 1"]
+        resources:
+          requests:
+            cpu: "5m"
+            memory: "8Mi"
+          limits:
+            cpu: "20m"
+            memory: "16Mi"
+      restartPolicy: Never
+
+# ============================================================
+# TEST 4: image_pull_secret_missing_events
+# Image pull requires a secret that doesn't exist.
+# → FailedToRetrieveImagePullSecret event
+# ============================================================
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-missing-pull-secret
+  namespace: alert-test
+spec:
+  imagePullSecrets:
+  - name: non-existent-registry-secret
+  containers:
+  - name: app
+    image: private-registry.example.com/myapp:latest
+    resources:
+      requests:
+        cpu: "5m"
+        memory: "8Mi"
+      limits:
+        cpu: "20m"
+        memory: "16Mi"
+
+# ============================================================
+# TEST 5: hpa_metric_unavailable_events
+# HPA targeting a Deployment with no metrics configured.
+# → FailedGetResourceMetric events
+# ============================================================
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-hpa-no-metrics
+  namespace: alert-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-hpa-no-metrics
+  template:
+    metadata:
+      labels:
+        app: test-hpa-no-metrics
+    spec:
+      containers:
+      - name: app
+        image: busybox
+        command: ["sleep", "3600"]
+        resources:
+          requests:
+            cpu: "1m"
+            memory: "8Mi"
+          limits:
+            cpu: "10m"
+            memory: "16Mi"
+        # Note: No CPU requests means HPA can't compute utilization %
+
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: test-hpa-no-metrics
+  namespace: alert-test
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: test-hpa-no-metrics
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 50
+
+# ============================================================
+# TEST 6: pod_sandbox_failed_events
+# FailedCreatePodSandBox is hard to force synthetically.
+# Verify the alert is working by checking existing events:
+#
+#   PromQL (SQL): SELECT count(*) FROM "k8s_events"
+#     WHERE str_match(body_object_reason, 'FailedCreatePodSandBox')
+#
+# To test: temporarily lower threshold from 3 to 0 in OpenObserve,
+# verify any existing sandbox failures trigger the alert.
+# ============================================================
+
+# ============================================================
+# TEST 7: node_drain_failed_events
+# Create a PDB that blocks eviction, then drain the node.
+#
+#   kubectl cordon <node>
+#   kubectl drain <node> --ignore-daemonsets --timeout=30s
+#
+# With a strict PDB below, drain will fail → FailedDraining event.
+# ============================================================
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: test-strict-pdb
+  namespace: alert-test
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: test-strict-pdb
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-strict-pdb
+  namespace: alert-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-strict-pdb
+  template:
+    metadata:
+      labels:
+        app: test-strict-pdb
+    spec:
+      containers:
+      - name: app
+        image: busybox
+        command: ["sleep", "3600"]
+        resources:
+          requests:
+            cpu: "5m"
+            memory: "8Mi"
+          limits:
+            cpu: "20m"
+            memory: "16Mi"
+
+# ============================================================
+# TEST 8: network_not_ready_events
+# Hard to force without breaking CNI.
+# Verify with: temporarily lower threshold to 0.
+# ============================================================
+
+# ============================================================
+# TEST 9: azure_maintenance_scheduled_events
+# These are generated by Azure automatically when VM maintenance
+# is scheduled. Cannot be triggered manually.
+# Verify: check existing events in the stream:
+#
+#   SELECT * FROM "k8s_events"
+#   WHERE str_match(body_object_reason, 'FreezeScheduled')
+#   LIMIT 5
+#
+# If your cluster has Azure spot nodes, PreemptScheduled
+# events will fire naturally.
+# ============================================================
+
+# ============================================================
+# TEST 10: azure_storage_provisioning_failed_events
+# Trigger by requesting a PVC with invalid StorageClass.
+# ============================================================
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: test-bad-storage-class
+  namespace: alert-test
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: invalid-azure-storage-class
+  resources:
+    requests:
+      storage: 10Gi
+
+# ============================================================
+# coredns_unreachable_events and node_shutdown_events:
+# Cannot be triggered safely in production.
+# To verify: lower threshold to 0, check existing events.
+# ============================================================

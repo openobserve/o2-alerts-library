@@ -1,0 +1,252 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: alert-test
+
+# ============================================================
+# TEST 1: deployment_replica_mismatch
+# Deployment requests 3 replicas but pods fail to start
+# (bad image) → available replicas < desired. Alert in ~5 min.
+# ============================================================
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-deploy-mismatch
+  namespace: alert-test
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: test-deploy-mismatch
+  template:
+    metadata:
+      labels:
+        app: test-deploy-mismatch
+    spec:
+      containers:
+      - name: app
+        image: openobserve/this-image-does-not-exist:v0.0.0
+        resources:
+          requests:
+            cpu: "10m"
+            memory: "16Mi"
+          limits:
+            cpu: "50m"
+            memory: "32Mi"
+
+# ============================================================
+# TEST 2: statefulset_replica_mismatch
+# StatefulSet with 2 replicas, bad image → pods stay Pending/
+# ImagePullBackOff. Alert fires after 10 minutes.
+# ============================================================
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: test-sts-mismatch
+  namespace: alert-test
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: test-sts-mismatch
+  serviceName: test-sts-mismatch
+  template:
+    metadata:
+      labels:
+        app: test-sts-mismatch
+    spec:
+      containers:
+      - name: app
+        image: openobserve/this-image-does-not-exist:v0.0.0
+        resources:
+          requests:
+            cpu: "10m"
+            memory: "16Mi"
+          limits:
+            cpu: "50m"
+            memory: "32Mi"
+
+# ============================================================
+# TEST 3: daemonset_pods_not_scheduled
+# DaemonSet with a nodeSelector that matches no nodes
+# → desired > ready. Alert fires after ~5 minutes.
+# ============================================================
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: test-ds-missing
+  namespace: alert-test
+spec:
+  selector:
+    matchLabels:
+      app: test-ds-missing
+  template:
+    metadata:
+      labels:
+        app: test-ds-missing
+    spec:
+      nodeSelector:
+        non-existent-label: "true"
+      containers:
+      - name: app
+        image: busybox
+        command: ["sleep", "3600"]
+        resources:
+          requests:
+            cpu: "5m"
+            memory: "8Mi"
+          limits:
+            cpu: "20m"
+            memory: "16Mi"
+
+# ============================================================
+# TEST 4: job_failed
+# Job runs a command that immediately exits with code 1.
+# backoffLimit: 0 means no retries → Job goes to Failed.
+# ============================================================
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: test-job-failed
+  namespace: alert-test
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      containers:
+      - name: fail
+        image: busybox
+        command: ["sh", "-c", "exit 1"]
+        resources:
+          requests:
+            cpu: "5m"
+            memory: "8Mi"
+          limits:
+            cpu: "20m"
+            memory: "16Mi"
+      restartPolicy: Never
+
+# ============================================================
+# TEST 5: cronjob_missed_schedule
+# CronJob with suspend: false and a schedule that should have
+# run. To force a miss, create with a past schedule and then
+# suspend the CronJob so it never runs:
+#
+#   kubectl patch cronjob test-cronjob-missed \
+#     -n alert-test -p '{"spec":{"suspend":true}}'
+#
+# Wait 5+ minutes → kube_cronjob_next_schedule_time falls
+# behind current time → alert fires.
+# ============================================================
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: test-cronjob-missed
+  namespace: alert-test
+spec:
+  schedule: "* * * * *"   # Every minute
+  suspend: false
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: job
+            image: busybox
+            command: ["echo", "running"]
+            resources:
+              requests:
+                cpu: "5m"
+                memory: "8Mi"
+              limits:
+                cpu: "20m"
+                memory: "16Mi"
+          restartPolicy: Never
+
+# ============================================================
+# TEST 6: hpa_at_max_replicas
+# HPA with max=2, targeting a Deployment under CPU load.
+# Stress pods will push CPU high → HPA scales to max=2.
+# Alert fires after 10 minutes at max.
+# ============================================================
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-hpa-target
+  namespace: alert-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-hpa-target
+  template:
+    metadata:
+      labels:
+        app: test-hpa-target
+    spec:
+      containers:
+      - name: stress
+        image: polinux/stress
+        command: ["stress"]
+        args: ["--cpu", "2", "--timeout", "600"]
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "64Mi"
+          limits:
+            cpu: "200m"
+            memory: "128Mi"
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: test-hpa
+  namespace: alert-test
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: test-hpa-target
+  minReplicas: 1
+  maxReplicas: 2
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50
+
+# ============================================================
+# TEST 7: hpa_unable_to_scale
+# HPA targeting a non-existent Deployment → AbleToScale=false.
+# Alert fires within ~5 minutes.
+# ============================================================
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: test-hpa-broken
+  namespace: alert-test
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: non-existent-deployment
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50

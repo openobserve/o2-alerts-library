@@ -1,0 +1,145 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: alert-test
+
+# ============================================================
+# TEST 1: container_cpu_over_provisioned
+#         container_memory_over_provisioned
+#
+# Pod requests large CPU/memory but uses almost none.
+# Alert fires after 1 hour window. To test quickly:
+#   lower frequency to 5 min in OpenObserve temporarily.
+# ============================================================
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-over-provisioned
+  namespace: alert-test
+spec:
+  containers:
+  - name: idle
+    image: busybox
+    command: ["sleep", "3600"]
+    resources:
+      requests:
+        cpu: "2000m"     # requests 2 full cores
+        memory: "2Gi"    # requests 2GB RAM
+      limits:
+        cpu: "2000m"
+        memory: "2Gi"
+    # Actual usage: ~1m CPU, ~4Mi memory → <1% of requests
+
+# ============================================================
+# TEST 2: container_resource_under_requested
+#
+# Pod requests tiny CPU but runs stress → hits 95%+ of request.
+# ============================================================
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-under-requested
+  namespace: alert-test
+spec:
+  containers:
+  - name: cpu-stress
+    image: polinux/stress
+    command: ["stress"]
+    args: ["--cpu", "1", "--timeout", "3600"]
+    resources:
+      requests:
+        cpu: "10m"       # requests only 10 millicores
+        memory: "32Mi"
+      limits:
+        cpu: "500m"
+        memory: "64Mi"
+    # Actual CPU usage >> 10m request → request_utilization > 95%
+
+# ============================================================
+# TEST 3: pods_without_resource_requests
+#         pod_missing_resource_limits
+#
+# Pod with no resource requests or limits at all.
+# ============================================================
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-no-requests
+  namespace: alert-test
+spec:
+  containers:
+  - name: no-resources
+    image: busybox
+    command: ["sleep", "3600"]
+    # No resources block at all
+
+# ============================================================
+# TEST 4: node_low_utilization
+#
+# Hard to trigger synthetically — requires a node with very
+# few or no workloads scheduled.
+#
+# To verify: check which nodes are underutilized with:
+#   PromQL: floor((1 - avg by(k8s_node_name, k8s_cluster)
+#           (system_cpu_utilization{state='idle'})) * 10000) / 100
+#
+# To test the alert: lower threshold from 10% to 50% temporarily
+# in OpenObserve and verify lightly loaded nodes appear.
+# ============================================================
+
+# ============================================================
+# TEST 5: storage_volume_under_utilized
+#
+# Creates a 200Mi PVC but writes only 10MB (~5% utilization).
+# ⚠️  Replace storageClassName with your cluster default.
+# ============================================================
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: test-pvc-underused
+  namespace: alert-test
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: managed-csi   # ← change if needed
+  resources:
+    requests:
+      storage: 200Mi
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-storage-underused
+  namespace: alert-test
+spec:
+  containers:
+  - name: light-writer
+    image: busybox
+    command:
+    - sh
+    - -c
+    - |
+      dd if=/dev/zero of=/data/small.bin bs=1M count=10
+      echo "Written 10MB of 200Mi. Sleeping..."
+      sleep 3600
+    volumeMounts:
+    - name: data
+      mountPath: /data
+    resources:
+      requests:
+        cpu: "5m"
+        memory: "8Mi"
+      limits:
+        cpu: "20m"
+        memory: "16Mi"
+  volumes:
+  - name: data
+    persistentVolumeClaim:
+      claimName: test-pvc-underused
+  restartPolicy: Never

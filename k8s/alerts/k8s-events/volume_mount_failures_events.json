@@ -1,0 +1,52 @@
+{
+  "id": "3Dnq4BNpZHohwgnLpfTrhIryWAN",
+  "name": "volume_mount_failures_events",
+  "org_id": "default",
+  "stream_type": "logs",
+  "stream_name": "k8s_events",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "sql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": "SELECT count(*) as event_count, k8s_cluster, k8s_namespace_name FROM \"k8s_events\" WHERE k8s_resource_name = 'events' AND body_object_type = 'Warning' AND (str_match(body_object_reason, 'FailedMount') OR str_match(body_object_reason, 'FailedAttachVolume') OR str_match(body_object_reason, 'VolumeFailedAttach')) GROUP BY k8s_cluster, k8s_namespace_name HAVING event_count > 0",
+    "promql": null,
+    "promql_condition": null,
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": null
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "destinations": [
+    "k8s_alert"
+  ],
+  "context_attributes": {},
+  "row_template": "*ClusterName:* {k8s_cluster} | Namespace: {k8s_namespace_name} | Volume Mount Failures: {event_count}",
+  "row_template_type": "String",
+  "description": "Critical: Volume mount failure events detected. Check PVC binding and storage backend health.",
+  "enabled": true,
+  "tz_offset": 0,
+  "last_triggered_at": 1778933235264806,
+  "last_satisfied_at": 1778933235264806,
+  "owner": "introspectionroot@openobserve.ai",
+  "last_edited_by": "introspectionroot@openobserve.ai",
+  "creates_incident": false
+}

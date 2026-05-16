@@ -1,0 +1,86 @@
+---
+# Test namespace — reuse alert-test or apply separately
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: alert-test
+
+---
+# TEST 1: container_cpu_limit_high
+# CPU limit set to 200m, stress uses full core → throttled to limit → utilization ~100%
+# Triggers: container_cpu_limit_high (>80% of CPU limit)
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-cpu-limit
+  namespace: alert-test
+spec:
+  containers:
+  - name: cpu-stress
+    image: polinux/stress
+    command: ["stress"]
+    args: ["--cpu", "1", "--timeout", "600"]
+    resources:
+      requests:
+        cpu: "100m"
+      limits:
+        cpu: "200m"
+
+---
+# TEST 2: container_memory_near_limit
+# Allocates 230MB, limit is 256Mi → ~90% utilization without OOMKill
+# Triggers: container_memory_near_limit (>90% of memory limit)
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-mem-limit
+  namespace: alert-test
+spec:
+  containers:
+  - name: mem-stress
+    image: polinux/stress
+    command: ["stress"]
+    args: ["--vm", "1", "--vm-bytes", "230M", "--vm-hang", "600", "--timeout", "600"]
+    resources:
+      requests:
+        memory: "128Mi"
+      limits:
+        memory: "256Mi"
+
+---
+# TEST 3: container_not_ready
+# Readiness probe checks port 8080 but nothing listens there → always fails
+# Triggers: container_not_ready (failing readiness for >5 min)
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-not-ready
+  namespace: alert-test
+spec:
+  containers:
+  - name: not-ready
+    image: busybox
+    command: ["sleep", "3600"]
+    readinessProbe:
+      httpGet:
+        path: /healthz
+        port: 8080
+      initialDelaySeconds: 5
+      periodSeconds: 10
+      failureThreshold: 3
+
+---
+# TEST 4: container_restarted
+# Exits after 15s → restarts repeatedly
+# Triggers: container_restarted (any restart in 5 min window)
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-container-restart
+  namespace: alert-test
+spec:
+  containers:
+  - name: restarter
+    image: busybox
+    command: ["sh", "-c", "echo 'running'; sleep 15; exit 0"]
+  restartPolicy: Always

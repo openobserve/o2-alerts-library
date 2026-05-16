@@ -1,0 +1,57 @@
+{
+  "id": "3DnnfNMdIt7hMXSm9KJLTQXQJS9",
+  "name": "unauthorized_api_access_high",
+  "org_id": "default",
+  "stream_type": "metrics",
+  "stream_name": "apiserver_request_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "floor(sum by(k8s_cluster, user) (rate(apiserver_request_total{code=~'401|403'}[5m])) * 100) / 100",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 10,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 30,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "destinations": [
+    "k8s_alert"
+  ],
+  "context_attributes": {},
+  "row_template": "*ClusterName:* {k8s_cluster} | User: {user} | Unauthorized Requests/s: {value}",
+  "row_template_type": "String",
+  "description": "Critical: High rate of 401/403 API responses. Potential unauthorized access or misconfigured RBAC. Review audit logs.",
+  "enabled": true,
+  "tz_offset": 0,
+  "last_triggered_at": 1778933505267612,
+  "last_satisfied_at": null,
+  "owner": "introspectionroot@openobserve.ai",
+  "last_edited_by": "introspectionroot@openobserve.ai",
+  "creates_incident": false
+}

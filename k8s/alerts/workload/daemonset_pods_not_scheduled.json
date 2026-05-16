@@ -1,0 +1,57 @@
+{
+  "id": "3Dnltp4KnsIuVoQVxbmSe5M9Oa6",
+  "name": "daemonset_pods_not_scheduled",
+  "org_id": "default",
+  "stream_type": "metrics",
+  "stream_name": "kube_daemonset_status_number_ready",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "kube_daemonset_status_desired_number_scheduled - kube_daemonset_status_number_ready > 0",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 30,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "destinations": [
+    "k8s_alert"
+  ],
+  "context_attributes": {},
+  "row_template": "*ClusterName:* {k8s_cluster} | Namespace: {namespace} | DaemonSet: {daemonset} | Missing Pods: {value}",
+  "row_template_type": "String",
+  "description": "Warning: DaemonSet is missing pods on some nodes for >5 minutes. Check node selectors, taints, and tolerations.",
+  "enabled": true,
+  "tz_offset": 0,
+  "last_triggered_at": 1778933225265083,
+  "last_satisfied_at": 1778933225265083,
+  "owner": "introspectionroot@openobserve.ai",
+  "last_edited_by": "introspectionroot@openobserve.ai",
+  "creates_incident": false
+}

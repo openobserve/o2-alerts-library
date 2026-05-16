@@ -1,0 +1,101 @@
+---
+# Test namespace — delete this entire namespace to clean up all test pods
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: alert-test
+
+---
+# TEST 1: pod_crashloop_backoff
+# Container exits with code 1 immediately → triggers CrashLoopBackOff after a few restarts
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-crashloop
+  namespace: alert-test
+spec:
+  containers:
+  - name: crashloop
+    image: busybox
+    command: ["sh", "-c", "echo 'crashing'; exit 1"]
+  restartPolicy: Always
+
+---
+# TEST 2: pod_pending_too_long
+# Requests 999 CPU cores — no node can satisfy this → stays Pending indefinitely
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pending
+  namespace: alert-test
+spec:
+  containers:
+  - name: pending
+    image: busybox
+    command: ["sleep", "3600"]
+    resources:
+      requests:
+        cpu: "999"
+        memory: "999Ti"
+
+---
+# TEST 3: pod_failed_state
+# Exits with code 1, restartPolicy=Never → goes to Failed (not CrashLoop)
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-failed
+  namespace: alert-test
+spec:
+  containers:
+  - name: failed
+    image: busybox
+    command: ["sh", "-c", "echo 'failing'; exit 1"]
+  restartPolicy: Never
+
+---
+# TEST 4: pod_image_pull_backoff
+# Pulls a non-existent image → ImagePullBackOff / ErrImagePull
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-imagepull
+  namespace: alert-test
+spec:
+  containers:
+  - name: imagepull
+    image: openobserve/this-image-does-not-exist:v0.0.0
+
+---
+# TEST 5: pod_oom_killed
+# stress allocates 200MB but limit is 64Mi → OOMKilled
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-oom
+  namespace: alert-test
+spec:
+  containers:
+  - name: oom
+    image: polinux/stress
+    command: ["stress"]
+    args: ["--vm", "1", "--vm-bytes", "200M", "--vm-hang", "1"]
+    resources:
+      limits:
+        memory: "64Mi"
+  restartPolicy: Never
+
+---
+# TEST 6: pod_high_restart_rate
+# Sleeps 10s then exits — will restart repeatedly, accumulating restart count
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-restarts
+  namespace: alert-test
+spec:
+  containers:
+  - name: restarter
+    image: busybox
+    command: ["sh", "-c", "sleep 10; exit 1"]
+  restartPolicy: Always

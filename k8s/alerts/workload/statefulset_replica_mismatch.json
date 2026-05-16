@@ -1,0 +1,57 @@
+{
+  "id": "3DnltNPlEvSzR3VhHcpM7Qv8TdM",
+  "name": "statefulset_replica_mismatch",
+  "org_id": "default",
+  "stream_type": "metrics",
+  "stream_name": "kube_statefulset_status_replicas_ready",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "kube_statefulset_replicas - kube_statefulset_status_replicas_ready > 0",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 10,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 30,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "destinations": [
+    "k8s_alert"
+  ],
+  "context_attributes": {},
+  "row_template": "*ClusterName:* {k8s_cluster} | Namespace: {namespace} | StatefulSet: {statefulset} | Not Ready: {value}",
+  "row_template_type": "String",
+  "description": "Warning: StatefulSet has fewer ready replicas than desired for >10 minutes. Check pod status, PVC availability, and startup sequence.",
+  "enabled": true,
+  "tz_offset": 0,
+  "last_triggered_at": 1778933225265083,
+  "last_satisfied_at": 1778933225265083,
+  "owner": "introspectionroot@openobserve.ai",
+  "last_edited_by": "introspectionroot@openobserve.ai",
+  "creates_incident": false
+}

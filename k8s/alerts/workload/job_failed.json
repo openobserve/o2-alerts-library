@@ -1,0 +1,57 @@
+{
+  "id": "3DnluBFNXaKUppUpgMdH4PhL6S5",
+  "name": "job_failed",
+  "org_id": "default",
+  "stream_type": "metrics",
+  "stream_name": "kube_job_failed",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "kube_job_failed",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "destinations": [
+    "k8s_alert"
+  ],
+  "context_attributes": {},
+  "row_template": "*ClusterName:* {k8s_cluster} | Namespace: {namespace} | Job: {job_name}",
+  "row_template_type": "String",
+  "description": "Warning: Kubernetes Job has failed. Check job logs and pod events.",
+  "enabled": true,
+  "tz_offset": 0,
+  "last_triggered_at": 1778933235264806,
+  "last_satisfied_at": 1778933235264806,
+  "owner": "introspectionroot@openobserve.ai",
+  "last_edited_by": "introspectionroot@openobserve.ai",
+  "creates_incident": false
+}

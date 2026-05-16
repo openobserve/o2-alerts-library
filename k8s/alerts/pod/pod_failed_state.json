@@ -1,0 +1,57 @@
+{
+  "id": "3DnixXebPhBZnJClI0LpqFaxcfU",
+  "name": "pod_failed_state",
+  "org_id": "default",
+  "stream_type": "metrics",
+  "stream_name": "kube_pod_status_phase",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "kube_pod_status_phase{phase='Failed'}",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "destinations": [
+    "k8s_alert"
+  ],
+  "context_attributes": {},
+  "row_template": "*ClusterName:* {k8s_cluster} | Namespace: {namespace} | Pod: {pod}",
+  "row_template_type": "String",
+  "description": "Critical: Pod has entered Failed state. Review pod events and logs to determine failure cause.",
+  "enabled": true,
+  "tz_offset": 0,
+  "last_triggered_at": 1778931915264990,
+  "last_satisfied_at": 1778931915264990,
+  "owner": "introspectionroot@openobserve.ai",
+  "last_edited_by": "introspectionroot@openobserve.ai",
+  "creates_incident": false
+}

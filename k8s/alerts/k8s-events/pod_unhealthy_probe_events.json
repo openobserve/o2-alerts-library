@@ -1,0 +1,52 @@
+{
+  "id": "3DnubCLcF7bJyTjn7E0WM9vYeqZ",
+  "name": "pod_unhealthy_probe_events",
+  "org_id": "default",
+  "stream_type": "logs",
+  "stream_name": "k8s_events",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "sql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": "SELECT count(*) as event_count, k8s_cluster, k8s_namespace_name FROM \"k8s_events\" WHERE k8s_resource_name = 'events' AND body_object_type = 'Warning' AND str_match(body_object_reason, 'Unhealthy') GROUP BY k8s_cluster, k8s_namespace_name HAVING event_count > 10",
+    "promql": null,
+    "promql_condition": null,
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": null
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 30,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "destinations": [
+    "k8s_alert"
+  ],
+  "context_attributes": {},
+  "row_template": "*ClusterName:* {k8s_cluster} | Namespace: {k8s_namespace_name} | Probe Failures: {event_count}",
+  "row_template_type": "String",
+  "description": "Warning: >10 readiness or liveness probe failure events in 5 minutes. Pods are failing health checks. Check application health and probe configuration.",
+  "enabled": true,
+  "tz_offset": 0,
+  "last_triggered_at": 1778933445265241,
+  "last_satisfied_at": null,
+  "owner": "introspectionroot@openobserve.ai",
+  "last_edited_by": "introspectionroot@openobserve.ai",
+  "creates_incident": false
+}

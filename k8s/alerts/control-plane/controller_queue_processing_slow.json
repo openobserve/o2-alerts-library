@@ -1,0 +1,57 @@
+{
+  "id": "3DnowSMEUo70Ski1pY99T7vTgMA",
+  "name": "controller_queue_processing_slow",
+  "org_id": "default",
+  "stream_type": "metrics",
+  "stream_name": "workqueue_queue_duration_seconds_bucket",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "floor(histogram_quantile(0.99, sum by(k8s_cluster, name, le) (rate(workqueue_queue_duration_seconds_bucket[5m]))) * 1000) / 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 1000,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 30,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "destinations": [
+    "k8s_alert"
+  ],
+  "context_attributes": {},
+  "row_template": "*ClusterName:* {k8s_cluster} | Queue: {name} | P99 Wait Time: {value}ms",
+  "row_template_type": "String",
+  "description": "Warning: Work queue P99 processing wait time exceeds 1 second. Controller is overloaded or reconciliation is blocked.",
+  "enabled": true,
+  "tz_offset": 0,
+  "last_triggered_at": 1778933235264806,
+  "last_satisfied_at": null,
+  "owner": "introspectionroot@openobserve.ai",
+  "last_edited_by": "introspectionroot@openobserve.ai",
+  "creates_incident": false
+}

@@ -1,0 +1,37 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Claude
+.claude/
+
+# Secrets / credentials
+*.env
+.env*
+*.key
+*.pem
+*.crt
+secrets/
+
+# Terraform
+*.tfstate
+*.tfstate.backup
+.terraform/
+
+# Helm
+*.tgz
+
+# Logs
+*.log
+
+# Temp files
+tmp/
+temp/

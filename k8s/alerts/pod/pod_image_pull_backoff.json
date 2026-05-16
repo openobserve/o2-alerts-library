@@ -1,0 +1,57 @@
+{
+  "id": "3DnixwyCK4xlfai4YY9aOESO9IT",
+  "name": "pod_image_pull_backoff",
+  "org_id": "default",
+  "stream_type": "metrics",
+  "stream_name": "kube_pod_container_status_waiting_reason",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "kube_pod_container_status_waiting_reason{reason=~'ImagePullBackOff|ErrImagePull'}",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 2,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 30,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "destinations": [
+    "k8s_alert"
+  ],
+  "context_attributes": {},
+  "row_template": "*ClusterName:* {k8s_cluster} | Namespace: {namespace} | Pod: {pod} | Container: {container} | Reason: {reason}",
+  "row_template_type": "String",
+  "description": "Warning: Pod cannot pull container image. Verify image name, registry access, and credentials.",
+  "enabled": true,
+  "tz_offset": 0,
+  "last_triggered_at": 1778933495264754,
+  "last_satisfied_at": 1778927055264605,
+  "owner": "introspectionroot@openobserve.ai",
+  "last_edited_by": "introspectionroot@openobserve.ai",
+  "creates_incident": false
+}

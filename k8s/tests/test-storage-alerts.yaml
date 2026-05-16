@@ -1,0 +1,147 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: alert-test
+
+# ============================================================
+# TEST 1: pvc_pending
+# PVC requests a StorageClass that does not exist → stays
+# Pending indefinitely. Alert fires after 5 minutes.
+# ============================================================
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: test-pvc-pending
+  namespace: alert-test
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: non-existent-storage-class
+  resources:
+    requests:
+      storage: 1Gi
+
+# ============================================================
+# TEST 2: pvc_lost  (TWO-STEP — see commands below)
+# Step 1: Apply this file → PV + PVC bind successfully
+# Step 2: Delete the PV → PVC transitions to Lost state
+#
+#   kubectl delete pv test-pv-for-lost-test
+#
+# Alert fires immediately after PVC reaches Lost state.
+# ============================================================
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: test-pv-for-lost-test
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: manual-test
+  hostPath:
+    path: /tmp/test-pv-lost
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: test-pvc-lost
+  namespace: alert-test
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: manual-test
+  volumeName: test-pv-for-lost-test
+  resources:
+    requests:
+      storage: 1Gi
+
+# ============================================================
+# TEST 3: pv_failed  (MANUAL PATCH — see commands below)
+# PV status.phase cannot be forced via manifest; it is managed
+# by the PV controller. Simulate with a direct status patch:
+#
+#   kubectl patch pv test-pv-force-failed \
+#     --subresource=status \
+#     --type=merge \
+#     -p '{"status":{"phase":"Failed"}}'
+#
+# Alert fires within the next scrape cycle (~30s).
+# Cleanup: kubectl delete pv test-pv-force-failed
+# ============================================================
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: test-pv-force-failed
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: manual-test
+  hostPath:
+    path: /tmp/test-pv-failed
+
+# ============================================================
+# TEST 4: pv_usage_high
+# Fills ~90MB into a 100Mi volume to push usage above 85%.
+#
+# ⚠️  Replace storageClassName below with your cluster default.
+# Check with: kubectl get storageclass
+# Common values: standard, gp2, managed-csi, default
+# ============================================================
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: test-pvc-fill
+  namespace: alert-test
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: managed-csi   # ← change if needed
+  resources:
+    requests:
+      storage: 200Mi
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pv-usage
+  namespace: alert-test
+spec:
+  containers:
+  - name: disk-filler
+    image: busybox
+    command:
+    - sh
+    - -c
+    - |
+      echo "Filling volume to ~180MB of 200Mi (90%)..."
+      dd if=/dev/zero of=/data/fill.bin bs=1M count=180
+      echo "Done. Sleeping to hold the data..."
+      sleep 3600
+    volumeMounts:
+    - name: data
+      mountPath: /data
+    resources:
+      requests:
+        cpu: "10m"
+        memory: "16Mi"
+      limits:
+        cpu: "50m"
+        memory: "32Mi"
+  volumes:
+  - name: data
+    persistentVolumeClaim:
+      claimName: test-pvc-fill
+  restartPolicy: Never

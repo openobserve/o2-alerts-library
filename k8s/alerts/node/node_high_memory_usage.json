@@ -1,0 +1,57 @@
+{
+  "id": "3DnRik2Keh3M0Y1TsAQkHAnm8Sp",
+  "name": "node_high_memory_usage",
+  "org_id": "default",
+  "stream_type": "metrics",
+  "stream_name": "k8s_node_memory_usage",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "floor(system_memory_utilization{state='used'} * 10000) / 100",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 80,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 30,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "destinations": [
+    "k8s_alert"
+  ],
+  "context_attributes": {},
+  "row_template": "*ClusterName:* {k8s_cluster} | Node: {k8s_node_name} | Memory: {value}%",
+  "row_template_type": "String",
+  "description": "Warning: Node memory utilization exceeds 85%, approaching OOM conditions. Review memory-intensive workloads.",
+  "enabled": true,
+  "tz_offset": 0,
+  "last_triggered_at": 1778933495264754,
+  "last_satisfied_at": 1778924355265014,
+  "owner": "introspectionroot@openobserve.ai",
+  "last_edited_by": "introspectionroot@openobserve.ai",
+  "creates_incident": false
+}

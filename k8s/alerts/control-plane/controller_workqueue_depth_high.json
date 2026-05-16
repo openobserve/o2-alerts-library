@@ -1,0 +1,57 @@
+{
+  "id": "3DnmQhn1rX6S5U5rCul105Sk51n",
+  "name": "controller_workqueue_depth_high",
+  "org_id": "default",
+  "stream_type": "metrics",
+  "stream_name": "workqueue_depth",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "workqueue_depth",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 50,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 30,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "destinations": [
+    "k8s_alert"
+  ],
+  "context_attributes": {},
+  "row_template": "*ClusterName:* {k8s_cluster} | Queue: {name} | Depth: {value}",
+  "row_template_type": "String",
+  "description": "Warning: Controller Manager work queue depth exceeds 50. Controller is falling behind on reconciliation.",
+  "enabled": true,
+  "tz_offset": 0,
+  "last_triggered_at": 1778933475264639,
+  "last_satisfied_at": null,
+  "owner": "introspectionroot@openobserve.ai",
+  "last_edited_by": "introspectionroot@openobserve.ai",
+  "creates_incident": false
+}

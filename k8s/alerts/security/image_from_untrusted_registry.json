@@ -1,0 +1,57 @@
+{
+  "id": "3DnnfnQux98Sw62Wig1mb4gPpTv",
+  "name": "image_from_untrusted_registry",
+  "org_id": "default",
+  "stream_type": "metrics",
+  "stream_name": "kube_pod_container_info",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "kube_pod_container_info{image!~'(gcr.io|registry.k8s.io|docker.io/library|ghcr.io|quay.io|public.ecr.aws)/.*'}",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 30,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 360,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "destinations": [
+    "k8s_alert"
+  ],
+  "context_attributes": {},
+  "row_template": "*ClusterName:* {k8s_cluster} | Namespace: {namespace} | Pod: {pod} | Container: {container} | Image: {image}",
+  "row_template_type": "String",
+  "description": "Warning: Container image pulled from non-standard registry. Review image source and update image pull policies. Customize trusted registries in the alert query.",
+  "enabled": true,
+  "tz_offset": 0,
+  "last_triggered_at": 1778927015265137,
+  "last_satisfied_at": 1778927015265137,
+  "owner": "introspectionroot@openobserve.ai",
+  "last_edited_by": "introspectionroot@openobserve.ai",
+  "creates_incident": false
+}

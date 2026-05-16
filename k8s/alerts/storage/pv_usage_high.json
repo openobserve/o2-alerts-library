@@ -1,0 +1,57 @@
+{
+  "id": "3DnkgLNtU9JF7dttDRX0iud1lFe",
+  "name": "pv_usage_high",
+  "org_id": "default",
+  "stream_type": "metrics",
+  "stream_name": "kubelet_volume_stats_used_bytes",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "floor(kubelet_volume_stats_used_bytes / kubelet_volume_stats_capacity_bytes * 10000) / 100",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 85,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 10,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "destinations": [
+    "k8s_alert"
+  ],
+  "context_attributes": {},
+  "row_template": "*ClusterName:* {k8s_cluster} | Namespace: {namespace} | PVC: {persistentvolumeclaim} | Usage: {value}%",
+  "row_template_type": "String",
+  "description": "Warning: PersistentVolume usage exceeds 85%. Expand volume or clean up data to prevent pod failures.",
+  "enabled": true,
+  "tz_offset": 0,
+  "last_triggered_at": 1778933525265663,
+  "last_satisfied_at": null,
+  "owner": "introspectionroot@openobserve.ai",
+  "last_edited_by": "introspectionroot@openobserve.ai",
+  "creates_incident": false
+}

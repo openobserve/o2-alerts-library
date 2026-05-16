@@ -1,0 +1,57 @@
+{
+  "id": "3DnmRukUhpDaC11SxRwscG03iZd",
+  "name": "admission_webhook_failures_high",
+  "org_id": "default",
+  "stream_type": "metrics",
+  "stream_name": "apiserver_admission_webhook_request_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "floor(sum by(k8s_cluster, name) (rate(apiserver_admission_webhook_request_total{rejected='true'}[5m])) * 100) / 100",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0.5,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 30,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "destinations": [
+    "k8s_alert"
+  ],
+  "context_attributes": {},
+  "row_template": "*ClusterName:* {k8s_cluster} | Webhook: {name} | Rejections/s: {value}",
+  "row_template_type": "String",
+  "description": "Warning: Admission webhook rejection rate exceeds 0.5/s. Check webhook endpoint health and configuration.",
+  "enabled": true,
+  "tz_offset": 0,
+  "last_triggered_at": 1778933255264978,
+  "last_satisfied_at": 1778933255264978,
+  "owner": "introspectionroot@openobserve.ai",
+  "last_edited_by": "introspectionroot@openobserve.ai",
+  "creates_incident": false
+}

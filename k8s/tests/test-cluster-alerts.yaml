@@ -1,0 +1,120 @@
+---
+# Namespace for cluster-level alert tests
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: alert-test
+
+---
+# TEST 1 & 2: cluster_cpu_capacity_high + cluster_memory_capacity_high
+#
+# Strategy: Deploy a Deployment with significant resource requests.
+# Since triggering 80% cluster-wide is risky in production, this test
+# verifies the metric is tracked correctly.
+# To actually trigger: temporarily lower alert threshold to 10% in OpenObserve
+# and check if the alert fires with real cluster request data.
+#
+# Each pod requests 500m CPU and 512Mi memory.
+# Scale replicas based on your cluster size to push requests higher.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-resource-requests
+  namespace: alert-test
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: test-resource-requests
+  template:
+    metadata:
+      labels:
+        app: test-resource-requests
+    spec:
+      containers:
+      - name: resource-consumer
+        image: busybox
+        command: ["sleep", "3600"]
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "512Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+
+---
+# TEST 3: cluster_pod_count_high
+#
+# Strategy: Deploy many small pods to increase pod count.
+# 10 replicas here — scale up carefully based on your cluster's pod limit.
+# A typical node allows 110 pods. Run:
+#   kubectl get nodes -o custom-columns='NAME:.metadata.name,MAX_PODS:.status.allocatable.pods'
+# to see your limits before scaling.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-pod-count
+  namespace: alert-test
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: test-pod-count
+  template:
+    metadata:
+      labels:
+        app: test-pod-count
+    spec:
+      containers:
+      - name: idle
+        image: busybox
+        command: ["sleep", "3600"]
+        resources:
+          requests:
+            cpu: "1m"
+            memory: "4Mi"
+          limits:
+            cpu: "10m"
+            memory: "8Mi"
+
+---
+# TEST 4: apiserver_high_latency
+#
+# Deployed as a Job that hammers the API server with list requests.
+# This generates load and may push P99 latency above 1s.
+# ⚠️ Use with caution on production clusters — run briefly then delete.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: test-apiserver-load
+  namespace: alert-test
+spec:
+  template:
+    spec:
+      serviceAccountName: default
+      containers:
+      - name: api-load
+        image: bitnami/kubectl:latest
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "64Mi"
+          limits:
+            cpu: "200m"
+            memory: "128Mi"
+        command:
+        - /bin/sh
+        - -c
+        - |
+          echo "Starting API server load test for 3 minutes..."
+          END=$(($(date +%s) + 180))
+          while [ $(date +%s) -lt $END ]; do
+            kubectl get pods --all-namespaces > /dev/null 2>&1 &
+            kubectl get nodes > /dev/null 2>&1 &
+            kubectl get deployments --all-namespaces > /dev/null 2>&1 &
+            sleep 0.1
+          done
+          echo "Done."
+      restartPolicy: Never
+  backoffLimit: 1

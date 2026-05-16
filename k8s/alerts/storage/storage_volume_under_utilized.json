@@ -1,0 +1,57 @@
+{
+  "id": "3DnoIeDW7NLEvcjfQbuNhmCscng",
+  "name": "storage_volume_under_utilized",
+  "org_id": "default",
+  "stream_type": "metrics",
+  "stream_name": "kubelet_volume_stats_used_bytes",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "floor(kubelet_volume_stats_used_bytes / kubelet_volume_stats_capacity_bytes * 10000) / 100",
+    "promql_condition": {
+      "column": "value",
+      "operator": "<",
+      "value": 20,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 60,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 60,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 1440,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "destinations": [
+    "k8s_alert"
+  ],
+  "context_attributes": {},
+  "row_template": "*ClusterName:* {k8s_cluster} | Namespace: {namespace} | PVC: {persistentvolumeclaim} | Used: {value}%",
+  "row_template_type": "String",
+  "description": "Info: PersistentVolume is less than 20% utilized. Consider downsizing the volume to reduce storage costs.",
+  "enabled": true,
+  "tz_offset": 0,
+  "last_triggered_at": 1778932875265807,
+  "last_satisfied_at": null,
+  "owner": "introspectionroot@openobserve.ai",
+  "last_edited_by": "introspectionroot@openobserve.ai",
+  "creates_incident": false
+}

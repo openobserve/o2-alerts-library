@@ -1,0 +1,57 @@
+{
+  "id": "3DnoH3GedOv6Cx2x7dsZN4A3YiW",
+  "name": "container_cpu_over_provisioned",
+  "org_id": "default",
+  "stream_type": "metrics",
+  "stream_name": "k8s_pod_cpu_request_utilization",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "floor(k8s_pod_cpu_request_utilization * 10000) / 100",
+    "promql_condition": {
+      "column": "value",
+      "operator": "<",
+      "value": 10,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 60,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 60,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 1440,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "destinations": [
+    "k8s_alert"
+  ],
+  "context_attributes": {},
+  "row_template": "*ClusterName:* {k8s_cluster} | Namespace: {k8s_namespace_name} | Pod: {k8s_pod_name} | CPU Used vs Request: {value}%",
+  "row_template_type": "String",
+  "description": "Info: Pod is using less than 10% of its requested CPU over 1 hour. Right-size CPU requests to improve scheduling efficiency.",
+  "enabled": true,
+  "tz_offset": 0,
+  "last_triggered_at": 1778927265265166,
+  "last_satisfied_at": 1778927265265166,
+  "owner": "introspectionroot@openobserve.ai",
+  "last_edited_by": "introspectionroot@openobserve.ai",
+  "creates_incident": false
+}
