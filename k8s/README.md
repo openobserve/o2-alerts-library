@@ -53,16 +53,16 @@ The alerts in this library use:
 | Pod | 7 | [alerts/pod/](./alerts/pod/) |
 | Container | 4 | [alerts/container/](./alerts/container/) |
 | Cluster | 5 | [alerts/cluster/](./alerts/cluster/) |
-| Storage | 5 | [alerts/storage/](./alerts/storage/) |
+| Storage | 8 | [alerts/storage/](./alerts/storage/) |
 | Network | 4 | [alerts/network/](./alerts/network/) |
-| Workload | 8 | [alerts/workload/](./alerts/workload/) |
+| Workload | 10 | [alerts/workload/](./alerts/workload/) |
 | Control Plane | 6 | [alerts/control-plane/](./alerts/control-plane/) |
 | Security | 4 | [alerts/security/](./alerts/security/) |
 | Resource Optimization | 5 | [alerts/resource-optimization/](./alerts/resource-optimization/) |
 | App Performance | 2 | [alerts/app-performance/](./alerts/app-performance/) |
 | K8s Events (SQL) | 16 | [alerts/k8s-events/](./alerts/k8s-events/) |
 | cert-manager | 4 | [alerts/cert-manager/](./alerts/cert-manager/) |
-| **Total** | **80** | |
+| **Total** | **85** | |
 
 ---
 
