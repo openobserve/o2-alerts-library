@@ -61,7 +61,8 @@ The alerts in this library use:
 | Resource Optimization | 5 | [alerts/resource-optimization/](./alerts/resource-optimization/) |
 | App Performance | 2 | [alerts/app-performance/](./alerts/app-performance/) |
 | K8s Events (SQL) | 16 | [alerts/k8s-events/](./alerts/k8s-events/) |
-| **Total** | **76** | |
+| cert-manager | 4 | [alerts/cert-manager/](./alerts/cert-manager/) |
+| **Total** | **80** | |
 
 ---
 
@@ -83,6 +84,8 @@ Deploy these first for immediate cluster protection:
 - `coredns_unreachable_events` — all DNS resolution broken
 - `node_shutdown_events` — unexpected node shutdown
 - `apiserver_error_rate_high` — API server returning 5xx errors
+- `cert_already_expired` — TLS certificate already expired (services failing)
+- `cert_expiry_critical_7d` — TLS certificate expires in <7 days
 
 **Priority 2 — Pod Health**
 - `pod_crashloop_backoff` — container in CrashLoopBackOff
@@ -149,7 +152,8 @@ k8s/
 │   └── test-events-alerts.yaml
 ├── openobserve-alert-library.md     ← Full reference: PromQL + SQL + descriptions
 ├── collected-metrics.md             ← Complete metrics reference from the collector
-└── alert-creation-status.md        ← Implementation tracker
+├── alert-creation-status.md        ← Implementation tracker
+└── (cert-manager alerts require cert-manager + prometheus-autodiscovery scraping)
 ```
 
 ---
