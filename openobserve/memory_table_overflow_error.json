@@ -1,0 +1,29 @@
+{
+  "id": "3EDr3soAeJ2ZZ5VYmRWwCOXRGIh",
+  "name": "memory_table_overflow_error",
+  "org_id": "default",
+  "stream_type": "logs",
+  "stream_name": "default",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "sql",
+    "sql": "SELECT k8s_cluster, k8s_namespace_name, k8s_pod_name, k8s_container_name, body, log FROM \"default\" WHERE match_all('MemoryTableOverflowError')"
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC"
+  },
+  "destinations": [
+    "o2_to_slack"
+  ],
+  "context_attributes": {},
+  "row_template": "*ClusterName:* {k8s_cluster} | Namespace: {k8s_namespace_name} | Pod: {k8s_pod_name} | Container: {k8s_container_name} | Error: MemoryTableOverflowError",
+  "row_template_type": "String",
+  "description": "Critical: MemoryTableOverflowError detected in logs. Investigate memory pressure on the affected node/pod.",
+  "enabled": true
+}
