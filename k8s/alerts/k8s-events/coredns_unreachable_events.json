@@ -24,13 +24,13 @@
     "multi_time_range": null
   },
   "trigger_condition": {
-    "period": 2,
+    "period": 5,
     "operator": ">=",
     "threshold": 1,
-    "frequency": 2,
+    "frequency": 10,
     "cron": "",
     "frequency_type": "minutes",
-    "silence": 30,
+    "silence": 120,
     "timezone": "UTC",
     "tolerance_in_secs": null,
     "align_time": true

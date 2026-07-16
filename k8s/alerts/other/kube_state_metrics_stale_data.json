@@ -1,9 +1,8 @@
 {
-  "id": "3DnixXebPhBZnJClI0LpqFaxcfU",
-  "name": "pod_failed_state",
+  "name": "kube_state_metrics_stale_data",
   "org_id": "default",
   "stream_type": "metrics",
-  "stream_name": "kube_pod_status_phase",
+  "stream_name": "kube_persistentvolume_status_phase",
   "is_real_time": false,
   "query_condition": {
     "type": "promql",
@@ -16,11 +15,11 @@
       }
     },
     "sql": null,
-    "promql": "kube_pod_status_phase{phase='Failed', namespace!~'trivy-system|kube-system|kube-node-lease'}",
+    "promql": "count by(k8s_cluster)(kube_persistentvolume_status_phase{phase=~'Failed|Released'}) > 0 unless on(k8s_cluster) (count by(k8s_cluster)(kube_persistentvolume_info) > 0)",
     "promql_condition": {
       "column": "value",
-      "operator": ">=",
-      "value": 1,
+      "operator": ">",
+      "value": 0,
       "ignore_case": false
     },
     "aggregation": null,
@@ -29,29 +28,23 @@
     "multi_time_range": []
   },
   "trigger_condition": {
-    "period": 1,
+    "period": 5,
     "operator": ">=",
     "threshold": 1,
-    "frequency": 1,
+    "frequency": 60,
     "cron": "",
     "frequency_type": "minutes",
-    "silence": 60,
+    "silence": 1440,
     "timezone": "UTC",
     "tolerance_in_secs": null,
     "align_time": true
   },
-  "destinations": [
-    "k8s_alert"
-  ],
+  "destinations": ["k8s_alert"],
   "context_attributes": {},
-  "row_template": "*ClusterName:* {k8s_cluster} | Namespace: {namespace} | Pod: {pod}",
+  "row_template": "*ClusterName:* {k8s_cluster} | KSM reports Failed/Released PVs that don't exist on cluster. Stale metrics — restart kube-state-metrics.",
   "row_template_type": "String",
-  "description": "Critical: Pod has entered Failed state. Excludes trivy-system (scan pods), kube-system (system pods) which normally show transient Failed state during completion.",
+  "description": "Info: kube-state-metrics reports PVs in Failed/Released state that don't exist in the actual cluster. Stale time series from previously deleted resources. Restart kube-state-metrics to flush. Runs every 60min with 24h silence.",
   "enabled": true,
   "tz_offset": 0,
-  "last_triggered_at": 1778931915264990,
-  "last_satisfied_at": 1778931915264990,
-  "owner": "introspectionroot@openobserve.ai",
-  "last_edited_by": "introspectionroot@openobserve.ai",
   "creates_incident": false
 }

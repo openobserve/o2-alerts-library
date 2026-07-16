@@ -15,7 +15,7 @@
         "conditions": []
       }
     },
-    "sql": "SELECT count(*) as event_count, k8s_cluster, k8s_namespace_name FROM \"k8s_events\" WHERE k8s_resource_name = 'events' AND body_object_type = 'Warning' AND (str_match(body_object_reason, 'BackOff') OR str_match(body_object_reason, 'ErrImagePull') OR str_match(body_object_reason, 'Failed')) AND str_match(body_object_note, 'image') GROUP BY k8s_cluster, k8s_namespace_name HAVING event_count > 3",
+    "sql": "SELECT count(*) as event_count, k8s_cluster, k8s_namespace_name FROM \"k8s_events\" WHERE k8s_resource_name = 'events' AND body_object_type = 'Warning' AND (str_match(body_object_reason, 'ErrImagePull') OR str_match(body_object_reason, 'ImagePullBackOff')) GROUP BY k8s_cluster, k8s_namespace_name HAVING event_count > 3",
     "promql": null,
     "promql_condition": null,
     "aggregation": null,

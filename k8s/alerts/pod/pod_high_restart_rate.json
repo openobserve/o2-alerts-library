@@ -20,7 +20,7 @@
     "promql_condition": {
       "column": "value",
       "operator": ">=",
-      "value": 5,
+      "value": 10,
       "ignore_case": false
     },
     "aggregation": null,
@@ -29,13 +29,13 @@
     "multi_time_range": []
   },
   "trigger_condition": {
-    "period": 10,
+    "period": 15,
     "operator": ">=",
     "threshold": 1,
     "frequency": 5,
     "cron": "",
     "frequency_type": "minutes",
-    "silence": 30,
+    "silence": 60,
     "timezone": "UTC",
     "tolerance_in_secs": null,
     "align_time": true
@@ -46,7 +46,7 @@
   "context_attributes": {},
   "row_template": "*ClusterName:* {k8s_cluster} | Node: {k8s_node_name} | Pod: {k8s_pod_name} | Namespace: {k8s_namespace_name} | Restarts: {value}",
   "row_template_type": "String",
-  "description": "Warning: Pod has restarted 5+ times in 10 minutes indicating instability. Investigate pod logs and application health.",
+  "description": "Warning: Pod has restarted 10+ times in 15 minutes indicating instability. Investigate pod logs and application health.",
   "enabled": true,
   "tz_offset": 0,
   "last_triggered_at": 1778933525265663,

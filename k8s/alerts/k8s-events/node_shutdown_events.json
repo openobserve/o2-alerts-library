@@ -15,7 +15,7 @@
         "conditions": []
       }
     },
-    "sql": "SELECT count(*) as event_count, k8s_cluster, event_name FROM \"k8s_events\" WHERE k8s_resource_name = 'events' AND body_object_type = 'Warning' AND str_match(body_object_reason, 'NodeShutdown') GROUP BY k8s_cluster, event_name HAVING event_count > 0",
+    "sql": "SELECT count(*) as event_count, k8s_cluster FROM \"k8s_events\" WHERE k8s_resource_name = 'events' AND body_object_type = 'Warning' AND str_match(body_object_reason, 'NodeShutdown') GROUP BY k8s_cluster HAVING event_count > 3",
     "promql": null,
     "promql_condition": null,
     "aggregation": null,
@@ -24,13 +24,13 @@
     "multi_time_range": null
   },
   "trigger_condition": {
-    "period": 2,
+    "period": 5,
     "operator": ">=",
     "threshold": 1,
-    "frequency": 2,
+    "frequency": 5,
     "cron": "",
     "frequency_type": "minutes",
-    "silence": 60,
+    "silence": 120,
     "timezone": "UTC",
     "tolerance_in_secs": null,
     "align_time": true
@@ -39,9 +39,9 @@
     "k8s_alert"
   ],
   "context_attributes": {},
-  "row_template": "*ClusterName:* {k8s_cluster} | Node: {event_name} | Status: Shutting Down",
+  "row_template": "*ClusterName:* {k8s_cluster} | Shutdown Events: {event_count} | Investigate node termination cause.",
   "row_template_type": "String",
-  "description": "Critical: Node is shutting down. Pods will be evicted. Investigate cause \u2014 unexpected shutdown can indicate hardware failure or cloud provider issue.",
+  "description": "Critical: Multiple node shutdown events detected (3+ events per period). Groups by cluster to avoid 1 node shutdown generating 20+ separate alerts from DaemonSet pod terminations.",
   "enabled": true,
   "tz_offset": 0,
   "last_triggered_at": 1778931715264662,

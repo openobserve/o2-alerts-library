@@ -15,7 +15,7 @@
         "conditions": []
       }
     },
-    "sql": "SELECT count(*) as event_count, k8s_cluster, event_name FROM \"k8s_events\" WHERE k8s_resource_name = 'events' AND body_object_type = 'Warning' AND str_match(body_object_reason, 'NetworkNotReady') GROUP BY k8s_cluster, event_name HAVING event_count > 0",
+    "sql": "SELECT count(*) as event_count, k8s_cluster FROM \"k8s_events\" WHERE k8s_resource_name = 'events' AND body_object_type = 'Warning' AND str_match(body_object_reason, 'NetworkNotReady') GROUP BY k8s_cluster HAVING event_count > 3",
     "promql": null,
     "promql_condition": null,
     "aggregation": null,
@@ -24,13 +24,13 @@
     "multi_time_range": null
   },
   "trigger_condition": {
-    "period": 2,
+    "period": 5,
     "operator": ">=",
     "threshold": 1,
-    "frequency": 2,
+    "frequency": 5,
     "cron": "",
     "frequency_type": "minutes",
-    "silence": 30,
+    "silence": 120,
     "timezone": "UTC",
     "tolerance_in_secs": null,
     "align_time": true
@@ -39,7 +39,7 @@
     "k8s_alert"
   ],
   "context_attributes": {},
-  "row_template": "*ClusterName:* {k8s_cluster} | Node: {event_name} | Network Not Ready Events: {event_count}",
+  "row_template": "*ClusterName:* {k8s_cluster} | Network Not Ready Events: {event_count}",
   "row_template_type": "String",
   "description": "Warning: CNI network plugin not ready on node. New pods cannot be scheduled. Check CNI DaemonSet and plugin logs.",
   "enabled": true,

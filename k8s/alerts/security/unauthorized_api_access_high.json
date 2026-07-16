@@ -16,7 +16,7 @@
       }
     },
     "sql": null,
-    "promql": "floor(sum by(k8s_cluster, user) (rate(apiserver_request_total{code=~'401|403'}[5m])) * 100) / 100",
+    "promql": "floor(sum by(k8s_cluster) (rate(apiserver_request_total{code=~'401|403'}[10m])) * 100) / 100",
     "promql_condition": {
       "column": "value",
       "operator": ">",
@@ -29,13 +29,13 @@
     "multi_time_range": []
   },
   "trigger_condition": {
-    "period": 5,
+    "period": 10,
     "operator": ">=",
     "threshold": 1,
-    "frequency": 5,
+    "frequency": 10,
     "cron": "",
     "frequency_type": "minutes",
-    "silence": 30,
+    "silence": 120,
     "timezone": "UTC",
     "tolerance_in_secs": null,
     "align_time": true
@@ -44,7 +44,7 @@
     "k8s_alert"
   ],
   "context_attributes": {},
-  "row_template": "*ClusterName:* {k8s_cluster} | User: {user} | Unauthorized Requests/s: {value}",
+  "row_template": "*ClusterName:* {k8s_cluster} | 401/403 Requests/s: {value}",
   "row_template_type": "String",
   "description": "Critical: High rate of 401/403 API responses. Potential unauthorized access or misconfigured RBAC. Review audit logs.",
   "enabled": true,

@@ -29,13 +29,13 @@
     "multi_time_range": []
   },
   "trigger_condition": {
-    "period": 1,
+    "period": 2,
     "operator": ">=",
     "threshold": 1,
-    "frequency": 1,
+    "frequency": 2,
     "cron": "",
     "frequency_type": "minutes",
-    "silence": 15,
+    "silence": 30,
     "timezone": "UTC",
     "tolerance_in_secs": null,
     "align_time": true

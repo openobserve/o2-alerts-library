@@ -20,7 +20,7 @@
     "promql_condition": {
       "column": "value",
       "operator": ">",
-      "value": 10,
+      "value": 100,
       "ignore_case": false
     },
     "aggregation": null,
@@ -29,13 +29,13 @@
     "multi_time_range": []
   },
   "trigger_condition": {
-    "period": 5,
+    "period": 10,
     "operator": ">=",
     "threshold": 1,
-    "frequency": 5,
+    "frequency": 10,
     "cron": "",
     "frequency_type": "minutes",
-    "silence": 30,
+    "silence": 120,
     "timezone": "UTC",
     "tolerance_in_secs": null,
     "align_time": true

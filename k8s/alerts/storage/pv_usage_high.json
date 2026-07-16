@@ -32,10 +32,10 @@
     "period": 5,
     "operator": ">=",
     "threshold": 1,
-    "frequency": 10,
+    "frequency": 30,
     "cron": "",
     "frequency_type": "minutes",
-    "silence": 60,
+    "silence": 180,
     "timezone": "UTC",
     "tolerance_in_secs": null,
     "align_time": true

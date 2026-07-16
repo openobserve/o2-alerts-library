@@ -16,7 +16,7 @@
       }
     },
     "sql": null,
-    "promql": "floor(sum by(k8s_cluster)(kube_pod_container_resource_requests{resource='memory'}) / on(k8s_cluster) sum by(k8s_cluster)(kube_node_status_allocatable{resource='memory'}) * 10000) / 100",
+    "promql": "clamp_max(floor(sum by(k8s_cluster)(kube_pod_container_resource_requests{resource='memory'}) / on(k8s_cluster) sum by(k8s_cluster)(kube_node_status_allocatable{resource='memory'}) * 10000) / 100, 100)",
     "promql_condition": {
       "column": "value",
       "operator": ">=",
@@ -46,7 +46,7 @@
   "context_attributes": {},
   "row_template": "*ClusterName:* {k8s_cluster} | Memory Requested: {value}% of allocatable",
   "row_template_type": "String",
-  "description": "Warning: Cluster-wide memory requests exceed 80% of allocatable. Plan for cluster expansion.",
+  "description": "Warning: Cluster-wide memory requests exceed 80% of allocatable. Uses clamp_max(100) to guard against telemetry unit mismatches.",
   "enabled": true,
   "tz_offset": 0,
   "last_triggered_at": 1778929825265378,

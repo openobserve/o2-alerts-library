@@ -15,7 +15,7 @@
         "conditions": []
       }
     },
-    "sql": "SELECT count(*) as event_count, k8s_cluster, k8s_namespace_name FROM \"k8s_events\" WHERE k8s_resource_name = 'events' AND body_object_type = 'Warning' AND (str_match(body_object_reason, 'FailedMount') OR str_match(body_object_reason, 'FailedAttachVolume') OR str_match(body_object_reason, 'VolumeFailedAttach')) GROUP BY k8s_cluster, k8s_namespace_name HAVING event_count > 0",
+    "sql": "SELECT count(*) as event_count, k8s_cluster, k8s_namespace_name FROM \"k8s_events\" WHERE k8s_resource_name = 'events' AND body_object_type = 'Warning' AND (str_match(body_object_reason, 'FailedMount') OR str_match(body_object_reason, 'FailedAttachVolume') OR str_match(body_object_reason, 'VolumeFailedAttach')) GROUP BY k8s_cluster, k8s_namespace_name HAVING event_count > 5",
     "promql": null,
     "promql_condition": null,
     "aggregation": null,
@@ -30,7 +30,7 @@
     "frequency": 5,
     "cron": "",
     "frequency_type": "minutes",
-    "silence": 60,
+    "silence": 120,
     "timezone": "UTC",
     "tolerance_in_secs": null,
     "align_time": true

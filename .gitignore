@@ -35,3 +35,7 @@ secrets/
 # Temp files
 tmp/
 temp/
+
+# Local monitoring scripts
+k8s/alerts/monitor_alerts.sh
+k8s/alerts/monitor.py

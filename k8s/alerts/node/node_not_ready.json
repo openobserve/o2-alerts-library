@@ -16,7 +16,7 @@
       }
     },
     "sql": null,
-    "promql": "kube_node_status_condition{condition='Ready',status='true'}",
+    "promql": "min_over_time(kube_node_status_condition{condition='Ready',status='true'}[5m])",
     "promql_condition": {
       "column": "value",
       "operator": "<=",
@@ -29,10 +29,10 @@
     "multi_time_range": []
   },
   "trigger_condition": {
-    "period": 2,
+    "period": 5,
     "operator": ">=",
     "threshold": 1,
-    "frequency": 1,
+    "frequency": 2,
     "cron": "",
     "frequency_type": "minutes",
     "silence": 30,
@@ -46,7 +46,7 @@
   "context_attributes": {},
   "row_template": "*ClusterName:* {k8s_cluster} | Node: {node} | Status: NotReady",
   "row_template_type": "String",
-  "description": "Critical: Node is in NotReady state for >2 minutes.",
+  "description": "Critical: Node has been in NotReady state continuously for 5+ minutes. Uses min_over_time to filter out node churn during scale-in/termination.",
   "enabled": true,
   "tz_offset": 0,
   "last_triggered_at": 1778933495264754,

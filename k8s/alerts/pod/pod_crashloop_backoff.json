@@ -16,7 +16,7 @@
       }
     },
     "sql": null,
-    "promql": "kube_pod_container_status_waiting_reason{reason='CrashLoopBackOff'}",
+    "promql": "kube_pod_container_status_waiting_reason{reason='CrashLoopBackOff', flag!='DATA_POINT_FLAGS_NO_RECORDED_VALUE_MASK'}",
     "promql_condition": {
       "column": "value",
       "operator": ">=",

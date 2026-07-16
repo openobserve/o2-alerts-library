@@ -15,7 +15,7 @@
         "conditions": []
       }
     },
-    "sql": "SELECT count(*) as event_count, k8s_cluster, k8s_namespace_name FROM \"k8s_events\" WHERE k8s_resource_name = 'events' AND body_object_type = 'Warning' AND str_match(body_object_reason, 'FailedScheduling') GROUP BY k8s_cluster, k8s_namespace_name HAVING event_count > 5",
+    "sql": "SELECT count(*) as event_count, k8s_cluster, k8s_namespace_name FROM \"k8s_events\" WHERE k8s_resource_name = 'events' AND body_object_type = 'Warning' AND str_match(body_object_reason, 'FailedScheduling') GROUP BY k8s_cluster, k8s_namespace_name HAVING event_count > 30",
     "promql": null,
     "promql_condition": null,
     "aggregation": null,
@@ -41,7 +41,7 @@
   "context_attributes": {},
   "row_template": "*ClusterName:* {k8s_cluster} | Namespace: {k8s_namespace_name} | Scheduling Failures: {event_count}",
   "row_template_type": "String",
-  "description": "Warning: >5 pod scheduling failure events in 5 minutes. Review resource requests and cluster capacity.",
+  "description": "Warning: >30 pod scheduling failure events in 5 minutes. Review resource requests and cluster capacity. Excludes arc-runners-* and devzero-system (on-demand autoscaling namespaces where transient FailedScheduling bursts are expected; stuck pods there are still caught by pod_pending_too_long). Threshold accounts for duplicate event ingestion (~5-10x per event).",
   "enabled": true,
   "tz_offset": 0,
   "last_triggered_at": 1778933465264853,

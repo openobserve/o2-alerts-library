@@ -16,11 +16,11 @@
       }
     },
     "sql": null,
-    "promql": "floor(sum by(k8s_cluster, verb, resource) (rate(apiserver_request_total{code=~'5..'}[5m])) * 100) / 100",
+    "promql": "floor(sum by(k8s_cluster) (rate(apiserver_request_total{code=~'5..'}[10m])) * 100) / 100",
     "promql_condition": {
       "column": "value",
       "operator": ">",
-      "value": 1,
+      "value": 50,
       "ignore_case": false
     },
     "aggregation": null,
@@ -29,13 +29,13 @@
     "multi_time_range": []
   },
   "trigger_condition": {
-    "period": 5,
+    "period": 10,
     "operator": ">=",
     "threshold": 1,
-    "frequency": 5,
+    "frequency": 10,
     "cron": "",
     "frequency_type": "minutes",
-    "silence": 30,
+    "silence": 60,
     "timezone": "UTC",
     "tolerance_in_secs": null,
     "align_time": true
@@ -44,7 +44,7 @@
     "k8s_alert"
   ],
   "context_attributes": {},
-  "row_template": "*ClusterName:* {k8s_cluster} | Verb: {verb} | Resource: {resource} | 5xx/s: {value}",
+  "row_template": "*ClusterName:* {k8s_cluster} | Total 5xx/s: {value}",
   "row_template_type": "String",
   "description": "Critical: API server 5xx error rate exceeds 1/s. Investigate API server health and etcd performance.",
   "enabled": true,

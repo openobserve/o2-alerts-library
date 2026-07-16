@@ -35,7 +35,7 @@
     "frequency": 60,
     "cron": "",
     "frequency_type": "minutes",
-    "silence": 1440,
+    "silence": 4320,
     "timezone": "UTC",
     "tolerance_in_secs": null,
     "align_time": true
