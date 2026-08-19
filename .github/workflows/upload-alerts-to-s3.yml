@@ -1,0 +1,65 @@
+name: Upload Alerts to S3
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      s3_bucket:
+        description: 'S3 bucket name (optional, overrides default)'
+        required: false
+        type: string
+
+env:
+  S3_BUCKET: ${{ inputs.s3_bucket || secrets.AWS_S3_BUCKET || 'openobserve-datasources-bucket' }}
+  S3_PATH: 'alerts/'
+  AWS_REGION: ${{ secrets.AWS_REGION || 'us-east-1' }}
+
+jobs:
+  upload-to-s3:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      id-token: write  # Required for OIDC authentication
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: "arn:aws:iam::325553860333:role/github-actions-s3-uploader"
+          role-session-name: GitHubActions-S3Upload
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Sync alerts to S3
+        run: |
+          echo "Syncing alert directories to s3://${S3_BUCKET}/${S3_PATH}"
+          aws s3 sync . "s3://${S3_BUCKET}/${S3_PATH}" \
+            --delete \
+            --exclude ".git/*" \
+            --exclude ".github/*" \
+            --exclude ".gitignore" \
+            --exclude "LICENSE" \
+            --exclude "*.md" \
+            --exclude "k8s/tests/*"
+
+      - name: Verify upload
+        run: |
+          echo "Listing uploaded files in S3:"
+          aws s3 ls "s3://${S3_BUCKET}/${S3_PATH}" --recursive --summarize | tail -n 20
+
+      - name: Upload summary
+        run: |
+          echo "### S3 Upload Summary :rocket:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Bucket:** s3://${S3_BUCKET}/${S3_PATH}" >> $GITHUB_STEP_SUMMARY
+          echo "**Region:** ${AWS_REGION}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          TOTAL_FILES=$(aws s3 ls "s3://${S3_BUCKET}/${S3_PATH}" --recursive | wc -l)
+          TOTAL_SIZE=$(aws s3 ls "s3://${S3_BUCKET}/${S3_PATH}" --recursive --summarize | grep "Total Size" | awk '{print $3, $4}')
+          echo "**Total Files:** ${TOTAL_FILES}" >> $GITHUB_STEP_SUMMARY
+          echo "**Total Size:** ${TOTAL_SIZE}" >> $GITHUB_STEP_SUMMARY
