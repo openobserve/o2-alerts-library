@@ -1,0 +1,66 @@
+{
+  "name": "jvm_thread_count_high",
+  "title": "JVM thread count high",
+  "severity": "warning",
+  "description": "JVM thread count is high (> 300), potential thread leak",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "jvm",
+    "jvm-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/jvm/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/jvm/",
+    "exporter": "jvm-exporter",
+    "upstream_alert": "JVM thread count high",
+    "upstream_query": "jvm_threads_current > 300",
+    "upstream_description": "JVM thread count is high (> 300), potential thread leak"
+  },
+  "stream_type": "metrics",
+  "stream_name": "jvm_threads_current",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "jvm_threads_current",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 300,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "300 is a rough default; thread count scales with your app's threading model (thread-per-request vs event-loop) — adjust based on your workload."
+}

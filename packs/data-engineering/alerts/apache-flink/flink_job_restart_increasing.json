@@ -1,0 +1,66 @@
+{
+  "name": "flink_job_restart_increasing",
+  "title": "Flink job restart increasing",
+  "severity": "warning",
+  "description": "Flink job has restarted times in the last 5 minutes.",
+  "tags": [
+    "apache-flink",
+    "awesome-prometheus-alerts",
+    "flink-prometheus-reporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/data-engineering/apache-flink/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/data-engineering/apache-flink/",
+    "exporter": "flink-prometheus-reporter",
+    "upstream_alert": "Flink job restart increasing",
+    "upstream_query": "delta(flink_jobmanager_job_numRestarts[5m]) > 1",
+    "upstream_description": "Flink job {{ $labels.job_name }} has restarted {{ $value }} times in the last 5 minutes."
+  },
+  "stream_type": "metrics",
+  "stream_name": "flink_jobmanager_job_numRestarts",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "delta(flink_jobmanager_job_numRestarts[5m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | job_name: {job_name} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Flink exposes numRestarts as a gauge (cumulative count), so delta() is used instead of increase().\nA single restart may be normal during deployments. Adjust threshold based on restart tolerance."
+}

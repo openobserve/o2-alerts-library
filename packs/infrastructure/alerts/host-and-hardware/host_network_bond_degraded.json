@@ -1,0 +1,65 @@
+{
+  "name": "host_network_bond_degraded",
+  "title": "Host Network Bond Degraded",
+  "severity": "warning",
+  "description": "Bond \" \" degraded on \" \".",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "host-and-hardware",
+    "node-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/host-and-hardware/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/host-and-hardware/",
+    "exporter": "node-exporter",
+    "upstream_alert": "Host Network Bond Degraded",
+    "upstream_query": "((node_bonding_active - node_bonding_slaves) != 0)",
+    "upstream_description": "Bond \"{{ $labels.device }}\" degraded on \"{{ $labels.instance }}\"."
+  },
+  "stream_type": "metrics",
+  "stream_name": "node_bonding_active",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "node_bonding_active - node_bonding_slaves",
+    "promql_condition": {
+      "column": "value",
+      "operator": "!=",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | device: {device} | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

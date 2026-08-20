@@ -1,0 +1,66 @@
+{
+  "name": "container_high_low_change_cpu_usage",
+  "title": "Container high low change CPU usage",
+  "severity": "info",
+  "description": "This alert rule monitors the absolute change in CPU usage within a time window and triggers an alert when the change exceeds 25%.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "docker-containers",
+    "google-cadvisor"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/docker-containers/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/docker-containers/",
+    "exporter": "google-cadvisor",
+    "upstream_alert": "Container high low change CPU usage",
+    "upstream_query": "(abs((sum by (instance, name) (rate(container_cpu_usage_seconds_total{name!=\"\"}[1m])) * 100) - (sum by (instance, name) (rate(container_cpu_usage_seconds_total{name!=\"\"}[1m] offset 1m)) * 100)) or abs((sum by (instance, name) (rate(container_cpu_usage_seconds_total{name!=\"\"}[1m])) * 100) - (sum by (instance, name) (rate(container_cpu_usage_seconds_total{name!=\"\"}[5m] offset 1m)) * 100))) > 25",
+    "upstream_description": "This alert rule monitors the absolute change in CPU usage within a time window and triggers an alert when the change exceeds 25%."
+  },
+  "stream_type": "metrics",
+  "stream_name": "container_cpu_usage_seconds_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "abs((sum by (instance, name) (rate(container_cpu_usage_seconds_total{name!=\"\"}[1m])) * 100) - (sum by (instance, name) (rate(container_cpu_usage_seconds_total{name!=\"\"}[1m] offset 1m)) * 100)) or abs((sum by (instance, name) (rate(container_cpu_usage_seconds_total{name!=\"\"}[1m])) * 100) - (sum by (instance, name) (rate(container_cpu_usage_seconds_total{name!=\"\"}[5m] offset 1m)) * 100))",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 25,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "25 percentage-point threshold is a rough default; acceptable CPU volatility depends on your workload's nature (bursty batch jobs vs steady services) — adjust based on your baseline."
+}

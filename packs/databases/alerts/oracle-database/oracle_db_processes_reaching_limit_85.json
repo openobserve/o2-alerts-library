@@ -1,0 +1,67 @@
+{
+  "name": "oracle_db_processes_reaching_limit_85",
+  "title": "Oracle DB processes reaching limit (> 85%)",
+  "severity": "warning",
+  "description": "Oracle Database process utilization is above 85%",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "iamseth-oracledb-exporter",
+    "oracle-database"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/oracle-database/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/oracle-database/",
+    "exporter": "iamseth-oracledb-exporter",
+    "upstream_alert": "Oracle DB processes reaching limit (> 85%)",
+    "upstream_query": "oracledb_resource_current_utilization{resource_name=\"processes\"} / oracledb_resource_limit_value{resource_name=\"processes\"} * 100 > 85 and oracledb_resource_limit_value{resource_name=\"processes\"} > 0",
+    "upstream_description": "Oracle Database process utilization is above 85% on {{ $labels.instance }} (current value: {{ $value }}%)",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "oracledb_resource_current_utilization",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(oracledb_resource_current_utilization{resource_name=\"processes\"} / oracledb_resource_limit_value{resource_name=\"processes\"} * 100 > 85 and oracledb_resource_limit_value{resource_name=\"processes\"} > 0) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Threshold is workload-dependent. Adjust 85% to suit your environment."
+}

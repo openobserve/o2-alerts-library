@@ -1,0 +1,65 @@
+{
+  "name": "mongodb_replication_status_3",
+  "title": "MongoDB replication Status 3",
+  "severity": "critical",
+  "description": "MongoDB Replication set member either perform startup self-checks, or transition from completing a rollback or resync",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "dcu-mongodb-exporter",
+    "mongodb"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/mongodb/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/mongodb/",
+    "exporter": "dcu-mongodb-exporter",
+    "upstream_alert": "MongoDB replication Status 3",
+    "upstream_query": "mongodb_replset_member_state == 3",
+    "upstream_description": "MongoDB Replication set member either perform startup self-checks, or transition from completing a rollback or resync"
+  },
+  "stream_type": "metrics",
+  "stream_name": "mongodb_replset_member_state",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "mongodb_replset_member_state",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 3,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

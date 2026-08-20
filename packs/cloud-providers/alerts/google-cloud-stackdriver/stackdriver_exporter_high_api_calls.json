@@ -1,0 +1,66 @@
+{
+  "name": "stackdriver_exporter_high_api_calls",
+  "title": "Stackdriver exporter high API calls",
+  "severity": "warning",
+  "description": "Stackdriver exporter is making API calls per minute for project. This may hit Google Cloud Monitoring API quotas.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "google-cloud-stackdriver",
+    "stackdriver-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/cloud-providers/google-cloud-stackdriver/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/cloud-providers/google-cloud-stackdriver/",
+    "exporter": "stackdriver-exporter",
+    "upstream_alert": "Stackdriver exporter high API calls",
+    "upstream_query": "rate(stackdriver_monitoring_api_calls_total[5m]) * 60 > 100",
+    "upstream_description": "Stackdriver exporter is making {{ $value }} API calls per minute for project {{ $labels.project_id }}. This may hit Google Cloud Monitoring API quotas."
+  },
+  "stream_type": "metrics",
+  "stream_name": "stackdriver_monitoring_api_calls_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "rate(stackdriver_monitoring_api_calls_total[5m]) * 60",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 100,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | project_id: {project_id} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "100 calls/min is a rough default; adjust to match your actual Google Cloud Monitoring API quota and how many metrics/resources you monitor."
+}

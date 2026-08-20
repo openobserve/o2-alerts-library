@@ -1,0 +1,65 @@
+{
+  "name": "digitalocean_load_balancer_down",
+  "title": "DigitalOcean load balancer down",
+  "severity": "critical",
+  "description": "DigitalOcean load balancer is not active.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "digitalocean",
+    "digitalocean-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/cloud-providers/digitalocean/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/cloud-providers/digitalocean/",
+    "exporter": "digitalocean-exporter",
+    "upstream_alert": "DigitalOcean load balancer down",
+    "upstream_query": "digitalocean_loadbalancer_status == 0",
+    "upstream_description": "DigitalOcean load balancer {{ $labels.name }} ({{ $labels.ip }}) is not active."
+  },
+  "stream_type": "metrics",
+  "stream_name": "digitalocean_loadbalancer_status",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "digitalocean_loadbalancer_status",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | name: {name} | ip: {ip} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

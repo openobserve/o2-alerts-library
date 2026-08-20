@@ -1,0 +1,66 @@
+{
+  "name": "clickhouse_interserver_connection_issues",
+  "title": "ClickHouse Interserver Connection Issues",
+  "severity": "warning",
+  "description": "High number of interserver connections may indicate replication or distributed query handling issues.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "clickhouse",
+    "embedded-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/clickhouse/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/clickhouse/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "ClickHouse Interserver Connection Issues",
+    "upstream_query": "ClickHouseMetrics_InterserverConnection > 50",
+    "upstream_description": "High number of interserver connections may indicate replication or distributed query handling issues."
+  },
+  "stream_type": "metrics",
+  "stream_name": "ClickHouseMetrics_InterserverConnection",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "ClickHouseMetrics_InterserverConnection",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 50,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Adjust the threshold based on your cluster size and expected replication traffic."
+}

@@ -1,0 +1,66 @@
+{
+  "name": "kubernetes_job_slow_completion",
+  "title": "Kubernetes Job slow completion",
+  "severity": "critical",
+  "description": "Kubernetes Job did not complete in time.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "kubernetes",
+    "kubestate-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/orchestrators/kubernetes/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/orchestrators/kubernetes/",
+    "exporter": "kubestate-exporter",
+    "upstream_alert": "Kubernetes Job slow completion",
+    "upstream_query": "kube_job_spec_completions - kube_job_status_succeeded - kube_job_status_failed > 0",
+    "upstream_description": "Kubernetes Job {{ $labels.namespace }}/{{ $labels.job_name }} did not complete in time.",
+    "period_clamped_from": "Upstream `for` is 12h (720 minutes); the evaluation window is capped at 60 minutes. Widen trigger_condition.period if you want the full upstream window."
+  },
+  "stream_type": "metrics",
+  "stream_name": "kube_job_spec_completions",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "kube_job_spec_completions - kube_job_status_succeeded - kube_job_status_failed",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 60,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | namespace: {namespace} | job_name: {job_name} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

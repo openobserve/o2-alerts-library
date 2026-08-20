@@ -1,0 +1,65 @@
+{
+  "name": "prometheus_high_query_load",
+  "title": "Prometheus high query load",
+  "severity": "warning",
+  "description": "Prometheus query engine has less than 20% available capacity for concurrent queries, meaning it is approaching its configured concurrency limit and may start rejecting queries.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "prometheus"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/prometheus-self-monitoring/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/prometheus-self-monitoring/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Prometheus high query load",
+    "upstream_query": "prometheus_engine_queries / prometheus_engine_queries_concurrent_max > 0.8",
+    "upstream_description": "Prometheus query engine has less than 20% available capacity for concurrent queries, meaning it is approaching its configured concurrency limit and may start rejecting queries."
+  },
+  "stream_type": "metrics",
+  "stream_name": "prometheus_engine_queries",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "prometheus_engine_queries / prometheus_engine_queries_concurrent_max",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0.8,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

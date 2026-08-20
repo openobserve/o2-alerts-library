@@ -1,0 +1,66 @@
+{
+  "name": "mimir_compactor_has_run_out_of_disk_space",
+  "title": "Mimir compactor has run out of disk space",
+  "severity": "critical",
+  "description": "Mimir compactor has run out of disk space.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "grafana-mimir"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-mimir/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-mimir/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Mimir compactor has run out of disk space",
+    "upstream_query": "delta(cortex_compactor_disk_out_of_space_errors_total[24h]) >= 1",
+    "upstream_description": "Mimir compactor {{ $labels.instance }} has run out of disk space."
+  },
+  "stream_type": "metrics",
+  "stream_name": "cortex_compactor_disk_out_of_space_errors_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "delta(cortex_compactor_disk_out_of_space_errors_total[24h])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "cortex_compactor_disk_out_of_space_errors_total is declared as gauge by Mimir despite the _total suffix, so delta() is used instead of increase()."
+}

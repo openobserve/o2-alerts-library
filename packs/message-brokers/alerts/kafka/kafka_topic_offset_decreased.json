@@ -1,0 +1,65 @@
+{
+  "name": "kafka_topic_offset_decreased",
+  "title": "Kafka topic offset decreased",
+  "severity": "warning",
+  "description": "Kafka topic offset has decreased",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "kafka",
+    "linkedin-kafka-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/message-brokers/kafka/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/message-brokers/kafka/",
+    "exporter": "linkedin-kafka-exporter",
+    "upstream_alert": "Kafka topic offset decreased",
+    "upstream_query": "delta(kafka_burrow_partition_current_offset[1m]) < 0",
+    "upstream_description": "Kafka topic offset has decreased"
+  },
+  "stream_type": "metrics",
+  "stream_name": "kafka_burrow_partition_current_offset",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "delta(kafka_burrow_partition_current_offset[1m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": "<",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

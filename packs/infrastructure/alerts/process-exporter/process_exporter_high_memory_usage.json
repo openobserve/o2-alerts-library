@@ -1,0 +1,65 @@
+{
+  "name": "process_exporter_high_memory_usage",
+  "title": "Process exporter high memory usage",
+  "severity": "warning",
+  "description": "Process group is using resident memory.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "process-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/process-exporter/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/process-exporter/",
+    "exporter": "process-exporter",
+    "upstream_alert": "Process exporter high memory usage",
+    "upstream_query": "namedprocess_namegroup_memory_bytes{memtype=\"resident\"} > 4e+09",
+    "upstream_description": "Process group {{ $labels.groupname }} is using {{ $value | humanize }}B of resident memory. (instance {{ $labels.instance }})"
+  },
+  "stream_type": "metrics",
+  "stream_name": "namedprocess_namegroup_memory_bytes",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "namedprocess_namegroup_memory_bytes{memtype=\"resident\"}",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 4000000000,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | groupname: {groupname} | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Threshold of 4GB is arbitrary and depends on the process being monitored. Adjust per group."
+}

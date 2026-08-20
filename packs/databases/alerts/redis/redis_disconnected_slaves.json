@@ -1,0 +1,65 @@
+{
+  "name": "redis_disconnected_slaves",
+  "title": "Redis disconnected slaves",
+  "severity": "critical",
+  "description": "Redis not replicating for all slaves. Consider reviewing the redis replication status.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "oliver006-redis-exporter",
+    "redis"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/redis/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/redis/",
+    "exporter": "oliver006-redis-exporter",
+    "upstream_alert": "Redis disconnected slaves",
+    "upstream_query": "count without (instance, job) (redis_connected_slaves) - sum without (instance, job) (redis_connected_slaves) - 1 > 0",
+    "upstream_description": "Redis not replicating for all slaves. Consider reviewing the redis replication status."
+  },
+  "stream_type": "metrics",
+  "stream_name": "redis_connected_slaves",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "count without (instance, job) (redis_connected_slaves) - sum without (instance, job) (redis_connected_slaves) - 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

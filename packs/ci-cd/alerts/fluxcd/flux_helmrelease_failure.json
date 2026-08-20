@@ -1,0 +1,65 @@
+{
+  "name": "flux_helmrelease_failure",
+  "title": "Flux HelmRelease Failure",
+  "severity": "warning",
+  "description": "The ' ' in namespace is marked as not ready.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "fluxcd"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/fluxcd/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/fluxcd/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Flux HelmRelease Failure",
+    "upstream_query": "gotk_resource_info{ready=\"False\", customresource_kind=\"HelmRelease\"} > 0",
+    "upstream_description": "The {{ $labels.customresource_kind }} '{{ $labels.name }}' in namespace {{ $labels.exported_namespace }} is marked as not ready."
+  },
+  "stream_type": "metrics",
+  "stream_name": "gotk_resource_info",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "gotk_resource_info{ready=\"False\", customresource_kind=\"HelmRelease\"}",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 15,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | customresource_kind: {customresource_kind} | name: {name} | exported_namespace: {exported_namespace} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

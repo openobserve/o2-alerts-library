@@ -1,0 +1,66 @@
+{
+  "name": "ruby_allocated_objects_spike",
+  "title": "Ruby allocated objects spike",
+  "severity": "warning",
+  "description": "Ruby is allocating objects at a high rate",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "ruby",
+    "ruby-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/ruby/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/ruby/",
+    "exporter": "ruby-exporter",
+    "upstream_alert": "Ruby allocated objects spike",
+    "upstream_query": "rate(ruby_allocated_objects_total[5m]) > 100000",
+    "upstream_description": "Ruby is allocating objects at a high rate"
+  },
+  "stream_type": "metrics",
+  "stream_name": "ruby_allocated_objects_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "rate(ruby_allocated_objects_total[5m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 100000,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "100k/s is a rough default; scales with your app's object allocation rate — adjust based on your workload."
+}

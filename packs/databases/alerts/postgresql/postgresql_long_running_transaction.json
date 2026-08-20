@@ -1,0 +1,66 @@
+{
+  "name": "postgresql_long_running_transaction",
+  "title": "Postgresql long-running transaction",
+  "severity": "warning",
+  "description": "A transaction on database has been running for more than 2 minutes, which can hold locks, cause table bloat, and delay replication.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "postgres-exporter",
+    "postgresql"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/postgresql/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/postgresql/",
+    "exporter": "postgres-exporter",
+    "upstream_alert": "Postgresql long-running transaction",
+    "upstream_query": "avg by (datname) (pg_stat_activity_max_tx_duration{datname!~\"template.*|postgres\"}) > 2 * 60",
+    "upstream_description": "A transaction on database {{ $labels.datname }} has been running for more than 2 minutes, which can hold locks, cause table bloat, and delay replication."
+  },
+  "stream_type": "metrics",
+  "stream_name": "pg_stat_activity_max_tx_duration",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "avg by (datname) (pg_stat_activity_max_tx_duration{datname!~\"template.*|postgres\"})",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 120,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | datname: {datname} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "2 minutes is a rough default; normal transaction duration depends on your workload (OLTP vs batch/reporting queries) — adjust based on your baseline."
+}

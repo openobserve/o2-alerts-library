@@ -1,0 +1,66 @@
+{
+  "name": "jvm_class_loading_anomaly",
+  "title": "JVM class loading anomaly",
+  "severity": "warning",
+  "description": "Rapid class loading detected, potential classloader leak",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "jvm",
+    "jvm-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/jvm/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/jvm/",
+    "exporter": "jvm-exporter",
+    "upstream_alert": "JVM class loading anomaly",
+    "upstream_query": "rate(jvm_classes_loaded_total[5m]) > 100",
+    "upstream_description": "Rapid class loading detected, potential classloader leak"
+  },
+  "stream_type": "metrics",
+  "stream_name": "jvm_classes_loaded_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "rate(jvm_classes_loaded_total[5m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 100,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "100/s is a rough default; class-loading rate scales with your app's classloading patterns (dynamic proxies, hot deployment) — adjust based on your workload."
+}

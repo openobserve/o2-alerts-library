@@ -1,0 +1,66 @@
+{
+  "name": "aws_sqs_message_age_too_old",
+  "title": "AWS SQS message age too old",
+  "severity": "warning",
+  "description": "SQS queue has messages older than 1 hour.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "aws-cloudwatch",
+    "prometheus-cloudwatch-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/cloud-providers/aws-cloudwatch/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/cloud-providers/aws-cloudwatch/",
+    "exporter": "prometheus-cloudwatch-exporter",
+    "upstream_alert": "AWS SQS message age too old",
+    "upstream_query": "aws_sqs_approximate_age_of_oldest_message_maximum offset 10m > 3600",
+    "upstream_description": "SQS queue {{ $labels.queue_name }} has messages older than 1 hour ({{ $value }}s)."
+  },
+  "stream_type": "metrics",
+  "stream_name": "aws_sqs_approximate_age_of_oldest_message_maximum",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "aws_sqs_approximate_age_of_oldest_message_maximum offset 10m",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 3600,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | queue_name: {queue_name} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Requires SQS ApproximateAgeOfOldestMessage metric."
+}

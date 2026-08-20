@@ -1,0 +1,66 @@
+{
+  "name": "postgresql_ssl_compression_active",
+  "title": "Postgresql SSL compression active",
+  "severity": "warning",
+  "description": "Database allows connections with SSL compression enabled. This may add significant jitter in replication delay. Replicas should turn off SSL compression via `sslcompression=0` in `recovery.conf`.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "postgres-exporter",
+    "postgresql"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/postgresql/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/postgresql/",
+    "exporter": "postgres-exporter",
+    "upstream_alert": "Postgresql SSL compression active",
+    "upstream_query": "sum by (instance) (pg_stat_ssl_compression) > 0",
+    "upstream_description": "Database allows connections with SSL compression enabled. This may add significant jitter in replication delay. Replicas should turn off SSL compression via `sslcompression=0` in `recovery.conf`."
+  },
+  "stream_type": "metrics",
+  "stream_name": "pg_stat_ssl_compression",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum by (instance) (pg_stat_ssl_compression)",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "pg_stat_ssl_compression is not a default postgres_exporter metric and is only available on PostgreSQL 9.5-13 (removed in PG 14). See https://github.com/samber/awesome-prometheus-alerts/issues/289#issuecomment-1164842737"
+}

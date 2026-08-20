@@ -1,0 +1,65 @@
+{
+  "name": "mysql_innodb_force_recovery_is_enabled",
+  "title": "MySQL InnoDB Force Recovery is enabled",
+  "severity": "warning",
+  "description": "MySQL InnoDB force recovery is enabled",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "mysql",
+    "mysqld-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/mysql/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/mysql/",
+    "exporter": "mysqld-exporter",
+    "upstream_alert": "MySQL InnoDB Force Recovery is enabled",
+    "upstream_query": "mysql_global_variables_innodb_force_recovery != 0",
+    "upstream_description": "MySQL InnoDB force recovery is enabled on {{ $labels.instance }}"
+  },
+  "stream_type": "metrics",
+  "stream_name": "mysql_global_variables_innodb_force_recovery",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "mysql_global_variables_innodb_force_recovery",
+    "promql_condition": {
+      "column": "value",
+      "operator": "!=",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

@@ -1,0 +1,66 @@
+{
+  "name": "clickhouse_node_down",
+  "title": "ClickHouse node down",
+  "severity": "critical",
+  "description": "No metrics received from ClickHouse exporter for over 2 minutes.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "clickhouse",
+    "embedded-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/clickhouse/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/clickhouse/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "ClickHouse node down",
+    "upstream_query": "up{job=\"clickhouse\"} == 0",
+    "upstream_description": "No metrics received from ClickHouse exporter for over 2 minutes."
+  },
+  "stream_type": "metrics",
+  "stream_name": "up",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "up{job=\"clickhouse\"}",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Adjust the job label to match your Prometheus configuration."
+}

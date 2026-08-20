@@ -1,0 +1,66 @@
+{
+  "name": "flink_taskmanager_gc_time_high",
+  "title": "Flink TaskManager GC time high",
+  "severity": "warning",
+  "description": "Flink TaskManager is spending more than 10% of time in garbage collection.",
+  "tags": [
+    "apache-flink",
+    "awesome-prometheus-alerts",
+    "flink-prometheus-reporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/data-engineering/apache-flink/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/data-engineering/apache-flink/",
+    "exporter": "flink-prometheus-reporter",
+    "upstream_alert": "Flink TaskManager GC time high",
+    "upstream_query": "deriv(flink_taskmanager_Status_JVM_GarbageCollector_All_Time[5m]) > 100",
+    "upstream_description": "Flink TaskManager {{ $labels.instance }} is spending more than 10% of time in garbage collection."
+  },
+  "stream_type": "metrics",
+  "stream_name": "flink_taskmanager_Status_JVM_GarbageCollector_All_Time",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "deriv(flink_taskmanager_Status_JVM_GarbageCollector_All_Time[5m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 100,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Flink exposes GC time as a gauge (cumulative milliseconds), so deriv() is used instead of rate().\nThreshold: more than 100ms/sec of GC time (10% of wall clock). Adjust based on your workload."
+}

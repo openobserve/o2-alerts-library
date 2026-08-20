@@ -1,0 +1,66 @@
+{
+  "name": "azure_api_read_rate_limit_approaching",
+  "title": "Azure API read rate limit approaching",
+  "severity": "warning",
+  "description": "Azure API read rate limit for subscription is running low.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "azure",
+    "azure-metrics-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/cloud-providers/azure/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/cloud-providers/azure/",
+    "exporter": "azure-metrics-exporter",
+    "upstream_alert": "Azure API read rate limit approaching",
+    "upstream_query": "azurerm_api_ratelimit{type=\"reads\"} < 100",
+    "upstream_description": "Azure API read rate limit for subscription {{ $labels.subscriptionID }} is running low ({{ $value }} remaining)."
+  },
+  "stream_type": "metrics",
+  "stream_name": "azurerm_api_ratelimit",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "azurerm_api_ratelimit{type=\"reads\"}",
+    "promql_condition": {
+      "column": "value",
+      "operator": "<",
+      "value": 100,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | subscriptionID: {subscriptionID} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Azure Resource Manager enforces rate limits per subscription.\nThe threshold of 100 remaining calls is a rough default. Adjust based on your\nscrape interval and number of monitored resources."
+}

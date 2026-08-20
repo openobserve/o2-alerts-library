@@ -1,0 +1,66 @@
+{
+  "name": "spark_too_many_waiting_apps",
+  "title": "Spark too many waiting apps",
+  "severity": "warning",
+  "description": "Spark has applications waiting for resources.",
+  "tags": [
+    "apache-spark",
+    "awesome-prometheus-alerts",
+    "spark-prometheus"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/data-engineering/apache-spark/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/data-engineering/apache-spark/",
+    "exporter": "spark-prometheus",
+    "upstream_alert": "Spark too many waiting apps",
+    "upstream_query": "metrics_master_waitingApps_Value > 10",
+    "upstream_description": "Spark has {{ $value }} applications waiting for resources."
+  },
+  "stream_type": "metrics",
+  "stream_name": "metrics_master_waitingApps_Value",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "metrics_master_waitingApps_Value",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 10,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Adjust the threshold based on your cluster's typical queuing behavior."
+}

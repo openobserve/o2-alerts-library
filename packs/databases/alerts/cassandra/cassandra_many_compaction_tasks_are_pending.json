@@ -1,0 +1,66 @@
+{
+  "name": "cassandra_many_compaction_tasks_are_pending",
+  "title": "Cassandra many compaction tasks are pending",
+  "severity": "warning",
+  "description": "Many Cassandra compaction tasks are pending",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "cassandra",
+    "instaclustr-cassandra-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/cassandra/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/cassandra/",
+    "exporter": "instaclustr-cassandra-exporter",
+    "upstream_alert": "Cassandra many compaction tasks are pending",
+    "upstream_query": "cassandra_table_estimated_pending_compactions > 100",
+    "upstream_description": "Many Cassandra compaction tasks are pending - {{ $labels.cassandra_cluster }}"
+  },
+  "stream_type": "metrics",
+  "stream_name": "cassandra_table_estimated_pending_compactions",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "cassandra_table_estimated_pending_compactions",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 100,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | cassandra_cluster: {cassandra_cluster} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "100 is a rough default; pending compactions scale with your write throughput and table count — adjust based on your workload, or add nodes to increase I/O capacity."
+}

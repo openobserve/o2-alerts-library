@@ -1,0 +1,66 @@
+{
+  "name": "netdata_md_mismatch_cnt_unsynchronized_blocks",
+  "title": "Netdata MD mismatch cnt unsynchronized blocks",
+  "severity": "warning",
+  "description": "RAID Array have unsynchronized blocks",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "netdata"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/netdata/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/netdata/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Netdata MD mismatch cnt unsynchronized blocks",
+    "upstream_query": "netdata_md_mismatch_cnt_unsynchronized_blocks_average > 1024",
+    "upstream_description": "RAID Array have unsynchronized blocks"
+  },
+  "stream_type": "metrics",
+  "stream_name": "netdata_md_mismatch_cnt_unsynchronized_blocks_average",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "netdata_md_mismatch_cnt_unsynchronized_blocks_average",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 1024,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "1024 blocks is a rough default; the expected mismatch count during a RAID scrub scales with array size — adjust based on your array's total capacity."
+}

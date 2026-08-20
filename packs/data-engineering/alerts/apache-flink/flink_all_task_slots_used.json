@@ -1,0 +1,66 @@
+{
+  "name": "flink_all_task_slots_used",
+  "title": "Flink all task slots used",
+  "severity": "warning",
+  "description": "All Flink task slots are in use. New jobs cannot be scheduled.",
+  "tags": [
+    "apache-flink",
+    "awesome-prometheus-alerts",
+    "flink-prometheus-reporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/data-engineering/apache-flink/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/data-engineering/apache-flink/",
+    "exporter": "flink-prometheus-reporter",
+    "upstream_alert": "Flink all task slots used",
+    "upstream_query": "flink_jobmanager_taskSlotsAvailable == 0",
+    "upstream_description": "All Flink task slots are in use ({{ $value }} available). New jobs cannot be scheduled."
+  },
+  "stream_type": "metrics",
+  "stream_name": "flink_jobmanager_taskSlotsAvailable",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "flink_jobmanager_taskSlotsAvailable",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "This alert fires when there are no available task slots. Adjust the threshold if your cluster is expected to run at full capacity."
+}

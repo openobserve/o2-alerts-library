@@ -1,0 +1,66 @@
+{
+  "name": "rabbitmq_too_many_consumers",
+  "title": "RabbitMQ too many consumers",
+  "severity": "critical",
+  "description": "Queue should have only 1 consumer",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "kbudde-rabbitmq-exporter",
+    "rabbitmq"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/message-brokers/rabbitmq/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/message-brokers/rabbitmq/",
+    "exporter": "kbudde-rabbitmq-exporter",
+    "upstream_alert": "RabbitMQ too many consumers",
+    "upstream_query": "rabbitmq_queue_consumers{queue=\"my-queue\"} > 1",
+    "upstream_description": "Queue should have only 1 consumer"
+  },
+  "stream_type": "metrics",
+  "stream_name": "rabbitmq_queue_consumers",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "rabbitmq_queue_consumers{queue=\"my-queue\"}",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Indicate the queue name in dedicated label."
+}

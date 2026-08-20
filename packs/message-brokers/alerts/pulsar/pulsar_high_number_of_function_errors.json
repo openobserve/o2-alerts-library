@@ -1,0 +1,66 @@
+{
+  "name": "pulsar_high_number_of_function_errors",
+  "title": "Pulsar high number of function errors",
+  "severity": "critical",
+  "description": "Pulsar function has more than 10 errors per second",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "pulsar"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/message-brokers/pulsar/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/message-brokers/pulsar/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Pulsar high number of function errors",
+    "upstream_query": "sum(rate(pulsar_function_user_exceptions_total[1m]) + rate(pulsar_function_system_exceptions_total[1m])) by (name) > 10",
+    "upstream_description": "Pulsar function {{ $labels.name }} has more than 10 errors per second ({{ $value | printf \"%.2f\" }}/s)"
+  },
+  "stream_type": "metrics",
+  "stream_name": "pulsar_function_user_exceptions_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum(rate(pulsar_function_user_exceptions_total[1m]) + rate(pulsar_function_system_exceptions_total[1m])) by (name)",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 10,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | name: {name} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "10/s is a rough default; absolute error count scales with your function's invocation volume — adjust based on your workload."
+}

@@ -1,0 +1,65 @@
+{
+  "name": "couchdb_replication_cluster_unstable",
+  "title": "CouchDB replication cluster unstable",
+  "severity": "critical",
+  "description": "The replication cluster is unstable, replication may be interrupted",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "couchdb",
+    "gesellix-couchdb-prometheus-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/couchdb/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/couchdb/",
+    "exporter": "gesellix-couchdb-prometheus-exporter",
+    "upstream_alert": "CouchDB replication cluster unstable",
+    "upstream_query": "couchdb_replicator_cluster_is_stable == 0",
+    "upstream_description": "The replication cluster is unstable, replication may be interrupted"
+  },
+  "stream_type": "metrics",
+  "stream_name": "couchdb_replicator_cluster_is_stable",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "couchdb_replicator_cluster_is_stable",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

@@ -1,0 +1,66 @@
+{
+  "name": "redis_not_enough_connections",
+  "title": "Redis not enough connections",
+  "severity": "warning",
+  "description": "Redis instance should have more connections (> 5)",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "oliver006-redis-exporter",
+    "redis"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/redis/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/redis/",
+    "exporter": "oliver006-redis-exporter",
+    "upstream_alert": "Redis not enough connections",
+    "upstream_query": "redis_connected_clients < 5",
+    "upstream_description": "Redis instance should have more connections (> 5)"
+  },
+  "stream_type": "metrics",
+  "stream_name": "redis_connected_clients",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "redis_connected_clients",
+    "promql_condition": {
+      "column": "value",
+      "operator": "<",
+      "value": 5,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "5 connections is a rough default; the expected minimum depends heavily on your application's usage pattern — adjust based on your baseline. Non-application connections (monitoring, admin/CLI sessions, replication) also keep a baseline count above zero even when the app itself is idle."
+}

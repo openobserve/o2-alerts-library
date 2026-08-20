@@ -1,0 +1,65 @@
+{
+  "name": "prometheus_error_sending_alerts_to_any_alertmanager",
+  "title": "Prometheus error sending alerts to any AlertManager",
+  "severity": "critical",
+  "description": "Prometheus is failing to send at least a high percentage of alerts to every configured Alertmanager, meaning alert delivery is broadly impaired.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "prometheus"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/prometheus-self-monitoring/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/prometheus-self-monitoring/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Prometheus error sending alerts to any AlertManager",
+    "upstream_query": "min without (alertmanager) (rate(prometheus_notifications_errors_total[5m]) / rate(prometheus_notifications_sent_total[5m])) * 100 > 3",
+    "upstream_description": "Prometheus is failing to send at least {{ $value | humanize }}% of alerts to every configured Alertmanager, meaning alert delivery is broadly impaired."
+  },
+  "stream_type": "metrics",
+  "stream_name": "prometheus_notifications_errors_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "min without (alertmanager) (rate(prometheus_notifications_errors_total[5m]) / rate(prometheus_notifications_sent_total[5m])) * 100",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 3,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 15,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

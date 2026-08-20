@@ -1,0 +1,66 @@
+{
+  "name": "tempo_distributor_kafka_produce_failures",
+  "title": "Tempo distributor Kafka produce failures",
+  "severity": "critical",
+  "description": "Tempo distributor is failing to produce a high percentage of trace records to Kafka, an early indicator of write-path trace loss.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "grafana-tempo"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-tempo/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-tempo/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Tempo distributor Kafka produce failures",
+    "upstream_query": "100 * sum by (job) (rate(tempo_distributor_produce_failures_total{reason!=\"cancelled-before-producing\"}[5m])) / sum by (job) (rate(tempo_distributor_produce_records_total[5m])) > 0.1 and sum by (job) (rate(tempo_distributor_produce_records_total[5m])) > 0",
+    "upstream_description": "Tempo distributor {{ $labels.job }} is failing to produce {{ printf \"%.2f\" $value }}% of trace records to Kafka, an early indicator of write-path trace loss.",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "tempo_distributor_produce_failures_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(100 * sum by (job) (rate(tempo_distributor_produce_failures_total{reason!=\"cancelled-before-producing\"}[5m])) / sum by (job) (rate(tempo_distributor_produce_records_total[5m])) > 0.1 and sum by (job) (rate(tempo_distributor_produce_records_total[5m])) > 0) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | job: {job}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

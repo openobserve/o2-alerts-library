@@ -1,0 +1,67 @@
+{
+  "name": "tempo_compaction_too_many_outstanding_blocks_critical",
+  "title": "Tempo compaction too many outstanding blocks critical",
+  "severity": "critical",
+  "description": "There are too many outstanding compaction blocks. Increase compactor resources immediately.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "grafana-tempo"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-tempo/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-tempo/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Tempo compaction too many outstanding blocks critical",
+    "upstream_query": "sum by (instance) (tempodb_compaction_outstanding_blocks) > 250",
+    "upstream_description": "There are too many outstanding compaction blocks for {{ $labels.instance }}. Increase compactor resources immediately.",
+    "period_clamped_from": "Upstream `for` is 24h (1440 minutes); the evaluation window is capped at 60 minutes. Widen trigger_condition.period if you want the full upstream window."
+  },
+  "stream_type": "metrics",
+  "stream_name": "tempodb_compaction_outstanding_blocks",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum by (instance) (tempodb_compaction_outstanding_blocks)",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 250,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 60,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Threshold of 250 blocks per compactor instance. Adjust based on your environment. If\nyou run a split backend-scheduler/backend-worker architecture, consider normalizing\nthis count by the number of backend-worker instances before thresholding, since\nsensitivity would otherwise scale inversely with fleet size."
+}

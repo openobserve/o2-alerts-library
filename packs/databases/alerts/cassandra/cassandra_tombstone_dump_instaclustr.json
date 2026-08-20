@@ -1,0 +1,66 @@
+{
+  "name": "cassandra_tombstone_dump_instaclustr",
+  "title": "Cassandra tombstone dump (Instaclustr)",
+  "severity": "critical",
+  "description": "Cassandra tombstone dump",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "cassandra",
+    "instaclustr-cassandra-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/cassandra/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/cassandra/",
+    "exporter": "instaclustr-cassandra-exporter",
+    "upstream_alert": "Cassandra tombstone dump (Instaclustr)",
+    "upstream_query": "avg(cassandra_table_tombstones_scanned{quantile=\"0.99\"}) by (instance,cassandra_cluster,keyspace) > 100",
+    "upstream_description": "Cassandra tombstone dump - {{ $labels.cassandra_cluster }}"
+  },
+  "stream_type": "metrics",
+  "stream_name": "cassandra_table_tombstones_scanned",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "avg(cassandra_table_tombstones_scanned{quantile=\"0.99\"}) by (instance,cassandra_cluster,keyspace)",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 100,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | cassandra_cluster: {cassandra_cluster} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "100 is a rough default; how many tombstones get scanned depends on your deletion patterns and compaction strategy — adjust based on your data model."
+}

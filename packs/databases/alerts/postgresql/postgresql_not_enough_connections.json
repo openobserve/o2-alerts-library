@@ -1,0 +1,66 @@
+{
+  "name": "postgresql_not_enough_connections",
+  "title": "Postgresql not enough connections",
+  "severity": "critical",
+  "description": "PostgreSQL instance should have more connections (> 5)",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "postgres-exporter",
+    "postgresql"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/postgresql/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/postgresql/",
+    "exporter": "postgres-exporter",
+    "upstream_alert": "Postgresql not enough connections",
+    "upstream_query": "sum by (datname) (pg_stat_activity_count{datname!~\"template.*|postgres\"}) < 5",
+    "upstream_description": "PostgreSQL instance should have more connections (> 5)"
+  },
+  "stream_type": "metrics",
+  "stream_name": "pg_stat_activity_count",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum by (datname) (pg_stat_activity_count{datname!~\"template.*|postgres\"})",
+    "promql_condition": {
+      "column": "value",
+      "operator": "<",
+      "value": 5,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "5 connections is a rough default; the expected minimum depends heavily on your application's usage pattern and connection pooling — adjust based on your baseline. Non-application connections (ETL jobs, monitoring, admin/root sessions, cronjobs, replication jobs) also keep a baseline count above zero even when the app itself is idle."
+}

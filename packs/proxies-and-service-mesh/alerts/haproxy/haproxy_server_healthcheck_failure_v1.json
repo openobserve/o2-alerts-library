@@ -1,0 +1,65 @@
+{
+  "name": "haproxy_server_healthcheck_failure_v1",
+  "title": "HAProxy server healthcheck failure (v1)",
+  "severity": "warning",
+  "description": "Some server healthcheck are failing",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "haproxy",
+    "haproxy-exporter-v1"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/haproxy/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/haproxy/",
+    "exporter": "haproxy-exporter-v1",
+    "upstream_alert": "HAProxy server healthcheck failure (v1)",
+    "upstream_query": "increase(haproxy_server_check_failures_total[1m]) > 2",
+    "upstream_description": "Some server healthcheck are failing on {{ $labels.server }} ({{ $value }} in the last 1m)"
+  },
+  "stream_type": "metrics",
+  "stream_name": "haproxy_server_check_failures_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "increase(haproxy_server_check_failures_total[1m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 2,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | server: {server} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

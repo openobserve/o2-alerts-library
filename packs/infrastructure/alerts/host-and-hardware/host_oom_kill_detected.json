@@ -1,0 +1,66 @@
+{
+  "name": "host_oom_kill_detected",
+  "title": "Host OOM kill detected",
+  "severity": "warning",
+  "description": "OOM kill detected",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "host-and-hardware",
+    "node-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/host-and-hardware/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/host-and-hardware/",
+    "exporter": "node-exporter",
+    "upstream_alert": "Host OOM kill detected",
+    "upstream_query": "(increase(node_vmstat_oom_kill[30m]) > 0)",
+    "upstream_description": "OOM kill detected"
+  },
+  "stream_type": "metrics",
+  "stream_name": "node_vmstat_oom_kill",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "increase(node_vmstat_oom_kill[30m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "When a machine runs out of memory, the node exporter can become unresponsive for several minutes. Even if the system takes 15–20 minutes to recover, the alert should still trigger."
+}

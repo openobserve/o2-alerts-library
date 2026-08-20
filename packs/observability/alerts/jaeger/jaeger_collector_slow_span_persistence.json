@@ -1,0 +1,66 @@
+{
+  "name": "jaeger_collector_slow_span_persistence",
+  "title": "Jaeger collector slow span persistence",
+  "severity": "warning",
+  "description": "Jaeger collector has a p99 span persistence latency, indicating the storage backend is slow to accept span writes.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter-legacy",
+    "jaeger"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/jaeger/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/jaeger/",
+    "exporter": "embedded-exporter-legacy",
+    "upstream_alert": "Jaeger collector slow span persistence",
+    "upstream_query": "histogram_quantile(0.99, sum by (le, instance, job, namespace) (rate(jaeger_collector_save_latency_bucket[5m]))) > 0.5",
+    "upstream_description": "Jaeger collector on {{ $labels.instance }} has a p99 span persistence latency of {{ $value }}s, indicating the storage backend is slow to accept span writes."
+  },
+  "stream_type": "metrics",
+  "stream_name": "jaeger_collector_save_latency_bucket",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "histogram_quantile(0.99, sum by (le, instance, job, namespace) (rate(jaeger_collector_save_latency_bucket[5m])))",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0.5,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "0.5s threshold is a rough default; write latency depends on your storage backend and span ingestion volume — adjust based on your baseline."
+}

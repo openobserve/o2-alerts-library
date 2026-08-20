@@ -1,0 +1,65 @@
+{
+  "name": "couchdb_4xx_error_rate_high",
+  "title": "CouchDB 4xx error rate high",
+  "severity": "warning",
+  "description": "CouchDB returned more than 5 4xx HTTP responses in the last 5 minutes, which may indicate client-side issues such as bad requests, authentication failures, or document conflicts.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "couchdb",
+    "gesellix-couchdb-prometheus-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/couchdb/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/couchdb/",
+    "exporter": "gesellix-couchdb-prometheus-exporter",
+    "upstream_alert": "CouchDB 4xx error rate high",
+    "upstream_query": "increase(couchdb_httpd_status_codes{code=~\"4..\"}[5m]) > 5",
+    "upstream_description": "CouchDB returned more than 5 4xx HTTP responses in the last 5 minutes, which may indicate client-side issues such as bad requests, authentication failures, or document conflicts."
+  },
+  "stream_type": "metrics",
+  "stream_name": "couchdb_httpd_status_codes",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "increase(couchdb_httpd_status_codes{code=~\"4..\"}[5m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 5,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

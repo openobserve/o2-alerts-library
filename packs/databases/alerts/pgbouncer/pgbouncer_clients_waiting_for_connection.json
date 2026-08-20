@@ -1,0 +1,66 @@
+{
+  "name": "pgbouncer_clients_waiting_for_connection",
+  "title": "PGBouncer clients waiting for connection",
+  "severity": "warning",
+  "description": "Client connections are queued in pool waiting for a server connection, indicating pool exhaustion.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "pgbouncer",
+    "spreaker-pgbouncer-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/pgbouncer/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/pgbouncer/",
+    "exporter": "spreaker-pgbouncer-exporter",
+    "upstream_alert": "PGBouncer clients waiting for connection",
+    "upstream_query": "pgbouncer_pools_client_waiting_connections > 20",
+    "upstream_description": "{{ $value }} client connections are queued in pool {{ $labels.database }}/{{ $labels.user }} waiting for a server connection, indicating pool exhaustion."
+  },
+  "stream_type": "metrics",
+  "stream_name": "pgbouncer_pools_client_waiting_connections",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "pgbouncer_pools_client_waiting_connections",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 20,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | database: {database} | user: {user} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "20 is a rough default; queue depth depends on your traffic volume relative to configured pool_size — adjust based on your workload."
+}

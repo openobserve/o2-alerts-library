@@ -1,0 +1,65 @@
+{
+  "name": "thanos_rule_sender_is_failing_alerts",
+  "title": "Thanos Rule Sender Is Failing Alerts",
+  "severity": "critical",
+  "description": "Thanos Rule is failing to send alerts to alertmanager.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "thanos",
+    "thanos-ruler"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/thanos/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/thanos/",
+    "exporter": "thanos-ruler",
+    "upstream_alert": "Thanos Rule Sender Is Failing Alerts",
+    "upstream_query": "sum by (job, instance) (rate(thanos_alert_sender_alerts_dropped_total[5m])) > 0",
+    "upstream_description": "Thanos Rule {{$labels.instance}} is failing to send alerts to alertmanager ({{ $value | humanize }}/s)."
+  },
+  "stream_type": "metrics",
+  "stream_name": "thanos_alert_sender_alerts_dropped_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum by (job, instance) (rate(thanos_alert_sender_alerts_dropped_total[5m]))",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

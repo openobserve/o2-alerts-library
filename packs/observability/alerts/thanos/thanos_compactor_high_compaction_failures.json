@@ -1,0 +1,66 @@
+{
+  "name": "thanos_compactor_high_compaction_failures",
+  "title": "Thanos Compactor High Compaction Failures",
+  "severity": "warning",
+  "description": "Thanos Compact is failing to execute a high percentage of compactions.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "thanos",
+    "thanos-compactor"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/thanos/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/thanos/",
+    "exporter": "thanos-compactor",
+    "upstream_alert": "Thanos Compactor High Compaction Failures",
+    "upstream_query": "(sum by (job) (rate(thanos_compact_group_compactions_failures_total[5m])) / sum by (job) (rate(thanos_compact_group_compactions_total[5m])) * 100 > 5) and sum by (job) (rate(thanos_compact_group_compactions_total[5m])) > 0",
+    "upstream_description": "Thanos Compact {{$labels.job}} is failing to execute {{$value | humanize}}% of compactions.",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "thanos_compact_group_compactions_failures_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "((sum by (job) (rate(thanos_compact_group_compactions_failures_total[5m])) / sum by (job) (rate(thanos_compact_group_compactions_total[5m])) * 100 > 5) and sum by (job) (rate(thanos_compact_group_compactions_total[5m])) > 0) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 15,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | job: {job}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

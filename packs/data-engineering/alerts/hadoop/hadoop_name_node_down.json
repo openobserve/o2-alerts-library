@@ -1,0 +1,66 @@
+{
+  "name": "hadoop_name_node_down",
+  "title": "Hadoop Name Node Down",
+  "severity": "critical",
+  "description": "The Hadoop NameNode service is unavailable.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "hadoop",
+    "jmx_exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/data-engineering/hadoop/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/data-engineering/hadoop/",
+    "exporter": "jmx_exporter",
+    "upstream_alert": "Hadoop Name Node Down",
+    "upstream_query": "up{job=\"hadoop-namenode\"} == 0",
+    "upstream_description": "The Hadoop NameNode service is unavailable."
+  },
+  "stream_type": "metrics",
+  "stream_name": "up",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "up{job=\"hadoop-namenode\"}",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "When targets are managed via service discovery, a disappeared target goes stale rather than reporting up==0,\nso this alert may not fire. Prefer application-level availability metrics if available.\nRename job=\"hadoop-namenode\" to match the actual job name in your Prometheus scrape config."
+}

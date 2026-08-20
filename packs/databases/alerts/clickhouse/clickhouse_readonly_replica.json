@@ -1,0 +1,65 @@
+{
+  "name": "clickhouse_readonly_replica",
+  "title": "ClickHouse readonly replica",
+  "severity": "critical",
+  "description": "A Replicated table is stuck in readonly mode, usually after losing its ZooKeeper session or starting up without ZooKeeper available.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "clickhouse",
+    "embedded-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/clickhouse/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/clickhouse/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "ClickHouse readonly replica",
+    "upstream_query": "ClickHouseMetrics_ReadonlyReplica > 0",
+    "upstream_description": "A Replicated table on {{ $labels.instance }} is stuck in readonly mode, usually after losing its ZooKeeper session or starting up without ZooKeeper available."
+  },
+  "stream_type": "metrics",
+  "stream_name": "ClickHouseMetrics_ReadonlyReplica",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "ClickHouseMetrics_ReadonlyReplica",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

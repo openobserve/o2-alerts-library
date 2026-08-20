@@ -1,0 +1,66 @@
+{
+  "name": "argocd_repo_server_too_many_pending_requests",
+  "title": "ArgoCD repo server too many pending requests",
+  "severity": "warning",
+  "description": "ArgoCD repo server has more than 50 requests pending on the repository lock, indicating the repo server is overloaded and manifest generation is being delayed.",
+  "tags": [
+    "argocd",
+    "awesome-prometheus-alerts",
+    "embedded-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/argocd/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/argocd/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "ArgoCD repo server too many pending requests",
+    "upstream_query": "argocd_repo_pending_request_total > 50",
+    "upstream_description": "ArgoCD repo server has more than 50 requests pending on the repository lock for {{ $labels.repo }}, indicating the repo server is overloaded and manifest generation is being delayed."
+  },
+  "stream_type": "metrics",
+  "stream_name": "argocd_repo_pending_request_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "argocd_repo_pending_request_total",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 50,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 10,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | repo: {repo} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "50 is a rough default; scales with your number of managed apps and sync frequency — adjust based on your workload."
+}

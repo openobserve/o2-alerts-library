@@ -1,0 +1,64 @@
+{
+  "name": "process_exporter_file_descriptors_exhausted",
+  "title": "Process exporter file descriptors exhausted",
+  "severity": "critical",
+  "description": "Process group has nearly exhausted its file descriptor limit.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "process-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/process-exporter/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/process-exporter/",
+    "exporter": "process-exporter",
+    "upstream_alert": "Process exporter file descriptors exhausted",
+    "upstream_query": "namedprocess_namegroup_worst_fd_ratio > 0.95",
+    "upstream_description": "Process group {{ $labels.groupname }} has nearly exhausted its file descriptor limit. (instance {{ $labels.instance }})"
+  },
+  "stream_type": "metrics",
+  "stream_name": "namedprocess_namegroup_worst_fd_ratio",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "namedprocess_namegroup_worst_fd_ratio",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0.95,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | groupname: {groupname} | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

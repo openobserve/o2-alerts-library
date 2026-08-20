@@ -1,0 +1,66 @@
+{
+  "name": "thanos_sidecar_bucket_operations_failed",
+  "title": "Thanos Sidecar Bucket Operations Failed",
+  "severity": "critical",
+  "description": "Thanos Sidecar bucket operations are failing.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "thanos",
+    "thanos-sidecar"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/thanos/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/thanos/",
+    "exporter": "thanos-sidecar",
+    "upstream_alert": "Thanos Sidecar Bucket Operations Failed",
+    "upstream_query": "sum by (job, instance) (rate(thanos_objstore_bucket_operation_failures_total{job=~\".*thanos-sidecar.*\"}[5m])) > 0.05",
+    "upstream_description": "Thanos Sidecar {{$labels.instance}} bucket operations are failing ({{ $value | humanize }}/s)."
+  },
+  "stream_type": "metrics",
+  "stream_name": "thanos_objstore_bucket_operation_failures_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum by (job, instance) (rate(thanos_objstore_bucket_operation_failures_total{job=~\".*thanos-sidecar.*\"}[5m]))",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0.05,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Threshold of 0.05/s avoids firing on transient single-event spikes."
+}

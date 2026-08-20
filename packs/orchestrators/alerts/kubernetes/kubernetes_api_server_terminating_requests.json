@@ -1,0 +1,66 @@
+{
+  "name": "kubernetes_api_server_terminating_requests",
+  "title": "Kubernetes API server terminating requests",
+  "severity": "critical",
+  "description": "The Kubernetes API server is terminating of incoming requests, indicating it is shedding load under overload (e.g. via priority and fairness flow control) rather than just returning error responses.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "kubernetes",
+    "kubestate-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/orchestrators/kubernetes/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/orchestrators/kubernetes/",
+    "exporter": "kubestate-exporter",
+    "upstream_alert": "Kubernetes API server terminating requests",
+    "upstream_query": "sum(rate(apiserver_request_terminations_total[10m])) / (sum(rate(apiserver_request_total[10m])) + sum(rate(apiserver_request_terminations_total[10m]))) > 0.20",
+    "upstream_description": "The Kubernetes API server is terminating {{ $value | humanizePercentage }} of incoming requests, indicating it is shedding load under overload (e.g. via priority and fairness flow control) rather than just returning error responses."
+  },
+  "stream_type": "metrics",
+  "stream_name": "apiserver_request_terminations_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum(rate(apiserver_request_terminations_total[10m])) / (sum(rate(apiserver_request_total[10m])) + sum(rate(apiserver_request_terminations_total[10m])))",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0.2,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "20% termination-rate threshold is a rough default; depends on your client request volume relative to API server flow-control settings (--max-requests-inflight) — adjust based on your baseline."
+}

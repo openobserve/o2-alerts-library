@@ -1,0 +1,66 @@
+{
+  "name": "argocd_repo_server_slow_git_operations",
+  "title": "ArgoCD repo server slow git operations",
+  "severity": "warning",
+  "description": "The 95th percentile duration of git operations against repository is above 30 seconds, which can be caused by a large repository, network latency, or an overloaded repo server.",
+  "tags": [
+    "argocd",
+    "awesome-prometheus-alerts",
+    "embedded-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/argocd/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/argocd/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "ArgoCD repo server slow git operations",
+    "upstream_query": "histogram_quantile(0.95, sum(rate(argocd_git_request_duration_seconds_bucket[5m])) by (le, repo)) > 30",
+    "upstream_description": "The 95th percentile duration of git operations against repository {{ $labels.repo }} is above 30 seconds, which can be caused by a large repository, network latency, or an overloaded repo server."
+  },
+  "stream_type": "metrics",
+  "stream_name": "argocd_git_request_duration_seconds_bucket",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "histogram_quantile(0.95, sum(rate(argocd_git_request_duration_seconds_bucket[5m])) by (le, repo))",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 30,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 10,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | repo: {repo} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "30s threshold is a rough default; depends on your repository size and network latency to the git host — adjust based on your baseline."
+}

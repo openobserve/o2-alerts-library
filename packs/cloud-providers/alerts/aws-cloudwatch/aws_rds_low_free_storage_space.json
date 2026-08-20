@@ -1,0 +1,66 @@
+{
+  "name": "aws_rds_low_free_storage_space",
+  "title": "AWS RDS low free storage space",
+  "severity": "warning",
+  "description": "RDS instance has less than 2GB free storage.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "aws-cloudwatch",
+    "prometheus-cloudwatch-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/cloud-providers/aws-cloudwatch/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/cloud-providers/aws-cloudwatch/",
+    "exporter": "prometheus-cloudwatch-exporter",
+    "upstream_alert": "AWS RDS low free storage space",
+    "upstream_query": "aws_rds_free_storage_space_average offset 10m < 2000000000",
+    "upstream_description": "RDS instance {{ $labels.dbinstance_identifier }} has less than 2GB free storage ({{ $value }} bytes remaining)."
+  },
+  "stream_type": "metrics",
+  "stream_name": "aws_rds_free_storage_space_average",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "aws_rds_free_storage_space_average offset 10m",
+    "promql_condition": {
+      "column": "value",
+      "operator": "<",
+      "value": 2000000000,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | dbinstance_identifier: {dbinstance_identifier} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Requires RDS FreeStorageSpace metric. The threshold of 2GB is a rough default.\nAdjust based on your database size."
+}

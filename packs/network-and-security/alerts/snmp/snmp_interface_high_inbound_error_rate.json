@@ -1,0 +1,67 @@
+{
+  "name": "snmp_interface_high_inbound_error_rate",
+  "title": "SNMP interface high inbound error rate",
+  "severity": "warning",
+  "description": "Interface has an inbound error rate above 5%.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "snmp",
+    "snmp-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/snmp/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/snmp/",
+    "exporter": "snmp-exporter",
+    "upstream_alert": "SNMP interface high inbound error rate",
+    "upstream_query": "rate(ifInErrors{job=~\"snmp.*\"}[5m]) / (rate(ifHCInUcastPkts{job=~\"snmp.*\"}[5m]) + rate(ifHCInBroadcastPkts{job=~\"snmp.*\"}[5m]) + rate(ifHCInMulticastPkts{job=~\"snmp.*\"}[5m])) > 0.05 and (rate(ifHCInUcastPkts{job=~\"snmp.*\"}[5m]) + rate(ifHCInBroadcastPkts{job=~\"snmp.*\"}[5m]) + rate(ifHCInMulticastPkts{job=~\"snmp.*\"}[5m])) > 0",
+    "upstream_description": "Interface {{ $labels.ifDescr }} on {{ $labels.instance }} has an inbound error rate above 5%.",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "ifInErrors",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(rate(ifInErrors{job=~\"snmp.*\"}[5m]) / (rate(ifHCInUcastPkts{job=~\"snmp.*\"}[5m]) + rate(ifHCInBroadcastPkts{job=~\"snmp.*\"}[5m]) + rate(ifHCInMulticastPkts{job=~\"snmp.*\"}[5m])) > 0.05 and (rate(ifHCInUcastPkts{job=~\"snmp.*\"}[5m]) + rate(ifHCInBroadcastPkts{job=~\"snmp.*\"}[5m]) + rate(ifHCInMulticastPkts{job=~\"snmp.*\"}[5m])) > 0) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | ifDescr: {ifDescr} | instance: {instance}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Threshold is a rough default. Adjust based on your network environment."
+}

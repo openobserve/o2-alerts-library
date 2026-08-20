@@ -1,0 +1,65 @@
+{
+  "name": "haproxy_server_healthcheck_flapping",
+  "title": "HAProxy server healthcheck flapping",
+  "severity": "warning",
+  "description": "Server is repeatedly transitioning between UP and DOWN health-check states, which may indicate an unstable backend node or overly sensitive health-check thresholds.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter-v2",
+    "haproxy"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/haproxy/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/haproxy/",
+    "exporter": "embedded-exporter-v2",
+    "upstream_alert": "HAProxy server healthcheck flapping",
+    "upstream_query": "rate(haproxy_server_check_up_down_total[5m]) != 0",
+    "upstream_description": "Server {{ $labels.server }} on {{ $labels.instance }} is repeatedly transitioning between UP and DOWN health-check states, which may indicate an unstable backend node or overly sensitive health-check thresholds."
+  },
+  "stream_type": "metrics",
+  "stream_name": "haproxy_server_check_up_down_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "rate(haproxy_server_check_up_down_total[5m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": "!=",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | server: {server} | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

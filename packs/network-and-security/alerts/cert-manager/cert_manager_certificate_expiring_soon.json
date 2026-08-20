@@ -1,0 +1,66 @@
+{
+  "name": "cert_manager_certificate_expiring_soon",
+  "title": "Cert-Manager certificate expiring soon",
+  "severity": "warning",
+  "description": "The certificate is expiring in less than 21 days.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "cert-manager",
+    "embedded-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/cert-manager/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/cert-manager/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Cert-Manager certificate expiring soon",
+    "upstream_query": "avg by (exported_namespace, namespace, name) (certmanager_certificate_expiration_timestamp_seconds - time()) < (21 * 24 * 3600)",
+    "upstream_description": "The certificate {{ $labels.name }} is expiring in less than 21 days."
+  },
+  "stream_type": "metrics",
+  "stream_name": "certmanager_certificate_expiration_timestamp_seconds",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "avg by (exported_namespace, namespace, name) (certmanager_certificate_expiration_timestamp_seconds - time())",
+    "promql_condition": {
+      "column": "value",
+      "operator": "<",
+      "value": 1814400,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 60,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | name: {name} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Threshold of 21 days is a rough default. ACME certificates are typically renewed 30 days before expiry, so expiring within 21 days may indicate issuer misconfiguration."
+}

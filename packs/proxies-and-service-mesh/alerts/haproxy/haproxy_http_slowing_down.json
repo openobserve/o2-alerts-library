@@ -1,0 +1,66 @@
+{
+  "name": "haproxy_http_slowing_down",
+  "title": "HAProxy HTTP slowing down",
+  "severity": "warning",
+  "description": "HAProxy backend max total time is above 1s -",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter-v2",
+    "haproxy"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/haproxy/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/haproxy/",
+    "exporter": "embedded-exporter-v2",
+    "upstream_alert": "HAProxy HTTP slowing down",
+    "upstream_query": "avg by (instance, proxy) (haproxy_backend_max_total_time_seconds) > 1",
+    "upstream_description": "HAProxy backend max total time is above 1s on {{ $labels.proxy }} - {{ $value | printf \"%.2f\"}}s"
+  },
+  "stream_type": "metrics",
+  "stream_name": "haproxy_backend_max_total_time_seconds",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "avg by (instance, proxy) (haproxy_backend_max_total_time_seconds)",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | proxy: {proxy} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "1s threshold is a rough default; acceptable latency varies by backend and your SLO — adjust based on your baseline."
+}

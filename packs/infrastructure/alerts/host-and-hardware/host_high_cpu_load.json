@@ -1,0 +1,65 @@
+{
+  "name": "host_high_cpu_load",
+  "title": "Host high CPU load",
+  "severity": "warning",
+  "description": "CPU load is > 80%",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "host-and-hardware",
+    "node-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/host-and-hardware/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/host-and-hardware/",
+    "exporter": "node-exporter",
+    "upstream_alert": "Host high CPU load",
+    "upstream_query": "1 - (avg without (cpu) (rate(node_cpu_seconds_total{mode=\"idle\"}[5m]))) > .80",
+    "upstream_description": "CPU load is > 80%"
+  },
+  "stream_type": "metrics",
+  "stream_name": "node_cpu_seconds_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "1 - (avg without (cpu) (rate(node_cpu_seconds_total{mode=\"idle\"}[5m])))",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0.8,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 10,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

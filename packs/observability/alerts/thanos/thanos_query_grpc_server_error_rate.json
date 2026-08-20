@@ -1,0 +1,66 @@
+{
+  "name": "thanos_query_grpc_server_error_rate",
+  "title": "Thanos Query Grpc Server Error Rate",
+  "severity": "warning",
+  "description": "Thanos Query is failing to handle a high percentage of requests.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "thanos",
+    "thanos-query"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/thanos/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/thanos/",
+    "exporter": "thanos-query",
+    "upstream_alert": "Thanos Query Grpc Server Error Rate",
+    "upstream_query": "(sum by (job) (rate(grpc_server_handled_total{grpc_code=~\"Unknown|ResourceExhausted|Internal|Unavailable|DataLoss|DeadlineExceeded\", job=~\".*thanos-query.*\"}[5m]))/  sum by (job) (rate(grpc_server_started_total{job=~\".*thanos-query.*\"}[5m])) * 100 > 5) and sum by (job) (rate(grpc_server_started_total{job=~\".*thanos-query.*\"}[5m])) > 0",
+    "upstream_description": "Thanos Query {{$labels.job}} is failing to handle {{$value | humanize}}% of requests.",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "grpc_server_handled_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "((sum by (job) (rate(grpc_server_handled_total{grpc_code=~\"Unknown|ResourceExhausted|Internal|Unavailable|DataLoss|DeadlineExceeded\", job=~\".*thanos-query.*\"}[5m]))/  sum by (job) (rate(grpc_server_started_total{job=~\".*thanos-query.*\"}[5m])) * 100 > 5) and sum by (job) (rate(grpc_server_started_total{job=~\".*thanos-query.*\"}[5m])) > 0) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | job: {job}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

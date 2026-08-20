@@ -1,0 +1,65 @@
+{
+  "name": "apc_ups_high_temperature",
+  "title": "APC UPS high temperature",
+  "severity": "warning",
+  "description": "Internal temperature is high",
+  "tags": [
+    "apc-ups",
+    "apcupsd_exporter",
+    "awesome-prometheus-alerts"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/other/apc-ups/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/other/apc-ups/",
+    "exporter": "apcupsd_exporter",
+    "upstream_alert": "APC UPS high temperature",
+    "upstream_query": "apcupsd_internal_temperature_celsius >= 40",
+    "upstream_description": "Internal temperature is high ({{$value}}°C)"
+  },
+  "stream_type": "metrics",
+  "stream_name": "apcupsd_internal_temperature_celsius",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "apcupsd_internal_temperature_celsius",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 40,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

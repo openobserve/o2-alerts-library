@@ -1,0 +1,66 @@
+{
+  "name": "oracle_db_high_wait_time_user_i_o",
+  "title": "Oracle DB high wait time (user I/O)",
+  "severity": "warning",
+  "description": "Oracle Database is experiencing high user I/O wait time",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "iamseth-oracledb-exporter",
+    "oracle-database"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/oracle-database/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/oracle-database/",
+    "exporter": "iamseth-oracledb-exporter",
+    "upstream_alert": "Oracle DB high wait time (user I/O)",
+    "upstream_query": "oracledb_wait_time_user_io > 300",
+    "upstream_description": "Oracle Database on {{ $labels.instance }} is experiencing high user I/O wait time"
+  },
+  "stream_type": "metrics",
+  "stream_name": "oracledb_wait_time_user_io",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "oracledb_wait_time_user_io",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 300,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "The metric from v$waitclassmetric is already a normalized rate (centiseconds per second). Threshold 300 means 3 seconds of I/O wait per second of wall time."
+}

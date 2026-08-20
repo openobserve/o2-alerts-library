@@ -1,0 +1,66 @@
+{
+  "name": "python_virtual_memory_high",
+  "title": "Python virtual memory high",
+  "severity": "warning",
+  "description": "Python process virtual memory is high (> 4GB)",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "python",
+    "python-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/python/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/python/",
+    "exporter": "python-exporter",
+    "upstream_alert": "Python virtual memory high",
+    "upstream_query": "process_virtual_memory_bytes > 4e9",
+    "upstream_description": "Python process virtual memory is high (> 4GB)"
+  },
+  "stream_type": "metrics",
+  "stream_name": "process_virtual_memory_bytes",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "process_virtual_memory_bytes",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 4000000000,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Threshold is a rough default. Adjust based on your application's expected memory footprint."
+}

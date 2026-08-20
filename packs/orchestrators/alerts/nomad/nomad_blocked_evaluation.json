@@ -1,0 +1,65 @@
+{
+  "name": "nomad_blocked_evaluation",
+  "title": "Nomad blocked evaluation",
+  "severity": "warning",
+  "description": "Nomad has blocked evaluations. The cluster may lack resources to place allocations.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "nomad"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/orchestrators/nomad/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/orchestrators/nomad/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Nomad blocked evaluation",
+    "upstream_query": "nomad_nomad_blocked_evals_total_blocked > 0",
+    "upstream_description": "Nomad has {{ $value }} blocked evaluations. The cluster may lack resources to place allocations."
+  },
+  "stream_type": "metrics",
+  "stream_name": "nomad_nomad_blocked_evals_total_blocked",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "nomad_nomad_blocked_evals_total_blocked",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

@@ -1,0 +1,66 @@
+{
+  "name": "blackbox_probe_low_uptime",
+  "title": "Blackbox probe low uptime",
+  "severity": "info",
+  "description": "Blackbox probe has had lower uptime than 99.9% over the last 30 days, which may indicate cumulative outages or repeated flapping not caught by immediate down alerts.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "blackbox",
+    "blackbox-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/blackbox/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/blackbox/",
+    "exporter": "blackbox-exporter",
+    "upstream_alert": "Blackbox probe low uptime",
+    "upstream_query": "avg_over_time(probe_success{job=\"blackbox-exporter\"}[30d]) * 100 < 99.9",
+    "upstream_description": "Blackbox probe has had lower uptime than 99.9% over the last 30 days, which may indicate cumulative outages or repeated flapping not caught by immediate down alerts."
+  },
+  "stream_type": "metrics",
+  "stream_name": "probe_success",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "avg_over_time(probe_success{job=\"blackbox-exporter\"}[30d]) * 100",
+    "promql_condition": {
+      "column": "value",
+      "operator": "<",
+      "value": 99.9,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Replace job=\"blackbox-exporter\" with the actual job name in your Prometheus configuration. The 99.9% threshold over 30d is a rough default; adjust based on your SLO."
+}

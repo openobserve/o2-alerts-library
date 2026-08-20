@@ -1,0 +1,66 @@
+{
+  "name": "redis_missing_backup",
+  "title": "Redis missing backup",
+  "severity": "critical",
+  "description": "Redis has not been backed up for 48 hours",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "oliver006-redis-exporter",
+    "redis"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/redis/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/redis/",
+    "exporter": "oliver006-redis-exporter",
+    "upstream_alert": "Redis missing backup",
+    "upstream_query": "time() - redis_rdb_last_save_timestamp_seconds > 60 * 60 * 48",
+    "upstream_description": "Redis has not been backed up for 48 hours"
+  },
+  "stream_type": "metrics",
+  "stream_name": "redis_rdb_last_save_timestamp_seconds",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "time() - redis_rdb_last_save_timestamp_seconds",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 172800,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "48 hours is a rough default; how often a backup is needed depends on your backup/retention policy and data-loss tolerance — adjust based on your workflow."
+}

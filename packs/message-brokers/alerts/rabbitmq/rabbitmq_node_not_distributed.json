@@ -1,0 +1,66 @@
+{
+  "name": "rabbitmq_node_not_distributed",
+  "title": "RabbitMQ node not distributed",
+  "severity": "critical",
+  "description": "Distribution link to peer is not 'up'",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "rabbitmq",
+    "rabbitmq-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/message-brokers/rabbitmq/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/message-brokers/rabbitmq/",
+    "exporter": "rabbitmq-exporter",
+    "upstream_alert": "RabbitMQ node not distributed",
+    "upstream_query": "erlang_vm_dist_node_state < 3",
+    "upstream_description": "Distribution link to peer {{ $labels.peer }} is not 'up' (state {{ $value }})"
+  },
+  "stream_type": "metrics",
+  "stream_name": "erlang_vm_dist_node_state",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "erlang_vm_dist_node_state",
+    "promql_condition": {
+      "column": "value",
+      "operator": "<",
+      "value": 3,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | peer: {peer} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "1m delay allows a restart without triggering an alert."
+}

@@ -1,0 +1,65 @@
+{
+  "name": "postgresql_dead_locks",
+  "title": "Postgresql dead locks",
+  "severity": "warning",
+  "description": "PostgreSQL has dead-locks",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "postgres-exporter",
+    "postgresql"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/postgresql/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/postgresql/",
+    "exporter": "postgres-exporter",
+    "upstream_alert": "Postgresql dead locks",
+    "upstream_query": "increase(pg_stat_database_deadlocks{datname!~\"template.*|postgres\",datid!=\"0\"}[1m]) > 5",
+    "upstream_description": "PostgreSQL has dead-locks ({{ $value }} in the last minute)"
+  },
+  "stream_type": "metrics",
+  "stream_name": "pg_stat_database_deadlocks",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "increase(pg_stat_database_deadlocks{datname!~\"template.*|postgres\",datid!=\"0\"}[1m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 5,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

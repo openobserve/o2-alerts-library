@@ -1,0 +1,65 @@
+{
+  "name": "haproxy_has_no_alive_backends",
+  "title": "HAproxy has no alive backends",
+  "severity": "critical",
+  "description": "HAProxy has no alive active or backup backends",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter-v2",
+    "haproxy"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/haproxy/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/haproxy/",
+    "exporter": "embedded-exporter-v2",
+    "upstream_alert": "HAproxy has no alive backends",
+    "upstream_query": "haproxy_backend_active_servers + haproxy_backend_backup_servers == 0",
+    "upstream_description": "HAProxy has no alive active or backup backends for {{ $labels.proxy }}"
+  },
+  "stream_type": "metrics",
+  "stream_name": "haproxy_backend_active_servers",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "haproxy_backend_active_servers + haproxy_backend_backup_servers",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | proxy: {proxy} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

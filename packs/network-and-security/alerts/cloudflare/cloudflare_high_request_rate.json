@@ -1,0 +1,65 @@
+{
+  "name": "cloudflare_high_request_rate",
+  "title": "Cloudflare high request rate",
+  "severity": "warning",
+  "description": "Cloudflare zone request rate over the last 10 minutes is a high percentage of the preceding 50-minute baseline, indicating an abnormal traffic spike (possible DDoS or misconfigured client).",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "cloudflare",
+    "lablabs-cloudflare-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/cloudflare/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/cloudflare/",
+    "exporter": "lablabs-cloudflare-exporter",
+    "upstream_alert": "Cloudflare high request rate",
+    "upstream_query": "sum by (zone) (100 * (rate(cloudflare_zone_requests_total[10m]) / clamp_min(rate(cloudflare_zone_requests_total[50m] offset 10m), 1))) > 150",
+    "upstream_description": "Cloudflare zone {{ $labels.zone }} request rate over the last 10 minutes is {{ $value }}% of the preceding 50-minute baseline, indicating an abnormal traffic spike (possible DDoS or misconfigured client)."
+  },
+  "stream_type": "metrics",
+  "stream_name": "cloudflare_zone_requests_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum by (zone) (100 * (rate(cloudflare_zone_requests_total[10m]) / clamp_min(rate(cloudflare_zone_requests_total[50m] offset 10m), 1)))",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 150,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | zone: {zone} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

@@ -1,0 +1,65 @@
+{
+  "name": "elasticsearch_relocating_shards",
+  "title": "Elasticsearch relocating shards",
+  "severity": "info",
+  "description": "Elasticsearch is relocating shards",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "elasticsearch",
+    "prometheus-community-elasticsearch-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/elasticsearch/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/elasticsearch/",
+    "exporter": "prometheus-community-elasticsearch-exporter",
+    "upstream_alert": "Elasticsearch relocating shards",
+    "upstream_query": "elasticsearch_cluster_health_relocating_shards > 0",
+    "upstream_description": "Elasticsearch is relocating shards"
+  },
+  "stream_type": "metrics",
+  "stream_name": "elasticsearch_cluster_health_relocating_shards",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "elasticsearch_cluster_health_relocating_shards",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

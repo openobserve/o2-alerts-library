@@ -1,0 +1,66 @@
+{
+  "name": "tempo_live_store_all_owners_lagging",
+  "title": "Tempo live store all owners lagging",
+  "severity": "critical",
+  "description": "All live-store owners of Tempo partition are lagging behind their Kafka ingest partition, causing a partial read outage for recent traces.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "grafana-tempo"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-tempo/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-tempo/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Tempo live store all owners lagging",
+    "upstream_query": "min by (job, partition) (tempo_ingest_group_partition_lag_seconds{container=\"live-store\"}) > 300",
+    "upstream_description": "All live-store owners of Tempo partition {{ $labels.partition }} are lagging by {{ $value }}s behind their Kafka ingest partition, causing a partial read outage for recent traces."
+  },
+  "stream_type": "metrics",
+  "stream_name": "tempo_ingest_group_partition_lag_seconds",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "min by (job, partition) (tempo_ingest_group_partition_lag_seconds{container=\"live-store\"})",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 300,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | partition: {partition} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "300s threshold is a rough default; Kafka lag scales with your ingestion throughput and consumer processing speed — adjust based on your workload."
+}

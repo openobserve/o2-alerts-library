@@ -1,0 +1,66 @@
+{
+  "name": "couchdb_open_os_files_critical",
+  "title": "CouchDB open OS files critical",
+  "severity": "critical",
+  "description": "CouchDB is using more than 90% of allowed OS file descriptors, may fail to open new files",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "couchdb",
+    "gesellix-couchdb-prometheus-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/couchdb/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/couchdb/",
+    "exporter": "gesellix-couchdb-prometheus-exporter",
+    "upstream_alert": "CouchDB open OS files critical",
+    "upstream_query": "couchdb_httpd_open_os_files > 0.9 * 65535",
+    "upstream_description": "CouchDB is using more than 90% of allowed OS file descriptors, may fail to open new files"
+  },
+  "stream_type": "metrics",
+  "stream_name": "couchdb_httpd_open_os_files",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "couchdb_httpd_open_os_files",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 58981.5,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Adjust 65535 to match your system's file descriptor limit (ulimit -n)."
+}

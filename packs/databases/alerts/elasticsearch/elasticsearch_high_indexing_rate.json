@@ -1,0 +1,66 @@
+{
+  "name": "elasticsearch_high_indexing_rate",
+  "title": "Elasticsearch High Indexing Rate",
+  "severity": "warning",
+  "description": "The indexing rate on Elasticsearch cluster is higher than the threshold.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "elasticsearch",
+    "prometheus-community-elasticsearch-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/elasticsearch/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/elasticsearch/",
+    "exporter": "prometheus-community-elasticsearch-exporter",
+    "upstream_alert": "Elasticsearch High Indexing Rate",
+    "upstream_query": "sum(rate(elasticsearch_indices_indexing_index_total[1m]))> 10000",
+    "upstream_description": "The indexing rate on Elasticsearch cluster is higher than the threshold."
+  },
+  "stream_type": "metrics",
+  "stream_name": "elasticsearch_indices_indexing_index_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum(rate(elasticsearch_indices_indexing_index_total[1m]))",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 10000,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Threshold of 10000 ops/s is a rough default. Adjust based on your cluster capacity and expected workload."
+}

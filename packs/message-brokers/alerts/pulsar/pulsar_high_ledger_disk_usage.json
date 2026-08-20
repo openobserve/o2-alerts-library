@@ -1,0 +1,66 @@
+{
+  "name": "pulsar_high_ledger_disk_usage",
+  "title": "Pulsar high ledger disk usage",
+  "severity": "critical",
+  "description": "Observing Ledger Disk Usage (> 75%)",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "pulsar"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/message-brokers/pulsar/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/message-brokers/pulsar/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Pulsar high ledger disk usage",
+    "upstream_query": "sum(bookie_ledger_dir__pulsar_data_bookkeeper_ledgers_usage) by (kubernetes_pod_name) > 75",
+    "upstream_description": "Observing Ledger Disk Usage (> 75%)"
+  },
+  "stream_type": "metrics",
+  "stream_name": "bookie_ledger_dir__pulsar_data_bookkeeper_ledgers_usage",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum(bookie_ledger_dir__pulsar_data_bookkeeper_ledgers_usage) by (kubernetes_pod_name)",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 75,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 60,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "This metric name is path-dependent and may differ based on your BookKeeper data directory configuration.\nAdjust the metric name to match your actual ledger directory path."
+}

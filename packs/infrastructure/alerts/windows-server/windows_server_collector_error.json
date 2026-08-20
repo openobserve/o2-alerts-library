@@ -1,0 +1,65 @@
+{
+  "name": "windows_server_collector_error",
+  "title": "Windows Server collector Error",
+  "severity": "critical",
+  "description": "Collector was not successful",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "windows-exporter",
+    "windows-server"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/windows-server/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/windows-server/",
+    "exporter": "windows-exporter",
+    "upstream_alert": "Windows Server collector Error",
+    "upstream_query": "windows_exporter_collector_success == 0",
+    "upstream_description": "Collector {{ $labels.collector }} was not successful"
+  },
+  "stream_type": "metrics",
+  "stream_name": "windows_exporter_collector_success",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "windows_exporter_collector_success",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | collector: {collector} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

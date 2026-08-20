@@ -1,0 +1,65 @@
+{
+  "name": "prometheus_alertmanager_configuration_reload_failure",
+  "title": "Prometheus AlertManager configuration reload failure",
+  "severity": "warning",
+  "description": "AlertManager configuration reload error",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "prometheus"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/prometheus-self-monitoring/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/prometheus-self-monitoring/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Prometheus AlertManager configuration reload failure",
+    "upstream_query": "alertmanager_config_last_reload_successful != 1",
+    "upstream_description": "AlertManager configuration reload error"
+  },
+  "stream_type": "metrics",
+  "stream_name": "alertmanager_config_last_reload_successful",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "alertmanager_config_last_reload_successful",
+    "promql_condition": {
+      "column": "value",
+      "operator": "!=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

@@ -1,0 +1,65 @@
+{
+  "name": "redis_cluster_slot_pfail",
+  "title": "Redis cluster slot pfail",
+  "severity": "warning",
+  "description": "Some hash slots of the Redis Cluster are tentatively marked as PFAIL (possibly failing), an early warning sign of node problems before they escalate to a hard FAIL state.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "oliver006-redis-exporter",
+    "redis"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/redis/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/redis/",
+    "exporter": "oliver006-redis-exporter",
+    "upstream_alert": "Redis cluster slot pfail",
+    "upstream_query": "redis_cluster_slots_pfail > 0",
+    "upstream_description": "Some hash slots of the Redis Cluster are tentatively marked as PFAIL (possibly failing), an early warning sign of node problems before they escalate to a hard FAIL state."
+  },
+  "stream_type": "metrics",
+  "stream_name": "redis_cluster_slots_pfail",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "redis_cluster_slots_pfail",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

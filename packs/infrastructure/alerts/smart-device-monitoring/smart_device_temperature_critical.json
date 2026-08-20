@@ -1,0 +1,65 @@
+{
+  "name": "smart_device_temperature_critical",
+  "title": "SMART device temperature critical",
+  "severity": "critical",
+  "description": "Device temperature critical drive over 70°C",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "smart-device-monitoring",
+    "smartctl-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/s-m-a-r-t-device-monitoring/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/s-m-a-r-t-device-monitoring/",
+    "exporter": "smartctl-exporter",
+    "upstream_alert": "SMART device temperature critical",
+    "upstream_query": "(max_over_time(smartctl_device_temperature{temperature_type=\"current\"} [5m]) unless on (instance, device) smartctl_device_temperature{temperature_type=\"drive_trip\"}) > 70",
+    "upstream_description": "Device temperature critical on {{ $labels.instance }} drive {{ $labels.device }} over 70°C"
+  },
+  "stream_type": "metrics",
+  "stream_name": "smartctl_device_temperature",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "max_over_time(smartctl_device_temperature{temperature_type=\"current\"} [5m]) unless on (instance, device) smartctl_device_temperature{temperature_type=\"drive_trip\"}",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 70,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | device: {device} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

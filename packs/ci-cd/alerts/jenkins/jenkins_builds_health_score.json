@@ -1,0 +1,65 @@
+{
+  "name": "jenkins_builds_health_score",
+  "title": "Jenkins builds health score",
+  "severity": "critical",
+  "description": "Healthcheck failure for ` ` in realm",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "jenkins",
+    "metric-plugin"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/jenkins/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/jenkins/",
+    "exporter": "metric-plugin",
+    "upstream_alert": "Jenkins builds health score",
+    "upstream_query": "default_jenkins_builds_health_score < 1",
+    "upstream_description": "Healthcheck failure for `{{$labels.instance}}` in realm {{$labels.realm}}/{{$labels.env}} ({{$labels.region}})"
+  },
+  "stream_type": "metrics",
+  "stream_name": "default_jenkins_builds_health_score",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "default_jenkins_builds_health_score",
+    "promql_condition": {
+      "column": "value",
+      "operator": "<",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | realm: {realm} | env: {env} | region: {region} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

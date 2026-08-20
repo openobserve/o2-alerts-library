@@ -1,0 +1,67 @@
+{
+  "name": "jenkins_outdated_plugins",
+  "title": "Jenkins outdated plugins",
+  "severity": "warning",
+  "description": "Plugins need update",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "jenkins",
+    "metric-plugin"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/jenkins/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/jenkins/",
+    "exporter": "metric-plugin",
+    "upstream_alert": "Jenkins outdated plugins",
+    "upstream_query": "sum(jenkins_plugins_withUpdate) by (instance) > 3",
+    "upstream_description": "{{ $value }} plugins need update",
+    "period_clamped_from": "Upstream `for` is 1d (1440 minutes); the evaluation window is capped at 60 minutes. Widen trigger_condition.period if you want the full upstream window."
+  },
+  "stream_type": "metrics",
+  "stream_name": "jenkins_plugins_withUpdate",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum(jenkins_plugins_withUpdate) by (instance)",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 3,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 60,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "3 is a rough default; depends on your team's plugin update cadence and patching policy — adjust based on your maintenance workflow."
+}

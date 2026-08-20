@@ -1,0 +1,67 @@
+{
+  "name": "thanos_query_instant_latency_high",
+  "title": "Thanos Query Instant Latency High",
+  "severity": "critical",
+  "description": "Thanos Query has a 99th percentile latency seconds for instant queries.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "thanos",
+    "thanos-query"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/thanos/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/thanos/",
+    "exporter": "thanos-query",
+    "upstream_alert": "Thanos Query Instant Latency High",
+    "upstream_query": "(histogram_quantile(0.99, sum by (job, le) (rate(http_request_duration_seconds_bucket{job=~\".*thanos-query.*\", handler=\"query\"}[5m]))) > 40 and sum by (job) (rate(http_request_duration_seconds_count{job=~\".*thanos-query.*\", handler=\"query\"}[5m])) > 0)",
+    "upstream_description": "Thanos Query {{$labels.job}} has a 99th percentile latency of {{$value}} seconds for instant queries.",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "http_request_duration_seconds_bucket",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "((histogram_quantile(0.99, sum by (job, le) (rate(http_request_duration_seconds_bucket{job=~\".*thanos-query.*\", handler=\"query\"}[5m]))) > 40 and sum by (job) (rate(http_request_duration_seconds_count{job=~\".*thanos-query.*\", handler=\"query\"}[5m])) > 0)) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 10,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | job: {job}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "40s threshold is a rough default; query latency scales with your data volume and query complexity — adjust based on your baseline."
+}

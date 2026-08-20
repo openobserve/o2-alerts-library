@@ -1,0 +1,66 @@
+{
+  "name": "mimir_bucket_index_not_updated",
+  "title": "Mimir bucket index not updated",
+  "severity": "critical",
+  "description": "Mimir bucket index for tenant has not been updated for more than 35 minutes.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "grafana-mimir"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-mimir/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-mimir/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Mimir bucket index not updated",
+    "upstream_query": "min by (user, job) (time() - cortex_bucket_index_last_successful_update_timestamp_seconds) > 2100",
+    "upstream_description": "Mimir bucket index for tenant {{ $labels.user }} has not been updated for more than 35 minutes."
+  },
+  "stream_type": "metrics",
+  "stream_name": "cortex_bucket_index_last_successful_update_timestamp_seconds",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "min by (user, job) (time() - cortex_bucket_index_last_successful_update_timestamp_seconds)",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 2100,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | user: {user} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "35-minute threshold is a rough default; depends on your tenant activity and configured update cadence — adjust based on your workload."
+}

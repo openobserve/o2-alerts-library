@@ -1,0 +1,65 @@
+{
+  "name": "kubernetes_volume_inodes_full_in_four_days",
+  "title": "Kubernetes Volume inodes full in four days",
+  "severity": "critical",
+  "description": "PersistentVolume claimed is expected to run out of free inodes within four days at the current rate.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "kubernetes",
+    "kubestate-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/orchestrators/kubernetes/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/orchestrators/kubernetes/",
+    "exporter": "kubestate-exporter",
+    "upstream_alert": "Kubernetes Volume inodes full in four days",
+    "upstream_query": "predict_linear(kubelet_volume_stats_inodes_free[6h:5m], 4 * 24 * 3600) < 0",
+    "upstream_description": "PersistentVolume claimed by {{ $labels.namespace }}/{{ $labels.persistentvolumeclaim }} is expected to run out of free inodes within four days at the current rate."
+  },
+  "stream_type": "metrics",
+  "stream_name": "kubelet_volume_stats_inodes_free",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "predict_linear(kubelet_volume_stats_inodes_free[6h:5m], 4 * 24 * 3600)",
+    "promql_condition": {
+      "column": "value",
+      "operator": "<",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | namespace: {namespace} | persistentvolumeclaim: {persistentvolumeclaim} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

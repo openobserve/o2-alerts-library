@@ -1,0 +1,65 @@
+{
+  "name": "digitalocean_exporter_collection_errors",
+  "title": "DigitalOcean exporter collection errors",
+  "severity": "warning",
+  "description": "DigitalOcean exporter collector has errors.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "digitalocean",
+    "digitalocean-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/cloud-providers/digitalocean/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/cloud-providers/digitalocean/",
+    "exporter": "digitalocean-exporter",
+    "upstream_alert": "DigitalOcean exporter collection errors",
+    "upstream_query": "increase(digitalocean_errors_total[5m]) > 3",
+    "upstream_description": "DigitalOcean exporter {{ $labels.collector }} collector has {{ $value }} errors."
+  },
+  "stream_type": "metrics",
+  "stream_name": "digitalocean_errors_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "increase(digitalocean_errors_total[5m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 3,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | collector: {collector} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

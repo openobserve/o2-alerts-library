@@ -1,0 +1,67 @@
+{
+  "name": "mimir_ingester_reaching_series_limit_warning",
+  "title": "Mimir ingester reaching series limit warning",
+  "severity": "warning",
+  "description": "Mimir ingester has reached a high percentage of its series limit.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "grafana-mimir"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-mimir/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-mimir/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Mimir ingester reaching series limit warning",
+    "upstream_query": "(cortex_ingester_memory_series / ignoring(limit) cortex_ingester_instance_limits{limit=\"max_series\"} * 100 > 80) and cortex_ingester_instance_limits{limit=\"max_series\"} > 0",
+    "upstream_description": "Mimir ingester {{ $labels.instance }} has reached {{ printf \"%.0f\" $value }}% of its series limit.",
+    "period_clamped_from": "Upstream `for` is 3h (180 minutes); the evaluation window is capped at 60 minutes. Widen trigger_condition.period if you want the full upstream window.",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "cortex_ingester_memory_series",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "((cortex_ingester_memory_series / ignoring(limit) cortex_ingester_instance_limits{limit=\"max_series\"} * 100 > 80) and cortex_ingester_instance_limits{limit=\"max_series\"} > 0) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 60,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

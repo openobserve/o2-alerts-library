@@ -1,0 +1,65 @@
+{
+  "name": "envoy_server_not_live",
+  "title": "Envoy server not live",
+  "severity": "critical",
+  "description": "Envoy server is not live (draining or shutting down)",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "envoy"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/envoy/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/envoy/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Envoy server not live",
+    "upstream_query": "envoy_server_live != 1",
+    "upstream_description": "Envoy server is not live (draining or shutting down) on {{ $labels.instance }}"
+  },
+  "stream_type": "metrics",
+  "stream_name": "envoy_server_live",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "envoy_server_live",
+    "promql_condition": {
+      "column": "value",
+      "operator": "!=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

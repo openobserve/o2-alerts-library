@@ -1,0 +1,65 @@
+{
+  "name": "hadoop_node_manager_cpu_high",
+  "title": "Hadoop Node Manager CPU High",
+  "severity": "warning",
+  "description": "YARN NodeManager CPU utilization is above 80%, which can degrade container scheduling and task execution on this node.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "hadoop",
+    "jmx_exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/data-engineering/hadoop/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/data-engineering/hadoop/",
+    "exporter": "jmx_exporter",
+    "upstream_alert": "Hadoop Node Manager CPU High",
+    "upstream_query": "max without(job,name)(100*hadoop_nodemanager_nodecpuutilization) > 80",
+    "upstream_description": "YARN NodeManager CPU utilization is above 80%, which can degrade container scheduling and task execution on this node."
+  },
+  "stream_type": "metrics",
+  "stream_name": "hadoop_nodemanager_nodecpuutilization",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "max without(job,name)(100*hadoop_nodemanager_nodecpuutilization)",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 80,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 15,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

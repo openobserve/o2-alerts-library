@@ -1,0 +1,65 @@
+{
+  "name": "php_fpm_max_children_reached",
+  "title": "PHP-FPM max-children reached",
+  "severity": "warning",
+  "description": "PHP-FPM reached max children",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "bakins-fpm-exporter",
+    "php-fpm"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/php-fpm/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/php-fpm/",
+    "exporter": "bakins-fpm-exporter",
+    "upstream_alert": "PHP-FPM max-children reached",
+    "upstream_query": "sum(increase(phpfpm_max_children_reached_total[5m])) by (instance) > 3",
+    "upstream_description": "PHP-FPM reached max children on {{ $labels.instance }} ({{ $value }} times in the last 5m)"
+  },
+  "stream_type": "metrics",
+  "stream_name": "phpfpm_max_children_reached_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum(increase(phpfpm_max_children_reached_total[5m])) by (instance)",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 3,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

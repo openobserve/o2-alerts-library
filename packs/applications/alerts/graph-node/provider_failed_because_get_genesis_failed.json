@@ -1,0 +1,65 @@
+{
+  "name": "provider_failed_because_get_genesis_failed",
+  "title": "Provider failed because get genesis failed",
+  "severity": "critical",
+  "description": "Failed to get genesis for Provider ` ` in Graph node ` `",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "graph-node"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/other/graph-node/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/other/graph-node/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Provider failed because get genesis failed",
+    "upstream_query": "eth_rpc_status == 2",
+    "upstream_description": "Failed to get genesis for Provider `{{$labels.provider}}` in Graph node `{{$labels.instance}}`"
+  },
+  "stream_type": "metrics",
+  "stream_name": "eth_rpc_status",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "eth_rpc_status",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 2,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | provider: {provider} | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

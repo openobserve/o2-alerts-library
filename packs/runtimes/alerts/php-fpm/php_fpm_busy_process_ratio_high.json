@@ -1,0 +1,65 @@
+{
+  "name": "php_fpm_busy_process_ratio_high",
+  "title": "PHP-FPM busy process ratio high",
+  "severity": "warning",
+  "description": "A high percentage of PHP-FPM processes are active (busy), the pool is approaching its max_children capacity.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "bakins-fpm-exporter",
+    "php-fpm"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/php-fpm/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/php-fpm/",
+    "exporter": "bakins-fpm-exporter",
+    "upstream_alert": "PHP-FPM busy process ratio high",
+    "upstream_query": "(sum(phpfpm_processes_total{state=\"active\"}) by (instance) * 100) / sum(phpfpm_processes_total) by (instance) > 80",
+    "upstream_description": "{{ $value }}% of PHP-FPM processes are active (busy) on {{ $labels.instance }}, the pool is approaching its max_children capacity."
+  },
+  "stream_type": "metrics",
+  "stream_name": "phpfpm_processes_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(sum(phpfpm_processes_total{state=\"active\"}) by (instance) * 100) / sum(phpfpm_processes_total) by (instance)",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 80,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

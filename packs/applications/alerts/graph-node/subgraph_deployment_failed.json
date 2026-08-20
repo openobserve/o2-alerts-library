@@ -1,0 +1,66 @@
+{
+  "name": "subgraph_deployment_failed",
+  "title": "Subgraph deployment failed",
+  "severity": "critical",
+  "description": "Subgraph deployment ` ` has failed and indexing has stopped in Graph node ` `; check the graph-node logs for the deployment to find the root cause.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "graph-node"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/other/graph-node/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/other/graph-node/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Subgraph deployment failed",
+    "upstream_query": "deployment_status == 4",
+    "upstream_description": "Subgraph deployment `{{$labels.deployment}}` has failed and indexing has stopped in Graph node `{{$labels.instance}}`; check the graph-node logs for the deployment to find the root cause."
+  },
+  "stream_type": "metrics",
+  "stream_name": "deployment_status",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "deployment_status",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 4,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | deployment: {deployment} | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Requires graph-node >= 0.37.0. The deployment_status gauge (1=starting, 2=running,\n3=stopped, 4=failed) replaced the older deployment_failed metric, which was removed."
+}

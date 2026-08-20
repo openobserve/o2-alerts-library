@@ -1,0 +1,65 @@
+{
+  "name": "blackbox_ssl_certificate_will_expire_soon",
+  "title": "Blackbox SSL certificate will expire soon",
+  "severity": "warning",
+  "description": "SSL certificate expires in less than 20 days",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "blackbox",
+    "blackbox-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/blackbox/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/blackbox/",
+    "exporter": "blackbox-exporter",
+    "upstream_alert": "Blackbox SSL certificate will expire soon",
+    "upstream_query": "3 <= round((last_over_time(probe_ssl_earliest_cert_expiry[10m]) - time()) / 86400, 0.1) < 20",
+    "upstream_description": "SSL certificate expires in less than 20 days"
+  },
+  "stream_type": "metrics",
+  "stream_name": "probe_ssl_earliest_cert_expiry",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "3 <= round((last_over_time(probe_ssl_earliest_cert_expiry[10m]) - time()) / 86400, 0.1)",
+    "promql_condition": {
+      "column": "value",
+      "operator": "<",
+      "value": 20,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

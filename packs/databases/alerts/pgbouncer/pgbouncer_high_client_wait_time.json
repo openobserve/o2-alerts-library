@@ -1,0 +1,66 @@
+{
+  "name": "pgbouncer_high_client_wait_time",
+  "title": "PGBouncer high client wait time",
+  "severity": "warning",
+  "description": "The oldest queued client in pool has been waiting for a server connection, which may indicate pool saturation or slow backend performance.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "pgbouncer",
+    "spreaker-pgbouncer-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/pgbouncer/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/pgbouncer/",
+    "exporter": "spreaker-pgbouncer-exporter",
+    "upstream_alert": "PGBouncer high client wait time",
+    "upstream_query": "pgbouncer_pools_client_maxwait_seconds > 15",
+    "upstream_description": "The oldest queued client in pool {{ $labels.database }}/{{ $labels.user }} has been waiting {{ $value }}s for a server connection, which may indicate pool saturation or slow backend performance."
+  },
+  "stream_type": "metrics",
+  "stream_name": "pgbouncer_pools_client_maxwait_seconds",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "pgbouncer_pools_client_maxwait_seconds",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 15,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | database: {database} | user: {user} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "15s threshold is a rough default; depends on your configured pool_size and backend database capacity — adjust based on your workload."
+}

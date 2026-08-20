@@ -1,0 +1,66 @@
+{
+  "name": "istio_low_total_request_rate",
+  "title": "Istio low total request rate",
+  "severity": "warning",
+  "description": "Global request rate in the service mesh is unusually low.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "istio"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/istio/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/istio/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Istio low total request rate",
+    "upstream_query": "sum(rate(istio_requests_total{reporter=\"destination\"}[5m])) < 100",
+    "upstream_description": "Global request rate in the service mesh is unusually low ({{ $value | printf \"%.2f\" }} req/s)."
+  },
+  "stream_type": "metrics",
+  "stream_name": "istio_requests_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum(rate(istio_requests_total{reporter=\"destination\"}[5m]))",
+    "promql_condition": {
+      "column": "value",
+      "operator": "<",
+      "value": 100,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Threshold of 100 req/s is a rough default. Adjust to your expected baseline traffic. This alert may fire on startup or low-traffic environments."
+}

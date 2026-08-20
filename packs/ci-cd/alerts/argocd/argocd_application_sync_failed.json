@@ -1,0 +1,65 @@
+{
+  "name": "argocd_application_sync_failed",
+  "title": "ArgoCD application sync failed",
+  "severity": "warning",
+  "description": "ArgoCD application failed to sync in project, check the application controller logs for the root cause.",
+  "tags": [
+    "argocd",
+    "awesome-prometheus-alerts",
+    "embedded-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/argocd/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/argocd/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "ArgoCD application sync failed",
+    "upstream_query": "sum(increase(argocd_app_sync_total{phase!=\"Succeeded\"}[10m])) by (name, phase, project) > 0",
+    "upstream_description": "ArgoCD application {{ $labels.name }} failed to sync (phase {{ $labels.phase }}) in project {{ $labels.project }}, check the application controller logs for the root cause."
+  },
+  "stream_type": "metrics",
+  "stream_name": "argocd_app_sync_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum(increase(argocd_app_sync_total{phase!=\"Succeeded\"}[10m])) by (name, phase, project)",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | name: {name} | phase: {phase} | project: {project} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

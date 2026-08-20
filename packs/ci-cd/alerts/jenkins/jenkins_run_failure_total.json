@@ -1,0 +1,65 @@
+{
+  "name": "jenkins_run_failure_total",
+  "title": "Jenkins run failure total",
+  "severity": "warning",
+  "description": "Job run failures. Healthcheck failure for ` ` in realm",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "jenkins",
+    "metric-plugin"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/jenkins/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/jenkins/",
+    "exporter": "metric-plugin",
+    "upstream_alert": "Jenkins run failure total",
+    "upstream_query": "increase(jenkins_runs_failure_total[1h]) > 100",
+    "upstream_description": "Job run failures: ({{$value}}) {{$labels.jenkins_job}}. Healthcheck failure for `{{$labels.instance}}` in realm {{$labels.realm}}/{{$labels.env}} ({{$labels.region}})"
+  },
+  "stream_type": "metrics",
+  "stream_name": "jenkins_runs_failure_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "increase(jenkins_runs_failure_total[1h])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 100,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | jenkins_job: {jenkins_job} | instance: {instance} | realm: {realm} | env: {env} | region: {region} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

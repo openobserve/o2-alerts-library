@@ -1,0 +1,67 @@
+{
+  "name": "gitlab_gitaly_high_rpc_latency",
+  "title": "GitLab Gitaly high RPC latency",
+  "severity": "warning",
+  "description": "Gitaly p95 unary RPC latency exceeds 1 second.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "gitaly",
+    "gitlab-ci"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/gitlab-ci/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/gitlab-ci/",
+    "exporter": "gitaly",
+    "upstream_alert": "GitLab Gitaly high RPC latency",
+    "upstream_query": "histogram_quantile(0.95, sum(rate(grpc_server_handling_seconds_bucket{job=\"gitaly\",grpc_type=\"unary\"}[5m])) by (le)) > 1",
+    "upstream_description": "Gitaly on {{ $labels.instance }} p95 unary RPC latency exceeds 1 second ({{ $value }}s).",
+    "labels_dropped": "The upstream annotation interpolates instance, but this expression aggregates those labels away, so they are not in row_template — they would render as literal placeholders."
+  },
+  "stream_type": "metrics",
+  "stream_name": "grpc_server_handling_seconds_bucket",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "histogram_quantile(0.95, sum(rate(grpc_server_handling_seconds_bucket{job=\"gitaly\",grpc_type=\"unary\"}[5m])) by (le))",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Replace job=\"gitaly\" with the actual job name in your Prometheus configuration. The 1s p95 latency threshold is a rough default; adjust based on your workload."
+}

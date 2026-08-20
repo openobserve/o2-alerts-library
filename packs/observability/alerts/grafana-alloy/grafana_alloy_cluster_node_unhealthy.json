@@ -1,0 +1,65 @@
+{
+  "name": "grafana_alloy_cluster_node_unhealthy",
+  "title": "Grafana Alloy cluster node unhealthy",
+  "severity": "warning",
+  "description": "Alloy node under job is reporting a gossip protocol health score above 0, indicating clustering issues that may prevent the node from properly participating in the cluster.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "grafana-alloy"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-alloy/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-alloy/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Grafana Alloy cluster node unhealthy",
+    "upstream_query": "cluster_node_gossip_health_score > 0",
+    "upstream_description": "Alloy node under job {{ $labels.job }} is reporting a gossip protocol health score above 0, indicating clustering issues that may prevent the node from properly participating in the cluster."
+  },
+  "stream_type": "metrics",
+  "stream_name": "cluster_node_gossip_health_score",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "cluster_node_gossip_health_score",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 10,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | job: {job} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

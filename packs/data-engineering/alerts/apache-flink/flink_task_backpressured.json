@@ -1,0 +1,65 @@
+{
+  "name": "flink_task_backpressured",
+  "title": "Flink task backpressured",
+  "severity": "warning",
+  "description": "Flink task in job is backpressured.",
+  "tags": [
+    "apache-flink",
+    "awesome-prometheus-alerts",
+    "flink-prometheus-reporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/data-engineering/apache-flink/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/data-engineering/apache-flink/",
+    "exporter": "flink-prometheus-reporter",
+    "upstream_alert": "Flink task backpressured",
+    "upstream_query": "flink_taskmanager_job_task_isBackPressured == 1",
+    "upstream_description": "Flink task {{ $labels.task_name }} in job {{ $labels.job_name }} is backpressured."
+  },
+  "stream_type": "metrics",
+  "stream_name": "flink_taskmanager_job_task_isBackPressured",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "flink_taskmanager_job_task_isBackPressured",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | task_name: {task_name} | job_name: {job_name} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

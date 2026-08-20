@@ -1,0 +1,65 @@
+{
+  "name": "clickhouse_no_live_replicas",
+  "title": "ClickHouse No Live Replicas",
+  "severity": "critical",
+  "description": "There are too few live replicas available, risking data loss and service disruption.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "clickhouse",
+    "embedded-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/clickhouse/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/clickhouse/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "ClickHouse No Live Replicas",
+    "upstream_query": "increase(ClickHouseErrorMetric_TOO_FEW_LIVE_REPLICAS[5m]) > 0",
+    "upstream_description": "There are too few live replicas available, risking data loss and service disruption."
+  },
+  "stream_type": "metrics",
+  "stream_name": "ClickHouseErrorMetric_TOO_FEW_LIVE_REPLICAS",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "increase(ClickHouseErrorMetric_TOO_FEW_LIVE_REPLICAS[5m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 3,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

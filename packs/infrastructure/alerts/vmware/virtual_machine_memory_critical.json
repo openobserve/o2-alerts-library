@@ -1,0 +1,65 @@
+{
+  "name": "virtual_machine_memory_critical",
+  "title": "Virtual Machine Memory Critical",
+  "severity": "critical",
+  "description": "High memory usage: a high percentage",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "pryorda-vmware-exporter",
+    "vmware"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/vmware/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/vmware/",
+    "exporter": "pryorda-vmware-exporter",
+    "upstream_alert": "Virtual Machine Memory Critical",
+    "upstream_query": "vmware_vm_mem_usage_average / 100 >= 95",
+    "upstream_description": "High memory usage on {{ $labels.instance }}: {{ $value | printf \"%.2f\"}}%"
+  },
+  "stream_type": "metrics",
+  "stream_name": "vmware_vm_mem_usage_average",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "vmware_vm_mem_usage_average / 100",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 95,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 10,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

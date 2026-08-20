@@ -1,0 +1,65 @@
+{
+  "name": "etcd_high_number_of_leader_changes",
+  "title": "Etcd high number of leader changes",
+  "severity": "warning",
+  "description": "Etcd leader changed times during 10 minutes",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "etcd"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/orchestrators/etcd/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/orchestrators/etcd/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Etcd high number of leader changes",
+    "upstream_query": "increase(etcd_server_leader_changes_seen_total[10m]) > 2",
+    "upstream_description": "Etcd leader changed {{ $value }} times during 10 minutes"
+  },
+  "stream_type": "metrics",
+  "stream_name": "etcd_server_leader_changes_seen_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "increase(etcd_server_leader_changes_seen_total[10m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 2,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

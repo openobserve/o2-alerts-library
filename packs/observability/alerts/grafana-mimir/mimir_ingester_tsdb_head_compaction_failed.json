@@ -1,0 +1,66 @@
+{
+  "name": "mimir_ingester_tsdb_head_compaction_failed",
+  "title": "Mimir ingester TSDB head compaction failed",
+  "severity": "critical",
+  "description": "Mimir ingester is failing to compact TSDB head.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "grafana-mimir"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-mimir/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-mimir/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Mimir ingester TSDB head compaction failed",
+    "upstream_query": "rate(cortex_ingester_tsdb_compactions_failed_total[5m]) > 0.05",
+    "upstream_description": "Mimir ingester {{ $labels.instance }} is failing to compact TSDB head ({{ $value | humanize }}/s)."
+  },
+  "stream_type": "metrics",
+  "stream_name": "cortex_ingester_tsdb_compactions_failed_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "rate(cortex_ingester_tsdb_compactions_failed_total[5m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0.05,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 15,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Threshold of 0.05/s avoids firing on transient single-event spikes."
+}

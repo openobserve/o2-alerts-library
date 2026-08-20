@@ -1,0 +1,66 @@
+{
+  "name": "coredns_high_query_latency",
+  "title": "CoreDNS High Query Latency",
+  "severity": "critical",
+  "description": "CoreDNS 99th percentile request duration on server zone is, indicating the resolver is overloaded or struggling to answer queries in time.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "coredns",
+    "embedded-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/coredns/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/coredns/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "CoreDNS High Query Latency",
+    "upstream_query": "histogram_quantile(0.99, sum(rate(coredns_dns_request_duration_seconds_bucket[5m])) without (instance, pod)) > 4",
+    "upstream_description": "CoreDNS 99th percentile request duration on server {{ $labels.server }} zone {{ $labels.zone }} is {{ $value }}s, indicating the resolver is overloaded or struggling to answer queries in time."
+  },
+  "stream_type": "metrics",
+  "stream_name": "coredns_dns_request_duration_seconds_bucket",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "histogram_quantile(0.99, sum(rate(coredns_dns_request_duration_seconds_bucket[5m])) without (instance, pod))",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 4,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 10,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | server: {server} | zone: {zone} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "4s threshold is a rough default; depends on your query volume and upstream resolver performance — adjust based on your baseline."
+}

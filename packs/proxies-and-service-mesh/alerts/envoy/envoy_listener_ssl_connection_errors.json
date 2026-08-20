@@ -1,0 +1,66 @@
+{
+  "name": "envoy_listener_ssl_connection_errors",
+  "title": "Envoy listener SSL connection errors",
+  "severity": "warning",
+  "description": "Envoy listener is experiencing SSL/TLS connection errors",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "envoy"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/envoy/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/envoy/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Envoy listener SSL connection errors",
+    "upstream_query": "increase(envoy_listener_ssl_connection_error[5m]) > 5",
+    "upstream_description": "Envoy listener is experiencing SSL/TLS connection errors on {{ $labels.instance }} ({{ $value }} in the last 5m)"
+  },
+  "stream_type": "metrics",
+  "stream_name": "envoy_listener_ssl_connection_error",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "increase(envoy_listener_ssl_connection_error[5m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 5,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "5 in 5m is a rough default; SSL error volume scales with your connection volume and client TLS configurations — adjust based on your workload."
+}

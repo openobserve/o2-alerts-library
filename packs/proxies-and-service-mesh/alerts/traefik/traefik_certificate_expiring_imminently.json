@@ -1,0 +1,65 @@
+{
+  "name": "traefik_certificate_expiring_imminently",
+  "title": "Traefik certificate expiring imminently",
+  "severity": "critical",
+  "description": "TLS certificate served by Traefik instance expires in less than 7 days and must be renewed urgently.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter-v2",
+    "traefik"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/traefik/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/traefik/",
+    "exporter": "embedded-exporter-v2",
+    "upstream_alert": "Traefik certificate expiring imminently",
+    "upstream_query": "min by (instance, sans) (last_over_time(traefik_tls_certs_not_after[5m]) - time()) / 86400 < 7",
+    "upstream_description": "TLS certificate for {{ $labels.sans }} served by Traefik instance {{ $labels.instance }} expires in less than 7 days and must be renewed urgently."
+  },
+  "stream_type": "metrics",
+  "stream_name": "traefik_tls_certs_not_after",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "min by (instance, sans) (last_over_time(traefik_tls_certs_not_after[5m]) - time()) / 86400",
+    "promql_condition": {
+      "column": "value",
+      "operator": "<",
+      "value": 7,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | sans: {sans} | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

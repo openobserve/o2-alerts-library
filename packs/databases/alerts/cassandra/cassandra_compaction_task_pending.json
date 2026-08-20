@@ -1,0 +1,66 @@
+{
+  "name": "cassandra_compaction_task_pending",
+  "title": "Cassandra compaction task pending",
+  "severity": "warning",
+  "description": "Many Cassandra compaction tasks are pending. You might need to increase I/O capacity by adding nodes to the cluster.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "cassandra",
+    "criteo-cassandra-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/cassandra/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/cassandra/",
+    "exporter": "criteo-cassandra-exporter",
+    "upstream_alert": "Cassandra compaction task pending",
+    "upstream_query": "cassandra_stats{name=\"org:apache:cassandra:metrics:compaction:pendingtasks:value\"} > 100",
+    "upstream_description": "Many Cassandra compaction tasks are pending. You might need to increase I/O capacity by adding nodes to the cluster."
+  },
+  "stream_type": "metrics",
+  "stream_name": "cassandra_stats",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "cassandra_stats{name=\"org:apache:cassandra:metrics:compaction:pendingtasks:value\"}",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 100,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "100 is a rough default; pending compactions scale with your write throughput and table count — adjust based on your workload, or add nodes to increase I/O capacity."
+}

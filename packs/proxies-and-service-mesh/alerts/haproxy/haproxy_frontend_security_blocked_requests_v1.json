@@ -1,0 +1,65 @@
+{
+  "name": "haproxy_frontend_security_blocked_requests_v1",
+  "title": "HAProxy frontend security blocked requests (v1)",
+  "severity": "warning",
+  "description": "HAProxy is blocking requests for security reason",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "haproxy",
+    "haproxy-exporter-v1"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/haproxy/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/haproxy/",
+    "exporter": "haproxy-exporter-v1",
+    "upstream_alert": "HAProxy frontend security blocked requests (v1)",
+    "upstream_query": "sum by (frontend) (rate(haproxy_frontend_requests_denied_total[2m])) > 10",
+    "upstream_description": "HAProxy is blocking requests for security reason"
+  },
+  "stream_type": "metrics",
+  "stream_name": "haproxy_frontend_requests_denied_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum by (frontend) (rate(haproxy_frontend_requests_denied_total[2m]))",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 10,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

@@ -1,0 +1,66 @@
+{
+  "name": "zfs_pool_out_of_space",
+  "title": "ZFS pool out of space",
+  "severity": "warning",
+  "description": "ZFS pool is almost full (< 10% left).",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "zfs",
+    "zfs_exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/storage/zfs/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/storage/zfs/",
+    "exporter": "zfs_exporter",
+    "upstream_alert": "ZFS pool out of space",
+    "upstream_query": "zfs_pool_free_bytes * 100 / zfs_pool_size_bytes < 10 and zfs_pool_readonly == 0 and zfs_pool_size_bytes > 0",
+    "upstream_description": "ZFS pool {{ $labels.pool }} is almost full (< 10% left).",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "zfs_pool_free_bytes",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(zfs_pool_free_bytes * 100 / zfs_pool_size_bytes < 10 and zfs_pool_readonly == 0 and zfs_pool_size_bytes > 0) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | pool: {pool}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

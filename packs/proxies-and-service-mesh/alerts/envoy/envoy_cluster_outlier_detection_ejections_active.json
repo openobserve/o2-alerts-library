@@ -1,0 +1,65 @@
+{
+  "name": "envoy_cluster_outlier_detection_ejections_active",
+  "title": "Envoy cluster outlier detection ejections active",
+  "severity": "info",
+  "description": "There are active outlier detection ejections in cluster",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "envoy"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/envoy/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/envoy/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Envoy cluster outlier detection ejections active",
+    "upstream_query": "envoy_cluster_outlier_detection_ejections_active > 0",
+    "upstream_description": "There are active outlier detection ejections in cluster {{ $labels.envoy_cluster_name }} on {{ $labels.instance }}"
+  },
+  "stream_type": "metrics",
+  "stream_name": "envoy_cluster_outlier_detection_ejections_active",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "envoy_cluster_outlier_detection_ejections_active",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | envoy_cluster_name: {envoy_cluster_name} | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

@@ -1,0 +1,66 @@
+{
+  "name": "rabbitmq_predicted_low_disk_watermark",
+  "title": "RabbitMQ predicted low disk watermark",
+  "severity": "warning",
+  "description": "Based on the trend of available disk space over the last 24h, node is predicted to hit its disk space alarm threshold within 24 hours, which would block all publishers cluster-wide.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "rabbitmq",
+    "rabbitmq-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/message-brokers/rabbitmq/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/message-brokers/rabbitmq/",
+    "exporter": "rabbitmq-exporter",
+    "upstream_alert": "RabbitMQ predicted low disk watermark",
+    "upstream_query": "predict_linear(rabbitmq_disk_space_available_bytes[24h], 24*3600) < rabbitmq_disk_space_available_limit_bytes",
+    "upstream_description": "Based on the trend of available disk space over the last 24h, node {{ $labels.instance }} is predicted to hit its disk space alarm threshold within 24 hours, which would block all publishers cluster-wide.",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "rabbitmq_disk_space_available_bytes",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(predict_linear(rabbitmq_disk_space_available_bytes[24h], 24*3600) < rabbitmq_disk_space_available_limit_bytes) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 60,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

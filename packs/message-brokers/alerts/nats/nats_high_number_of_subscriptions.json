@@ -1,0 +1,66 @@
+{
+  "name": "nats_high_number_of_subscriptions",
+  "title": "Nats high number of subscriptions",
+  "severity": "warning",
+  "description": "NATS server has more than 1000 active subscriptions",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "nats",
+    "nats-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/message-brokers/nats/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/message-brokers/nats/",
+    "exporter": "nats-exporter",
+    "upstream_alert": "Nats high number of subscriptions",
+    "upstream_query": "gnatsd_varz_subscriptions > 1000",
+    "upstream_description": "NATS server has more than 1000 active subscriptions"
+  },
+  "stream_type": "metrics",
+  "stream_name": "gnatsd_varz_subscriptions",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "gnatsd_varz_subscriptions",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 1000,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "1000 is a rough default; subscription count scales with your application's subscription patterns — adjust based on your workload."
+}

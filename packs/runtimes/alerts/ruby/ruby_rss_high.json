@@ -1,0 +1,66 @@
+{
+  "name": "ruby_rss_high",
+  "title": "Ruby RSS high",
+  "severity": "warning",
+  "description": "Ruby process RSS is high (> 1GB)",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "ruby",
+    "ruby-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/ruby/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/ruby/",
+    "exporter": "ruby-exporter",
+    "upstream_alert": "Ruby RSS high",
+    "upstream_query": "ruby_rss > 1e9",
+    "upstream_description": "Ruby process RSS is high (> 1GB)"
+  },
+  "stream_type": "metrics",
+  "stream_name": "ruby_rss",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "ruby_rss",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 1000000000,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "1GB is a rough default; RSS scales with your app's memory footprint (worker count, dependencies, data processing) — adjust based on your workload."
+}

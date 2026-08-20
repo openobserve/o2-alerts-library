@@ -1,0 +1,66 @@
+{
+  "name": "spinnaker_zombie_executions",
+  "title": "Spinnaker zombie executions",
+  "severity": "warning",
+  "description": "Zombie pipeline executions rate is/s. These are executions with no corresponding queue messages.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "spinnaker"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/spinnaker/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/spinnaker/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Spinnaker zombie executions",
+    "upstream_query": "rate(queue_zombies_total[5m]) > 0.05",
+    "upstream_description": "Zombie pipeline executions rate is {{ $value | humanize }}/s. These are executions with no corresponding queue messages."
+  },
+  "stream_type": "metrics",
+  "stream_name": "queue_zombies_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "rate(queue_zombies_total[5m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0.05,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Zombies are pipeline executions that are running but have lost their queue entry.\nSee https://spinnaker.io/docs/guides/runbooks/orca-zombie-executions/"
+}

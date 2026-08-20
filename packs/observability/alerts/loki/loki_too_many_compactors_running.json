@@ -1,0 +1,65 @@
+{
+  "name": "loki_too_many_compactors_running",
+  "title": "Loki too many compactors running",
+  "severity": "warning",
+  "description": "More than one Loki compactor is running in cluster; the compactor must run as a singleton, or index compaction and retention can be duplicated or corrupted.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "loki"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/loki/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/loki/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Loki too many compactors running",
+    "upstream_query": "sum(loki_boltdb_shipper_compactor_running) by (cluster) > 1",
+    "upstream_description": "More than one Loki compactor is running in cluster {{ $labels.cluster }}; the compactor must run as a singleton, or index compaction and retention can be duplicated or corrupted."
+  },
+  "stream_type": "metrics",
+  "stream_name": "loki_boltdb_shipper_compactor_running",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum(loki_boltdb_shipper_compactor_running) by (cluster)",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | cluster: {cluster} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

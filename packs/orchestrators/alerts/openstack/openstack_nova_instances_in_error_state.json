@@ -1,0 +1,65 @@
+{
+  "name": "openstack_nova_instances_in_error_state",
+  "title": "OpenStack Nova instances in ERROR state",
+  "severity": "warning",
+  "description": "Nova instances are in ERROR state",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "openstack",
+    "openstack-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/orchestrators/openstack/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/orchestrators/openstack/",
+    "exporter": "openstack-exporter",
+    "upstream_alert": "OpenStack Nova instances in ERROR state",
+    "upstream_query": "sum(openstack_nova_server_status{status=\"ERROR\"}) > 0",
+    "upstream_description": "{{ $value }} Nova instances are in ERROR state"
+  },
+  "stream_type": "metrics",
+  "stream_name": "openstack_nova_server_status",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum(openstack_nova_server_status{status=\"ERROR\"})",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

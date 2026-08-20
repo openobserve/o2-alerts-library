@@ -1,0 +1,65 @@
+{
+  "name": "caddy_reverse_proxy_down",
+  "title": "Caddy Reverse Proxy Down",
+  "severity": "critical",
+  "description": "Caddy reverse proxy upstream is unhealthy",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "caddy",
+    "embedded-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/caddy/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/caddy/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Caddy Reverse Proxy Down",
+    "upstream_query": "caddy_reverse_proxy_upstreams_healthy == 0",
+    "upstream_description": "Caddy reverse proxy upstream {{ $labels.upstream }} is unhealthy"
+  },
+  "stream_type": "metrics",
+  "stream_name": "caddy_reverse_proxy_upstreams_healthy",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "caddy_reverse_proxy_upstreams_healthy",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | upstream: {upstream} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

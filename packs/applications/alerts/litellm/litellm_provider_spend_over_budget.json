@@ -1,0 +1,66 @@
+{
+  "name": "litellm_provider_spend_over_budget",
+  "title": "LiteLLM provider spend over budget",
+  "severity": "warning",
+  "description": "Cumulative spend for an LLM provider has exceeded the daily budget threshold. Replace the regex `(claude-|anthropic/).*` with your provider's model-name pattern. Useful as a soft-warning when `provider_budget_config` hard-cap is unavailable or disabled.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "litellm"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/other/litellm/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/other/litellm/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "LiteLLM provider spend over budget",
+    "upstream_query": "sum(increase(litellm_spend_metric_total{model=~\"(claude-|anthropic/).*\"}[24h])) > 1",
+    "upstream_description": "Cumulative spend for an LLM provider has exceeded the daily budget threshold. Replace the regex `(claude-|anthropic/).*` with your provider's model-name pattern. Useful as a soft-warning when `provider_budget_config` hard-cap is unavailable or disabled."
+  },
+  "stream_type": "metrics",
+  "stream_name": "litellm_spend_metric_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum(increase(litellm_spend_metric_total{model=~\"(claude-|anthropic/).*\"}[24h]))",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "The threshold (1) is in USD. The `model` label carries the resolved model-name (post-routing).\nPromQL `increase()` requires ≥2 datapoints with growth-difference to extrapolate positive —\nfor brand-new counter series this needs ≥2 distinct request bursts ≥1 scrape-cycle apart."
+}

@@ -1,0 +1,65 @@
+{
+  "name": "digitalocean_droplet_down",
+  "title": "DigitalOcean droplet down",
+  "severity": "critical",
+  "description": "DigitalOcean droplet is not running.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "digitalocean",
+    "digitalocean-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/cloud-providers/digitalocean/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/cloud-providers/digitalocean/",
+    "exporter": "digitalocean-exporter",
+    "upstream_alert": "DigitalOcean droplet down",
+    "upstream_query": "digitalocean_droplet_up == 0",
+    "upstream_description": "DigitalOcean droplet {{ $labels.name }} ({{ $labels.id }}) in {{ $labels.region }} is not running."
+  },
+  "stream_type": "metrics",
+  "stream_name": "digitalocean_droplet_up",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "digitalocean_droplet_up",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | name: {name} | id: {id} | region: {region} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

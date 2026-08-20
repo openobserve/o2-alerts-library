@@ -1,0 +1,66 @@
+{
+  "name": "cortex_ingester_tsdb_wal_writes_failing",
+  "title": "Cortex ingester TSDB WAL writes failing",
+  "severity": "critical",
+  "description": "Cortex ingester is failing to write samples to the TSDB WAL, which protects against data loss on crash/restart.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "cortex",
+    "embedded-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/cortex/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/cortex/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Cortex ingester TSDB WAL writes failing",
+    "upstream_query": "rate(cortex_ingester_tsdb_wal_writes_failed_total[1m]) > 0.05",
+    "upstream_description": "Cortex ingester {{ $labels.instance }} is failing to write samples to the TSDB WAL, which protects against data loss on crash/restart."
+  },
+  "stream_type": "metrics",
+  "stream_name": "cortex_ingester_tsdb_wal_writes_failed_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "rate(cortex_ingester_tsdb_wal_writes_failed_total[1m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0.05,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 3,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Threshold of 0.05/s avoids firing on transient single-event spikes."
+}

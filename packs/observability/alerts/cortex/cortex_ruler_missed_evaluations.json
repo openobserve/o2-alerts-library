@@ -1,0 +1,66 @@
+{
+  "name": "cortex_ruler_missed_evaluations",
+  "title": "Cortex ruler missed evaluations",
+  "severity": "warning",
+  "description": "Cortex ruler is missing a high percentage of evaluation iterations for rule group, meaning alerting/recording rules are not evaluated on schedule.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "cortex",
+    "embedded-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/cortex/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/cortex/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Cortex ruler missed evaluations",
+    "upstream_query": "100 * sum by (instance, rule_group) (rate(cortex_prometheus_rule_group_iterations_missed_total[5m])) / sum by (instance, rule_group) (rate(cortex_prometheus_rule_group_iterations_total[5m])) > 1 and sum by (instance, rule_group) (rate(cortex_prometheus_rule_group_iterations_total[5m])) > 0",
+    "upstream_description": "Cortex ruler {{ $labels.instance }} is missing {{ printf \"%.2f\" $value }}% of evaluation iterations for rule group {{ $labels.rule_group }}, meaning alerting/recording rules are not evaluated on schedule.",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "cortex_prometheus_rule_group_iterations_missed_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(100 * sum by (instance, rule_group) (rate(cortex_prometheus_rule_group_iterations_missed_total[5m])) / sum by (instance, rule_group) (rate(cortex_prometheus_rule_group_iterations_total[5m])) > 1 and sum by (instance, rule_group) (rate(cortex_prometheus_rule_group_iterations_total[5m])) > 0) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | rule_group: {rule_group}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

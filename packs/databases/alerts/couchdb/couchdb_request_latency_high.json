@@ -1,0 +1,66 @@
+{
+  "name": "couchdb_request_latency_high",
+  "title": "CouchDB request latency high",
+  "severity": "warning",
+  "description": "Average CouchDB request time is above 500ms, indicating degraded performance.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "couchdb",
+    "gesellix-couchdb-prometheus-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/couchdb/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/couchdb/",
+    "exporter": "gesellix-couchdb-prometheus-exporter",
+    "upstream_alert": "CouchDB request latency high",
+    "upstream_query": "couchdb_httpd_request_time{metric=\"ArithmeticMean\"} > 500",
+    "upstream_description": "Average CouchDB request time is above 500ms, indicating degraded performance."
+  },
+  "stream_type": "metrics",
+  "stream_name": "couchdb_httpd_request_time",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "couchdb_httpd_request_time{metric=\"ArithmeticMean\"}",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 500,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "500ms threshold is a rough default; normal request latency depends on your query complexity and dataset size — adjust based on your baseline."
+}

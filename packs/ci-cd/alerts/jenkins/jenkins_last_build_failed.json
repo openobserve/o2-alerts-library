@@ -1,0 +1,66 @@
+{
+  "name": "jenkins_last_build_failed",
+  "title": "Jenkins last build failed",
+  "severity": "warning",
+  "description": "Last build failed. Failed build for job ` `",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "jenkins",
+    "metric-plugin"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/jenkins/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/jenkins/",
+    "exporter": "metric-plugin",
+    "upstream_alert": "Jenkins last build failed",
+    "upstream_query": "default_jenkins_builds_last_build_result_ordinal == 2",
+    "upstream_description": "Last build failed: {{$labels.jenkins_job}}. Failed build for job `{{$labels.jenkins_job}}` on {{$labels.instance}}/{{$labels.env}} ({{$labels.region}})"
+  },
+  "stream_type": "metrics",
+  "stream_name": "default_jenkins_builds_last_build_result_ordinal",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "default_jenkins_builds_last_build_result_ordinal",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 2,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | jenkins_job: {jenkins_job} | instance: {instance} | env: {env} | region: {region} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "* RUNNING  -1 true  - The build had no errors.\n* SUCCESS   0 true  - The build had no errors.\n* UNSTABLE  1 true  - The build had some errors but they were not fatal. For example, some tests failed.\n* FAILURE   2 false - The build had a fatal error.\n* NOT_BUILT 3 false - The module was not built.\n* ABORTED   4 false - The build was manually aborted."
+}

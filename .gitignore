@@ -13,6 +13,15 @@
 # Claude
 .claude/
 
+# Python
+__pycache__/
+*.pyc
+
+# Internal decision record. NOT committed: this repository is mirrored
+# verbatim to a public S3 bucket, and the document names the bucket, the CI
+# secrets and the deployment's weak points.
+library-repo-structure.md
+
 # Secrets / credentials
 *.env
 .env*

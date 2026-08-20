@@ -1,0 +1,65 @@
+{
+  "name": "zookeeper_not_ok",
+  "title": "Zookeeper Not Ok",
+  "severity": "warning",
+  "description": "Zookeeper instance is not ok (ruok check failed)",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "dabealu-zookeeper-exporter",
+    "zookeeper"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/message-brokers/zookeeper/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/message-brokers/zookeeper/",
+    "exporter": "dabealu-zookeeper-exporter",
+    "upstream_alert": "Zookeeper Not Ok",
+    "upstream_query": "zk_ruok == 0",
+    "upstream_description": "Zookeeper instance {{ $labels.instance }} is not ok (ruok check failed)"
+  },
+  "stream_type": "metrics",
+  "stream_name": "zk_ruok",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "zk_ruok",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 3,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

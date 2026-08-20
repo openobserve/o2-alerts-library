@@ -1,0 +1,66 @@
+{
+  "name": "mimir_memory_map_areas_too_high",
+  "title": "Mimir memory map areas too high",
+  "severity": "critical",
+  "description": "Mimir is using a high percentage of its memory map area limit.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "grafana-mimir"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-mimir/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-mimir/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Mimir memory map areas too high",
+    "upstream_query": "process_memory_map_areas{job=~\".*(ingester|cortex|mimir|store-gateway).*\"} / process_memory_map_areas_limit{job=~\".*(ingester|cortex|mimir|store-gateway).*\"} * 100 > 80 and process_memory_map_areas_limit{job=~\".*(ingester|cortex|mimir|store-gateway).*\"} > 0",
+    "upstream_description": "Mimir {{ $labels.job }} is using {{ printf \"%.0f\" $value }}% of its memory map area limit.",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "process_memory_map_areas",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(process_memory_map_areas{job=~\".*(ingester|cortex|mimir|store-gateway).*\"} / process_memory_map_areas_limit{job=~\".*(ingester|cortex|mimir|store-gateway).*\"} * 100 > 80 and process_memory_map_areas_limit{job=~\".*(ingester|cortex|mimir|store-gateway).*\"} > 0) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | job: {job}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

@@ -1,0 +1,66 @@
+{
+  "name": "cortex_ingester_has_not_shipped_blocks",
+  "title": "Cortex ingester has not shipped blocks",
+  "severity": "critical",
+  "description": "Cortex ingester has not shipped any TSDB block to long-term storage in the last 4 hours despite ingesting samples, risking data loss if it crashes before flushing.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "cortex",
+    "embedded-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/cortex/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/cortex/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Cortex ingester has not shipped blocks",
+    "upstream_query": "(min by (instance) (time() - thanos_objstore_bucket_last_successful_upload_time{job=~\".+/ingester.*\"}) > 14400) and (max by (instance) (thanos_objstore_bucket_last_successful_upload_time{job=~\".+/ingester.*\"}) > 0) and (max by (instance) (rate(cortex_ingester_ingested_samples_total[4h])) > 0)",
+    "upstream_description": "Cortex ingester {{ $labels.instance }} has not shipped any TSDB block to long-term storage in the last 4 hours despite ingesting samples, risking data loss if it crashes before flushing.",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "thanos_objstore_bucket_last_successful_upload_time",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "((min by (instance) (time() - thanos_objstore_bucket_last_successful_upload_time{job=~\".+/ingester.*\"}) > 14400) and (max by (instance) (thanos_objstore_bucket_last_successful_upload_time{job=~\".+/ingester.*\"}) > 0) and (max by (instance) (rate(cortex_ingester_ingested_samples_total[4h])) > 0)) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 15,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

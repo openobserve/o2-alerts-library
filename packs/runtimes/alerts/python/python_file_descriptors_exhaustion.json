@@ -1,0 +1,67 @@
+{
+  "name": "python_file_descriptors_exhaustion",
+  "title": "Python file descriptors exhaustion",
+  "severity": "warning",
+  "description": "Python process is running out of file descriptors (> 90% used)",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "python",
+    "python-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/python/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/python/",
+    "exporter": "python-exporter",
+    "upstream_alert": "Python file descriptors exhaustion",
+    "upstream_query": "(process_open_fds / process_max_fds) * 100 > 90 and process_max_fds > 0",
+    "upstream_description": "Python process is running out of file descriptors (> 90% used)",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "process_open_fds",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "((process_open_fds / process_max_fds) * 100 > 90 and process_max_fds > 0) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}*",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "process_open_fds and process_max_fds are generic metrics from the Prometheus client library, not Python-specific.\nThis alert will also fire for Go, JVM, or any process exposing these metrics."
+}
