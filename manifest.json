@@ -77,6 +77,7 @@
  ],
  "alerts": [
   {
+   "id": "k8s/go_gc_pause_high",
    "name": "go_gc_pause_high",
    "pack": "k8s",
    "category": "app-performance",
@@ -89,9 +90,11 @@
    "required_streams": [
     "go_gc_duration_seconds_sum"
    ],
-   "path": "packs/k8s/alerts/app-performance/go_gc_pause_high.json"
+   "path": "packs/k8s/alerts/app-performance/go_gc_pause_high.json",
+   "content_hash": "1c09e8f6ac33"
   },
   {
+   "id": "k8s/go_gc_rate_high",
    "name": "go_gc_rate_high",
    "pack": "k8s",
    "category": "app-performance",
@@ -104,9 +107,11 @@
    "required_streams": [
     "go_gc_duration_seconds_count"
    ],
-   "path": "packs/k8s/alerts/app-performance/go_gc_rate_high.json"
+   "path": "packs/k8s/alerts/app-performance/go_gc_rate_high.json",
+   "content_hash": "d389aefc7af7"
   },
   {
+   "id": "k8s/cert_already_expired",
    "name": "cert_already_expired",
    "pack": "k8s",
    "category": "cert-manager",
@@ -119,9 +124,11 @@
    "required_streams": [
     "certmanager_certificate_expiration_timestamp_seconds"
    ],
-   "path": "packs/k8s/alerts/cert-manager/cert_already_expired.json"
+   "path": "packs/k8s/alerts/cert-manager/cert_already_expired.json",
+   "content_hash": "2ea05f5ed02f"
   },
   {
+   "id": "k8s/cert_challenge_failed",
    "name": "cert_challenge_failed",
    "pack": "k8s",
    "category": "cert-manager",
@@ -134,9 +141,11 @@
    "required_streams": [
     "certmanager_certificate_challenge_status"
    ],
-   "path": "packs/k8s/alerts/cert-manager/cert_challenge_failed.json"
+   "path": "packs/k8s/alerts/cert-manager/cert_challenge_failed.json",
+   "content_hash": "e7d8782522a1"
   },
   {
+   "id": "k8s/cert_expiry_critical_7d",
    "name": "cert_expiry_critical_7d",
    "pack": "k8s",
    "category": "cert-manager",
@@ -149,9 +158,11 @@
    "required_streams": [
     "certmanager_certificate_expiration_timestamp_seconds"
    ],
-   "path": "packs/k8s/alerts/cert-manager/cert_expiry_critical_7d.json"
+   "path": "packs/k8s/alerts/cert-manager/cert_expiry_critical_7d.json",
+   "content_hash": "d19187f7c1b2"
   },
   {
+   "id": "k8s/cert_expiry_warning_30d",
    "name": "cert_expiry_warning_30d",
    "pack": "k8s",
    "category": "cert-manager",
@@ -164,9 +175,11 @@
    "required_streams": [
     "certmanager_certificate_expiration_timestamp_seconds"
    ],
-   "path": "packs/k8s/alerts/cert-manager/cert_expiry_warning_30d.json"
+   "path": "packs/k8s/alerts/cert-manager/cert_expiry_warning_30d.json",
+   "content_hash": "7681bd28da16"
   },
   {
+   "id": "k8s/apiserver_high_latency",
    "name": "apiserver_high_latency",
    "pack": "k8s",
    "category": "cluster",
@@ -179,9 +192,11 @@
    "required_streams": [
     "apiserver_request_duration_seconds_bucket"
    ],
-   "path": "packs/k8s/alerts/cluster/apiserver_high_latency.json"
+   "path": "packs/k8s/alerts/cluster/apiserver_high_latency.json",
+   "content_hash": "1eef09888531"
   },
   {
+   "id": "k8s/certificate_expiry_warning",
    "name": "certificate_expiry_warning",
    "pack": "k8s",
    "category": "cluster",
@@ -194,9 +209,11 @@
    "required_streams": [
     "apiserver_client_certificate_expiration_seconds_bucket"
    ],
-   "path": "packs/k8s/alerts/cluster/certificate_expiry_warning.json"
+   "path": "packs/k8s/alerts/cluster/certificate_expiry_warning.json",
+   "content_hash": "efedf43bec1a"
   },
   {
+   "id": "k8s/cluster_cpu_capacity_high",
    "name": "cluster_cpu_capacity_high",
    "pack": "k8s",
    "category": "cluster",
@@ -209,9 +226,11 @@
    "required_streams": [
     "kube_pod_container_resource_requests"
    ],
-   "path": "packs/k8s/alerts/cluster/cluster_cpu_capacity_high.json"
+   "path": "packs/k8s/alerts/cluster/cluster_cpu_capacity_high.json",
+   "content_hash": "e601233c85a7"
   },
   {
+   "id": "k8s/cluster_memory_capacity_high",
    "name": "cluster_memory_capacity_high",
    "pack": "k8s",
    "category": "cluster",
@@ -224,9 +243,11 @@
    "required_streams": [
     "kube_pod_container_resource_requests"
    ],
-   "path": "packs/k8s/alerts/cluster/cluster_memory_capacity_high.json"
+   "path": "packs/k8s/alerts/cluster/cluster_memory_capacity_high.json",
+   "content_hash": "f6b4f6f1f841"
   },
   {
+   "id": "k8s/cluster_pod_count_high",
    "name": "cluster_pod_count_high",
    "pack": "k8s",
    "category": "cluster",
@@ -239,9 +260,11 @@
    "required_streams": [
     "kube_pod_info"
    ],
-   "path": "packs/k8s/alerts/cluster/cluster_pod_count_high.json"
+   "path": "packs/k8s/alerts/cluster/cluster_pod_count_high.json",
+   "content_hash": "19eea8c6280b"
   },
   {
+   "id": "k8s/container_cpu_limit_high",
    "name": "container_cpu_limit_high",
    "pack": "k8s",
    "category": "container",
@@ -254,9 +277,11 @@
    "required_streams": [
     "k8s_pod_cpu_limit_utilization"
    ],
-   "path": "packs/k8s/alerts/container/container_cpu_limit_high.json"
+   "path": "packs/k8s/alerts/container/container_cpu_limit_high.json",
+   "content_hash": "7e758a9ed5e7"
   },
   {
+   "id": "k8s/container_memory_near_limit",
    "name": "container_memory_near_limit",
    "pack": "k8s",
    "category": "container",
@@ -269,9 +294,11 @@
    "required_streams": [
     "k8s_pod_memory_limit_utilization"
    ],
-   "path": "packs/k8s/alerts/container/container_memory_near_limit.json"
+   "path": "packs/k8s/alerts/container/container_memory_near_limit.json",
+   "content_hash": "f168e2e62cb7"
   },
   {
+   "id": "k8s/container_not_ready",
    "name": "container_not_ready",
    "pack": "k8s",
    "category": "container",
@@ -284,9 +311,11 @@
    "required_streams": [
     "kube_pod_container_status_ready"
    ],
-   "path": "packs/k8s/alerts/container/container_not_ready.json"
+   "path": "packs/k8s/alerts/container/container_not_ready.json",
+   "content_hash": "086894c3d1a5"
   },
   {
+   "id": "k8s/container_restarted",
    "name": "container_restarted",
    "pack": "k8s",
    "category": "container",
@@ -299,9 +328,11 @@
    "required_streams": [
     "kube_pod_container_status_restarts_total"
    ],
-   "path": "packs/k8s/alerts/container/container_restarted.json"
+   "path": "packs/k8s/alerts/container/container_restarted.json",
+   "content_hash": "95a99cb4c16c"
   },
   {
+   "id": "k8s/admission_webhook_failures_high",
    "name": "admission_webhook_failures_high",
    "pack": "k8s",
    "category": "control-plane",
@@ -314,9 +345,11 @@
    "required_streams": [
     "apiserver_admission_webhook_request_total"
    ],
-   "path": "packs/k8s/alerts/control-plane/admission_webhook_failures_high.json"
+   "path": "packs/k8s/alerts/control-plane/admission_webhook_failures_high.json",
+   "content_hash": "9fe400d2a8ba"
   },
   {
+   "id": "k8s/apiserver_error_rate_high",
    "name": "apiserver_error_rate_high",
    "pack": "k8s",
    "category": "control-plane",
@@ -329,9 +362,11 @@
    "required_streams": [
     "apiserver_request_total"
    ],
-   "path": "packs/k8s/alerts/control-plane/apiserver_error_rate_high.json"
+   "path": "packs/k8s/alerts/control-plane/apiserver_error_rate_high.json",
+   "content_hash": "7878ee9da06f"
   },
   {
+   "id": "k8s/apiserver_inflight_requests_high",
    "name": "apiserver_inflight_requests_high",
    "pack": "k8s",
    "category": "control-plane",
@@ -344,9 +379,11 @@
    "required_streams": [
     "apiserver_current_inflight_requests"
    ],
-   "path": "packs/k8s/alerts/control-plane/apiserver_inflight_requests_high.json"
+   "path": "packs/k8s/alerts/control-plane/apiserver_inflight_requests_high.json",
+   "content_hash": "a48f6fbea2a8"
   },
   {
+   "id": "k8s/controller_queue_processing_slow",
    "name": "controller_queue_processing_slow",
    "pack": "k8s",
    "category": "control-plane",
@@ -359,9 +396,11 @@
    "required_streams": [
     "workqueue_queue_duration_seconds_bucket"
    ],
-   "path": "packs/k8s/alerts/control-plane/controller_queue_processing_slow.json"
+   "path": "packs/k8s/alerts/control-plane/controller_queue_processing_slow.json",
+   "content_hash": "5245256d9a14"
   },
   {
+   "id": "k8s/controller_reconcile_errors_high",
    "name": "controller_reconcile_errors_high",
    "pack": "k8s",
    "category": "control-plane",
@@ -374,9 +413,11 @@
    "required_streams": [
     "controller_runtime_reconcile_errors_total"
    ],
-   "path": "packs/k8s/alerts/control-plane/controller_reconcile_errors_high.json"
+   "path": "packs/k8s/alerts/control-plane/controller_reconcile_errors_high.json",
+   "content_hash": "d88bace43193"
   },
   {
+   "id": "k8s/controller_workqueue_depth_high",
    "name": "controller_workqueue_depth_high",
    "pack": "k8s",
    "category": "control-plane",
@@ -389,9 +430,11 @@
    "required_streams": [
     "workqueue_depth"
    ],
-   "path": "packs/k8s/alerts/control-plane/controller_workqueue_depth_high.json"
+   "path": "packs/k8s/alerts/control-plane/controller_workqueue_depth_high.json",
+   "content_hash": "886764f011e9"
   },
   {
+   "id": "k8s/azure_maintenance_scheduled_events",
    "name": "azure_maintenance_scheduled_events",
    "pack": "k8s",
    "category": "k8s-events",
@@ -404,9 +447,11 @@
    "required_streams": [
     "k8s_events"
    ],
-   "path": "packs/k8s/alerts/k8s-events/azure_maintenance_scheduled_events.json"
+   "path": "packs/k8s/alerts/k8s-events/azure_maintenance_scheduled_events.json",
+   "content_hash": "f02d6b4f3930"
   },
   {
+   "id": "k8s/azure_storage_provisioning_failed_events",
    "name": "azure_storage_provisioning_failed_events",
    "pack": "k8s",
    "category": "k8s-events",
@@ -419,9 +464,11 @@
    "required_streams": [
     "k8s_events"
    ],
-   "path": "packs/k8s/alerts/k8s-events/azure_storage_provisioning_failed_events.json"
+   "path": "packs/k8s/alerts/k8s-events/azure_storage_provisioning_failed_events.json",
+   "content_hash": "6fb35f4c2c7b"
   },
   {
+   "id": "k8s/coredns_unreachable_events",
    "name": "coredns_unreachable_events",
    "pack": "k8s",
    "category": "k8s-events",
@@ -434,9 +481,11 @@
    "required_streams": [
     "k8s_events"
    ],
-   "path": "packs/k8s/alerts/k8s-events/coredns_unreachable_events.json"
+   "path": "packs/k8s/alerts/k8s-events/coredns_unreachable_events.json",
+   "content_hash": "b9f6d57c9b66"
   },
   {
+   "id": "k8s/high_warning_event_rate",
    "name": "high_warning_event_rate",
    "pack": "k8s",
    "category": "k8s-events",
@@ -449,9 +498,11 @@
    "required_streams": [
     "k8s_events"
    ],
-   "path": "packs/k8s/alerts/k8s-events/high_warning_event_rate.json"
+   "path": "packs/k8s/alerts/k8s-events/high_warning_event_rate.json",
+   "content_hash": "9a0bcc20d3d1"
   },
   {
+   "id": "k8s/hpa_metric_unavailable_events",
    "name": "hpa_metric_unavailable_events",
    "pack": "k8s",
    "category": "k8s-events",
@@ -464,9 +515,11 @@
    "required_streams": [
     "k8s_events"
    ],
-   "path": "packs/k8s/alerts/k8s-events/hpa_metric_unavailable_events.json"
+   "path": "packs/k8s/alerts/k8s-events/hpa_metric_unavailable_events.json",
+   "content_hash": "8be6180cb9e1"
   },
   {
+   "id": "k8s/image_pull_errors_events",
    "name": "image_pull_errors_events",
    "pack": "k8s",
    "category": "k8s-events",
@@ -479,9 +532,11 @@
    "required_streams": [
     "k8s_events"
    ],
-   "path": "packs/k8s/alerts/k8s-events/image_pull_errors_events.json"
+   "path": "packs/k8s/alerts/k8s-events/image_pull_errors_events.json",
+   "content_hash": "7985190bdedb"
   },
   {
+   "id": "k8s/image_pull_secret_missing_events",
    "name": "image_pull_secret_missing_events",
    "pack": "k8s",
    "category": "k8s-events",
@@ -494,9 +549,11 @@
    "required_streams": [
     "k8s_events"
    ],
-   "path": "packs/k8s/alerts/k8s-events/image_pull_secret_missing_events.json"
+   "path": "packs/k8s/alerts/k8s-events/image_pull_secret_missing_events.json",
+   "content_hash": "c7725d2165d2"
   },
   {
+   "id": "k8s/network_not_ready_events",
    "name": "network_not_ready_events",
    "pack": "k8s",
    "category": "k8s-events",
@@ -509,9 +566,11 @@
    "required_streams": [
     "k8s_events"
    ],
-   "path": "packs/k8s/alerts/k8s-events/network_not_ready_events.json"
+   "path": "packs/k8s/alerts/k8s-events/network_not_ready_events.json",
+   "content_hash": "987a59cb0c7e"
   },
   {
+   "id": "k8s/node_condition_change_events",
    "name": "node_condition_change_events",
    "pack": "k8s",
    "category": "k8s-events",
@@ -524,9 +583,11 @@
    "required_streams": [
     "k8s_events"
    ],
-   "path": "packs/k8s/alerts/k8s-events/node_condition_change_events.json"
+   "path": "packs/k8s/alerts/k8s-events/node_condition_change_events.json",
+   "content_hash": "8d06e91cc227"
   },
   {
+   "id": "k8s/node_drain_failed_events",
    "name": "node_drain_failed_events",
    "pack": "k8s",
    "category": "k8s-events",
@@ -539,9 +600,11 @@
    "required_streams": [
     "k8s_events"
    ],
-   "path": "packs/k8s/alerts/k8s-events/node_drain_failed_events.json"
+   "path": "packs/k8s/alerts/k8s-events/node_drain_failed_events.json",
+   "content_hash": "33eb925ca24d"
   },
   {
+   "id": "k8s/node_shutdown_events",
    "name": "node_shutdown_events",
    "pack": "k8s",
    "category": "k8s-events",
@@ -554,9 +617,11 @@
    "required_streams": [
     "k8s_events"
    ],
-   "path": "packs/k8s/alerts/k8s-events/node_shutdown_events.json"
+   "path": "packs/k8s/alerts/k8s-events/node_shutdown_events.json",
+   "content_hash": "55783d73f58a"
   },
   {
+   "id": "k8s/oom_killing_events",
    "name": "oom_killing_events",
    "pack": "k8s",
    "category": "k8s-events",
@@ -569,9 +634,11 @@
    "required_streams": [
     "k8s_events"
    ],
-   "path": "packs/k8s/alerts/k8s-events/oom_killing_events.json"
+   "path": "packs/k8s/alerts/k8s-events/oom_killing_events.json",
+   "content_hash": "851f14d0c26f"
   },
   {
+   "id": "k8s/pod_sandbox_failed_events",
    "name": "pod_sandbox_failed_events",
    "pack": "k8s",
    "category": "k8s-events",
@@ -584,9 +651,11 @@
    "required_streams": [
     "k8s_events"
    ],
-   "path": "packs/k8s/alerts/k8s-events/pod_sandbox_failed_events.json"
+   "path": "packs/k8s/alerts/k8s-events/pod_sandbox_failed_events.json",
+   "content_hash": "ec77f0cc9b0c"
   },
   {
+   "id": "k8s/pod_scheduling_failures_events",
    "name": "pod_scheduling_failures_events",
    "pack": "k8s",
    "category": "k8s-events",
@@ -599,9 +668,11 @@
    "required_streams": [
     "k8s_events"
    ],
-   "path": "packs/k8s/alerts/k8s-events/pod_scheduling_failures_events.json"
+   "path": "packs/k8s/alerts/k8s-events/pod_scheduling_failures_events.json",
+   "content_hash": "1ea50a87323d"
   },
   {
+   "id": "k8s/pod_unhealthy_probe_events",
    "name": "pod_unhealthy_probe_events",
    "pack": "k8s",
    "category": "k8s-events",
@@ -614,9 +685,11 @@
    "required_streams": [
     "k8s_events"
    ],
-   "path": "packs/k8s/alerts/k8s-events/pod_unhealthy_probe_events.json"
+   "path": "packs/k8s/alerts/k8s-events/pod_unhealthy_probe_events.json",
+   "content_hash": "a3e542ebf977"
   },
   {
+   "id": "k8s/volume_mount_failures_events",
    "name": "volume_mount_failures_events",
    "pack": "k8s",
    "category": "k8s-events",
@@ -629,9 +702,11 @@
    "required_streams": [
     "k8s_events"
    ],
-   "path": "packs/k8s/alerts/k8s-events/volume_mount_failures_events.json"
+   "path": "packs/k8s/alerts/k8s-events/volume_mount_failures_events.json",
+   "content_hash": "8de75634a097"
   },
   {
+   "id": "k8s/dns_high_latency",
    "name": "dns_high_latency",
    "pack": "k8s",
    "category": "network",
@@ -644,9 +719,11 @@
    "required_streams": [
     "coredns_dns_request_duration_seconds_bucket"
    ],
-   "path": "packs/k8s/alerts/network/dns_high_latency.json"
+   "path": "packs/k8s/alerts/network/dns_high_latency.json",
+   "content_hash": "c2e042d8ea3b"
   },
   {
+   "id": "k8s/dns_resolution_failures_high",
    "name": "dns_resolution_failures_high",
    "pack": "k8s",
    "category": "network",
@@ -659,9 +736,11 @@
    "required_streams": [
     "coredns_dns_responses_total"
    ],
-   "path": "packs/k8s/alerts/network/dns_resolution_failures_high.json"
+   "path": "packs/k8s/alerts/network/dns_resolution_failures_high.json",
+   "content_hash": "94a7ddf1c52d"
   },
   {
+   "id": "k8s/node_network_errors_high",
    "name": "node_network_errors_high",
    "pack": "k8s",
    "category": "network",
@@ -674,9 +753,11 @@
    "required_streams": [
     "k8s_node_network_errors"
    ],
-   "path": "packs/k8s/alerts/network/node_network_errors_high.json"
+   "path": "packs/k8s/alerts/network/node_network_errors_high.json",
+   "content_hash": "9a74dede89dc"
   },
   {
+   "id": "k8s/service_no_ready_endpoints",
    "name": "service_no_ready_endpoints",
    "pack": "k8s",
    "category": "network",
@@ -689,9 +770,11 @@
    "required_streams": [
     "kube_endpoint_address"
    ],
-   "path": "packs/k8s/alerts/network/service_no_ready_endpoints.json"
+   "path": "packs/k8s/alerts/network/service_no_ready_endpoints.json",
+   "content_hash": "0d542f17bb91"
   },
   {
+   "id": "k8s/node_critical_cpu_utilization",
    "name": "node_critical_cpu_utilization",
    "pack": "k8s",
    "category": "node",
@@ -704,9 +787,11 @@
    "required_streams": [
     "system_cpu_utilization"
    ],
-   "path": "packs/k8s/alerts/node/node_critical_cpu_utilization.json"
+   "path": "packs/k8s/alerts/node/node_critical_cpu_utilization.json",
+   "content_hash": "05e1aa3b1caa"
   },
   {
+   "id": "k8s/node_critical_disk_usage",
    "name": "node_critical_disk_usage",
    "pack": "k8s",
    "category": "node",
@@ -719,9 +804,11 @@
    "required_streams": [
     "k8s_node_filesystem_usage"
    ],
-   "path": "packs/k8s/alerts/node/node_critical_disk_usage.json"
+   "path": "packs/k8s/alerts/node/node_critical_disk_usage.json",
+   "content_hash": "fc559737c71b"
   },
   {
+   "id": "k8s/node_critical_memory_usage",
    "name": "node_critical_memory_usage",
    "pack": "k8s",
    "category": "node",
@@ -734,9 +821,11 @@
    "required_streams": [
     "k8s_node_memory_usage"
    ],
-   "path": "packs/k8s/alerts/node/node_critical_memory_usage.json"
+   "path": "packs/k8s/alerts/node/node_critical_memory_usage.json",
+   "content_hash": "2923ec85bf90"
   },
   {
+   "id": "k8s/node_disk_pressure",
    "name": "node_disk_pressure",
    "pack": "k8s",
    "category": "node",
@@ -749,9 +838,11 @@
    "required_streams": [
     "k8s_node_condition_disk_pressure"
    ],
-   "path": "packs/k8s/alerts/node/node_disk_pressure.json"
+   "path": "packs/k8s/alerts/node/node_disk_pressure.json",
+   "content_hash": "5de5065dc5af"
   },
   {
+   "id": "k8s/node_high_cpu_utilization",
    "name": "node_high_cpu_utilization",
    "pack": "k8s",
    "category": "node",
@@ -764,9 +855,11 @@
    "required_streams": [
     "system_cpu_utilization"
    ],
-   "path": "packs/k8s/alerts/node/node_high_cpu_utilization.json"
+   "path": "packs/k8s/alerts/node/node_high_cpu_utilization.json",
+   "content_hash": "18661b01c6f5"
   },
   {
+   "id": "k8s/node_high_disk_usage",
    "name": "node_high_disk_usage",
    "pack": "k8s",
    "category": "node",
@@ -779,9 +872,11 @@
    "required_streams": [
     "k8s_node_filesystem_usage"
    ],
-   "path": "packs/k8s/alerts/node/node_high_disk_usage.json"
+   "path": "packs/k8s/alerts/node/node_high_disk_usage.json",
+   "content_hash": "65853004d768"
   },
   {
+   "id": "k8s/node_high_memory_usage",
    "name": "node_high_memory_usage",
    "pack": "k8s",
    "category": "node",
@@ -794,9 +889,11 @@
    "required_streams": [
     "k8s_node_memory_usage"
    ],
-   "path": "packs/k8s/alerts/node/node_high_memory_usage.json"
+   "path": "packs/k8s/alerts/node/node_high_memory_usage.json",
+   "content_hash": "558e68c357d6"
   },
   {
+   "id": "k8s/node_memory_pressure",
    "name": "node_memory_pressure",
    "pack": "k8s",
    "category": "node",
@@ -809,9 +906,11 @@
    "required_streams": [
     "k8s_node_condition_memory_pressure"
    ],
-   "path": "packs/k8s/alerts/node/node_memory_pressure.json"
+   "path": "packs/k8s/alerts/node/node_memory_pressure.json",
+   "content_hash": "ffbade5d7712"
   },
   {
+   "id": "k8s/node_not_ready",
    "name": "node_not_ready",
    "pack": "k8s",
    "category": "node",
@@ -824,9 +923,11 @@
    "required_streams": [
     "k8s_node_condition_ready"
    ],
-   "path": "packs/k8s/alerts/node/node_not_ready.json"
+   "path": "packs/k8s/alerts/node/node_not_ready.json",
+   "content_hash": "21257e9c0638"
   },
   {
+   "id": "k8s/node_unschedulable",
    "name": "node_unschedulable",
    "pack": "k8s",
    "category": "node",
@@ -839,9 +940,11 @@
    "required_streams": [
     "kube_node_spec_taint"
    ],
-   "path": "packs/k8s/alerts/node/node_unschedulable.json"
+   "path": "packs/k8s/alerts/node/node_unschedulable.json",
+   "content_hash": "027723c4e7fe"
   },
   {
+   "id": "k8s/kube_state_metrics_stale_data",
    "name": "kube_state_metrics_stale_data",
    "pack": "k8s",
    "category": "other",
@@ -854,9 +957,11 @@
    "required_streams": [
     "kube_persistentvolume_status_phase"
    ],
-   "path": "packs/k8s/alerts/other/kube_state_metrics_stale_data.json"
+   "path": "packs/k8s/alerts/other/kube_state_metrics_stale_data.json",
+   "content_hash": "62837ae60f1f"
   },
   {
+   "id": "k8s/pod_crashloop_backoff",
    "name": "pod_crashloop_backoff",
    "pack": "k8s",
    "category": "pod",
@@ -869,9 +974,11 @@
    "required_streams": [
     "kube_pod_container_status_waiting_reason"
    ],
-   "path": "packs/k8s/alerts/pod/pod_crashloop_backoff.json"
+   "path": "packs/k8s/alerts/pod/pod_crashloop_backoff.json",
+   "content_hash": "f3f83fa83d52"
   },
   {
+   "id": "k8s/pod_evicted",
    "name": "pod_evicted",
    "pack": "k8s",
    "category": "pod",
@@ -884,9 +991,11 @@
    "required_streams": [
     "kube_pod_status_reason"
    ],
-   "path": "packs/k8s/alerts/pod/pod_evicted.json"
+   "path": "packs/k8s/alerts/pod/pod_evicted.json",
+   "content_hash": "c9180f75bbe6"
   },
   {
+   "id": "k8s/pod_failed_state",
    "name": "pod_failed_state",
    "pack": "k8s",
    "category": "pod",
@@ -899,9 +1008,11 @@
    "required_streams": [
     "kube_pod_status_phase"
    ],
-   "path": "packs/k8s/alerts/pod/pod_failed_state.json"
+   "path": "packs/k8s/alerts/pod/pod_failed_state.json",
+   "content_hash": "c75d84f8fa89"
   },
   {
+   "id": "k8s/pod_high_restart_rate",
    "name": "pod_high_restart_rate",
    "pack": "k8s",
    "category": "pod",
@@ -914,9 +1025,11 @@
    "required_streams": [
     "k8s_container_restarts"
    ],
-   "path": "packs/k8s/alerts/pod/pod_high_restart_rate.json"
+   "path": "packs/k8s/alerts/pod/pod_high_restart_rate.json",
+   "content_hash": "3599f948cf9e"
   },
   {
+   "id": "k8s/pod_image_pull_backoff",
    "name": "pod_image_pull_backoff",
    "pack": "k8s",
    "category": "pod",
@@ -929,9 +1042,11 @@
    "required_streams": [
     "kube_pod_container_status_waiting_reason"
    ],
-   "path": "packs/k8s/alerts/pod/pod_image_pull_backoff.json"
+   "path": "packs/k8s/alerts/pod/pod_image_pull_backoff.json",
+   "content_hash": "955cb3a8ecce"
   },
   {
+   "id": "k8s/pod_oom_killed",
    "name": "pod_oom_killed",
    "pack": "k8s",
    "category": "pod",
@@ -944,9 +1059,11 @@
    "required_streams": [
     "kube_pod_container_status_terminated_reason"
    ],
-   "path": "packs/k8s/alerts/pod/pod_oom_killed.json"
+   "path": "packs/k8s/alerts/pod/pod_oom_killed.json",
+   "content_hash": "ea291ef21102"
   },
   {
+   "id": "k8s/pod_pending_too_long",
    "name": "pod_pending_too_long",
    "pack": "k8s",
    "category": "pod",
@@ -959,9 +1076,11 @@
    "required_streams": [
     "kube_pod_status_phase"
    ],
-   "path": "packs/k8s/alerts/pod/pod_pending_too_long.json"
+   "path": "packs/k8s/alerts/pod/pod_pending_too_long.json",
+   "content_hash": "f943249874d9"
   },
   {
+   "id": "k8s/container_cpu_over_provisioned",
    "name": "container_cpu_over_provisioned",
    "pack": "k8s",
    "category": "resource-optimization",
@@ -974,9 +1093,11 @@
    "required_streams": [
     "k8s_pod_cpu_request_utilization"
    ],
-   "path": "packs/k8s/alerts/resource-optimization/container_cpu_over_provisioned.json"
+   "path": "packs/k8s/alerts/resource-optimization/container_cpu_over_provisioned.json",
+   "content_hash": "c57f21c16d70"
   },
   {
+   "id": "k8s/container_memory_over_provisioned",
    "name": "container_memory_over_provisioned",
    "pack": "k8s",
    "category": "resource-optimization",
@@ -989,9 +1110,11 @@
    "required_streams": [
     "k8s_pod_memory_request_utilization"
    ],
-   "path": "packs/k8s/alerts/resource-optimization/container_memory_over_provisioned.json"
+   "path": "packs/k8s/alerts/resource-optimization/container_memory_over_provisioned.json",
+   "content_hash": "0a06a93851a2"
   },
   {
+   "id": "k8s/container_resource_under_requested",
    "name": "container_resource_under_requested",
    "pack": "k8s",
    "category": "resource-optimization",
@@ -1004,9 +1127,11 @@
    "required_streams": [
     "k8s_pod_cpu_request_utilization"
    ],
-   "path": "packs/k8s/alerts/resource-optimization/container_resource_under_requested.json"
+   "path": "packs/k8s/alerts/resource-optimization/container_resource_under_requested.json",
+   "content_hash": "1e0c78470ac6"
   },
   {
+   "id": "k8s/node_low_utilization",
    "name": "node_low_utilization",
    "pack": "k8s",
    "category": "resource-optimization",
@@ -1019,9 +1144,11 @@
    "required_streams": [
     "system_cpu_utilization"
    ],
-   "path": "packs/k8s/alerts/resource-optimization/node_low_utilization.json"
+   "path": "packs/k8s/alerts/resource-optimization/node_low_utilization.json",
+   "content_hash": "fbeb15945bfd"
   },
   {
+   "id": "k8s/pods_without_resource_requests",
    "name": "pods_without_resource_requests",
    "pack": "k8s",
    "category": "resource-optimization",
@@ -1034,9 +1161,11 @@
    "required_streams": [
     "kube_pod_container_info"
    ],
-   "path": "packs/k8s/alerts/resource-optimization/pods_without_resource_requests.json"
+   "path": "packs/k8s/alerts/resource-optimization/pods_without_resource_requests.json",
+   "content_hash": "06c7e601f77e"
   },
   {
+   "id": "k8s/image_from_untrusted_registry",
    "name": "image_from_untrusted_registry",
    "pack": "k8s",
    "category": "security",
@@ -1049,9 +1178,11 @@
    "required_streams": [
     "kube_pod_container_info"
    ],
-   "path": "packs/k8s/alerts/security/image_from_untrusted_registry.json"
+   "path": "packs/k8s/alerts/security/image_from_untrusted_registry.json",
+   "content_hash": "fe187539cda9"
   },
   {
+   "id": "k8s/namespace_without_network_policy",
    "name": "namespace_without_network_policy",
    "pack": "k8s",
    "category": "security",
@@ -1064,9 +1195,11 @@
    "required_streams": [
     "kube_namespace_status_phase"
    ],
-   "path": "packs/k8s/alerts/security/namespace_without_network_policy.json"
+   "path": "packs/k8s/alerts/security/namespace_without_network_policy.json",
+   "content_hash": "54696e0dca5b"
   },
   {
+   "id": "k8s/pod_missing_resource_limits",
    "name": "pod_missing_resource_limits",
    "pack": "k8s",
    "category": "security",
@@ -1079,9 +1212,11 @@
    "required_streams": [
     "kube_pod_container_info"
    ],
-   "path": "packs/k8s/alerts/security/pod_missing_resource_limits.json"
+   "path": "packs/k8s/alerts/security/pod_missing_resource_limits.json",
+   "content_hash": "ecc3cbd23461"
   },
   {
+   "id": "k8s/unauthorized_api_access_high",
    "name": "unauthorized_api_access_high",
    "pack": "k8s",
    "category": "security",
@@ -1094,9 +1229,11 @@
    "required_streams": [
     "apiserver_request_total"
    ],
-   "path": "packs/k8s/alerts/security/unauthorized_api_access_high.json"
+   "path": "packs/k8s/alerts/security/unauthorized_api_access_high.json",
+   "content_hash": "634138884277"
   },
   {
+   "id": "k8s/pv_available_unused",
    "name": "pv_available_unused",
    "pack": "k8s",
    "category": "storage",
@@ -1109,9 +1246,11 @@
    "required_streams": [
     "kube_persistentvolume_status_phase"
    ],
-   "path": "packs/k8s/alerts/storage/pv_available_unused.json"
+   "path": "packs/k8s/alerts/storage/pv_available_unused.json",
+   "content_hash": "ce48d7343bba"
   },
   {
+   "id": "k8s/pv_failed",
    "name": "pv_failed",
    "pack": "k8s",
    "category": "storage",
@@ -1124,9 +1263,11 @@
    "required_streams": [
     "kube_persistentvolume_status_phase"
    ],
-   "path": "packs/k8s/alerts/storage/pv_failed.json"
+   "path": "packs/k8s/alerts/storage/pv_failed.json",
+   "content_hash": "1751f59beb7b"
   },
   {
+   "id": "k8s/pv_released_orphaned",
    "name": "pv_released_orphaned",
    "pack": "k8s",
    "category": "storage",
@@ -1139,9 +1280,11 @@
    "required_streams": [
     "kube_persistentvolume_status_phase"
    ],
-   "path": "packs/k8s/alerts/storage/pv_released_orphaned.json"
+   "path": "packs/k8s/alerts/storage/pv_released_orphaned.json",
+   "content_hash": "1a164e0584a5"
   },
   {
+   "id": "k8s/pv_usage_high",
    "name": "pv_usage_high",
    "pack": "k8s",
    "category": "storage",
@@ -1154,9 +1297,11 @@
    "required_streams": [
     "kubelet_volume_stats_used_bytes"
    ],
-   "path": "packs/k8s/alerts/storage/pv_usage_high.json"
+   "path": "packs/k8s/alerts/storage/pv_usage_high.json",
+   "content_hash": "8243c4eb201b"
   },
   {
+   "id": "k8s/pvc_bound_no_pod_attached",
    "name": "pvc_bound_no_pod_attached",
    "pack": "k8s",
    "category": "storage",
@@ -1169,9 +1314,11 @@
    "required_streams": [
     "kube_persistentvolumeclaim_status_phase"
    ],
-   "path": "packs/k8s/alerts/storage/pvc_bound_no_pod_attached.json"
+   "path": "packs/k8s/alerts/storage/pvc_bound_no_pod_attached.json",
+   "content_hash": "d37201aa4d2e"
   },
   {
+   "id": "k8s/pvc_lost",
    "name": "pvc_lost",
    "pack": "k8s",
    "category": "storage",
@@ -1184,9 +1331,11 @@
    "required_streams": [
     "kube_persistentvolumeclaim_status_phase"
    ],
-   "path": "packs/k8s/alerts/storage/pvc_lost.json"
+   "path": "packs/k8s/alerts/storage/pvc_lost.json",
+   "content_hash": "c5c4d8fd9623"
   },
   {
+   "id": "k8s/pvc_pending",
    "name": "pvc_pending",
    "pack": "k8s",
    "category": "storage",
@@ -1199,9 +1348,11 @@
    "required_streams": [
     "kube_persistentvolumeclaim_status_phase"
    ],
-   "path": "packs/k8s/alerts/storage/pvc_pending.json"
+   "path": "packs/k8s/alerts/storage/pvc_pending.json",
+   "content_hash": "0b346f2794e2"
   },
   {
+   "id": "k8s/storage_volume_under_utilized",
    "name": "storage_volume_under_utilized",
    "pack": "k8s",
    "category": "storage",
@@ -1214,9 +1365,11 @@
    "required_streams": [
     "kubelet_volume_stats_used_bytes"
    ],
-   "path": "packs/k8s/alerts/storage/storage_volume_under_utilized.json"
+   "path": "packs/k8s/alerts/storage/storage_volume_under_utilized.json",
+   "content_hash": "7c62018d8f0c"
   },
   {
+   "id": "k8s/cronjob_job_stuck_running",
    "name": "cronjob_job_stuck_running",
    "pack": "k8s",
    "category": "workload",
@@ -1229,9 +1382,11 @@
    "required_streams": [
     "kube_cronjob_status_active"
    ],
-   "path": "packs/k8s/alerts/workload/cronjob_job_stuck_running.json"
+   "path": "packs/k8s/alerts/workload/cronjob_job_stuck_running.json",
+   "content_hash": "74bbcae0f54b"
   },
   {
+   "id": "k8s/cronjob_missed_schedule",
    "name": "cronjob_missed_schedule",
    "pack": "k8s",
    "category": "workload",
@@ -1244,9 +1399,11 @@
    "required_streams": [
     "kube_cronjob_next_schedule_time"
    ],
-   "path": "packs/k8s/alerts/workload/cronjob_missed_schedule.json"
+   "path": "packs/k8s/alerts/workload/cronjob_missed_schedule.json",
+   "content_hash": "563907f66b19"
   },
   {
+   "id": "k8s/cronjob_suspended",
    "name": "cronjob_suspended",
    "pack": "k8s",
    "category": "workload",
@@ -1259,9 +1416,11 @@
    "required_streams": [
     "kube_cronjob_spec_suspend"
    ],
-   "path": "packs/k8s/alerts/workload/cronjob_suspended.json"
+   "path": "packs/k8s/alerts/workload/cronjob_suspended.json",
+   "content_hash": "73e32942cbd5"
   },
   {
+   "id": "k8s/daemonset_pods_not_scheduled",
    "name": "daemonset_pods_not_scheduled",
    "pack": "k8s",
    "category": "workload",
@@ -1274,9 +1433,11 @@
    "required_streams": [
     "kube_daemonset_status_number_ready"
    ],
-   "path": "packs/k8s/alerts/workload/daemonset_pods_not_scheduled.json"
+   "path": "packs/k8s/alerts/workload/daemonset_pods_not_scheduled.json",
+   "content_hash": "4dd051d1543e"
   },
   {
+   "id": "k8s/deployment_replica_mismatch",
    "name": "deployment_replica_mismatch",
    "pack": "k8s",
    "category": "workload",
@@ -1289,9 +1450,11 @@
    "required_streams": [
     "kube_deployment_status_replicas_available"
    ],
-   "path": "packs/k8s/alerts/workload/deployment_replica_mismatch.json"
+   "path": "packs/k8s/alerts/workload/deployment_replica_mismatch.json",
+   "content_hash": "86850d4ed5b1"
   },
   {
+   "id": "k8s/hpa_at_max_replicas",
    "name": "hpa_at_max_replicas",
    "pack": "k8s",
    "category": "workload",
@@ -1304,9 +1467,11 @@
    "required_streams": [
     "kube_horizontalpodautoscaler_status_current_replicas"
    ],
-   "path": "packs/k8s/alerts/workload/hpa_at_max_replicas.json"
+   "path": "packs/k8s/alerts/workload/hpa_at_max_replicas.json",
+   "content_hash": "82b1989f2d27"
   },
   {
+   "id": "k8s/hpa_unable_to_scale",
    "name": "hpa_unable_to_scale",
    "pack": "k8s",
    "category": "workload",
@@ -1319,9 +1484,11 @@
    "required_streams": [
     "kube_horizontalpodautoscaler_status_condition"
    ],
-   "path": "packs/k8s/alerts/workload/hpa_unable_to_scale.json"
+   "path": "packs/k8s/alerts/workload/hpa_unable_to_scale.json",
+   "content_hash": "ea52f4a688fe"
   },
   {
+   "id": "k8s/job_backoff_limit_exceeded_events",
    "name": "job_backoff_limit_exceeded_events",
    "pack": "k8s",
    "category": "workload",
@@ -1334,9 +1501,11 @@
    "required_streams": [
     "k8s_events"
    ],
-   "path": "packs/k8s/alerts/workload/job_backoff_limit_exceeded_events.json"
+   "path": "packs/k8s/alerts/workload/job_backoff_limit_exceeded_events.json",
+   "content_hash": "fc9a5eb4b954"
   },
   {
+   "id": "k8s/job_failed",
    "name": "job_failed",
    "pack": "k8s",
    "category": "workload",
@@ -1349,9 +1518,11 @@
    "required_streams": [
     "kube_job_failed"
    ],
-   "path": "packs/k8s/alerts/workload/job_failed.json"
+   "path": "packs/k8s/alerts/workload/job_failed.json",
+   "content_hash": "854800ee0bf1"
   },
   {
+   "id": "k8s/statefulset_replica_mismatch",
    "name": "statefulset_replica_mismatch",
    "pack": "k8s",
    "category": "workload",
@@ -1364,9 +1535,11 @@
    "required_streams": [
     "kube_statefulset_status_replicas_ready"
    ],
-   "path": "packs/k8s/alerts/workload/statefulset_replica_mismatch.json"
+   "path": "packs/k8s/alerts/workload/statefulset_replica_mismatch.json",
+   "content_hash": "11ca47e41ef5"
   },
   {
+   "id": "openobserve/memory_table_overflow_error",
    "name": "memory_table_overflow_error",
    "pack": "openobserve",
    "category": "self-monitoring",
@@ -1379,7 +1552,8 @@
    "required_streams": [
     "default"
    ],
-   "path": "packs/openobserve/alerts/self-monitoring/memory_table_overflow_error.json"
+   "path": "packs/openobserve/alerts/self-monitoring/memory_table_overflow_error.json",
+   "content_hash": "01da8a1dc21a"
   }
  ]
 }

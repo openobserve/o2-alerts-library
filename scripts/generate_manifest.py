@@ -7,9 +7,15 @@ then fetches individual alert files at the `path` each entry states.
 Rules this script enforces (it fails the build rather than emit a wrong index):
   - every alert lives at exactly packs/<pack>/alerts/<category>/<name>.json
   - filename == the alert's internal "name" field
+  - alert names are unique per pack — "<pack>/<name>" is the stable `id`
+    installers stamp for provenance/update detection, so a collision is a
+    build error, not a surprise in a customer org
   - severity comes from an explicit "severity" field, or deterministically
     from the description's "Critical:/Warning:/Info:" prefix — an alert with
     neither is an error, never a silent default
+
+Each entry also carries `content_hash` (sha256 of the alert file, first 12
+hex chars) for mechanical update detection.
 
 Determinism is load-bearing: same tree in, byte-identical manifest out
 (sorted traversal, no timestamps). CI relies on "no diff => no bot commit"
@@ -19,6 +25,7 @@ In-file fields (title, tags, tier, version, docs_url) win over derived values,
 so the metadata backfill enriches the manifest without touching this script.
 """
 
+import hashlib
 import json
 import re
 import sys
@@ -80,6 +87,11 @@ def main() -> None:
                 f"under alerts/"
             )
 
+        # `id` (<pack>/<name>) is the stable key installers stamp into customer
+        # orgs (provenance / update detection), so collisions must be build
+        # errors: the filesystem only prevents same-name within one category.
+        seen_names: dict[str, str] = {}
+
         categories = []
         for cat_dir in sorted(p for p in alerts_dir.iterdir() if p.is_dir()):
             category = cat_dir.name
@@ -94,15 +106,24 @@ def main() -> None:
 
             for f in files:
                 rel = f.relative_to(ROOT).as_posix()
+                raw = f.read_bytes()
                 try:
-                    data = json.loads(f.read_text())
-                except (json.JSONDecodeError, OSError) as e:
-                    fail(f"{rel}: unreadable or invalid JSON: {e}")
+                    data = json.loads(raw)
+                except json.JSONDecodeError as e:
+                    fail(f"{rel}: invalid JSON: {e}")
                 if data.get("name") != f.stem:
                     fail(f"{rel}: filename '{f.stem}' != internal name '{data.get('name')}'")
+                if data["name"] in seen_names:
+                    fail(
+                        f"{rel}: duplicate alert name '{data['name']}' in pack "
+                        f"'{pack}' (also at {seen_names[data['name']]}) — names "
+                        "must be unique per pack; they form the stable id"
+                    )
+                seen_names[data["name"]] = rel
 
                 qc = data.get("query_condition") or {}
                 entry = {
+                    "id": f"{pack}/{data['name']}",
                     "name": data["name"],
                     "pack": pack,
                     "category": category,
@@ -114,6 +135,11 @@ def main() -> None:
                     "query_type": qc.get("type"),
                     "required_streams": [data["stream_name"]] if data.get("stream_name") else [],
                     "path": rel,
+                    # Mechanical change detection: installers stamp this hash;
+                    # the gallery compares stamp vs manifest to show "update
+                    # available". Nobody has to remember to bump anything. A
+                    # curated semver `version` field can layer on top later.
+                    "content_hash": hashlib.sha256(raw).hexdigest()[:12],
                 }
                 for optional in ("tags", "tier", "version", "docs_url"):
                     if optional in data:
