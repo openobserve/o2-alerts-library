@@ -1,0 +1,66 @@
+{
+  "name": "smart_wearout_indicator",
+  "title": "SMART Wearout Indicator",
+  "severity": "critical",
+  "description": "Device is wearing out drive",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "smart-device-monitoring",
+    "smartctl-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/s-m-a-r-t-device-monitoring/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/s-m-a-r-t-device-monitoring/",
+    "exporter": "smartctl-exporter",
+    "upstream_alert": "SMART Wearout Indicator",
+    "upstream_query": "smartctl_device_available_spare < smartctl_device_available_spare_threshold",
+    "upstream_description": "Device is wearing out on {{ $labels.instance }} drive {{ $labels.device }}",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "smartctl_device_available_spare",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(smartctl_device_available_spare < smartctl_device_available_spare_threshold) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | device: {device}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

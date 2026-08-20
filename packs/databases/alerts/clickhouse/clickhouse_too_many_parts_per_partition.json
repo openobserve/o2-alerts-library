@@ -1,0 +1,66 @@
+{
+  "name": "clickhouse_too_many_parts_per_partition",
+  "title": "ClickHouse too many parts per partition",
+  "severity": "warning",
+  "description": "The number of data parts per partition is high, an early warning sign of merge pressure before ClickHouse starts rejecting or delaying INSERTs.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "clickhouse",
+    "embedded-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/clickhouse/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/clickhouse/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "ClickHouse too many parts per partition",
+    "upstream_query": "ClickHouseAsyncMetrics_MaxPartCountForPartition > 100",
+    "upstream_description": "The number of data parts per partition on {{ $labels.instance }} is high, an early warning sign of merge pressure before ClickHouse starts rejecting or delaying INSERTs."
+  },
+  "stream_type": "metrics",
+  "stream_name": "ClickHouseAsyncMetrics_MaxPartCountForPartition",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "ClickHouseAsyncMetrics_MaxPartCountForPartition",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 100,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "100 is a rough default; part count scales with your insert frequency and batch size — adjust based on your workload."
+}

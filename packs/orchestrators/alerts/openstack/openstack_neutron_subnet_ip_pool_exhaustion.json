@@ -1,0 +1,66 @@
+{
+  "name": "openstack_neutron_subnet_ip_pool_exhaustion",
+  "title": "OpenStack Neutron subnet IP pool exhaustion",
+  "severity": "warning",
+  "description": "Subnet on network has used over 90% of its IP pool",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "openstack",
+    "openstack-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/orchestrators/openstack/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/orchestrators/openstack/",
+    "exporter": "openstack-exporter",
+    "upstream_alert": "OpenStack Neutron subnet IP pool exhaustion",
+    "upstream_query": "openstack_neutron_network_ip_availabilities_used / openstack_neutron_network_ip_availabilities_total > 0.9 and openstack_neutron_network_ip_availabilities_total > 0",
+    "upstream_description": "Subnet {{ $labels.subnet_name }} on network {{ $labels.network_name }} has used over 90% of its IP pool",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "openstack_neutron_network_ip_availabilities_used",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(openstack_neutron_network_ip_availabilities_used / openstack_neutron_network_ip_availabilities_total > 0.9 and openstack_neutron_network_ip_availabilities_total > 0) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | subnet_name: {subnet_name} | network_name: {network_name}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

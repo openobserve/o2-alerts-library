@@ -1,0 +1,66 @@
+{
+  "name": "istio_latency_99_percentile",
+  "title": "Istio latency 99 percentile",
+  "severity": "warning",
+  "description": "Istio p99 request latency is (threshold: 1000ms).",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "istio"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/istio/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/istio/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Istio latency 99 percentile",
+    "upstream_query": "histogram_quantile(0.99, sum(rate(istio_request_duration_milliseconds_bucket[1m])) by (destination_canonical_service, destination_workload_namespace, le)) > 1000",
+    "upstream_description": "Istio p99 request latency is {{ $value }}ms (threshold: 1000ms)."
+  },
+  "stream_type": "metrics",
+  "stream_name": "istio_request_duration_milliseconds_bucket",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "histogram_quantile(0.99, sum(rate(istio_request_duration_milliseconds_bucket[1m])) by (destination_canonical_service, destination_workload_namespace, le))",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 1000,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "1000ms threshold is a rough default; acceptable latency varies by service and your SLO — adjust based on your baseline."
+}

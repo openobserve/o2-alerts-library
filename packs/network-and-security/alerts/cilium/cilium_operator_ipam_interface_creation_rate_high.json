@@ -1,0 +1,66 @@
+{
+  "name": "cilium_operator_ipam_interface_creation_rate_high",
+  "title": "Cilium operator IPAM interface creation rate high",
+  "severity": "warning",
+  "description": "Cilium operator is creating IPAM network interfaces at a high rate. This indicates churn and may correlate with IPAM issues depending on your Cilium version.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "cilium",
+    "embedded-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/cilium/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/cilium/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Cilium operator IPAM interface creation rate high",
+    "upstream_query": "sum(rate(cilium_operator_ipam_interface_creation_ops[5m])) by () > 0.05",
+    "upstream_description": "Cilium operator is creating IPAM network interfaces at a high rate. This indicates churn and may correlate with IPAM issues depending on your Cilium version."
+  },
+  "stream_type": "metrics",
+  "stream_name": "cilium_operator_ipam_interface_creation_ops",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum(rate(cilium_operator_ipam_interface_creation_ops[5m])) by ()",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0.05,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 10,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "The status label was removed from this metric in Cilium v1.13; the counter is only\nincremented on interface-creation calls, so any nonzero rate here reflects operator\nIPAM activity, not necessarily failures specifically."
+}

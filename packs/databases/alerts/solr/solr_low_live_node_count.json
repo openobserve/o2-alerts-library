@@ -1,0 +1,65 @@
+{
+  "name": "solr_low_live_node_count",
+  "title": "Solr low live node count",
+  "severity": "critical",
+  "description": "Solr collection has less than two live nodes for replica.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "solr"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/solr/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/solr/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Solr low live node count",
+    "upstream_query": "solr_collections_live_nodes < 2",
+    "upstream_description": "Solr collection {{ $labels.collection }} has less than two live nodes for replica {{ $labels.replica }} on {{ $labels.base_url }}."
+  },
+  "stream_type": "metrics",
+  "stream_name": "solr_collections_live_nodes",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "solr_collections_live_nodes",
+    "promql_condition": {
+      "column": "value",
+      "operator": "<",
+      "value": 2,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | collection: {collection} | replica: {replica} | base_url: {base_url} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

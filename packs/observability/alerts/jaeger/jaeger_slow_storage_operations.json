@@ -1,0 +1,66 @@
+{
+  "name": "jaeger_slow_storage_operations",
+  "title": "Jaeger slow storage operations",
+  "severity": "warning",
+  "description": "Jaeger storage p99 latency is.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "jaeger"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/jaeger/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/jaeger/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Jaeger slow storage operations",
+    "upstream_query": "histogram_quantile(0.99, sum(rate(jaeger_storage_latency_seconds_bucket[5m])) by (le, instance, job, namespace, operation)) > 1",
+    "upstream_description": "Jaeger on {{ $labels.instance }} storage p99 latency for {{ $labels.operation }} is {{ $value | humanizeDuration }}."
+  },
+  "stream_type": "metrics",
+  "stream_name": "jaeger_storage_latency_seconds_bucket",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "histogram_quantile(0.99, sum(rate(jaeger_storage_latency_seconds_bucket[5m])) by (le, instance, job, namespace, operation))",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | operation: {operation} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Threshold of 1s is a rough default. Adjust based on your storage backend and data volume."
+}

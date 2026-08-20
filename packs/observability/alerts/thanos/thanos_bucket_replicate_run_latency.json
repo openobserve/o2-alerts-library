@@ -1,0 +1,67 @@
+{
+  "name": "thanos_bucket_replicate_run_latency",
+  "title": "Thanos Bucket Replicate Run Latency",
+  "severity": "critical",
+  "description": "Thanos Replicate has a 99th percentile latency seconds for the replicate operations.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "thanos",
+    "thanos-bucket-replicate"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/thanos/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/thanos/",
+    "exporter": "thanos-bucket-replicate",
+    "upstream_alert": "Thanos Bucket Replicate Run Latency",
+    "upstream_query": "(histogram_quantile(0.99, sum by (job, le) (rate(thanos_replicate_replication_run_duration_seconds_bucket[5m]))) > 20 and  sum by (job) (rate(thanos_replicate_replication_run_duration_seconds_count[5m])) > 0)",
+    "upstream_description": "Thanos Replicate {{$labels.job}} has a 99th percentile latency of {{$value}} seconds for the replicate operations.",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "thanos_replicate_replication_run_duration_seconds_bucket",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "((histogram_quantile(0.99, sum by (job, le) (rate(thanos_replicate_replication_run_duration_seconds_bucket[5m]))) > 20 and  sum by (job) (rate(thanos_replicate_replication_run_duration_seconds_count[5m])) > 0)) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | job: {job}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "20s threshold is a rough default; replication latency depends on your data volume and object storage backend — adjust based on your baseline."
+}

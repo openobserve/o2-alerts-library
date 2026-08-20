@@ -1,0 +1,66 @@
+{
+  "name": "pulsar_topic_very_large_backlog_storage_size",
+  "title": "Pulsar topic very large backlog storage size",
+  "severity": "critical",
+  "description": "The topic backlog storage size is over 20 GB",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "pulsar"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/message-brokers/pulsar/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/message-brokers/pulsar/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Pulsar topic very large backlog storage size",
+    "upstream_query": "sum(pulsar_storage_size) by (topic) > 20*1024*1024*1024",
+    "upstream_description": "The topic backlog storage size is over 20 GB"
+  },
+  "stream_type": "metrics",
+  "stream_name": "pulsar_storage_size",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum(pulsar_storage_size) by (topic)",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 21474836480,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 60,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "20GB is a rough default; scales with your message size, retention, and consumer lag — adjust based on your workload."
+}

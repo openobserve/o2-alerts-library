@@ -1,0 +1,65 @@
+{
+  "name": "cloudflare_load_balancer_pool_unhealthy",
+  "title": "Cloudflare load balancer pool unhealthy",
+  "severity": "critical",
+  "description": "Cloudflare load balancer pool for zone is reporting as unhealthy, meaning origin servers behind this pool may be unreachable.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "cloudflare",
+    "lablabs-cloudflare-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/cloudflare/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/cloudflare/",
+    "exporter": "lablabs-cloudflare-exporter",
+    "upstream_alert": "Cloudflare load balancer pool unhealthy",
+    "upstream_query": "cloudflare_zone_pool_health_status == 0",
+    "upstream_description": "Cloudflare load balancer pool {{ $labels.pool_name }} for zone {{ $labels.zone }} is reporting as unhealthy, meaning origin servers behind this pool may be unreachable."
+  },
+  "stream_type": "metrics",
+  "stream_name": "cloudflare_zone_pool_health_status",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "cloudflare_zone_pool_health_status",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | pool_name: {pool_name} | zone: {zone} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

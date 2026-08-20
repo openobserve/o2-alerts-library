@@ -1,0 +1,65 @@
+{
+  "name": "kubernetes_persistentvolumeclaim_pending",
+  "title": "Kubernetes PersistentVolumeClaim pending",
+  "severity": "warning",
+  "description": "PersistentVolumeClaim is pending",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "kubernetes",
+    "kubestate-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/orchestrators/kubernetes/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/orchestrators/kubernetes/",
+    "exporter": "kubestate-exporter",
+    "upstream_alert": "Kubernetes PersistentVolumeClaim pending",
+    "upstream_query": "kube_persistentvolumeclaim_status_phase{phase=\"Pending\"} == 1",
+    "upstream_description": "PersistentVolumeClaim {{ $labels.namespace }}/{{ $labels.persistentvolumeclaim }} is pending"
+  },
+  "stream_type": "metrics",
+  "stream_name": "kube_persistentvolumeclaim_status_phase",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "kube_persistentvolumeclaim_status_phase{phase=\"Pending\"}",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | namespace: {namespace} | persistentvolumeclaim: {persistentvolumeclaim} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

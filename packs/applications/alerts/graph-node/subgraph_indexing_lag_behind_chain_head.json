@@ -1,0 +1,66 @@
+{
+  "name": "subgraph_indexing_lag_behind_chain_head",
+  "title": "Subgraph indexing lag behind chain head",
+  "severity": "warning",
+  "description": "Subgraph deployment ` ` is more than 100 blocks behind the ` ` chain head in Graph node ` `, indicating indexing is stalled or too slow to keep up with new blocks.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "graph-node"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/other/graph-node/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/other/graph-node/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Subgraph indexing lag behind chain head",
+    "upstream_query": "ethereum_chain_head_number - ignoring(deployment,shard) group_right(deployment,shard) deployment_head > 100",
+    "upstream_description": "Subgraph deployment `{{$labels.deployment}}` is more than 100 blocks behind the `{{$labels.network}}` chain head in Graph node `{{$labels.instance}}`, indicating indexing is stalled or too slow to keep up with new blocks."
+  },
+  "stream_type": "metrics",
+  "stream_name": "ethereum_chain_head_number",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "ethereum_chain_head_number - ignoring(deployment,shard) group_right(deployment,shard) deployment_head",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 100,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 10,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | deployment: {deployment} | network: {network} | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "100 blocks is a rough default; real-world lag varies enormously by chain (block time ranges from ~2s to ~10min across networks) — adjust based on the specific network's block time."
+}

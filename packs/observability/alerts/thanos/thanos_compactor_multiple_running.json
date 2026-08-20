@@ -1,0 +1,65 @@
+{
+  "name": "thanos_compactor_multiple_running",
+  "title": "Thanos Compactor Multiple Running",
+  "severity": "warning",
+  "description": "No more than one Thanos Compact instance should be running at once. There are instances running.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "thanos",
+    "thanos-compactor"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/thanos/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/thanos/",
+    "exporter": "thanos-compactor",
+    "upstream_alert": "Thanos Compactor Multiple Running",
+    "upstream_query": "sum by (job) (up{job=~\".*thanos-compact.*\"}) > 1",
+    "upstream_description": "No more than one Thanos Compact instance should be running at once. There are {{$value}} instances running."
+  },
+  "stream_type": "metrics",
+  "stream_name": "up",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum by (job) (up{job=~\".*thanos-compact.*\"})",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

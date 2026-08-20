@@ -1,0 +1,65 @@
+{
+  "name": "openebs_lvm_thin_pool_capacity_high",
+  "title": "OpenEBS LVM thin pool capacity high",
+  "severity": "warning",
+  "description": "OpenEBS LVM LocalPV thin pool is using more than 90% of its capacity. A thin pool can run out of space even when the underlying volume group has free capacity.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "openebs"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/storage/openebs/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/storage/openebs/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "OpenEBS LVM thin pool capacity high",
+    "upstream_query": "lvm_lv_used_percent{segtype=\"thin-pool\"} > 90",
+    "upstream_description": "OpenEBS LVM LocalPV thin pool {{ $labels.instance }} is using more than 90% of its capacity ({{ $value }}%). A thin pool can run out of space even when the underlying volume group has free capacity."
+  },
+  "stream_type": "metrics",
+  "stream_name": "lvm_lv_used_percent",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "lvm_lv_used_percent{segtype=\"thin-pool\"}",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 90,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

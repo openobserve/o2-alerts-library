@@ -1,0 +1,67 @@
+{
+  "name": "cilium_operator_low_available_ipam_ips",
+  "title": "Cilium operator low available IPAM IPs",
+  "severity": "warning",
+  "description": "Cilium operator IPAM IP pool is over 90% utilized. Allocate more IPs to avoid exhaustion.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "cilium",
+    "embedded-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/cilium/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/cilium/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Cilium operator low available IPAM IPs",
+    "upstream_query": "sum(cilium_operator_ipam_ips{type!=\"available\"}) by () / sum(cilium_operator_ipam_ips) by () > 0.9 and sum(cilium_operator_ipam_ips) by () > 0",
+    "upstream_description": "Cilium operator IPAM IP pool is over 90% utilized. Allocate more IPs to avoid exhaustion.",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "cilium_operator_ipam_ips",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(sum(cilium_operator_ipam_ips{type!=\"available\"}) by () / sum(cilium_operator_ipam_ips) by () > 0.9 and sum(cilium_operator_ipam_ips) by () > 0) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}*",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Threshold of 90% is a rough default. Adjust based on your pod churn rate and IP pool size."
+}

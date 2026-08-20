@@ -1,0 +1,66 @@
+{
+  "name": "memcached_out_of_memory_errors",
+  "title": "Memcached out of memory errors",
+  "severity": "warning",
+  "description": "Memcached is returning out-of-memory errors",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "memcached",
+    "memcached-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/memcached/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/memcached/",
+    "exporter": "memcached-exporter",
+    "upstream_alert": "Memcached out of memory errors",
+    "upstream_query": "sum without (slab) (rate(memcached_slab_items_outofmemory_total[5m])) > 0.05",
+    "upstream_description": "Memcached is returning out-of-memory errors on {{ $labels.instance }} ({{ $value }} errors/s)"
+  },
+  "stream_type": "metrics",
+  "stream_name": "memcached_slab_items_outofmemory_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum without (slab) (rate(memcached_slab_items_outofmemory_total[5m]))",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0.05,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "0.05 errors/s is a rough default; OOM error rate depends on your configured memory limit (-m) relative to your working set size and write traffic — adjust based on your workload."
+}

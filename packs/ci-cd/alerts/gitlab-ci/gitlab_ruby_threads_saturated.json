@@ -1,0 +1,66 @@
+{
+  "name": "gitlab_ruby_threads_saturated",
+  "title": "GitLab Ruby threads saturated",
+  "severity": "warning",
+  "description": "GitLab running threads have exceeded the expected maximum.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "gitlab-built-in-exporter",
+    "gitlab-ci"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/gitlab-ci/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/gitlab-ci/",
+    "exporter": "gitlab-built-in-exporter",
+    "upstream_alert": "GitLab Ruby threads saturated",
+    "upstream_query": "sum by (instance) (gitlab_ruby_threads_running_threads) > on(instance) gitlab_ruby_threads_max_expected_threads * 1.5",
+    "upstream_description": "GitLab running threads on {{ $labels.instance }} have exceeded the expected maximum ({{ $value }}).",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "gitlab_ruby_threads_running_threads",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(sum by (instance) (gitlab_ruby_threads_running_threads) > on(instance) gitlab_ruby_threads_max_expected_threads * 1.5) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 10,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

@@ -1,0 +1,66 @@
+{
+  "name": "spinnaker_orca_queue_backing_up",
+  "title": "Spinnaker Orca queue backing up",
+  "severity": "warning",
+  "description": "Orca work queue has messages ready for delivery but not yet picked up. Pipeline executions may be delayed.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "spinnaker"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/spinnaker/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/spinnaker/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Spinnaker Orca queue backing up",
+    "upstream_query": "queue_ready_depth > 0",
+    "upstream_description": "Orca work queue has {{ $value }} messages ready for delivery but not yet picked up. Pipeline executions may be delayed."
+  },
+  "stream_type": "metrics",
+  "stream_name": "queue_ready_depth",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "queue_ready_depth",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "In a healthy Spinnaker, queue_ready_depth should stay at or near 0.\nSustained non-zero values indicate Orca cannot keep up with incoming work."
+}

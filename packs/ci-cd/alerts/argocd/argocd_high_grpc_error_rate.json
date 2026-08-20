@@ -1,0 +1,66 @@
+{
+  "name": "argocd_high_grpc_error_rate",
+  "title": "ArgoCD high gRPC error rate",
+  "severity": "warning",
+  "description": "More than 5% of gRPC requests handled by ArgoCD are failing, indicating degraded health of the API server or repo server.",
+  "tags": [
+    "argocd",
+    "awesome-prometheus-alerts",
+    "embedded-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/argocd/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/argocd/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "ArgoCD high gRPC error rate",
+    "upstream_query": "sum(rate(grpc_server_handled_total{grpc_code=~\"Internal|Unavailable|DeadlineExceeded|ResourceExhausted|Aborted|Unknown\"}[5m])) / sum(rate(grpc_server_handled_total[5m])) * 100 > 5 and sum(rate(grpc_server_handled_total[5m])) > 0",
+    "upstream_description": "More than 5% of gRPC requests handled by ArgoCD are failing ({{ $value | humanize }}%), indicating degraded health of the API server or repo server.",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "grpc_server_handled_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(sum(rate(grpc_server_handled_total{grpc_code=~\"Internal|Unavailable|DeadlineExceeded|ResourceExhausted|Aborted|Unknown\"}[5m])) / sum(rate(grpc_server_handled_total[5m])) * 100 > 5 and sum(rate(grpc_server_handled_total[5m])) > 0) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 10,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}*",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

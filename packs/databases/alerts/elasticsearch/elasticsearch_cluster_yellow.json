@@ -1,0 +1,65 @@
+{
+  "name": "elasticsearch_cluster_yellow",
+  "title": "Elasticsearch Cluster Yellow",
+  "severity": "warning",
+  "description": "Elastic Cluster Yellow status",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "elasticsearch",
+    "prometheus-community-elasticsearch-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/elasticsearch/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/elasticsearch/",
+    "exporter": "prometheus-community-elasticsearch-exporter",
+    "upstream_alert": "Elasticsearch Cluster Yellow",
+    "upstream_query": "elasticsearch_cluster_health_status{color=\"yellow\"} == 1",
+    "upstream_description": "Elastic Cluster Yellow status"
+  },
+  "stream_type": "metrics",
+  "stream_name": "elasticsearch_cluster_health_status",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "elasticsearch_cluster_health_status{color=\"yellow\"}",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

@@ -1,0 +1,65 @@
+{
+  "name": "systemd_unit_failed",
+  "title": "Systemd unit failed",
+  "severity": "warning",
+  "description": "Systemd unit has entered failed state.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "systemd",
+    "systemd-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/systemd/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/systemd/",
+    "exporter": "systemd-exporter",
+    "upstream_alert": "Systemd unit failed",
+    "upstream_query": "systemd_unit_state{state=\"failed\"} == 1",
+    "upstream_description": "Systemd unit {{ $labels.name }} has entered failed state. (instance {{ $labels.instance }})"
+  },
+  "stream_type": "metrics",
+  "stream_name": "systemd_unit_state",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "systemd_unit_state{state=\"failed\"}",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | name: {name} | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

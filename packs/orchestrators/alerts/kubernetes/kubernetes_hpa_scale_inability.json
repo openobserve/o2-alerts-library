@@ -1,0 +1,65 @@
+{
+  "name": "kubernetes_hpa_scale_inability",
+  "title": "Kubernetes HPA scale inability",
+  "severity": "warning",
+  "description": "HPA is unable to scale",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "kubernetes",
+    "kubestate-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/orchestrators/kubernetes/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/orchestrators/kubernetes/",
+    "exporter": "kubestate-exporter",
+    "upstream_alert": "Kubernetes HPA scale inability",
+    "upstream_query": "(kube_horizontalpodautoscaler_spec_max_replicas - kube_horizontalpodautoscaler_status_desired_replicas) * on (horizontalpodautoscaler,namespace) (kube_horizontalpodautoscaler_status_condition{condition=\"ScalingLimited\", status=\"true\"} == 1) == 0",
+    "upstream_description": "HPA {{ $labels.namespace }}/{{ $labels.horizontalpodautoscaler }} is unable to scale"
+  },
+  "stream_type": "metrics",
+  "stream_name": "kube_horizontalpodautoscaler_spec_max_replicas",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(kube_horizontalpodautoscaler_spec_max_replicas - kube_horizontalpodautoscaler_status_desired_replicas) * on (horizontalpodautoscaler,namespace) (kube_horizontalpodautoscaler_status_condition{condition=\"ScalingLimited\", status=\"true\"} == 1)",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | namespace: {namespace} | horizontalpodautoscaler: {horizontalpodautoscaler} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

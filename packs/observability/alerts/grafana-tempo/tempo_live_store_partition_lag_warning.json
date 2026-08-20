@@ -1,0 +1,66 @@
+{
+  "name": "tempo_live_store_partition_lag_warning",
+  "title": "Tempo live store partition lag warning",
+  "severity": "warning",
+  "description": "Tempo live-store is lagging behind Kafka ingest partition, degrading read completeness for recent traces.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "grafana-tempo"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-tempo/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-tempo/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Tempo live store partition lag warning",
+    "upstream_query": "tempo_ingest_group_partition_lag_seconds{container=\"live-store\"} > 200",
+    "upstream_description": "Tempo live-store {{ $labels.instance }} (group {{ $labels.group }}) is lagging by {{ $value }}s behind Kafka ingest partition {{ $labels.partition }}, degrading read completeness for recent traces."
+  },
+  "stream_type": "metrics",
+  "stream_name": "tempo_ingest_group_partition_lag_seconds",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "tempo_ingest_group_partition_lag_seconds{container=\"live-store\"}",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 200,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | group: {group} | partition: {partition} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "200s threshold is a rough default; Kafka lag scales with your ingestion throughput and consumer processing speed — adjust based on your workload."
+}

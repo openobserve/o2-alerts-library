@@ -1,0 +1,65 @@
+{
+  "name": "etcd_database_quota_low_space",
+  "title": "Etcd database quota low space",
+  "severity": "critical",
+  "description": "Etcd database size is above 95% of the configured storage quota; once the quota is reached, etcd stops accepting writes cluster-wide.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "etcd"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/orchestrators/etcd/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/orchestrators/etcd/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Etcd database quota low space",
+    "upstream_query": "(last_over_time(etcd_mvcc_db_total_size_in_bytes[5m]) / last_over_time(etcd_server_quota_backend_bytes[5m])) * 100 > 95",
+    "upstream_description": "Etcd database size is above 95% of the configured storage quota ({{ $value }}%); once the quota is reached, etcd stops accepting writes cluster-wide."
+  },
+  "stream_type": "metrics",
+  "stream_name": "etcd_mvcc_db_total_size_in_bytes",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(last_over_time(etcd_mvcc_db_total_size_in_bytes[5m]) / last_over_time(etcd_server_quota_backend_bytes[5m])) * 100",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 95,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 10,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

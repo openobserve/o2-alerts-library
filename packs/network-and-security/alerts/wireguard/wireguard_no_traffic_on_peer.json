@@ -1,0 +1,67 @@
+{
+  "name": "wireguard_no_traffic_on_peer",
+  "title": "WireGuard no traffic on peer",
+  "severity": "warning",
+  "description": "WireGuard peer on interface has had no traffic for 15 minutes despite an active handshake.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "mindflavor-prometheus-wireguard-exporter",
+    "wireguard"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/wireguard/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/wireguard/",
+    "exporter": "mindflavor-prometheus-wireguard-exporter",
+    "upstream_alert": "WireGuard no traffic on peer",
+    "upstream_query": "(rate(wireguard_sent_bytes_total[15m]) + rate(wireguard_received_bytes_total[15m])) == 0 and wireguard_latest_handshake_seconds > 0 and (time() - wireguard_latest_handshake_seconds) < 300",
+    "upstream_description": "WireGuard peer {{ $labels.public_key }} on interface {{ $labels.interface }} has had no traffic for 15 minutes despite an active handshake.",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "wireguard_sent_bytes_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "((rate(wireguard_sent_bytes_total[15m]) + rate(wireguard_received_bytes_total[15m])) == 0 and wireguard_latest_handshake_seconds > 0 and (time() - wireguard_latest_handshake_seconds) < 300) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 15,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | public_key: {public_key} | interface: {interface}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "This alert fires when a peer has a recent handshake but zero traffic flow.\nMay indicate routing issues or a misconfigured allowed-ips.\nOnly useful if you expect continuous traffic on all peers."
+}

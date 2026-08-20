@@ -1,0 +1,65 @@
+{
+  "name": "ceph_mds_unhealthy",
+  "title": "Ceph MDS unhealthy",
+  "severity": "critical",
+  "description": "The CephFS filesystem is damaged, fully offline, degraded, has a failed MDS rank with no standby, or has switched to read-only mode. Data may be partially or fully inaccessible; check 'ceph fs status' for details.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "ceph",
+    "embedded-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/storage/ceph/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/storage/ceph/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Ceph MDS unhealthy",
+    "upstream_query": "ceph_health_detail{name=~\"MDS_DAMAGE|MDS_ALL_DOWN|FS_DEGRADED|FS_WITH_FAILED_MDS|MDS_HEALTH_READ_ONLY\"} == 1",
+    "upstream_description": "The CephFS filesystem is damaged, fully offline, degraded, has a failed MDS rank with no standby, or has switched to read-only mode. Data may be partially or fully inaccessible; check 'ceph fs status' for details."
+  },
+  "stream_type": "metrics",
+  "stream_name": "ceph_health_detail",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "ceph_health_detail{name=~\"MDS_DAMAGE|MDS_ALL_DOWN|FS_DEGRADED|FS_WITH_FAILED_MDS|MDS_HEALTH_READ_ONLY\"}",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

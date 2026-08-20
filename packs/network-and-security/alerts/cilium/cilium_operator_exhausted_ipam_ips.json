@@ -1,0 +1,65 @@
+{
+  "name": "cilium_operator_exhausted_ipam_ips",
+  "title": "Cilium operator exhausted IPAM IPs",
+  "severity": "critical",
+  "description": "Cilium operator has no available IPAM IPs. New pods will fail to schedule networking.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "cilium",
+    "embedded-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/cilium/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/cilium/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Cilium operator exhausted IPAM IPs",
+    "upstream_query": "sum(cilium_operator_ipam_ips{type=\"available\"}) by () <= 0",
+    "upstream_description": "Cilium operator has no available IPAM IPs. New pods will fail to schedule networking."
+  },
+  "stream_type": "metrics",
+  "stream_name": "cilium_operator_ipam_ips",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum(cilium_operator_ipam_ips{type=\"available\"}) by ()",
+    "promql_condition": {
+      "column": "value",
+      "operator": "<=",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

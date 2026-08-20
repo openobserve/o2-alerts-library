@@ -1,0 +1,66 @@
+{
+  "name": "ipmi_sel_almost_full",
+  "title": "IPMI SEL almost full",
+  "severity": "warning",
+  "description": "IPMI System Event Log has only bytes free. Clear the SEL to prevent loss of new events.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "ipmi",
+    "ipmi-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/ipmi/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/ipmi/",
+    "exporter": "ipmi-exporter",
+    "upstream_alert": "IPMI SEL almost full",
+    "upstream_query": "ipmi_sel_free_space_bytes < 512",
+    "upstream_description": "IPMI System Event Log on {{ $labels.instance }} has only {{ printf \"%.0f\" $value }} bytes free. Clear the SEL to prevent loss of new events."
+  },
+  "stream_type": "metrics",
+  "stream_name": "ipmi_sel_free_space_bytes",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "ipmi_sel_free_space_bytes",
+    "promql_condition": {
+      "column": "value",
+      "operator": "<",
+      "value": 512,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "SEL storage is typically very limited (e.g., 16KB). When full, new events may be dropped."
+}

@@ -1,0 +1,66 @@
+{
+  "name": "cassandra_repair_pending_tasks",
+  "title": "Cassandra repair pending tasks",
+  "severity": "warning",
+  "description": "Some Cassandra repair tasks are pending",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "cassandra",
+    "criteo-cassandra-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/cassandra/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/cassandra/",
+    "exporter": "criteo-cassandra-exporter",
+    "upstream_alert": "Cassandra repair pending tasks",
+    "upstream_query": "cassandra_stats{name=\"org:apache:cassandra:metrics:threadpools:internal:antientropystage:pendingtasks:value\"} > 2",
+    "upstream_description": "Some Cassandra repair tasks are pending"
+  },
+  "stream_type": "metrics",
+  "stream_name": "cassandra_stats",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "cassandra_stats{name=\"org:apache:cassandra:metrics:threadpools:internal:antientropystage:pendingtasks:value\"}",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 2,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "2 is a rough default; repair backlog scales with cluster size and repair schedule — adjust based on your workload."
+}

@@ -1,0 +1,65 @@
+{
+  "name": "thanos_receive_limits_high_meta_monitoring_queries_failure_rate",
+  "title": "Thanos Receive Limits High Meta Monitoring Queries Failure Rate",
+  "severity": "warning",
+  "description": "Thanos Receive is failing to execute a high percentage of its meta-monitoring queries.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "thanos",
+    "thanos-receiver"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/thanos/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/thanos/",
+    "exporter": "thanos-receiver",
+    "upstream_alert": "Thanos Receive Limits High Meta Monitoring Queries Failure Rate",
+    "upstream_query": "(sum by (job) (increase(thanos_receive_metamonitoring_failed_queries_total[5m])) / 20) * 100 > 20",
+    "upstream_description": "Thanos Receive {{$labels.job}} is failing to execute {{ $value | humanize }}% of its meta-monitoring queries."
+  },
+  "stream_type": "metrics",
+  "stream_name": "thanos_receive_metamonitoring_failed_queries_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(sum by (job) (increase(thanos_receive_metamonitoring_failed_queries_total[5m])) / 20) * 100",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 20,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | job: {job} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

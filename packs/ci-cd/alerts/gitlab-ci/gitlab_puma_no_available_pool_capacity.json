@@ -1,0 +1,65 @@
+{
+  "name": "gitlab_puma_no_available_pool_capacity",
+  "title": "GitLab Puma no available pool capacity",
+  "severity": "critical",
+  "description": "GitLab Puma pool capacity has been at 0 for 5 minutes. All threads are busy.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "gitlab-built-in-exporter",
+    "gitlab-ci"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/gitlab-ci/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/gitlab-ci/",
+    "exporter": "gitlab-built-in-exporter",
+    "upstream_alert": "GitLab Puma no available pool capacity",
+    "upstream_query": "puma_pool_capacity == 0",
+    "upstream_description": "GitLab Puma pool capacity on {{ $labels.instance }} has been at 0 for 5 minutes. All threads are busy."
+  },
+  "stream_type": "metrics",
+  "stream_name": "puma_pool_capacity",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "puma_pool_capacity",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

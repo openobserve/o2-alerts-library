@@ -1,0 +1,65 @@
+{
+  "name": "windows_server_clock_offset",
+  "title": "Windows Server clock offset",
+  "severity": "warning",
+  "description": "System clock is offset from its configured time source by more than 1 second, which can break Kerberos authentication, Active Directory replication and log correlation.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "windows-exporter",
+    "windows-server"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/windows-server/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/windows-server/",
+    "exporter": "windows-exporter",
+    "upstream_alert": "Windows Server clock offset",
+    "upstream_query": "windows_time_computed_time_offset_seconds > 1",
+    "upstream_description": "System clock on {{ $labels.instance }} is offset from its configured time source by more than 1 second, which can break Kerberos authentication, Active Directory replication and log correlation."
+  },
+  "stream_type": "metrics",
+  "stream_name": "windows_time_computed_time_offset_seconds",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "windows_time_computed_time_offset_seconds",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

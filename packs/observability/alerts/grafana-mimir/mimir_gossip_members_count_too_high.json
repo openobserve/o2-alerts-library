@@ -1,0 +1,66 @@
+{
+  "name": "mimir_gossip_members_count_too_high",
+  "title": "Mimir gossip members count too high",
+  "severity": "warning",
+  "description": "Mimir gossip cluster has more members than expected.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "grafana-mimir"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-mimir/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-mimir/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Mimir gossip members count too high",
+    "upstream_query": "max by (job) (memberlist_client_cluster_members_count{job=~\".*(mimir|cortex).*\"}) > (sum by (job) (up{job=~\".*(mimir|cortex).*\"}) + 10)",
+    "upstream_description": "Mimir gossip cluster has more members than expected.",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "memberlist_client_cluster_members_count",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(max by (job) (memberlist_client_cluster_members_count{job=~\".*(mimir|cortex).*\"}) > (sum by (job) (up{job=~\".*(mimir|cortex).*\"}) + 10)) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 20,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}*",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

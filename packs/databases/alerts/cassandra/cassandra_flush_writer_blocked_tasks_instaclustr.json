@@ -1,0 +1,66 @@
+{
+  "name": "cassandra_flush_writer_blocked_tasks_instaclustr",
+  "title": "Cassandra flush writer blocked tasks (Instaclustr)",
+  "severity": "warning",
+  "description": "Some Cassandra flush writer tasks are blocked",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "cassandra",
+    "instaclustr-cassandra-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/cassandra/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/cassandra/",
+    "exporter": "instaclustr-cassandra-exporter",
+    "upstream_alert": "Cassandra flush writer blocked tasks (Instaclustr)",
+    "upstream_query": "cassandra_thread_pool_blocked_tasks{pool=\"MemtableFlushWriter\"} > 15",
+    "upstream_description": "Some Cassandra flush writer tasks are blocked - {{ $labels.cassandra_cluster }}"
+  },
+  "stream_type": "metrics",
+  "stream_name": "cassandra_thread_pool_blocked_tasks",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "cassandra_thread_pool_blocked_tasks{pool=\"MemtableFlushWriter\"}",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 15,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | cassandra_cluster: {cassandra_cluster} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "15 is a rough default; blocked-task depth scales with write load — adjust based on your workload."
+}

@@ -1,0 +1,66 @@
+{
+  "name": "postgresql_configuration_changed",
+  "title": "Postgresql configuration changed",
+  "severity": "info",
+  "description": "Postgres Database configuration change has occurred",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "postgres-exporter",
+    "postgresql"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/postgresql/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/postgresql/",
+    "exporter": "postgres-exporter",
+    "upstream_alert": "Postgresql configuration changed",
+    "upstream_query": "{__name__=~\"pg_settings_.*\",__name__!=\"pg_settings_transaction_read_only\"} != ON(__name__, instance) {__name__=~\"pg_settings_.*\",__name__!=\"pg_settings_transaction_read_only\"} OFFSET 5m",
+    "upstream_description": "Postgres Database configuration change has occurred",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "pg_settings_max_connections",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "({__name__=~\"pg_settings_.*\",__name__!=\"pg_settings_transaction_read_only\"} != ON(__name__, instance) {__name__=~\"pg_settings_.*\",__name__!=\"pg_settings_transaction_read_only\"} OFFSET 5m) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}*",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

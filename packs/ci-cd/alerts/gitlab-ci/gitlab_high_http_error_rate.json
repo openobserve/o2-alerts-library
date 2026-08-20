@@ -1,0 +1,68 @@
+{
+  "name": "gitlab_high_http_error_rate",
+  "title": "GitLab high HTTP error rate",
+  "severity": "critical",
+  "description": "GitLab is returning more than 5% HTTP 5xx errors.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "gitlab-built-in-exporter",
+    "gitlab-ci"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/gitlab-ci/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/gitlab-ci/",
+    "exporter": "gitlab-built-in-exporter",
+    "upstream_alert": "GitLab high HTTP error rate",
+    "upstream_query": "sum(rate(http_requests_total{status=~\"5..\"}[5m])) / sum(rate(http_requests_total[5m])) * 100 > 5 and sum(rate(http_requests_total[5m])) > 0",
+    "upstream_description": "GitLab is returning more than 5% HTTP 5xx errors on {{ $labels.instance }}.",
+    "labels_dropped": "The upstream annotation interpolates instance, but this expression aggregates those labels away, so they are not in row_template — they would render as literal placeholders.",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "http_requests_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(sum(rate(http_requests_total{status=~\"5..\"}[5m])) / sum(rate(http_requests_total[5m])) * 100 > 5 and sum(rate(http_requests_total[5m])) > 0) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}*",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Threshold is 5% of all requests returning server errors.\nCheck GitLab logs at /var/log/gitlab/ for root cause."
+}

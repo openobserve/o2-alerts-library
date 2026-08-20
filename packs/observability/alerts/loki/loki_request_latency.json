@@ -1,0 +1,66 @@
+{
+  "name": "loki_request_latency",
+  "title": "Loki request latency",
+  "severity": "critical",
+  "description": "The is experiencing 99th percentile latency.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "loki"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/loki/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/loki/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Loki request latency",
+    "upstream_query": "histogram_quantile(0.99, sum(rate(loki_request_duration_seconds_bucket{route!~\"(?i).*tail.*|/schedulerpb.SchedulerForQuerier/QuerierLoop\"}[5m])) by (namespace, job, route, le)) > 1",
+    "upstream_description": "The {{ $labels.job }} {{ $labels.route }} is experiencing {{ printf \"%.2f\" $value }}s 99th percentile latency."
+  },
+  "stream_type": "metrics",
+  "stream_name": "loki_request_duration_seconds_bucket",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "histogram_quantile(0.99, sum(rate(loki_request_duration_seconds_bucket{route!~\"(?i).*tail.*|/schedulerpb.SchedulerForQuerier/QuerierLoop\"}[5m])) by (namespace, job, route, le))",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | job: {job} | route: {route} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "1s p99 latency threshold is a rough default; acceptable latency varies by route and your SLO — adjust based on your baseline."
+}

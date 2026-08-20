@@ -1,0 +1,65 @@
+{
+  "name": "ceph_pg_not_deep_scrubbed",
+  "title": "Ceph PG not deep scrubbed",
+  "severity": "warning",
+  "description": "One or more placement groups have missed their deep scrub interval, which compares data replicas to protect against silent bit-rot.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "ceph",
+    "embedded-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/storage/ceph/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/storage/ceph/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Ceph PG not deep scrubbed",
+    "upstream_query": "ceph_health_detail{name=\"PG_NOT_DEEP_SCRUBBED\"} == 1",
+    "upstream_description": "One or more placement groups have missed their deep scrub interval, which compares data replicas to protect against silent bit-rot."
+  },
+  "stream_type": "metrics",
+  "stream_name": "ceph_health_detail",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "ceph_health_detail{name=\"PG_NOT_DEEP_SCRUBBED\"}",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

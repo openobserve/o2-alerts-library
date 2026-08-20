@@ -1,0 +1,65 @@
+{
+  "name": "digitalocean_account_not_active",
+  "title": "DigitalOcean account not active",
+  "severity": "critical",
+  "description": "DigitalOcean account is not active. It may be suspended or locked.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "digitalocean",
+    "digitalocean-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/cloud-providers/digitalocean/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/cloud-providers/digitalocean/",
+    "exporter": "digitalocean-exporter",
+    "upstream_alert": "DigitalOcean account not active",
+    "upstream_query": "digitalocean_account_active != 1",
+    "upstream_description": "DigitalOcean account is not active. It may be suspended or locked."
+  },
+  "stream_type": "metrics",
+  "stream_name": "digitalocean_account_active",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "digitalocean_account_active",
+    "promql_condition": {
+      "column": "value",
+      "operator": "!=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

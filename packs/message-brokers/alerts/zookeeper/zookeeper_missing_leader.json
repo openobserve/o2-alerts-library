@@ -1,0 +1,65 @@
+{
+  "name": "zookeeper_missing_leader",
+  "title": "Zookeeper missing leader",
+  "severity": "critical",
+  "description": "Zookeeper cluster has no node marked as leader",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "dabealu-zookeeper-exporter",
+    "zookeeper"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/message-brokers/zookeeper/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/message-brokers/zookeeper/",
+    "exporter": "dabealu-zookeeper-exporter",
+    "upstream_alert": "Zookeeper missing leader",
+    "upstream_query": "sum(zk_server_leader) == 0",
+    "upstream_description": "Zookeeper cluster has no node marked as leader"
+  },
+  "stream_type": "metrics",
+  "stream_name": "zk_server_leader",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum(zk_server_leader)",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

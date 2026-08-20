@@ -1,0 +1,65 @@
+{
+  "name": "solr_update_errors",
+  "title": "Solr update errors",
+  "severity": "critical",
+  "description": "Solr collection has failed updates for replica.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "solr"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/solr/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/solr/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Solr update errors",
+    "upstream_query": "increase(solr_metrics_core_update_handler_errors_total[1m]) > 1",
+    "upstream_description": "Solr collection {{ $labels.collection }} has failed updates for replica {{ $labels.replica }} on {{ $labels.base_url }}."
+  },
+  "stream_type": "metrics",
+  "stream_name": "solr_metrics_core_update_handler_errors_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "increase(solr_metrics_core_update_handler_errors_total[1m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | collection: {collection} | replica: {replica} | base_url: {base_url} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

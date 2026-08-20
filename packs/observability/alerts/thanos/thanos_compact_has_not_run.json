@@ -1,0 +1,65 @@
+{
+  "name": "thanos_compact_has_not_run",
+  "title": "Thanos Compact Has Not Run",
+  "severity": "warning",
+  "description": "Thanos Compact has not uploaded anything for 24 hours.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "thanos",
+    "thanos-compactor"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/thanos/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/thanos/",
+    "exporter": "thanos-compactor",
+    "upstream_alert": "Thanos Compact Has Not Run",
+    "upstream_query": "(time() - max by (job) (max_over_time(thanos_objstore_bucket_last_successful_upload_time{job=~\".*thanos-compact.*\"}[24h]))) / 60 / 60 > 24",
+    "upstream_description": "Thanos Compact {{$labels.job}} has not uploaded anything for 24 hours."
+  },
+  "stream_type": "metrics",
+  "stream_name": "thanos_objstore_bucket_last_successful_upload_time",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(time() - max by (job) (max_over_time(thanos_objstore_bucket_last_successful_upload_time{job=~\".*thanos-compact.*\"}[24h]))) / 60 / 60",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 24,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | job: {job} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

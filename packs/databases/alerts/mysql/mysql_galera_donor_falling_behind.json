@@ -1,0 +1,67 @@
+{
+  "name": "mysql_galera_donor_falling_behind",
+  "title": "MySQL Galera donor falling behind",
+  "severity": "warning",
+  "description": "Galera donor node serving a state transfer has a growing receive queue, indicating it is falling behind the rest of the cluster.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "mysql",
+    "mysqld-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/mysql/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/mysql/",
+    "exporter": "mysqld-exporter",
+    "upstream_alert": "MySQL Galera donor falling behind",
+    "upstream_query": "mysql_global_status_wsrep_local_state == 2 and mysql_global_status_wsrep_local_recv_queue > 100",
+    "upstream_description": "Galera donor node {{ $labels.instance }} serving a state transfer has a growing receive queue ({{ $value }} entries), indicating it is falling behind the rest of the cluster.",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "mysql_global_status_wsrep_local_state",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(mysql_global_status_wsrep_local_state == 2 and mysql_global_status_wsrep_local_recv_queue > 100) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "100-entry queue is a rough default; catch-up speed depends on your cluster's write throughput and network bandwidth — adjust based on your workload."
+}

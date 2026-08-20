@@ -1,0 +1,65 @@
+{
+  "name": "ipmi_chassis_power_off",
+  "title": "IPMI chassis power off",
+  "severity": "critical",
+  "description": "IPMI reports chassis power is off. The server may have shut down unexpectedly.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "ipmi",
+    "ipmi-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/ipmi/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/ipmi/",
+    "exporter": "ipmi-exporter",
+    "upstream_alert": "IPMI chassis power off",
+    "upstream_query": "ipmi_chassis_power_state == 0",
+    "upstream_description": "IPMI reports chassis power is off on {{ $labels.instance }}. The server may have shut down unexpectedly."
+  },
+  "stream_type": "metrics",
+  "stream_name": "ipmi_chassis_power_state",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "ipmi_chassis_power_state",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

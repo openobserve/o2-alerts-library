@@ -1,0 +1,65 @@
+{
+  "name": "process_exporter_high_cpu_usage",
+  "title": "Process exporter high CPU usage",
+  "severity": "warning",
+  "description": "Process group is using a high percentage CPU (core-equivalent).",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "process-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/process-exporter/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/process-exporter/",
+    "exporter": "process-exporter",
+    "upstream_alert": "Process exporter high CPU usage",
+    "upstream_query": "rate(namedprocess_namegroup_cpu_seconds_total[5m]) * 100 > 80",
+    "upstream_description": "Process group {{ $labels.groupname }} is using {{ $value }}% CPU (core-equivalent). (instance {{ $labels.instance }})"
+  },
+  "stream_type": "metrics",
+  "stream_name": "namedprocess_namegroup_cpu_seconds_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "rate(namedprocess_namegroup_cpu_seconds_total[5m]) * 100",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 80,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | groupname: {groupname} | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Value is core-equivalent %: 100% = 1 full core, 200% = 2 cores, etc. Threshold of 80% is per-core. Adjust based on expected workload."
+}

@@ -1,0 +1,66 @@
+{
+  "name": "cortex_frontend_queries_stuck",
+  "title": "Cortex frontend queries stuck",
+  "severity": "critical",
+  "description": "There are queued up queries in query-frontend.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "cortex",
+    "embedded-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/cortex/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/cortex/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Cortex frontend queries stuck",
+    "upstream_query": "sum by (job) (cortex_query_frontend_queue_length) > 1",
+    "upstream_description": "There are queued up queries in query-frontend."
+  },
+  "stream_type": "metrics",
+  "stream_name": "cortex_query_frontend_queue_length",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum by (job) (cortex_query_frontend_queue_length)",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Threshold is > 1 rather than > 0: a single momentarily queued query for 5 minutes\ndoesn't necessarily indicate a stuck query-frontend."
+}

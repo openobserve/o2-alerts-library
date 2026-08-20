@@ -1,0 +1,67 @@
+{
+  "name": "spinnaker_orca_queue_message_lag_high",
+  "title": "Spinnaker Orca queue message lag high",
+  "severity": "warning",
+  "description": "Orca queue message lag is. Pipeline stages are waiting too long before being processed.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "spinnaker"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/spinnaker/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/spinnaker/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Spinnaker Orca queue message lag high",
+    "upstream_query": "rate(queue_message_lag_seconds_sum[5m]) / rate(queue_message_lag_seconds_count[5m]) > 30 and rate(queue_message_lag_seconds_count[5m]) > 0",
+    "upstream_description": "Orca queue message lag is {{ $value }}s. Pipeline stages are waiting too long before being processed.",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "queue_message_lag_seconds_sum",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(rate(queue_message_lag_seconds_sum[5m]) / rate(queue_message_lag_seconds_count[5m]) > 30 and rate(queue_message_lag_seconds_count[5m]) > 0) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}*",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "The 30s threshold is a rough default. Adjust based on your pipeline SLOs."
+}

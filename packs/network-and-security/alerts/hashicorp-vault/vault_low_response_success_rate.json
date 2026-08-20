@@ -1,0 +1,66 @@
+{
+  "name": "vault_low_response_success_rate",
+  "title": "Vault low response success rate",
+  "severity": "warning",
+  "description": "Less than 95% of Vault API responses succeeded (non-5xx).",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "hashicorp-vault"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/hashicorp-vault/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/hashicorp-vault/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Vault low response success rate",
+    "upstream_query": "(1 - sum(rate(vault_core_response_status_code{type=\"5xx\"}[5m])) by (instance) / sum(rate(vault_core_response_status_code[5m])) by (instance)) * 100 < 95 and sum(rate(vault_core_response_status_code{type=\"5xx\"}[5m])) by (instance) > 1",
+    "upstream_description": "Less than 95% of Vault API responses succeeded (non-5xx) on {{ $labels.instance }} (current value: {{ $value | printf \"%.1f\" }}%).",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "vault_core_response_status_code",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "((1 - sum(rate(vault_core_response_status_code{type=\"5xx\"}[5m])) by (instance) / sum(rate(vault_core_response_status_code[5m])) by (instance)) * 100 < 95 and sum(rate(vault_core_response_status_code{type=\"5xx\"}[5m])) by (instance) > 1) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

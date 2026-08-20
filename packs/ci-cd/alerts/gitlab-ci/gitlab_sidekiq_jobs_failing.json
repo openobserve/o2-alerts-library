@@ -1,0 +1,66 @@
+{
+  "name": "gitlab_sidekiq_jobs_failing",
+  "title": "GitLab Sidekiq jobs failing",
+  "severity": "warning",
+  "description": "GitLab Sidekiq jobs are failing at a rate per second.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "gitlab-built-in-exporter",
+    "gitlab-ci"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/gitlab-ci/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/gitlab-ci/",
+    "exporter": "gitlab-built-in-exporter",
+    "upstream_alert": "GitLab Sidekiq jobs failing",
+    "upstream_query": "rate(sidekiq_jobs_failed_total[5m]) > 0.1",
+    "upstream_description": "GitLab Sidekiq jobs are failing at a rate of {{ $value }} per second on {{ $labels.instance }}."
+  },
+  "stream_type": "metrics",
+  "stream_name": "sidekiq_jobs_failed_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "rate(sidekiq_jobs_failed_total[5m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0.1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 10,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "This metric requires the emit_sidekiq_histogram_metrics feature flag to be enabled.\nA sustained failure rate indicates background processing issues."
+}

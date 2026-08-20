@@ -1,0 +1,66 @@
+{
+  "name": "spinnaker_polling_monitor_items_over_threshold",
+  "title": "Spinnaker polling monitor items over threshold",
+  "severity": "critical",
+  "description": "Igor polling monitor has exceeded its item threshold, preventing pipeline triggers.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "spinnaker"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/spinnaker/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/spinnaker/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Spinnaker polling monitor items over threshold",
+    "upstream_query": "sum by (monitor, partition) (pollingMonitor_itemsOverThreshold) > 0",
+    "upstream_description": "Igor polling monitor {{ $labels.monitor }} for {{ $labels.partition }} has exceeded its item threshold, preventing pipeline triggers."
+  },
+  "stream_type": "metrics",
+  "stream_name": "pollingMonitor_itemsOverThreshold",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum by (monitor, partition) (pollingMonitor_itemsOverThreshold)",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | monitor: {monitor} | partition: {partition} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "When this threshold is exceeded, Igor stops triggering pipelines for the affected monitor.\nSee https://kb.armory.io/s/article/Hitting-Igor-s-caching-thresholds"
+}

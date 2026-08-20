@@ -1,0 +1,65 @@
+{
+  "name": "spark_worker_memory_exhausted",
+  "title": "Spark worker memory exhausted",
+  "severity": "warning",
+  "description": "Spark worker has no free memory.",
+  "tags": [
+    "apache-spark",
+    "awesome-prometheus-alerts",
+    "spark-prometheus"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/data-engineering/apache-spark/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/data-engineering/apache-spark/",
+    "exporter": "spark-prometheus",
+    "upstream_alert": "Spark worker memory exhausted",
+    "upstream_query": "metrics_worker_memFree_MB_Value == 0",
+    "upstream_description": "Spark worker {{ $labels.instance }} has no free memory ({{ $value }}MB free)."
+  },
+  "stream_type": "metrics",
+  "stream_name": "metrics_worker_memFree_MB_Value",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "metrics_worker_memFree_MB_Value",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

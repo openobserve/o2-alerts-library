@@ -1,0 +1,66 @@
+{
+  "name": "elasticsearch_no_new_documents",
+  "title": "Elasticsearch no new documents",
+  "severity": "warning",
+  "description": "No new documents for 10 min!",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "elasticsearch",
+    "prometheus-community-elasticsearch-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/elasticsearch/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/elasticsearch/",
+    "exporter": "prometheus-community-elasticsearch-exporter",
+    "upstream_alert": "Elasticsearch no new documents",
+    "upstream_query": "increase(elasticsearch_indices_indexing_index_total{es_data_node=\"true\"}[10m]) < 1",
+    "upstream_description": "No new documents for 10 min!"
+  },
+  "stream_type": "metrics",
+  "stream_name": "elasticsearch_indices_indexing_index_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "increase(elasticsearch_indices_indexing_index_total{es_data_node=\"true\"}[10m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": "<",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "10-minute no-activity window is a rough default; expected indexing cadence varies by application (continuous vs batch indexing) — adjust based on your workload."
+}

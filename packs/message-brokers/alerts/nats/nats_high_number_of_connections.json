@@ -1,0 +1,66 @@
+{
+  "name": "nats_high_number_of_connections",
+  "title": "Nats high number of connections",
+  "severity": "warning",
+  "description": "NATS server has more than 1000 active connections",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "nats",
+    "nats-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/message-brokers/nats/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/message-brokers/nats/",
+    "exporter": "nats-exporter",
+    "upstream_alert": "Nats high number of connections",
+    "upstream_query": "gnatsd_connz_num_connections > 1000",
+    "upstream_description": "NATS server has more than 1000 active connections"
+  },
+  "stream_type": "metrics",
+  "stream_name": "gnatsd_connz_num_connections",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "gnatsd_connz_num_connections",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 1000,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "1000 is a rough default; connection count scales with your client/application count — adjust based on your workload."
+}

@@ -1,0 +1,65 @@
+{
+  "name": "cortex_ingester_tsdb_wal_corrupted",
+  "title": "Cortex ingester TSDB WAL corrupted",
+  "severity": "critical",
+  "description": "Cortex ingester detected a corrupted TSDB WAL or checkpoint, which can lead to loss of unflushed samples.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "cortex",
+    "embedded-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/cortex/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/cortex/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Cortex ingester TSDB WAL corrupted",
+    "upstream_query": "rate(cortex_ingester_tsdb_wal_corruptions_total[5m]) > 0",
+    "upstream_description": "Cortex ingester {{ $labels.instance }} detected a corrupted TSDB WAL or checkpoint, which can lead to loss of unflushed samples."
+  },
+  "stream_type": "metrics",
+  "stream_name": "cortex_ingester_tsdb_wal_corruptions_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "rate(cortex_ingester_tsdb_wal_corruptions_total[5m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

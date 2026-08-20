@@ -1,0 +1,66 @@
+{
+  "name": "mongodb_instance_recently_restarted",
+  "title": "MongoDB instance recently restarted",
+  "severity": "info",
+  "description": "MongoDB instance was restarted seconds ago.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "mongodb",
+    "percona-mongodb-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/mongodb/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/mongodb/",
+    "exporter": "percona-mongodb-exporter",
+    "upstream_alert": "MongoDB instance recently restarted",
+    "upstream_query": "mongodb_ss_uptime < 300",
+    "upstream_description": "MongoDB instance {{ $labels.instance }} was restarted {{ $value }} seconds ago."
+  },
+  "stream_type": "metrics",
+  "stream_name": "mongodb_ss_uptime",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "mongodb_ss_uptime",
+    "promql_condition": {
+      "column": "value",
+      "operator": "<",
+      "value": 300,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "mongodb_ss_uptime (from serverStatus.uptime) is exposed in default mode.\nOlder exporters (or --compatible-mode) instead expose mongodb_instance_uptime_seconds."
+}

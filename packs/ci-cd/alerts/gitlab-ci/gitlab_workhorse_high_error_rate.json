@@ -1,0 +1,68 @@
+{
+  "name": "gitlab_workhorse_high_error_rate",
+  "title": "GitLab Workhorse high error rate",
+  "severity": "critical",
+  "description": "GitLab Workhorse is returning more than 10% HTTP 5xx errors.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "gitlab-ci",
+    "workhorse"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/gitlab-ci/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/gitlab-ci/",
+    "exporter": "workhorse",
+    "upstream_alert": "GitLab Workhorse high error rate",
+    "upstream_query": "sum(rate(gitlab_workhorse_http_request_duration_seconds_count{code=~\"5..\"}[5m])) / sum(rate(gitlab_workhorse_http_request_duration_seconds_count[5m])) * 100 > 10 and sum(rate(gitlab_workhorse_http_request_duration_seconds_count[5m])) > 0",
+    "upstream_description": "GitLab Workhorse on {{ $labels.instance }} is returning more than 10% HTTP 5xx errors.",
+    "labels_dropped": "The upstream annotation interpolates instance, but this expression aggregates those labels away, so they are not in row_template — they would render as literal placeholders.",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "gitlab_workhorse_http_request_duration_seconds_count",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(sum(rate(gitlab_workhorse_http_request_duration_seconds_count{code=~\"5..\"}[5m])) / sum(rate(gitlab_workhorse_http_request_duration_seconds_count[5m])) * 100 > 10 and sum(rate(gitlab_workhorse_http_request_duration_seconds_count[5m])) > 0) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}*",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Workhorse sits in front of Puma and handles Git HTTP, file uploads, and proxying.\nThreshold from GitLab Omnibus default rules: 10% for high-traffic instances."
+}

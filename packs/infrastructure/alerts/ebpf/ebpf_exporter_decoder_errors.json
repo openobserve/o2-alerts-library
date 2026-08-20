@@ -1,0 +1,65 @@
+{
+  "name": "ebpf_exporter_decoder_errors",
+  "title": "eBPF exporter decoder errors",
+  "severity": "warning",
+  "description": "EBPF exporter is experiencing decoder errors for config. Kernel data is not being correctly transformed into labels.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "ebpf",
+    "ebpf-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/ebpf/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/ebpf/",
+    "exporter": "ebpf-exporter",
+    "upstream_alert": "eBPF exporter decoder errors",
+    "upstream_query": "rate(ebpf_exporter_decoder_errors_total[5m]) > 0.05",
+    "upstream_description": "eBPF exporter is experiencing decoder errors for config {{ $labels.config }}. Kernel data is not being correctly transformed into labels. (instance {{ $labels.instance }})"
+  },
+  "stream_type": "metrics",
+  "stream_name": "ebpf_exporter_decoder_errors_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "rate(ebpf_exporter_decoder_errors_total[5m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0.05,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | config: {config} | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

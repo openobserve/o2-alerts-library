@@ -1,0 +1,66 @@
+{
+  "name": "jvm_threads_blocked",
+  "title": "JVM threads BLOCKED",
+  "severity": "warning",
+  "description": "JVM has high number of BLOCKED threads, indicating lock contention",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "jvm",
+    "jvm-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/jvm/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/jvm/",
+    "exporter": "jvm-exporter",
+    "upstream_alert": "JVM threads BLOCKED",
+    "upstream_query": "jvm_threads_state{state=\"BLOCKED\"} > 50",
+    "upstream_description": "JVM has high number of BLOCKED threads, indicating lock contention"
+  },
+  "stream_type": "metrics",
+  "stream_name": "jvm_threads_state",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "jvm_threads_state{state=\"BLOCKED\"}",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 50,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "50 is a rough default; blocked-thread count scales with your app's locking/contention patterns — adjust based on your workload."
+}

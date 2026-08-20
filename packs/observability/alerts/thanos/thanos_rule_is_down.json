@@ -1,0 +1,67 @@
+{
+  "name": "thanos_rule_is_down",
+  "title": "Thanos Rule Is Down",
+  "severity": "critical",
+  "description": "ThanosRule has disappeared. Prometheus target for the component cannot be discovered.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "thanos",
+    "thanos-component-absent"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/thanos/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/thanos/",
+    "exporter": "thanos-component-absent",
+    "upstream_alert": "Thanos Rule Is Down",
+    "upstream_query": "absent(up{job=~\".*thanos-rule.*\"} == 1)",
+    "upstream_description": "ThanosRule has disappeared. Prometheus target for the component cannot be discovered.",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "up",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(absent(up{job=~\".*thanos-rule.*\"} == 1)) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}*",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Adjust the job=~\".*thanos-rule.*\" regex to match your Prometheus job naming convention. absent() fires only once every matching replica has disappeared, not for a single instance going down."
+}

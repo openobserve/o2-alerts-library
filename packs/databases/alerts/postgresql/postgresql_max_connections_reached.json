@@ -1,0 +1,66 @@
+{
+  "name": "postgresql_max_connections_reached",
+  "title": "Postgresql max connections reached",
+  "severity": "critical",
+  "description": "PostgreSQL instance has reached the maximum usable connection limit (max_connections minus superuser_reserved_connections). New client connections will be rejected until connections free up.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "postgres-exporter",
+    "postgresql"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/postgresql/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/postgresql/",
+    "exporter": "postgres-exporter",
+    "upstream_alert": "Postgresql max connections reached",
+    "upstream_query": "sum by (instance, job, server) (pg_stat_activity_count) >= (min by (instance, job, server) (pg_settings_max_connections) - min by (instance, job, server) (pg_settings_superuser_reserved_connections))",
+    "upstream_description": "PostgreSQL instance {{ $labels.instance }} has reached the maximum usable connection limit (max_connections minus superuser_reserved_connections). New client connections will be rejected until connections free up.",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "pg_stat_activity_count",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(sum by (instance, job, server) (pg_stat_activity_count) >= (min by (instance, job, server) (pg_settings_max_connections) - min by (instance, job, server) (pg_settings_superuser_reserved_connections))) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

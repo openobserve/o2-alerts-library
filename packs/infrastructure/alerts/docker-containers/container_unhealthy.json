@@ -1,0 +1,66 @@
+{
+  "name": "container_unhealthy",
+  "title": "Container Unhealthy",
+  "severity": "warning",
+  "description": "Container has been reporting an unhealthy Docker health check status for more than 5m",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "docker-containers",
+    "google-cadvisor"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/docker-containers/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/docker-containers/",
+    "exporter": "google-cadvisor",
+    "upstream_alert": "Container Unhealthy",
+    "upstream_query": "container_health_state == 0",
+    "upstream_description": "Container {{ $labels.name }} on {{ $labels.instance }} has been reporting an unhealthy Docker health check status for more than 5m"
+  },
+  "stream_type": "metrics",
+  "stream_name": "container_health_state",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "container_health_state",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | name: {name} | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Docker-specific health check rule. 0=unhealthy, 1=healthy, -1=no health check configured."
+}

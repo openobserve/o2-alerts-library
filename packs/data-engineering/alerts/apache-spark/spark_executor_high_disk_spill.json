@@ -1,0 +1,66 @@
+{
+  "name": "spark_executor_high_disk_spill",
+  "title": "Spark executor high disk spill",
+  "severity": "warning",
+  "description": "Spark executor is spilling data to disk. Consider increasing executor memory.",
+  "tags": [
+    "apache-spark",
+    "awesome-prometheus-alerts",
+    "spark-prometheus"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/data-engineering/apache-spark/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/data-engineering/apache-spark/",
+    "exporter": "spark-prometheus",
+    "upstream_alert": "Spark executor high disk spill",
+    "upstream_query": "metrics_executor_diskUsed_bytes > 1e9",
+    "upstream_description": "Spark executor {{ $labels.executor_id }} is spilling data to disk. Consider increasing executor memory."
+  },
+  "stream_type": "metrics",
+  "stream_name": "metrics_executor_diskUsed_bytes",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "metrics_executor_diskUsed_bytes",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 1000000000,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | executor_id: {executor_id} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "diskUsed is a gauge, not a counter — do not use rate(). Threshold of 1GB is a rough default.\nDisk spilling indicates insufficient memory for the workload."
+}

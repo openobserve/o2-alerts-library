@@ -1,0 +1,66 @@
+{
+  "name": "spinnaker_aws_rate_limiting",
+  "title": "Spinnaker AWS rate limiting",
+  "severity": "warning",
+  "description": "Clouddriver is being rate-limited by AWS. Cloud operations will be slower.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "spinnaker"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/spinnaker/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/spinnaker/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Spinnaker AWS rate limiting",
+    "upstream_query": "amazonClientProvider_rateLimitDelayMil > 1000",
+    "upstream_description": "Clouddriver is being rate-limited by AWS on {{ $labels.instance }} ({{ $value }}ms delay). Cloud operations will be slower."
+  },
+  "stream_type": "metrics",
+  "stream_name": "amazonClientProvider_rateLimitDelayMil",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "amazonClientProvider_rateLimitDelayMil",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 1000,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "This metric is specific to AWS cloud providers in Clouddriver.\nThe 1000ms threshold is a rough default. Adjust based on your AWS usage patterns."
+}

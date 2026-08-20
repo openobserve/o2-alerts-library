@@ -1,0 +1,65 @@
+{
+  "name": "apc_ups_high_load",
+  "title": "APC UPS high load",
+  "severity": "warning",
+  "description": "UPS load is > 80%",
+  "tags": [
+    "apc-ups",
+    "apcupsd_exporter",
+    "awesome-prometheus-alerts"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/other/apc-ups/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/other/apc-ups/",
+    "exporter": "apcupsd_exporter",
+    "upstream_alert": "APC UPS high load",
+    "upstream_query": "apcupsd_ups_load_percent > 80",
+    "upstream_description": "UPS load is > 80%"
+  },
+  "stream_type": "metrics",
+  "stream_name": "apcupsd_ups_load_percent",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "apcupsd_ups_load_percent",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 80,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

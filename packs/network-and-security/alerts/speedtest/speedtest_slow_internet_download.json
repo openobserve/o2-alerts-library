@@ -1,0 +1,66 @@
+{
+  "name": "speedtest_slow_internet_download",
+  "title": "SpeedTest Slow Internet Download",
+  "severity": "warning",
+  "description": "Internet download speed is currently Mbps.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "nlamirault-speedtest-exporter",
+    "speedtest"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/speedtest/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/speedtest/",
+    "exporter": "nlamirault-speedtest-exporter",
+    "upstream_alert": "SpeedTest Slow Internet Download",
+    "upstream_query": "avg_over_time(speedtest_download[10m]) < 100",
+    "upstream_description": "Internet download speed is currently {{humanize $value}} Mbps."
+  },
+  "stream_type": "metrics",
+  "stream_name": "speedtest_download",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "avg_over_time(speedtest_download[10m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": "<",
+      "value": 100,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "100 Mbps threshold is a rough default; adjust to match the speed your ISP plan actually promises."
+}

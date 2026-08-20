@@ -1,0 +1,66 @@
+{
+  "name": "prometheus_rule_evaluation_slow",
+  "title": "Prometheus rule evaluation slow",
+  "severity": "warning",
+  "description": "Prometheus rule evaluation took more time than the scheduled interval. It indicates a slower storage backend access or too complex query.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "prometheus"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/prometheus-self-monitoring/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/prometheus-self-monitoring/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Prometheus rule evaluation slow",
+    "upstream_query": "prometheus_rule_group_last_duration_seconds > prometheus_rule_group_interval_seconds",
+    "upstream_description": "Prometheus rule evaluation took more time than the scheduled interval. It indicates a slower storage backend access or too complex query.",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "prometheus_rule_group_last_duration_seconds",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(prometheus_rule_group_last_duration_seconds > prometheus_rule_group_interval_seconds) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}*",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

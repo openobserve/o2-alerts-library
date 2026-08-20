@@ -1,0 +1,65 @@
+{
+  "name": "kubernetes_cronjob_suspended",
+  "title": "Kubernetes CronJob suspended",
+  "severity": "warning",
+  "description": "CronJob is suspended",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "kubernetes",
+    "kubestate-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/orchestrators/kubernetes/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/orchestrators/kubernetes/",
+    "exporter": "kubestate-exporter",
+    "upstream_alert": "Kubernetes CronJob suspended",
+    "upstream_query": "kube_cronjob_spec_suspend != 0",
+    "upstream_description": "CronJob {{ $labels.namespace }}/{{ $labels.cronjob }} is suspended"
+  },
+  "stream_type": "metrics",
+  "stream_name": "kube_cronjob_spec_suspend",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "kube_cronjob_spec_suspend",
+    "promql_condition": {
+      "column": "value",
+      "operator": "!=",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | namespace: {namespace} | cronjob: {cronjob} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

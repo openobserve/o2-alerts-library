@@ -1,0 +1,66 @@
+{
+  "name": "mimir_go_threads_too_high_critical",
+  "title": "Mimir go threads too high critical",
+  "severity": "critical",
+  "description": "Mimir has Go threads.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "grafana-mimir"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-mimir/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-mimir/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Mimir go threads too high critical",
+    "upstream_query": "go_threads{job=~\".*(mimir|cortex).*\"} > 8000",
+    "upstream_description": "Mimir {{ $labels.instance }} has {{ $value }} Go threads."
+  },
+  "stream_type": "metrics",
+  "stream_name": "go_threads",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "go_threads{job=~\".*(mimir|cortex).*\"}",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 8000,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 15,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "8000 is a rough default; Go thread count scales with your workload's I/O patterns and any cgo usage — adjust based on your baseline."
+}

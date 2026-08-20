@@ -1,0 +1,66 @@
+{
+  "name": "couchdb_mango_queries_scanning_too_many_docs",
+  "title": "CouchDB Mango queries scanning too many docs",
+  "severity": "warning",
+  "description": "Some Mango queries are scanning too many documents, consider adding indexes",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "couchdb",
+    "gesellix-couchdb-prometheus-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/couchdb/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/couchdb/",
+    "exporter": "gesellix-couchdb-prometheus-exporter",
+    "upstream_alert": "CouchDB Mango queries scanning too many docs",
+    "upstream_query": "rate(couchdb_mango_too_many_docs_scanned[5m]) > 50",
+    "upstream_description": "Some Mango queries are scanning too many documents, consider adding indexes"
+  },
+  "stream_type": "metrics",
+  "stream_name": "couchdb_mango_too_many_docs_scanned",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "rate(couchdb_mango_too_many_docs_scanned[5m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 50,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "50/s is a rough default; depends on your query patterns and dataset size — adjust based on your workload, or add indexes to reduce full scans."
+}

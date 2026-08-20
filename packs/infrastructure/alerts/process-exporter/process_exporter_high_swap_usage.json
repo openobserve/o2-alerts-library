@@ -1,0 +1,65 @@
+{
+  "name": "process_exporter_high_swap_usage",
+  "title": "Process exporter high swap usage",
+  "severity": "warning",
+  "description": "Process group is using swap.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "process-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/process-exporter/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/process-exporter/",
+    "exporter": "process-exporter",
+    "upstream_alert": "Process exporter high swap usage",
+    "upstream_query": "namedprocess_namegroup_memory_bytes{memtype=\"swapped\"} > 512e+06",
+    "upstream_description": "Process group {{ $labels.groupname }} is using {{ $value | humanize }}B of swap. (instance {{ $labels.instance }})"
+  },
+  "stream_type": "metrics",
+  "stream_name": "namedprocess_namegroup_memory_bytes",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "namedprocess_namegroup_memory_bytes{memtype=\"swapped\"}",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 512000000,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | groupname: {groupname} | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Threshold of 512MB is arbitrary. Adjust per group and environment."
+}

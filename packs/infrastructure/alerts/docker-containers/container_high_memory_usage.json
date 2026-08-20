@@ -1,0 +1,66 @@
+{
+  "name": "container_high_memory_usage",
+  "title": "Container High Memory usage",
+  "severity": "warning",
+  "description": "Container Memory usage is above 80%",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "docker-containers",
+    "google-cadvisor"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/docker-containers/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/docker-containers/",
+    "exporter": "google-cadvisor",
+    "upstream_alert": "Container High Memory usage",
+    "upstream_query": "(sum(container_memory_working_set_bytes{name!=\"\"}) BY (instance, name) / sum(container_spec_memory_limit_bytes > 0) BY (instance, name) * 100) > 80",
+    "upstream_description": "Container Memory usage is above 80%"
+  },
+  "stream_type": "metrics",
+  "stream_name": "container_memory_working_set_bytes",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum(container_memory_working_set_bytes{name!=\"\"}) BY (instance, name) / sum(container_spec_memory_limit_bytes > 0) BY (instance, name) * 100",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 80,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "See https://medium.com/faun/how-much-is-too-much-the-linux-oomkiller-and-used-memory-d32186f29c9d"
+}

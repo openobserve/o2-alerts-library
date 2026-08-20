@@ -1,0 +1,65 @@
+{
+  "name": "etcd_peer_communication_failures",
+  "title": "Etcd peer communication failures",
+  "severity": "warning",
+  "description": "Etcd member is experiencing more than 0.01 failed peer sends per second to peer, which usually indicates the member is unreachable or network-partitioned.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "etcd"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/orchestrators/etcd/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/orchestrators/etcd/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Etcd peer communication failures",
+    "upstream_query": "sum(rate(etcd_network_peer_sent_failures_total[1m])) by (To) > 0.01",
+    "upstream_description": "Etcd member is experiencing more than 0.01 failed peer sends per second to peer {{ $labels.To }}, which usually indicates the member is unreachable or network-partitioned."
+  },
+  "stream_type": "metrics",
+  "stream_name": "etcd_network_peer_sent_failures_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum(rate(etcd_network_peer_sent_failures_total[1m])) by (To)",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0.01,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | To: {To} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

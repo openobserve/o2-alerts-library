@@ -1,0 +1,66 @@
+{
+  "name": "mysql_innodb_history_len_too_long",
+  "title": "MySQL InnoDB history_len too long",
+  "severity": "warning",
+  "description": "MySQL history_len (undo log) too long",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "mysql",
+    "mysqld-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/mysql/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/mysql/",
+    "exporter": "mysqld-exporter",
+    "upstream_alert": "MySQL InnoDB history_len too long",
+    "upstream_query": "mysql_info_schema_innodb_metrics_transaction_trx_rseg_history_len > 50000",
+    "upstream_description": "MySQL history_len (undo log) too long on {{ $labels.instance }}"
+  },
+  "stream_type": "metrics",
+  "stream_name": "mysql_info_schema_innodb_metrics_transaction_trx_rseg_history_len",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "mysql_info_schema_innodb_metrics_transaction_trx_rseg_history_len",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 50000,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "50000 is a rough default; undo log length grows with long-running transactions and write volume — adjust based on your transaction patterns."
+}

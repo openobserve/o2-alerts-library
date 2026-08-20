@@ -1,0 +1,65 @@
+{
+  "name": "loki_request_panic",
+  "title": "Loki request panic",
+  "severity": "critical",
+  "description": "Is experiencing panic(s) in the last 5 minutes.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "loki"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/loki/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/loki/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Loki request panic",
+    "upstream_query": "sum(increase(loki_panic_total[5m])) by (namespace, job) > 0",
+    "upstream_description": "{{ $labels.job }} is experiencing {{ $value | humanize }} panic(s) in the last 5 minutes."
+  },
+  "stream_type": "metrics",
+  "stream_name": "loki_panic_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum(increase(loki_panic_total[5m])) by (namespace, job)",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | job: {job} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

@@ -1,0 +1,66 @@
+{
+  "name": "mongodb_replication_headroom",
+  "title": "MongoDB replication headroom",
+  "severity": "critical",
+  "description": "MongoDB replication headroom is <= 0",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "mongodb",
+    "percona-mongodb-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/mongodb/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/mongodb/",
+    "exporter": "percona-mongodb-exporter",
+    "upstream_alert": "MongoDB replication headroom",
+    "upstream_query": "sum(avg(mongodb_mongod_replset_oplog_head_timestamp - mongodb_mongod_replset_oplog_tail_timestamp)) - sum(avg(mongodb_rs_members_optimeDate{member_state=\"PRIMARY\"} - on (set) group_right mongodb_rs_members_optimeDate{member_state=\"SECONDARY\"})) <= 0",
+    "upstream_description": "MongoDB replication headroom is <= 0"
+  },
+  "stream_type": "metrics",
+  "stream_name": "mongodb_mongod_replset_oplog_head_timestamp",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum(avg(mongodb_mongod_replset_oplog_head_timestamp - mongodb_mongod_replset_oplog_tail_timestamp)) - sum(avg(mongodb_rs_members_optimeDate{member_state=\"PRIMARY\"} - on (set) group_right mongodb_rs_members_optimeDate{member_state=\"SECONDARY\"}))",
+    "promql_condition": {
+      "column": "value",
+      "operator": "<=",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "This query mixes old (mongodb_mongod_*) and new (mongodb_rs_*) metric names. It requires the Percona exporter to run with --compatible-mode to expose both."
+}

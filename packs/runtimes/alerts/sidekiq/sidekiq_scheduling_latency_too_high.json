@@ -1,0 +1,66 @@
+{
+  "name": "sidekiq_scheduling_latency_too_high",
+  "title": "Sidekiq scheduling latency too high",
+  "severity": "critical",
+  "description": "Sidekiq jobs are taking more than 1min to be picked up. Users may be seeing delays in background processing.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "sidekiq",
+    "strech-sidekiq-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/sidekiq/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/sidekiq/",
+    "exporter": "strech-sidekiq-exporter",
+    "upstream_alert": "Sidekiq scheduling latency too high",
+    "upstream_query": "max(sidekiq_queue_latency_seconds) > 60",
+    "upstream_description": "Sidekiq jobs are taking more than 1min to be picked up. Users may be seeing delays in background processing."
+  },
+  "stream_type": "metrics",
+  "stream_name": "sidekiq_queue_latency_seconds",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "max(sidekiq_queue_latency_seconds)",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 60,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "1 minute is a rough default; acceptable pickup latency depends on the balance between your job production rate and worker capacity — adjust based on your workload."
+}

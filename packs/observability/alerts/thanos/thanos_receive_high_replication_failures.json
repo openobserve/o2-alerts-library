@@ -1,0 +1,66 @@
+{
+  "name": "thanos_receive_high_replication_failures",
+  "title": "Thanos Receive High Replication Failures",
+  "severity": "warning",
+  "description": "Thanos Receive is failing to replicate a high percentage of requests.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "thanos",
+    "thanos-receiver"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/thanos/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/thanos/",
+    "exporter": "thanos-receiver",
+    "upstream_alert": "Thanos Receive High Replication Failures",
+    "upstream_query": "thanos_receive_replication_factor > 1 and ((sum by (job) (rate(thanos_receive_replications_total{result=\"error\"}[5m])) / sum by (job) (rate(thanos_receive_replications_total[5m]))) > (max by (job) (floor((thanos_receive_replication_factor+1)/ 2)) / max by (job) (thanos_receive_hashring_nodes))) * 100",
+    "upstream_description": "Thanos Receive {{$labels.job}} is failing to replicate {{$value | humanize}}% of requests.",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "thanos_receive_replication_factor",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(thanos_receive_replication_factor > 1 and ((sum by (job) (rate(thanos_receive_replications_total{result=\"error\"}[5m])) / sum by (job) (rate(thanos_receive_replications_total[5m]))) > (max by (job) (floor((thanos_receive_replication_factor+1)/ 2)) / max by (job) (thanos_receive_hashring_nodes))) * 100) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | job: {job}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

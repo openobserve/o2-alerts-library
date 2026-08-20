@@ -1,0 +1,66 @@
+{
+  "name": "mimir_compactor_skipped_blocks",
+  "title": "Mimir compactor skipped blocks",
+  "severity": "warning",
+  "description": "Mimir compactor has found blocks that cannot be compacted.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "grafana-mimir"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-mimir/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-mimir/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Mimir compactor skipped blocks",
+    "upstream_query": "increase(cortex_compactor_blocks_marked_for_no_compaction_total[24h]) > 0",
+    "upstream_description": "Mimir compactor has found {{ $value }} blocks that cannot be compacted (reason {{ $labels.reason }})."
+  },
+  "stream_type": "metrics",
+  "stream_name": "cortex_compactor_blocks_marked_for_no_compaction_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "increase(cortex_compactor_blocks_marked_for_no_compaction_total[24h])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | reason: {reason} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Using a 24h window as compaction skips are rare events."
+}

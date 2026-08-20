@@ -1,0 +1,66 @@
+{
+  "name": "go_gc_duration_high",
+  "title": "Go GC duration high",
+  "severity": "warning",
+  "description": "Go GC pause duration is too high (max > 1s)",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "golang",
+    "golang-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/golang/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/golang/",
+    "exporter": "golang-exporter",
+    "upstream_alert": "Go GC duration high",
+    "upstream_query": "go_gc_duration_seconds{quantile=\"1\"} > 1",
+    "upstream_description": "Go GC pause duration is too high (max > 1s)"
+  },
+  "stream_type": "metrics",
+  "stream_name": "go_gc_duration_seconds",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "go_gc_duration_seconds{quantile=\"1\"}",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "quantile=\"1\" is the maximum observed GC pause in the current summary window, not p99.\nA single outlier pause can push this above 1s. The for: 5m ensures the max stays elevated."
+}

@@ -1,0 +1,65 @@
+{
+  "name": "apc_ups_battery_nearly_empty",
+  "title": "APC UPS Battery nearly empty",
+  "severity": "critical",
+  "description": "Battery is almost empty (< 10% left)",
+  "tags": [
+    "apc-ups",
+    "apcupsd_exporter",
+    "awesome-prometheus-alerts"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/other/apc-ups/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/other/apc-ups/",
+    "exporter": "apcupsd_exporter",
+    "upstream_alert": "APC UPS Battery nearly empty",
+    "upstream_query": "apcupsd_battery_charge_percent < 10",
+    "upstream_description": "Battery is almost empty (< 10% left)"
+  },
+  "stream_type": "metrics",
+  "stream_name": "apcupsd_battery_charge_percent",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "apcupsd_battery_charge_percent",
+    "promql_condition": {
+      "column": "value",
+      "operator": "<",
+      "value": 10,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

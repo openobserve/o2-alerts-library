@@ -28,25 +28,33 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
+      # Validate before generating: the generator only enforces the invariants
+      # it needs to build an index, so a file that would be rejected by
+      # OpenObserve on import can still produce a perfectly valid manifest.
+      - name: Validate alert files
+        run: python3 scripts/validate_alerts.py
+
       # The manifest is 100% CI-built and committed, so the S3 mirror serves
       # exactly what GitHub holds. Generation is deterministic (same tree in,
       # byte-identical manifest out) — that is what makes the no-diff guard
       # below a safe loop-breaker.
+      # Also writes PACKS.md, the human-readable index, from the same walk —
+      # so it cannot drift from the tree the way a hand-written one does.
       - name: Regenerate manifest
         run: python3 scripts/generate_manifest.py
 
       - name: Commit manifest if changed
         run: |
-          if [ -z "$(git status --porcelain manifest.json)" ]; then
-            echo "Manifest unchanged — nothing to commit."
+          if [ -z "$(git status --porcelain manifest.json PACKS.md)" ]; then
+            echo "Manifest and PACKS.md unchanged — nothing to commit."
           else
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add manifest.json
+            git add manifest.json PACKS.md
             # [skip ci] stops this push from retriggering the workflow; the
             # sync below runs in THIS run, after the commit, so S3 still gets
             # the fresh manifest atomically with the alert files.
-            git commit -m "chore: regenerate manifest.json [skip ci]"
+            git commit -m "chore: regenerate manifest.json and PACKS.md [skip ci]"
             git push
           fi
 

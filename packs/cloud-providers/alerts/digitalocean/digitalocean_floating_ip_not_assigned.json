@@ -1,0 +1,65 @@
+{
+  "name": "digitalocean_floating_ip_not_assigned",
+  "title": "DigitalOcean floating IP not assigned",
+  "severity": "warning",
+  "description": "DigitalOcean floating IP is not assigned to any droplet.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "digitalocean",
+    "digitalocean-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/cloud-providers/digitalocean/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/cloud-providers/digitalocean/",
+    "exporter": "digitalocean-exporter",
+    "upstream_alert": "DigitalOcean floating IP not assigned",
+    "upstream_query": "digitalocean_floating_ipv4_active == 0",
+    "upstream_description": "DigitalOcean floating IP {{ $labels.ipv4 }} in {{ $labels.region }} is not assigned to any droplet."
+  },
+  "stream_type": "metrics",
+  "stream_name": "digitalocean_floating_ipv4_active",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "digitalocean_floating_ipv4_active",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 10,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | ipv4: {ipv4} | region: {region} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

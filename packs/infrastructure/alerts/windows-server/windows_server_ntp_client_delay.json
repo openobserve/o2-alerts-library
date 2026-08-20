@@ -1,0 +1,66 @@
+{
+  "name": "windows_server_ntp_client_delay",
+  "title": "Windows Server NTP client delay",
+  "severity": "warning",
+  "description": "NTP round-trip delay between and its time source exceeds 1 second, which reduces time synchronization accuracy and may point to network issues.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "windows-exporter",
+    "windows-server"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/windows-server/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/windows-server/",
+    "exporter": "windows-exporter",
+    "upstream_alert": "Windows Server NTP client delay",
+    "upstream_query": "windows_time_ntp_round_trip_delay_seconds > 1",
+    "upstream_description": "NTP round-trip delay between {{ $labels.instance }} and its time source exceeds 1 second, which reduces time synchronization accuracy and may point to network issues."
+  },
+  "stream_type": "metrics",
+  "stream_name": "windows_time_ntp_round_trip_delay_seconds",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "windows_time_ntp_round_trip_delay_seconds",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "1s threshold is a rough default; acceptable round-trip time depends on your network topology (local NTP server vs internet-based) — adjust based on your baseline."
+}

@@ -1,0 +1,66 @@
+{
+  "name": "systemd_socket_high_connections",
+  "title": "Systemd socket high connections",
+  "severity": "warning",
+  "description": "Systemd socket has active connections.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "systemd",
+    "systemd-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/systemd/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/systemd/",
+    "exporter": "systemd-exporter",
+    "upstream_alert": "Systemd socket high connections",
+    "upstream_query": "systemd_socket_current_connections > 100",
+    "upstream_description": "Systemd socket {{ $labels.name }} has {{ $value }} active connections. (instance {{ $labels.instance }})"
+  },
+  "stream_type": "metrics",
+  "stream_name": "systemd_socket_current_connections",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "systemd_socket_current_connections",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 100,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | name: {name} | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Threshold of 100 connections is arbitrary. Adjust to your workload."
+}

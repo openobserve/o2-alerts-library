@@ -1,0 +1,66 @@
+{
+  "name": "tempo_distributor_usage_tracker_errors",
+  "title": "Tempo distributor usage tracker errors",
+  "severity": "critical",
+  "description": "Tempo distributor usage tracker errors/s.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "grafana-tempo"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-tempo/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-tempo/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Tempo distributor usage tracker errors",
+    "upstream_query": "sum by (job, reason) (rate(tempo_distributor_usage_tracker_errors_total[5m])) > 0.05",
+    "upstream_description": "Tempo distributor usage tracker errors for {{ $labels.job }} at {{ $value | humanize }}/s (reason {{ $labels.reason }})."
+  },
+  "stream_type": "metrics",
+  "stream_name": "tempo_distributor_usage_tracker_errors_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum by (job, reason) (rate(tempo_distributor_usage_tracker_errors_total[5m]))",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0.05,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 30,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | job: {job} | reason: {reason} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Threshold of 0.05/s avoids firing on transient single-event spikes."
+}

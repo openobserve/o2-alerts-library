@@ -1,0 +1,65 @@
+{
+  "name": "ssl_certificate_expiry_7_days",
+  "title": "SSL certificate expiry (< 7 days)",
+  "severity": "warning",
+  "description": "Certificate is expiring in 7 days",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "ribbybibby-ssl-exporter",
+    "ssl-tls"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/ssl-tls/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/ssl-tls/",
+    "exporter": "ribbybibby-ssl-exporter",
+    "upstream_alert": "SSL certificate expiry (< 7 days)",
+    "upstream_query": "ssl_verified_cert_not_after{chain_no=\"0\"} - time() < 86400 * 7",
+    "upstream_description": "{{ $labels.instance }} Certificate is expiring in 7 days"
+  },
+  "stream_type": "metrics",
+  "stream_name": "ssl_verified_cert_not_after",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "ssl_verified_cert_not_after{chain_no=\"0\"} - time()",
+    "promql_condition": {
+      "column": "value",
+      "operator": "<",
+      "value": 604800,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

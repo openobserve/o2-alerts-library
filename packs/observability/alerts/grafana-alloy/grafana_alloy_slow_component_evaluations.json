@@ -1,0 +1,65 @@
+{
+  "name": "grafana_alloy_slow_component_evaluations",
+  "title": "Grafana Alloy slow component evaluations",
+  "severity": "warning",
+  "description": "Component at path under job is taking too long to evaluate, which can lead to stale scrape targets or delayed pipeline processing.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "grafana-alloy"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-alloy/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-alloy/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Grafana Alloy slow component evaluations",
+    "upstream_query": "sum by (job, component_path, component_id) (rate(alloy_component_evaluation_slow_seconds[10m])) > 0",
+    "upstream_description": "Component {{ $labels.component_id }} at path {{ $labels.component_path }} under job {{ $labels.job }} is taking too long to evaluate, which can lead to stale scrape targets or delayed pipeline processing."
+  },
+  "stream_type": "metrics",
+  "stream_name": "alloy_component_evaluation_slow_seconds",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum by (job, component_path, component_id) (rate(alloy_component_evaluation_slow_seconds[10m]))",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 15,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | component_id: {component_id} | component_path: {component_path} | job: {job} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

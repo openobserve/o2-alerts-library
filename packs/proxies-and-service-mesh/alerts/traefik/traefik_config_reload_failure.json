@@ -1,0 +1,65 @@
+{
+  "name": "traefik_config_reload_failure",
+  "title": "Traefik config reload failure",
+  "severity": "warning",
+  "description": "Traefik dynamic configuration reload is failing, so recent routing and provider configuration changes may not be applied.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter-v2",
+    "traefik"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/traefik/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/traefik/",
+    "exporter": "embedded-exporter-v2",
+    "upstream_alert": "Traefik config reload failure",
+    "upstream_query": "sum(rate(traefik_config_reloads_failure_total[3m])) by (job) > 0",
+    "upstream_description": "Traefik dynamic configuration reload is failing on {{ $labels.job }}, so recent routing and provider configuration changes may not be applied."
+  },
+  "stream_type": "metrics",
+  "stream_name": "traefik_config_reloads_failure_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum(rate(traefik_config_reloads_failure_total[3m])) by (job)",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | job: {job} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

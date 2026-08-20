@@ -1,0 +1,65 @@
+{
+  "name": "opensearch_host_cpu_usage_high",
+  "title": "OpenSearch host CPU usage high",
+  "severity": "warning",
+  "description": "System CPU usage on OpenSearch node is above 90%, which may cause search and indexing latency.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "opensearch",
+    "opensearch-project-opensearch-prometheus-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/opensearch/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/opensearch/",
+    "exporter": "opensearch-project-opensearch-prometheus-exporter",
+    "upstream_alert": "OpenSearch host CPU usage high",
+    "upstream_query": "sum by (cluster, instance, node) (opensearch_os_cpu_percent) > 90",
+    "upstream_description": "System CPU usage on OpenSearch node {{ $labels.node }} (cluster {{ $labels.cluster }}) is above 90%, which may cause search and indexing latency."
+  },
+  "stream_type": "metrics",
+  "stream_name": "opensearch_os_cpu_percent",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum by (cluster, instance, node) (opensearch_os_cpu_percent)",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 90,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | node: {node} | cluster: {cluster} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

@@ -1,0 +1,65 @@
+{
+  "name": "elasticsearch_circuit_breaker_tripped",
+  "title": "Elasticsearch Circuit Breaker Tripped",
+  "severity": "warning",
+  "description": "The circuit breaker on Elasticsearch node has tripped in the last 5 minutes, meaning the node is rejecting operations to prevent a Java OutOfMemoryError.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "elasticsearch",
+    "prometheus-community-elasticsearch-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/elasticsearch/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/elasticsearch/",
+    "exporter": "prometheus-community-elasticsearch-exporter",
+    "upstream_alert": "Elasticsearch Circuit Breaker Tripped",
+    "upstream_query": "increase(elasticsearch_breakers_tripped[5m]) > 0",
+    "upstream_description": "The {{ $labels.breaker }} circuit breaker on Elasticsearch node {{ $labels.name }} has tripped in the last 5 minutes, meaning the node is rejecting operations to prevent a Java OutOfMemoryError."
+  },
+  "stream_type": "metrics",
+  "stream_name": "elasticsearch_breakers_tripped",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "increase(elasticsearch_breakers_tripped[5m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | breaker: {breaker} | name: {name} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

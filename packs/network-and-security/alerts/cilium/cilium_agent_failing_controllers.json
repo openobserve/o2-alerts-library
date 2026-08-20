@@ -1,0 +1,66 @@
+{
+  "name": "cilium_agent_failing_controllers",
+  "title": "Cilium agent failing controllers",
+  "severity": "warning",
+  "description": "Cilium agent has failing controller(s). Check cilium-agent logs for details.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "cilium",
+    "embedded-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/cilium/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/cilium/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Cilium agent failing controllers",
+    "upstream_query": "sum(cilium_controllers_failing{}) by (pod) > 0",
+    "upstream_description": "Cilium agent {{ $labels.pod }} has {{ $value }} failing controller(s). Check cilium-agent logs for details."
+  },
+  "stream_type": "metrics",
+  "stream_name": "cilium_controllers_failing",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum(cilium_controllers_failing{}) by (pod)",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | pod: {pod} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Metric name depends on Cilium version. Use cilium_controllers_failing (older) or cilium_controllers_runs_total (1.14+)."
+}

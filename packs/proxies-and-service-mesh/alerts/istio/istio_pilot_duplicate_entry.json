@@ -1,0 +1,65 @@
+{
+  "name": "istio_pilot_duplicate_entry",
+  "title": "Istio Pilot Duplicate Entry",
+  "severity": "critical",
+  "description": "Istio Pilot has detected duplicate Envoy cluster(s), indicating misconfigured DestinationRules or ServiceEntries.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "istio"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/istio/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/istio/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Istio Pilot Duplicate Entry",
+    "upstream_query": "sum(pilot_duplicate_envoy_clusters{}) > 0",
+    "upstream_description": "Istio Pilot has detected {{ $value }} duplicate Envoy cluster(s), indicating misconfigured DestinationRules or ServiceEntries."
+  },
+  "stream_type": "metrics",
+  "stream_name": "pilot_duplicate_envoy_clusters",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum(pilot_duplicate_envoy_clusters{})",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

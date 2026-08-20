@@ -1,0 +1,65 @@
+{
+  "name": "prometheus_target_scrape_duplicate",
+  "title": "Prometheus target scrape duplicate",
+  "severity": "warning",
+  "description": "Prometheus has many samples rejected due to duplicate timestamps but different values",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "prometheus"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/prometheus-self-monitoring/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/prometheus-self-monitoring/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Prometheus target scrape duplicate",
+    "upstream_query": "increase(prometheus_target_scrapes_sample_duplicate_timestamp_total[5m]) > 3",
+    "upstream_description": "Prometheus has many samples rejected due to duplicate timestamps but different values ({{ $value }} samples)"
+  },
+  "stream_type": "metrics",
+  "stream_name": "prometheus_target_scrapes_sample_duplicate_timestamp_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "increase(prometheus_target_scrapes_sample_duplicate_timestamp_total[5m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 3,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

@@ -1,0 +1,66 @@
+{
+  "name": "go_heap_in_use_growing",
+  "title": "Go heap in-use growing",
+  "severity": "warning",
+  "description": "Go heap in-use memory is growing steadily, potential memory leak or under-sized heap",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "golang",
+    "golang-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/golang/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/golang/",
+    "exporter": "golang-exporter",
+    "upstream_alert": "Go heap in-use growing",
+    "upstream_query": "deriv(go_memstats_heap_inuse_bytes[10m]) > 1e7",
+    "upstream_description": "Go heap in-use memory is growing steadily, potential memory leak or under-sized heap"
+  },
+  "stream_type": "metrics",
+  "stream_name": "go_memstats_heap_inuse_bytes",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "deriv(go_memstats_heap_inuse_bytes[10m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 10000000,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Alerts when heap in-use grows by more than 10MB/s sustained over 10 minutes.\nAdjust threshold based on your workload."
+}

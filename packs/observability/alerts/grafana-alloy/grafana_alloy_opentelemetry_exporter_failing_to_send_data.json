@@ -1,0 +1,65 @@
+{
+  "name": "grafana_alloy_opentelemetry_exporter_failing_to_send_data",
+  "title": "Grafana Alloy OpenTelemetry exporter failing to send data",
+  "severity": "warning",
+  "description": "The OpenTelemetry exporter in Alloy under job has a success rate below 95% for sending spans, metrics, or logs to their destination, meaning telemetry data delivery is failing, possibly due to a payload issue or an unreachable endpoint.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "grafana-alloy"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-alloy/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-alloy/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Grafana Alloy OpenTelemetry exporter failing to send data",
+    "upstream_query": "(1 - (sum by (job) (rate({__name__=~\"otelcol_exporter_send_failed_(spans|metric_points|log_records)_total\"}[1m])) / (sum by (job) (rate({__name__=~\"otelcol_exporter_send_failed_(spans|metric_points|log_records)_total\"}[1m])) + sum by (job) (rate({__name__=~\"otelcol_exporter_sent_(spans|metric_points|log_records)_total\"}[1m]))))) < 0.95",
+    "upstream_description": "The OpenTelemetry exporter in Alloy under job {{ $labels.job }} has a success rate below 95% for sending spans, metrics, or logs to their destination, meaning telemetry data delivery is failing, possibly due to a payload issue or an unreachable endpoint."
+  },
+  "stream_type": "metrics",
+  "stream_name": "otelcol_exporter_send_failed_spans_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "1 - (sum by (job) (rate({__name__=~\"otelcol_exporter_send_failed_(spans|metric_points|log_records)_total\"}[1m])) / (sum by (job) (rate({__name__=~\"otelcol_exporter_send_failed_(spans|metric_points|log_records)_total\"}[1m])) + sum by (job) (rate({__name__=~\"otelcol_exporter_sent_(spans|metric_points|log_records)_total\"}[1m]))))",
+    "promql_condition": {
+      "column": "value",
+      "operator": "<",
+      "value": 0.95,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 10,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | job: {job} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

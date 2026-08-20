@@ -1,0 +1,65 @@
+{
+  "name": "netdata_disk_reallocated_sectors",
+  "title": "Netdata disk reallocated sectors",
+  "severity": "info",
+  "description": "Disk reallocated sectors detected",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "netdata"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/netdata/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/netdata/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Netdata disk reallocated sectors",
+    "upstream_query": "increase(netdata_smartd_log_reallocated_sectors_count_sectors_average[1m]) > 0",
+    "upstream_description": "Disk reallocated sectors detected ({{ $value }} sectors)"
+  },
+  "stream_type": "metrics",
+  "stream_name": "netdata_smartd_log_reallocated_sectors_count_sectors_average",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "increase(netdata_smartd_log_reallocated_sectors_count_sectors_average[1m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

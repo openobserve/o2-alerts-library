@@ -1,0 +1,66 @@
+{
+  "name": "cloudwatch_api_high_request_rate",
+  "title": "CloudWatch API high request rate",
+  "severity": "warning",
+  "description": "CloudWatch exporter is making API calls per minute to namespace. This can lead to high AWS costs.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "aws-cloudwatch",
+    "prometheus-cloudwatch-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/cloud-providers/aws-cloudwatch/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/cloud-providers/aws-cloudwatch/",
+    "exporter": "prometheus-cloudwatch-exporter",
+    "upstream_alert": "CloudWatch API high request rate",
+    "upstream_query": "sum by (instance, namespace) (rate(cloudwatch_requests_total[5m])) * 60 > 100",
+    "upstream_description": "CloudWatch exporter on {{ $labels.instance }} is making {{ $value }} API calls per minute to namespace {{ $labels.namespace }}. This can lead to high AWS costs."
+  },
+  "stream_type": "metrics",
+  "stream_name": "cloudwatch_requests_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum by (instance, namespace) (rate(cloudwatch_requests_total[5m])) * 60",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 100,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | namespace: {namespace} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "CloudWatch API calls cost money (~$0.01 per 1000 GetMetricData requests).\n100 requests/minute ≈ $45/month. Adjust the threshold based on your budget."
+}

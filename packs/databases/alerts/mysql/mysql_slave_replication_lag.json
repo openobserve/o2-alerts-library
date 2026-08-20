@@ -1,0 +1,65 @@
+{
+  "name": "mysql_slave_replication_lag",
+  "title": "MySQL Slave replication lag",
+  "severity": "critical",
+  "description": "MySQL replication lag",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "mysql",
+    "mysqld-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/mysql/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/mysql/",
+    "exporter": "mysqld-exporter",
+    "upstream_alert": "MySQL Slave replication lag",
+    "upstream_query": "( (mysql_slave_status_seconds_behind_master - mysql_slave_status_sql_delay) and ON (instance) mysql_slave_status_master_server_id > 0 ) > 30",
+    "upstream_description": "MySQL replication lag on {{ $labels.instance }}"
+  },
+  "stream_type": "metrics",
+  "stream_name": "mysql_slave_status_seconds_behind_master",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(mysql_slave_status_seconds_behind_master - mysql_slave_status_sql_delay) and ON (instance) mysql_slave_status_master_server_id > 0",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 30,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

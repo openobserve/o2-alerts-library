@@ -1,0 +1,67 @@
+{
+  "name": "keycloak_slow_request_response_time",
+  "title": "Keycloak slow request response time",
+  "severity": "warning",
+  "description": "Keycloak requests are taking more than 2 seconds on average.",
+  "tags": [
+    "aerogear-keycloak-metrics-spi",
+    "awesome-prometheus-alerts",
+    "keycloak"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/keycloak/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/keycloak/",
+    "exporter": "aerogear-keycloak-metrics-spi",
+    "upstream_alert": "Keycloak slow request response time",
+    "upstream_query": "sum by (method) (rate(keycloak_request_duration_sum[5m])) / sum by (method) (rate(keycloak_request_duration_count[5m])) > 2000 and sum by (method) (rate(keycloak_request_duration_count[5m])) > 0",
+    "upstream_description": "Keycloak {{ $labels.method }} requests are taking more than 2 seconds on average.",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "keycloak_request_duration_sum",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(sum by (method) (rate(keycloak_request_duration_sum[5m])) / sum by (method) (rate(keycloak_request_duration_count[5m])) > 2000 and sum by (method) (rate(keycloak_request_duration_count[5m])) > 0) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | method: {method}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "keycloak_request_duration is in milliseconds. Threshold of 2000ms (2 seconds) is a rough default."
+}

@@ -1,0 +1,65 @@
+{
+  "name": "mimir_ingester_tsdb_wal_corrupted",
+  "title": "Mimir ingester TSDB WAL corrupted",
+  "severity": "critical",
+  "description": "Mimir ingester detected a corrupted TSDB write-ahead log, risking sample loss when the ingester restarts and replays the WAL.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "grafana-mimir"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-mimir/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-mimir/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Mimir ingester TSDB WAL corrupted",
+    "upstream_query": "count by (job) (rate(cortex_ingester_tsdb_wal_corruptions_total[5m]) > 0) > 1",
+    "upstream_description": "Mimir ingester in {{ $labels.job }} detected a corrupted TSDB write-ahead log, risking sample loss when the ingester restarts and replays the WAL."
+  },
+  "stream_type": "metrics",
+  "stream_name": "cortex_ingester_tsdb_wal_corruptions_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "count by (job) (rate(cortex_ingester_tsdb_wal_corruptions_total[5m]) > 0)",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | job: {job} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

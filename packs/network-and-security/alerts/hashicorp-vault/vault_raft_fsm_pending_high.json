@@ -1,0 +1,66 @@
+{
+  "name": "vault_raft_fsm_pending_high",
+  "title": "Vault raft FSM pending high",
+  "severity": "warning",
+  "description": "Vault Raft peer has pending FSM operations, indicating a storage apply backlog on the integrated Raft storage backend.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "hashicorp-vault"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/hashicorp-vault/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/hashicorp-vault/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Vault raft FSM pending high",
+    "upstream_query": "vault_raft_storage_stats_fsm_pending > 100",
+    "upstream_description": "Vault Raft peer {{ $labels.peer_id }} on {{ $labels.instance }} has {{ $value }} pending FSM operations, indicating a storage apply backlog on the integrated Raft storage backend."
+  },
+  "stream_type": "metrics",
+  "stream_name": "vault_raft_storage_stats_fsm_pending",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "vault_raft_storage_stats_fsm_pending",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 100,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | peer_id: {peer_id} | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "100 is a rough default; storage-apply backlog scales with your Raft cluster's write throughput — adjust based on your workload."
+}

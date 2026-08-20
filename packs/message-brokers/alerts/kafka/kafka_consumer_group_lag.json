@@ -1,0 +1,66 @@
+{
+  "name": "kafka_consumer_group_lag",
+  "title": "Kafka consumer group lag",
+  "severity": "warning",
+  "description": "Kafka consumer group is lagging behind",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "danielqsj-kafka-exporter",
+    "kafka"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/message-brokers/kafka/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/message-brokers/kafka/",
+    "exporter": "danielqsj-kafka-exporter",
+    "upstream_alert": "Kafka consumer group lag",
+    "upstream_query": "sum(kafka_consumergroup_lag) by (consumergroup) > 10000",
+    "upstream_description": "Kafka consumer group {{ $labels.consumergroup }} is lagging behind ({{ $value }} messages)"
+  },
+  "stream_type": "metrics",
+  "stream_name": "kafka_consumergroup_lag",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum(kafka_consumergroup_lag) by (consumergroup)",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 10000,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | consumergroup: {consumergroup} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "10000 messages is a rough default; scales with your message production and consumption rate — adjust based on your workload."
+}

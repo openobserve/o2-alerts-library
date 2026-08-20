@@ -1,0 +1,65 @@
+{
+  "name": "stackdriver_exporter_scrape_stale",
+  "title": "Stackdriver exporter scrape stale",
+  "severity": "warning",
+  "description": "Stackdriver exporter has not successfully scraped metrics for project in the last 10 minutes.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "google-cloud-stackdriver",
+    "stackdriver-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/cloud-providers/google-cloud-stackdriver/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/cloud-providers/google-cloud-stackdriver/",
+    "exporter": "stackdriver-exporter",
+    "upstream_alert": "Stackdriver exporter scrape stale",
+    "upstream_query": "time() - stackdriver_monitoring_last_scrape_timestamp > 600",
+    "upstream_description": "Stackdriver exporter has not successfully scraped metrics for project {{ $labels.project_id }} in the last 10 minutes."
+  },
+  "stream_type": "metrics",
+  "stream_name": "stackdriver_monitoring_last_scrape_timestamp",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "time() - stackdriver_monitoring_last_scrape_timestamp",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 600,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | project_id: {project_id} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

@@ -1,0 +1,66 @@
+{
+  "name": "couchdb_temporary_view_read_rate_critical",
+  "title": "CouchDB temporary view read rate critical",
+  "severity": "critical",
+  "description": "Temporary view read rate exceeds 100 reads/sec, high risk of performance degradation",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "couchdb",
+    "gesellix-couchdb-prometheus-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/couchdb/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/couchdb/",
+    "exporter": "gesellix-couchdb-prometheus-exporter",
+    "upstream_alert": "CouchDB temporary view read rate critical",
+    "upstream_query": "rate(couchdb_httpd_temporary_view_reads[5m]) > 100",
+    "upstream_description": "Temporary view read rate exceeds 100 reads/sec, high risk of performance degradation"
+  },
+  "stream_type": "metrics",
+  "stream_name": "couchdb_httpd_temporary_view_reads",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "rate(couchdb_httpd_temporary_view_reads[5m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 100,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "100 reads/s is a rough default; depends on your application's query patterns — adjust based on your workload. Note temporary views are inherently inefficient in CouchDB regardless of rate; consider replacing them with permanent views."
+}

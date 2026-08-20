@@ -1,0 +1,65 @@
+{
+  "name": "cassandra_storage_exceptions_criteo",
+  "title": "Cassandra storage exceptions (Criteo)",
+  "severity": "critical",
+  "description": "Something is going wrong with cassandra storage",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "cassandra",
+    "criteo-cassandra-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/cassandra/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/cassandra/",
+    "exporter": "criteo-cassandra-exporter",
+    "upstream_alert": "Cassandra storage exceptions (Criteo)",
+    "upstream_query": "changes(cassandra_stats{name=\"org:apache:cassandra:metrics:storage:exceptions:count\"}[1m]) > 1",
+    "upstream_description": "Something is going wrong with cassandra storage"
+  },
+  "stream_type": "metrics",
+  "stream_name": "cassandra_stats",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "changes(cassandra_stats{name=\"org:apache:cassandra:metrics:storage:exceptions:count\"}[1m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

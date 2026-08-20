@@ -1,0 +1,67 @@
+{
+  "name": "php_fpm_slow_requests_ratio",
+  "title": "PHP-FPM slow requests ratio",
+  "severity": "warning",
+  "description": "Of accepted connections exceed request_slowlog_timeout, indicating degraded PHP-FPM response times.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "bakins-fpm-exporter",
+    "php-fpm"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/php-fpm/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/php-fpm/",
+    "exporter": "bakins-fpm-exporter",
+    "upstream_alert": "PHP-FPM slow requests ratio",
+    "upstream_query": "sum(rate(phpfpm_slow_requests_total[5m])) by (instance) / sum(rate(phpfpm_accepted_connections_total[5m])) by (instance) > 0.1 and sum(rate(phpfpm_accepted_connections_total[5m])) by (instance) > 0",
+    "upstream_description": "{{ $value | humanizePercentage }} of accepted connections on {{ $labels.instance }} exceed request_slowlog_timeout, indicating degraded PHP-FPM response times.",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "phpfpm_slow_requests_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(sum(rate(phpfpm_slow_requests_total[5m])) by (instance) / sum(rate(phpfpm_accepted_connections_total[5m])) by (instance) > 0.1 and sum(rate(phpfpm_accepted_connections_total[5m])) by (instance) > 0) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "If this fires too often or too rarely, tune your PHP-FPM request_slowlog_timeout setting (which defines what counts as \"slow\") rather than this 10% ratio threshold."
+}

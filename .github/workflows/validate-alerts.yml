@@ -1,0 +1,46 @@
+name: Validate alerts
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # the hand-edit check below diffs against the base
+
+      - name: Validate alert files
+        run: python3 scripts/validate_alerts.py
+
+      # Catches what only the generator can see: a duplicate alert name inside
+      # a pack, an empty category folder, a stray JSON outside one. The output
+      # is thrown away — the manifest is built and committed on merge, so a PR
+      # that adds alerts is EXPECTED to leave it stale.
+      - name: Check the manifest can be generated
+        run: |
+          python3 scripts/generate_manifest.py
+          # Discard the output: on a PR that adds alerts the committed manifest
+          # is EXPECTED to be stale, because CI regenerates and bot-commits it
+          # on merge. PACKS.md may not be tracked yet, hence the tolerance.
+          git checkout -- manifest.json PACKS.md 2>/dev/null || true
+
+      - name: Reject hand-edited generated files
+        if: github.event_name == 'pull_request'
+        run: |
+          # Diff against the base BRANCH, not the event payload's frozen
+          # base.sha: `main` moves under the PR every time the merge workflow
+          # bot-commits a regenerated manifest, and on a re-run the stale sha
+          # would attribute that bot commit to this PR and fail it with no way
+          # for the contributor to fix it.
+          base="origin/${{ github.event.pull_request.base.ref }}"
+          git fetch --quiet origin "${{ github.event.pull_request.base.ref }}"
+          edited=$(git diff --name-only "$base...HEAD" -- manifest.json PACKS.md)
+          if [ -n "$edited" ]; then
+            echo "::error::$edited is generated and committed by CI on merge to main. Revert your changes to it — anything written here is overwritten."
+            exit 1
+          fi
+          echo "No hand edits to generated files."

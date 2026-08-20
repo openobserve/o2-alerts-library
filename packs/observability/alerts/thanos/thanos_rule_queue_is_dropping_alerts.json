@@ -1,0 +1,65 @@
+{
+  "name": "thanos_rule_queue_is_dropping_alerts",
+  "title": "Thanos Rule Queue Is Dropping Alerts",
+  "severity": "critical",
+  "description": "Thanos Rule is failing to queue alerts.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "thanos",
+    "thanos-ruler"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/thanos/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/thanos/",
+    "exporter": "thanos-ruler",
+    "upstream_alert": "Thanos Rule Queue Is Dropping Alerts",
+    "upstream_query": "sum by (job, instance) (rate(thanos_alert_queue_alerts_dropped_total[5m])) > 0",
+    "upstream_description": "Thanos Rule {{$labels.instance}} is failing to queue alerts ({{ $value | humanize }}/s)."
+  },
+  "stream_type": "metrics",
+  "stream_name": "thanos_alert_queue_alerts_dropped_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum by (job, instance) (rate(thanos_alert_queue_alerts_dropped_total[5m]))",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

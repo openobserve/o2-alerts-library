@@ -1,0 +1,65 @@
+{
+  "name": "solr_shard_has_no_leader",
+  "title": "Solr shard has no leader",
+  "severity": "critical",
+  "description": "Solr collection shard has no elected leader and cannot accept writes until a new leader is elected.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "solr"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/solr/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/solr/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Solr shard has no leader",
+    "upstream_query": "max by (collection, shard) (solr_collections_shard_leader) < 1",
+    "upstream_description": "Solr collection {{ $labels.collection }} shard {{ $labels.shard }} has no elected leader and cannot accept writes until a new leader is elected."
+  },
+  "stream_type": "metrics",
+  "stream_name": "solr_collections_shard_leader",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "max by (collection, shard) (solr_collections_shard_leader)",
+    "promql_condition": {
+      "column": "value",
+      "operator": "<",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | collection: {collection} | shard: {shard} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

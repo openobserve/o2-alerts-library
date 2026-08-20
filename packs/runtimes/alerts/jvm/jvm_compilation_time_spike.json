@@ -1,0 +1,66 @@
+{
+  "name": "jvm_compilation_time_spike",
+  "title": "JVM compilation time spike",
+  "severity": "warning",
+  "description": "Excessive JIT compilation time consuming CPU",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "jvm",
+    "jvm-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/jvm/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/jvm/",
+    "exporter": "jvm-exporter",
+    "upstream_alert": "JVM compilation time spike",
+    "upstream_query": "rate(jvm_compilation_time_seconds_total[5m]) > 0.1",
+    "upstream_description": "Excessive JIT compilation time consuming CPU"
+  },
+  "stream_type": "metrics",
+  "stream_name": "jvm_compilation_time_seconds_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "rate(jvm_compilation_time_seconds_total[5m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0.1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "rate() divides the counter's accumulated seconds by the 5m window's seconds, producing a dimensionless seconds-of-compile-time-per-second-of-wall-time ratio — so 0.1 means 10% of wall-clock time, not 100ms.\n10% is a rough default; depends on your app's code complexity and deployment/restart frequency (JIT warms up after each restart) — adjust based on your baseline."
+}

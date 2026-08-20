@@ -1,0 +1,65 @@
+{
+  "name": "cloudwatch_exporter_scrape_error",
+  "title": "CloudWatch exporter scrape error",
+  "severity": "warning",
+  "description": "CloudWatch exporter failed to scrape metrics from AWS CloudWatch API.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "aws-cloudwatch",
+    "prometheus-cloudwatch-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/cloud-providers/aws-cloudwatch/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/cloud-providers/aws-cloudwatch/",
+    "exporter": "prometheus-cloudwatch-exporter",
+    "upstream_alert": "CloudWatch exporter scrape error",
+    "upstream_query": "cloudwatch_exporter_scrape_error > 0",
+    "upstream_description": "CloudWatch exporter on {{ $labels.instance }} failed to scrape metrics from AWS CloudWatch API."
+  },
+  "stream_type": "metrics",
+  "stream_name": "cloudwatch_exporter_scrape_error",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "cloudwatch_exporter_scrape_error",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

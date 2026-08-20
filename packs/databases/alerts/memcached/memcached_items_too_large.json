@@ -1,0 +1,66 @@
+{
+  "name": "memcached_items_too_large",
+  "title": "Memcached items too large",
+  "severity": "info",
+  "description": "Memcached is rejecting items exceeding max-item-size",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "memcached",
+    "memcached-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/memcached/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/memcached/",
+    "exporter": "memcached-exporter",
+    "upstream_alert": "Memcached items too large",
+    "upstream_query": "increase(memcached_item_too_large_total[5m]) > 3",
+    "upstream_description": "Memcached is rejecting items exceeding max-item-size on {{ $labels.instance }} ({{ $value }} rejections in the last 5m)"
+  },
+  "stream_type": "metrics",
+  "stream_name": "memcached_item_too_large_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "increase(memcached_item_too_large_total[5m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 3,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "3 rejections in 5m is a rough default; depends on how often your application attempts to cache items exceeding your configured max-item-size — adjust based on your workload and item sizing."
+}

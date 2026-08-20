@@ -1,0 +1,65 @@
+{
+  "name": "vault_autopilot_unhealthy",
+  "title": "Vault autopilot unhealthy",
+  "severity": "critical",
+  "description": "Vault Autopilot reports the Raft integrated storage cluster as unhealthy, which may indicate node health, quorum, or version mismatch issues.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "hashicorp-vault"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/hashicorp-vault/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/hashicorp-vault/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Vault autopilot unhealthy",
+    "upstream_query": "min(vault_autopilot_healthy) by (instance) == 0",
+    "upstream_description": "Vault Autopilot reports the Raft integrated storage cluster on {{ $labels.instance }} as unhealthy, which may indicate node health, quorum, or version mismatch issues."
+  },
+  "stream_type": "metrics",
+  "stream_name": "vault_autopilot_healthy",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "min(vault_autopilot_healthy) by (instance)",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

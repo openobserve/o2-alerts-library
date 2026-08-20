@@ -1,0 +1,66 @@
+{
+  "name": "host_software_raid_insufficient_drives",
+  "title": "Host software RAID insufficient drives",
+  "severity": "critical",
+  "description": "MD RAID array has insufficient drives remaining.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "host-and-hardware",
+    "node-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/host-and-hardware/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/host-and-hardware/",
+    "exporter": "node-exporter",
+    "upstream_alert": "Host software RAID insufficient drives",
+    "upstream_query": "((node_md_disks_required - ignoring(state) node_md_disks{state=\"active\"}) > 0)",
+    "upstream_description": "MD RAID array {{ $labels.device }} on {{ $labels.instance }} has insufficient drives remaining."
+  },
+  "stream_type": "metrics",
+  "stream_name": "node_md_disks_required",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "node_md_disks_required - ignoring(state) node_md_disks{state=\"active\"}",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | device: {device} | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Uses ignoring(state) to handle additional labels on node_md_disks.\nRebuilding a RAID array after a drive replacement can take a long time, during which this\nquery would still report a temporary drive deficit; adjust for a \"for\" duration if that\ncauses noisy alerts on your setup."
+}

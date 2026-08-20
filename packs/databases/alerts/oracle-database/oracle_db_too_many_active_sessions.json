@@ -1,0 +1,66 @@
+{
+  "name": "oracle_db_too_many_active_sessions",
+  "title": "Oracle DB too many active sessions",
+  "severity": "warning",
+  "description": "Oracle Database has too many active user sessions",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "iamseth-oracledb-exporter",
+    "oracle-database"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/oracle-database/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/oracle-database/",
+    "exporter": "iamseth-oracledb-exporter",
+    "upstream_alert": "Oracle DB too many active sessions",
+    "upstream_query": "oracledb_sessions_value{status=\"ACTIVE\", type=\"USER\"} > 200",
+    "upstream_description": "Oracle Database on {{ $labels.instance }} has too many active user sessions (current value: {{ $value }})"
+  },
+  "stream_type": "metrics",
+  "stream_name": "oracledb_sessions_value",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "oracledb_sessions_value{status=\"ACTIVE\", type=\"USER\"}",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 200,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Threshold is highly workload-dependent. Adjust 200 to suit your environment."
+}

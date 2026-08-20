@@ -1,0 +1,65 @@
+{
+  "name": "mimir_inconsistent_runtime_config",
+  "title": "Mimir inconsistent runtime config",
+  "severity": "critical",
+  "description": "An inconsistent runtime config file is used across Mimir instances.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "grafana-mimir"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-mimir/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/grafana-mimir/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Mimir inconsistent runtime config",
+    "upstream_query": "count(count by (job, sha256) (cortex_runtime_config_hash)) without(sha256) > 1",
+    "upstream_description": "An inconsistent runtime config file is used across Mimir instances."
+  },
+  "stream_type": "metrics",
+  "stream_name": "cortex_runtime_config_hash",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "count(count by (job, sha256) (cortex_runtime_config_hash)) without(sha256)",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 60,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

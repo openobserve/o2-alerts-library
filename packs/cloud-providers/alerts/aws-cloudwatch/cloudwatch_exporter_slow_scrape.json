@@ -1,0 +1,66 @@
+{
+  "name": "cloudwatch_exporter_slow_scrape",
+  "title": "CloudWatch exporter slow scrape",
+  "severity": "warning",
+  "description": "CloudWatch exporter scrape is taking more than 5 minutes. Consider reducing the number of metrics or splitting across multiple exporters.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "aws-cloudwatch",
+    "prometheus-cloudwatch-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/cloud-providers/aws-cloudwatch/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/cloud-providers/aws-cloudwatch/",
+    "exporter": "prometheus-cloudwatch-exporter",
+    "upstream_alert": "CloudWatch exporter slow scrape",
+    "upstream_query": "cloudwatch_exporter_scrape_duration_seconds > 300",
+    "upstream_description": "CloudWatch exporter on {{ $labels.instance }} scrape is taking more than 5 minutes ({{ $value }}s). Consider reducing the number of metrics or splitting across multiple exporters."
+  },
+  "stream_type": "metrics",
+  "stream_name": "cloudwatch_exporter_scrape_duration_seconds",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "cloudwatch_exporter_scrape_duration_seconds",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 300,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "5-minute threshold is a rough default; scrape time scales with how many AWS resources and metrics you are monitoring — adjust based on your monitored fleet size."
+}

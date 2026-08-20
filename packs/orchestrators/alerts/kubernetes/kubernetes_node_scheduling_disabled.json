@@ -1,0 +1,66 @@
+{
+  "name": "kubernetes_node_scheduling_disabled",
+  "title": "Kubernetes Node scheduling disabled",
+  "severity": "warning",
+  "description": "Node has been marked as unschedulable for more than 30 minutes.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "kubernetes",
+    "kubestate-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/orchestrators/kubernetes/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/orchestrators/kubernetes/",
+    "exporter": "kubestate-exporter",
+    "upstream_alert": "Kubernetes Node scheduling disabled",
+    "upstream_query": "kube_node_spec_taint{key=\"node.kubernetes.io/unschedulable\"} == 1",
+    "upstream_description": "Node {{ $labels.node }} has been marked as unschedulable for more than 30 minutes."
+  },
+  "stream_type": "metrics",
+  "stream_name": "kube_node_spec_taint",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "kube_node_spec_taint{key=\"node.kubernetes.io/unschedulable\"}",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 30,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | node: {node} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Kubernetes Node with disabled schedules are fine.\nThis alarm can be useful to get warned if there are nodes which are longer unscheduled."
+}

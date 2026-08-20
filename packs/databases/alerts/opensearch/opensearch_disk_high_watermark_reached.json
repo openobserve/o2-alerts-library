@@ -1,0 +1,65 @@
+{
+  "name": "opensearch_disk_high_watermark_reached",
+  "title": "OpenSearch disk high watermark reached",
+  "severity": "critical",
+  "description": "Disk usage on OpenSearch node is above the high watermark (90%): OpenSearch will start relocating existing shards away from this node.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "opensearch",
+    "opensearch-project-opensearch-prometheus-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/opensearch/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/opensearch/",
+    "exporter": "opensearch-project-opensearch-prometheus-exporter",
+    "upstream_alert": "OpenSearch disk high watermark reached",
+    "upstream_query": "sum by (cluster, instance, node) (round((1 - (opensearch_fs_path_available_bytes / opensearch_fs_path_total_bytes)) * 100, 0.001)) > 90",
+    "upstream_description": "Disk usage on OpenSearch node {{ $labels.node }} (cluster {{ $labels.cluster }}) is above the high watermark (90%): OpenSearch will start relocating existing shards away from this node."
+  },
+  "stream_type": "metrics",
+  "stream_name": "opensearch_fs_path_available_bytes",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum by (cluster, instance, node) (round((1 - (opensearch_fs_path_available_bytes / opensearch_fs_path_total_bytes)) * 100, 0.001))",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 90,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | node: {node} | cluster: {cluster} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

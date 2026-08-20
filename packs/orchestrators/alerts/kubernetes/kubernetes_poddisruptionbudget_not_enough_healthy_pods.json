@@ -1,0 +1,65 @@
+{
+  "name": "kubernetes_poddisruptionbudget_not_enough_healthy_pods",
+  "title": "Kubernetes PodDisruptionBudget not enough healthy pods",
+  "severity": "warning",
+  "description": "PodDisruptionBudget does not have the desired number of healthy pods, so voluntary disruptions such as node drains or cluster upgrades may be blocked or the application may be under-provisioned during maintenance.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "kubernetes",
+    "kubestate-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/orchestrators/kubernetes/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/orchestrators/kubernetes/",
+    "exporter": "kubestate-exporter",
+    "upstream_alert": "Kubernetes PodDisruptionBudget not enough healthy pods",
+    "upstream_query": "kube_poddisruptionbudget_status_desired_healthy - kube_poddisruptionbudget_status_current_healthy > 0",
+    "upstream_description": "PodDisruptionBudget {{ $labels.namespace }}/{{ $labels.poddisruptionbudget }} does not have the desired number of healthy pods, so voluntary disruptions such as node drains or cluster upgrades may be blocked or the application may be under-provisioned during maintenance."
+  },
+  "stream_type": "metrics",
+  "stream_name": "kube_poddisruptionbudget_status_desired_healthy",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "kube_poddisruptionbudget_status_desired_healthy - kube_poddisruptionbudget_status_current_healthy",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 10,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | namespace: {namespace} | poddisruptionbudget: {poddisruptionbudget} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

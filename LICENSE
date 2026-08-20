@@ -1,0 +1,57 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+Copyright (c) 2026 OpenObserve Inc.
+
+This work — the OpenObserve Alert Library, including the alert definitions, the
+scripts and the documentation in this repository — is licensed under the
+Creative Commons Attribution 4.0 International License.
+
+To view a copy of this license, visit:
+
+    https://creativecommons.org/licenses/by/4.0/
+
+or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+The canonical legal code is the version published at the URL above; this file
+is the notice, not a restatement of the licence text.
+
+
+YOU ARE FREE TO
+---------------
+
+  * Share — copy and redistribute the material in any medium or format
+  * Adapt — remix, transform, and build upon the material
+
+for any purpose, including commercially, as long as you follow the licence
+terms.
+
+
+UNDER THE FOLLOWING TERMS
+-------------------------
+
+  * Attribution — You must give appropriate credit, provide a link to the
+    licence, and indicate if changes were made. You may do so in any reasonable
+    manner, but not in any way that suggests the licensor endorses you or your
+    use.
+
+  * No additional restrictions — You may not apply legal terms or technological
+    measures that legally restrict others from doing anything the licence
+    permits.
+
+
+THIRD-PARTY MATERIAL
+--------------------
+
+These packs are derived from awesome-prometheus-alerts, Copyright (c) 2018
+Samuel Berthe, which is itself licensed CC BY 4.0:
+
+    applications, ci-cd, cloud-providers, data-engineering, databases,
+    infrastructure, message-brokers, network-and-security, observability,
+    orchestrators, proxies-and-service-mesh, runtimes, storage
+
+Redistributing this repository therefore carries an attribution obligation to
+that project as well as to OpenObserve, and the modifications made on import
+must be indicated. Both are set out in ATTRIBUTION.md, and every derived alert
+file names its origin in its own `source` object.
+
+The `k8s` and `openobserve` packs are original work by OpenObserve Inc.

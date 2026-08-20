@@ -1,0 +1,65 @@
+{
+  "name": "ceph_monitor_quorum_at_risk",
+  "title": "Ceph monitor quorum at risk",
+  "severity": "critical",
+  "description": "Ceph monitor quorum is the minimum required to stay operational; losing one more monitor will make the cluster inoperable for all clients.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "ceph",
+    "embedded-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/storage/ceph/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/storage/ceph/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Ceph monitor quorum at risk",
+    "upstream_query": "(ceph_health_detail{name=\"MON_DOWN\"} == 1) * on() group_right() (count(ceph_mon_quorum_status == 1) == bool (floor(count(ceph_mon_metadata) / 2) + 1)) == 1",
+    "upstream_description": "Ceph monitor quorum is at the minimum required to stay operational; losing one more monitor will make the cluster inoperable for all clients."
+  },
+  "stream_type": "metrics",
+  "stream_name": "ceph_health_detail",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(ceph_health_detail{name=\"MON_DOWN\"} == 1) * on() group_right() (count(ceph_mon_quorum_status == 1) == bool (floor(count(ceph_mon_metadata) / 2) + 1))",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

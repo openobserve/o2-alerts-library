@@ -1,0 +1,65 @@
+{
+  "name": "gitlab_sidekiq_queue_not_draining",
+  "title": "GitLab Sidekiq queue not draining",
+  "severity": "warning",
+  "description": "GitLab Sidekiq queue has had a persistent backlog jobs for 30 minutes, suggesting a stuck or crashed worker class rather than transient load.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "gitlab-built-in-exporter",
+    "gitlab-ci"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/gitlab-ci/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/gitlab-ci/",
+    "exporter": "gitlab-built-in-exporter",
+    "upstream_alert": "GitLab Sidekiq queue not draining",
+    "upstream_query": "sum by (name) (sidekiq_queue_size) > 0",
+    "upstream_description": "GitLab Sidekiq queue {{ $labels.name }} has had a persistent backlog of {{ $value }} jobs for 30 minutes, suggesting a stuck or crashed worker class rather than transient load."
+  },
+  "stream_type": "metrics",
+  "stream_name": "sidekiq_queue_size",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum by (name) (sidekiq_queue_size)",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 30,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | name: {name} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

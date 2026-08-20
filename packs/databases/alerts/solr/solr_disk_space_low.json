@@ -1,0 +1,65 @@
+{
+  "name": "solr_disk_space_low",
+  "title": "Solr disk space low",
+  "severity": "warning",
+  "description": "Solr node has less than 20% usable disk space remaining, risking index corruption if it fills up.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "solr"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/solr/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/solr/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Solr disk space low",
+    "upstream_query": "min by (base_url) (solr_metrics_core_fs_bytes{item=\"usableSpace\"}) / max by (base_url) (solr_metrics_core_fs_bytes{item=\"totalSpace\"}) <= 0.2",
+    "upstream_description": "Solr node {{ $labels.base_url }} has less than 20% usable disk space remaining, risking index corruption if it fills up."
+  },
+  "stream_type": "metrics",
+  "stream_name": "solr_metrics_core_fs_bytes",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "min by (base_url) (solr_metrics_core_fs_bytes{item=\"usableSpace\"}) / max by (base_url) (solr_metrics_core_fs_bytes{item=\"totalSpace\"})",
+    "promql_condition": {
+      "column": "value",
+      "operator": "<=",
+      "value": 0.2,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 10,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | base_url: {base_url} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

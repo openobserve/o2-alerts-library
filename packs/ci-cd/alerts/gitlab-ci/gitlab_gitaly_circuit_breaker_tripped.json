@@ -1,0 +1,66 @@
+{
+  "name": "gitlab_gitaly_circuit_breaker_tripped",
+  "title": "GitLab Gitaly circuit breaker tripped",
+  "severity": "critical",
+  "description": "Gitaly circuit breaker has tripped. Git operations are failing.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "gitaly",
+    "gitlab-ci"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/gitlab-ci/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/ci-cd/gitlab-ci/",
+    "exporter": "gitaly",
+    "upstream_alert": "GitLab Gitaly circuit breaker tripped",
+    "upstream_query": "increase(gitaly_circuit_breaker_transitions_total{to_state=\"open\"}[5m]) > 0",
+    "upstream_description": "Gitaly circuit breaker has tripped on {{ $labels.instance }}. Git operations are failing."
+  },
+  "stream_type": "metrics",
+  "stream_name": "gitaly_circuit_breaker_transitions_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "increase(gitaly_circuit_breaker_transitions_total{to_state=\"open\"}[5m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "When the circuit breaker trips to \"open\" state, Git operations (push, pull, clone) will fail.\nCheck Gitaly service health and logs."
+}

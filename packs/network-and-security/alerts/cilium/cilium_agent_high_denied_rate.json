@@ -1,0 +1,66 @@
+{
+  "name": "cilium_agent_high_denied_rate",
+  "title": "Cilium agent high denied rate",
+  "severity": "info",
+  "description": "Cilium agent is dropping packets due to policy denial. Verify network policies are correct.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "cilium",
+    "embedded-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/cilium/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/cilium/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Cilium agent high denied rate",
+    "upstream_query": "sum(rate(cilium_drop_count_total{reason=\"Policy denied\"}[1m])) by (pod) > 0",
+    "upstream_description": "Cilium agent {{ $labels.pod }} is dropping packets due to policy denial. Verify network policies are correct."
+  },
+  "stream_type": "metrics",
+  "stream_name": "cilium_drop_count_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum(rate(cilium_drop_count_total{reason=\"Policy denied\"}[1m])) by (pod)",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 10,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | pod: {pod} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Policy denials may be expected behavior. Investigate only if unexpected traffic is being blocked."
+}

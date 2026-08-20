@@ -1,0 +1,67 @@
+{
+  "name": "pulsar_high_write_latency",
+  "title": "Pulsar high write latency",
+  "severity": "critical",
+  "description": "Pulsar topic has storage write operations exceeding the maximum latency bucket (> 1000ms)",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter",
+    "pulsar"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/message-brokers/pulsar/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/message-brokers/pulsar/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "Pulsar high write latency",
+    "upstream_query": "sum(pulsar_storage_write_latency_le_overflow > 0) by (topic)",
+    "upstream_description": "Pulsar topic {{ $labels.topic }} has {{ $value }} storage write operations exceeding the maximum latency bucket (> 1000ms)",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "pulsar_storage_write_latency_le_overflow",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(sum(pulsar_storage_write_latency_le_overflow > 0) by (topic)) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 60,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | topic: {topic}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "pulsar_storage_write_latency_le_overflow is the overflow bucket of Pulsar's non-standard histogram.\nIt counts write operations exceeding all defined latency bounds (> 1000ms)."
+}

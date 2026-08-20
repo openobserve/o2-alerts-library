@@ -1,0 +1,65 @@
+{
+  "name": "coredns_forward_upstream_healthcheck_failing",
+  "title": "CoreDNS Forward Upstream Healthcheck Failing",
+  "severity": "warning",
+  "description": "CoreDNS health checks are failing for upstream server, which may be removed from the forwarding rotation if it stays unhealthy.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "coredns",
+    "embedded-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/coredns/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/coredns/",
+    "exporter": "embedded-exporter",
+    "upstream_alert": "CoreDNS Forward Upstream Healthcheck Failing",
+    "upstream_query": "sum without (pod, instance) (rate(coredns_forward_healthcheck_failures_total[5m])) > 0",
+    "upstream_description": "CoreDNS health checks are failing for upstream server {{ $labels.to }}, which may be removed from the forwarding rotation if it stays unhealthy."
+  },
+  "stream_type": "metrics",
+  "stream_name": "coredns_forward_healthcheck_failures_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum without (pod, instance) (rate(coredns_forward_healthcheck_failures_total[5m]))",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 10,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | to: {to} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

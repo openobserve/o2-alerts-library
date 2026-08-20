@@ -1,0 +1,67 @@
+{
+  "name": "haproxy_high_http_4xx_error_rate_server",
+  "title": "HAProxy high HTTP 4xx error rate server",
+  "severity": "critical",
+  "description": "Too many HTTP requests with status 4xx (> 5%) on server",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter-v2",
+    "haproxy"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/haproxy/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/haproxy/",
+    "exporter": "embedded-exporter-v2",
+    "upstream_alert": "HAProxy high HTTP 4xx error rate server",
+    "upstream_query": "((sum by (server) (rate(haproxy_server_http_responses_total{code=\"4xx\"}[1m])) / sum by (server) (rate(haproxy_server_http_responses_total[1m]))) * 100) > 5 and sum by (server) (rate(haproxy_server_http_responses_total[1m])) > 0",
+    "upstream_description": "Too many HTTP requests with status 4xx (> 5%) on server {{ $labels.server }}",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "haproxy_server_http_responses_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(((sum by (server) (rate(haproxy_server_http_responses_total{code=\"4xx\"}[1m])) / sum by (server) (rate(haproxy_server_http_responses_total[1m]))) * 100) > 5 and sum by (server) (rate(haproxy_server_http_responses_total[1m])) > 0) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | server: {server}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "5% 4xx rate is a rough default. Client-error rates vary widely by application (bots, API misuse, rate limits, short-lived token expiry, malformed clients) — adjust based on your baseline."
+}

@@ -1,0 +1,66 @@
+{
+  "name": "go_memory_leak",
+  "title": "Go memory leak",
+  "severity": "warning",
+  "description": "Go application has sustained high allocation rate (> 1GB/s), potential memory leak",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "golang",
+    "golang-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/golang/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/golang/",
+    "exporter": "golang-exporter",
+    "upstream_alert": "Go memory leak",
+    "upstream_query": "rate(go_memstats_alloc_bytes_total[5m]) > 1e9",
+    "upstream_description": "Go application has sustained high allocation rate (> 1GB/s), potential memory leak"
+  },
+  "stream_type": "metrics",
+  "stream_name": "go_memstats_alloc_bytes_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "rate(go_memstats_alloc_bytes_total[5m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 1000000000,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "1GB/s allocation rate is a rough default; depends on your app's allocation-heavy code paths — adjust based on your baseline."
+}

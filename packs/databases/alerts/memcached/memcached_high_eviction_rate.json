@@ -1,0 +1,66 @@
+{
+  "name": "memcached_high_eviction_rate",
+  "title": "Memcached high eviction rate",
+  "severity": "warning",
+  "description": "Memcached is evicting items at a high rate",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "memcached",
+    "memcached-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/memcached/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/memcached/",
+    "exporter": "memcached-exporter",
+    "upstream_alert": "Memcached high eviction rate",
+    "upstream_query": "rate(memcached_items_evicted_total[5m]) > 10",
+    "upstream_description": "Memcached is evicting items at a high rate on {{ $labels.instance }} ({{ $value }} evictions/s)"
+  },
+  "stream_type": "metrics",
+  "stream_name": "memcached_items_evicted_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "rate(memcached_items_evicted_total[5m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 10,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "A sustained eviction rate indicates memory pressure. Consider increasing memcached memory limit or reducing cache usage. Threshold of 10 evictions/s is a rough default — adjust based on your workload."
+}

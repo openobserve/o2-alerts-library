@@ -1,0 +1,66 @@
+{
+  "name": "jaeger_agent_udp_packets_dropped",
+  "title": "Jaeger agent UDP packets dropped",
+  "severity": "warning",
+  "description": "Jaeger agent is dropping UDP packets on its Thrift-compact span ingestion server, meaning spans are lost before they reach the collector.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "embedded-exporter-legacy",
+    "jaeger"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/jaeger/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/observability/jaeger/",
+    "exporter": "embedded-exporter-legacy",
+    "upstream_alert": "Jaeger agent UDP packets dropped",
+    "upstream_query": "rate(jaeger_agent_thrift_udp_server_packets_dropped_total[1m]) > 1",
+    "upstream_description": "Jaeger agent on {{ $labels.instance }} is dropping UDP packets on its Thrift-compact span ingestion server ({{ $value }} packets/s), meaning spans are lost before they reach the collector."
+  },
+  "stream_type": "metrics",
+  "stream_name": "jaeger_agent_thrift_udp_server_packets_dropped_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "rate(jaeger_agent_thrift_udp_server_packets_dropped_total[1m])",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 15,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "1/s is a rough default; absolute drop count scales with your span ingestion volume — adjust based on your workload."
+}

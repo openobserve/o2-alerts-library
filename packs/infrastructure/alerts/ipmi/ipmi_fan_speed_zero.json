@@ -1,0 +1,65 @@
+{
+  "name": "ipmi_fan_speed_zero",
+  "title": "IPMI fan speed zero",
+  "severity": "critical",
+  "description": "IPMI fan reports 0 RPM. The fan may have failed.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "ipmi",
+    "ipmi-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/ipmi/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/basic-resource-monitoring/ipmi/",
+    "exporter": "ipmi-exporter",
+    "upstream_alert": "IPMI fan speed zero",
+    "upstream_query": "ipmi_fan_speed_rpm == 0",
+    "upstream_description": "IPMI fan {{ $labels.name }} on {{ $labels.instance }} reports 0 RPM. The fan may have failed."
+  },
+  "stream_type": "metrics",
+  "stream_name": "ipmi_fan_speed_rpm",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "ipmi_fan_speed_rpm",
+    "promql_condition": {
+      "column": "value",
+      "operator": "=",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | name: {name} | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

@@ -1,0 +1,65 @@
+{
+  "name": "kafka_consumer_group_lag_increasing",
+  "title": "Kafka consumer group lag increasing",
+  "severity": "warning",
+  "description": "Kafka consumer group lag on topic is continuously increasing over the last 15 minutes, meaning the consumer is falling further behind even though the absolute lag threshold hasn't been crossed yet.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "danielqsj-kafka-exporter",
+    "kafka"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/message-brokers/kafka/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/message-brokers/kafka/",
+    "exporter": "danielqsj-kafka-exporter",
+    "upstream_alert": "Kafka consumer group lag increasing",
+    "upstream_query": "sum by (topic, consumergroup) (delta(kafka_consumergroup_lag{topic!=\"__consumer_offsets\",consumergroup!=\"\"}[5m])) > 0",
+    "upstream_description": "Kafka consumer group {{ $labels.consumergroup }} lag on topic {{ $labels.topic }} is continuously increasing over the last 15 minutes, meaning the consumer is falling further behind even though the absolute lag threshold hasn't been crossed yet."
+  },
+  "stream_type": "metrics",
+  "stream_name": "kafka_consumergroup_lag",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum by (topic, consumergroup) (delta(kafka_consumergroup_lag{topic!=\"__consumer_offsets\",consumergroup!=\"\"}[5m]))",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 15,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | consumergroup: {consumergroup} | topic: {topic} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

@@ -1,0 +1,66 @@
+{
+  "name": "cloudflare_high_threat_count",
+  "title": "Cloudflare high threat count",
+  "severity": "warning",
+  "description": "Cloudflare zone recorded threats (WAF/DDoS blocks) in the last 5 minutes, which may indicate an ongoing attack.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "cloudflare",
+    "lablabs-cloudflare-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/cloudflare/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/cloudflare/",
+    "exporter": "lablabs-cloudflare-exporter",
+    "upstream_alert": "Cloudflare high threat count",
+    "upstream_query": "sum by (zone) (increase(cloudflare_zone_threats_total[5m])) > 3",
+    "upstream_description": "Cloudflare zone {{ $labels.zone }} recorded {{ $value }} threats (WAF/DDoS blocks) in the last 5 minutes, which may indicate an ongoing attack."
+  },
+  "stream_type": "metrics",
+  "stream_name": "cloudflare_zone_threats_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum by (zone) (increase(cloudflare_zone_threats_total[5m]))",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 3,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 1,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | zone: {zone} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "3 threats per 5m is a rough default; adjust based on your zone's typical traffic and threat baseline."
+}

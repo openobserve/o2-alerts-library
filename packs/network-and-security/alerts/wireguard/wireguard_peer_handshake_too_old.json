@@ -1,0 +1,67 @@
+{
+  "name": "wireguard_peer_handshake_too_old",
+  "title": "WireGuard peer handshake too old",
+  "severity": "warning",
+  "description": "WireGuard peer on interface has not had a handshake for over 5 minutes. The tunnel may be down.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "mindflavor-prometheus-wireguard-exporter",
+    "wireguard"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/wireguard/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/network-and-security/wireguard/",
+    "exporter": "mindflavor-prometheus-wireguard-exporter",
+    "upstream_alert": "WireGuard peer handshake too old",
+    "upstream_query": "time() - wireguard_latest_handshake_seconds > 300 and wireguard_latest_handshake_seconds > 0",
+    "upstream_description": "WireGuard peer {{ $labels.public_key }} on interface {{ $labels.interface }} has not had a handshake for over 5 minutes. The tunnel may be down.",
+    "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
+  },
+  "stream_type": "metrics",
+  "stream_name": "wireguard_latest_handshake_seconds",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(time() - wireguard_latest_handshake_seconds > 300 and wireguard_latest_handshake_seconds > 0) * 0 + 1",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">=",
+      "value": 1,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | public_key: {public_key} | interface: {interface}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "The threshold of 300 seconds (5 minutes) is a rough default. WireGuard peers that are idle but reachable\ntypically re-handshake every 2 minutes. Adjust based on your keepalive interval.\nThe `> 0` guard excludes peers that have never completed a handshake (covered by a separate rule)."
+}

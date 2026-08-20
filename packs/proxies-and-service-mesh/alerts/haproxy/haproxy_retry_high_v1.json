@@ -1,0 +1,65 @@
+{
+  "name": "haproxy_retry_high_v1",
+  "title": "HAProxy retry high (v1)",
+  "severity": "warning",
+  "description": "High rate of retry backend",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "haproxy",
+    "haproxy-exporter-v1"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/haproxy/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/proxies-load-balancers-and-service-meshes/haproxy/",
+    "exporter": "haproxy-exporter-v1",
+    "upstream_alert": "HAProxy retry high (v1)",
+    "upstream_query": "sum by (backend) (rate(haproxy_backend_retry_warnings_total[1m])) > 10",
+    "upstream_description": "High rate of retry on {{ $labels.backend }} backend"
+  },
+  "stream_type": "metrics",
+  "stream_name": "haproxy_backend_retry_warnings_total",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "sum by (backend) (rate(haproxy_backend_retry_warnings_total[1m]))",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 10,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | backend: {backend} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

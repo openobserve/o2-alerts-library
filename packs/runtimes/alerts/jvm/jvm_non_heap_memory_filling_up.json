@@ -1,0 +1,66 @@
+{
+  "name": "jvm_non_heap_memory_filling_up",
+  "title": "JVM non-heap memory filling up",
+  "severity": "warning",
+  "description": "JVM non-heap memory (metaspace/code cache) is filling up (> 80%)",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "jvm",
+    "jvm-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/jvm/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/runtimes/jvm/",
+    "exporter": "jvm-exporter",
+    "upstream_alert": "JVM non-heap memory filling up",
+    "upstream_query": "(sum by (instance)(jvm_memory_used_bytes{area=\"nonheap\"}) / (sum by (instance)(jvm_memory_max_bytes{area=\"nonheap\"}) > 0)) * 100 > 80",
+    "upstream_description": "JVM non-heap memory (metaspace/code cache) is filling up (> 80%)"
+  },
+  "stream_type": "metrics",
+  "stream_name": "jvm_memory_used_bytes",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "(sum by (instance)(jvm_memory_used_bytes{area=\"nonheap\"}) / (sum by (instance)(jvm_memory_max_bytes{area=\"nonheap\"}) > 0)) * 100",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 80,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "Many JVM configurations leave metaspace unbounded, in which case jvm_memory_max_bytes{area=\"nonheap\"} is -1 and this alert will not fire.\nThe query filters out max_bytes <= 0 to avoid false negatives."
+}

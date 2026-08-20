@@ -1,0 +1,66 @@
+{
+  "name": "mongodb_wiredtiger_read_tickets_exhausted",
+  "title": "MongoDB WiredTiger read tickets exhausted",
+  "severity": "warning",
+  "description": "WiredTiger available read tickets have dropped, which causes read requests to queue and latency to spike.",
+  "tags": [
+    "awesome-prometheus-alerts",
+    "mongodb",
+    "percona-mongodb-exporter"
+  ],
+  "docs_url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/mongodb/",
+  "source": {
+    "project": "awesome-prometheus-alerts",
+    "license": "CC-BY-4.0",
+    "url": "https://samber.github.io/awesome-prometheus-alerts/rules/databases/mongodb/",
+    "exporter": "percona-mongodb-exporter",
+    "upstream_alert": "MongoDB WiredTiger read tickets exhausted",
+    "upstream_query": "mongodb_ss_wt_concurrentTransactions_available{txn_rw_type=\"read\"} < 50",
+    "upstream_description": "WiredTiger available read tickets on {{ $labels.instance }} have dropped to {{ $value }}, which causes read requests to queue and latency to spike."
+  },
+  "stream_type": "metrics",
+  "stream_name": "mongodb_ss_wt_concurrentTransactions_available",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "mongodb_ss_wt_concurrentTransactions_available{txn_rw_type=\"read\"}",
+    "promql_condition": {
+      "column": "value",
+      "operator": "<",
+      "value": 50,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 2,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 1,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {instance} | value: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false,
+  "notes": "50 is a rough default relative to MongoDB's default 128 concurrent read transactions; adjust based on your configured wiredTigerConcurrentReadTransactions and workload concurrency."
+}
