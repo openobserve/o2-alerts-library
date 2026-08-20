@@ -21,12 +21,34 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: read
+      contents: write  # bot-commits the regenerated manifest
       id-token: write  # Required for OIDC authentication
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
+
+      # The manifest is 100% CI-built and committed, so the S3 mirror serves
+      # exactly what GitHub holds. Generation is deterministic (same tree in,
+      # byte-identical manifest out) — that is what makes the no-diff guard
+      # below a safe loop-breaker.
+      - name: Regenerate manifest
+        run: python3 scripts/generate_manifest.py
+
+      - name: Commit manifest if changed
+        run: |
+          if [ -z "$(git status --porcelain manifest.json)" ]; then
+            echo "Manifest unchanged — nothing to commit."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add manifest.json
+            # [skip ci] stops this push from retriggering the workflow; the
+            # sync below runs in THIS run, after the commit, so S3 still gets
+            # the fresh manifest atomically with the alert files.
+            git commit -m "chore: regenerate manifest.json [skip ci]"
+            git push
+          fi
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v5
@@ -37,15 +59,15 @@ jobs:
 
       - name: Sync alerts to S3
         run: |
-          echo "Syncing alert directories to s3://${S3_BUCKET}/${S3_PATH}"
+          # S3 is a byte-for-byte mirror of the repo: only VCS/CI internals are
+          # excluded. Content of every kind (alerts, docs, tests) syncs as-is —
+          # the manifest is the index consumers read, not the bucket listing.
+          echo "Mirroring repo to s3://${S3_BUCKET}/${S3_PATH}"
           aws s3 sync . "s3://${S3_BUCKET}/${S3_PATH}" \
             --delete \
             --exclude ".git/*" \
             --exclude ".github/*" \
-            --exclude ".gitignore" \
-            --exclude "LICENSE" \
-            --exclude "*.md" \
-            --exclude "k8s/tests/*"
+            --exclude ".gitignore"
 
       - name: Verify upload
         run: |

@@ -1,0 +1,1559 @@
+{
+ "format_version": "1.0.0",
+ "alert_count": 87,
+ "packs": [
+  {
+   "id": "k8s",
+   "categories": [
+    {
+     "id": "app-performance",
+     "alert_count": 2
+    },
+    {
+     "id": "cert-manager",
+     "alert_count": 4
+    },
+    {
+     "id": "cluster",
+     "alert_count": 5
+    },
+    {
+     "id": "container",
+     "alert_count": 4
+    },
+    {
+     "id": "control-plane",
+     "alert_count": 6
+    },
+    {
+     "id": "k8s-events",
+     "alert_count": 16
+    },
+    {
+     "id": "network",
+     "alert_count": 4
+    },
+    {
+     "id": "node",
+     "alert_count": 10
+    },
+    {
+     "id": "other",
+     "alert_count": 1
+    },
+    {
+     "id": "pod",
+     "alert_count": 7
+    },
+    {
+     "id": "resource-optimization",
+     "alert_count": 5
+    },
+    {
+     "id": "security",
+     "alert_count": 4
+    },
+    {
+     "id": "storage",
+     "alert_count": 8
+    },
+    {
+     "id": "workload",
+     "alert_count": 10
+    }
+   ],
+   "alert_count": 86
+  },
+  {
+   "id": "openobserve",
+   "categories": [
+    {
+     "id": "self-monitoring",
+     "alert_count": 1
+    }
+   ],
+   "alert_count": 1
+  }
+ ],
+ "alerts": [
+  {
+   "id": "k8s/go_gc_pause_high",
+   "name": "go_gc_pause_high",
+   "pack": "k8s",
+   "category": "app-performance",
+   "title": "Go Gc Pause High",
+   "severity": "warning",
+   "description": "Warning: Go GC average pause time exceeds 100ms. Tune heap size or investigate memory allocation patterns.",
+   "stream": "go_gc_duration_seconds_sum",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "go_gc_duration_seconds_sum"
+   ],
+   "path": "packs/k8s/alerts/app-performance/go_gc_pause_high.json",
+   "content_hash": "1c09e8f6ac33"
+  },
+  {
+   "id": "k8s/go_gc_rate_high",
+   "name": "go_gc_rate_high",
+   "pack": "k8s",
+   "category": "app-performance",
+   "title": "Go Gc Rate High",
+   "severity": "warning",
+   "description": "Warning: Go GC frequency exceeds 10 collections/min. Application is under memory pressure. Increase heap size or reduce allocations.",
+   "stream": "go_gc_duration_seconds_count",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "go_gc_duration_seconds_count"
+   ],
+   "path": "packs/k8s/alerts/app-performance/go_gc_rate_high.json",
+   "content_hash": "d389aefc7af7"
+  },
+  {
+   "id": "k8s/cert_already_expired",
+   "name": "cert_already_expired",
+   "pack": "k8s",
+   "category": "cert-manager",
+   "title": "Cert Already Expired",
+   "severity": "critical",
+   "description": "Critical: cert-manager certificate has already expired. Services using this certificate will fail TLS validation. Renew immediately.",
+   "stream": "certmanager_certificate_expiration_timestamp_seconds",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "certmanager_certificate_expiration_timestamp_seconds"
+   ],
+   "path": "packs/k8s/alerts/cert-manager/cert_already_expired.json",
+   "content_hash": "2ea05f5ed02f"
+  },
+  {
+   "id": "k8s/cert_challenge_failed",
+   "name": "cert_challenge_failed",
+   "pack": "k8s",
+   "category": "cert-manager",
+   "title": "Cert Challenge Failed",
+   "severity": "warning",
+   "description": "Warning: cert-manager ACME challenge has errored. Certificate renewal will fail. Check DNS records, HTTP-01 solver ingress, or Let's Encrypt rate limits.",
+   "stream": "certmanager_certificate_challenge_status",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "certmanager_certificate_challenge_status"
+   ],
+   "path": "packs/k8s/alerts/cert-manager/cert_challenge_failed.json",
+   "content_hash": "e7d8782522a1"
+  },
+  {
+   "id": "k8s/cert_expiry_critical_7d",
+   "name": "cert_expiry_critical_7d",
+   "pack": "k8s",
+   "category": "cert-manager",
+   "title": "Cert Expiry Critical 7d",
+   "severity": "critical",
+   "description": "Critical: cert-manager certificate expires in less than 7 days. Cert-manager should renew automatically — check for ACME challenge failures or DNS issues.",
+   "stream": "certmanager_certificate_expiration_timestamp_seconds",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "certmanager_certificate_expiration_timestamp_seconds"
+   ],
+   "path": "packs/k8s/alerts/cert-manager/cert_expiry_critical_7d.json",
+   "content_hash": "d19187f7c1b2"
+  },
+  {
+   "id": "k8s/cert_expiry_warning_30d",
+   "name": "cert_expiry_warning_30d",
+   "pack": "k8s",
+   "category": "cert-manager",
+   "title": "Cert Expiry Warning 30d",
+   "severity": "warning",
+   "description": "Warning: cert-manager certificate expires within 30 days. Monitor renewal progress. If cert-manager is healthy it will renew at 2/3 of lifetime.",
+   "stream": "certmanager_certificate_expiration_timestamp_seconds",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "certmanager_certificate_expiration_timestamp_seconds"
+   ],
+   "path": "packs/k8s/alerts/cert-manager/cert_expiry_warning_30d.json",
+   "content_hash": "7681bd28da16"
+  },
+  {
+   "id": "k8s/apiserver_high_latency",
+   "name": "apiserver_high_latency",
+   "pack": "k8s",
+   "category": "cluster",
+   "title": "Apiserver High Latency",
+   "severity": "warning",
+   "description": "Warning: API server P99 request latency exceeds 1 second. Investigate API server load and etcd performance.",
+   "stream": "apiserver_request_duration_seconds_bucket",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "apiserver_request_duration_seconds_bucket"
+   ],
+   "path": "packs/k8s/alerts/cluster/apiserver_high_latency.json",
+   "content_hash": "1eef09888531"
+  },
+  {
+   "id": "k8s/certificate_expiry_warning",
+   "name": "certificate_expiry_warning",
+   "pack": "k8s",
+   "category": "cluster",
+   "title": "Certificate Expiry Warning",
+   "severity": "warning",
+   "description": "Warning: One or more API server client certificates expire within 30 days. Plan certificate rotation immediately.",
+   "stream": "apiserver_client_certificate_expiration_seconds_bucket",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "apiserver_client_certificate_expiration_seconds_bucket"
+   ],
+   "path": "packs/k8s/alerts/cluster/certificate_expiry_warning.json",
+   "content_hash": "efedf43bec1a"
+  },
+  {
+   "id": "k8s/cluster_cpu_capacity_high",
+   "name": "cluster_cpu_capacity_high",
+   "pack": "k8s",
+   "category": "cluster",
+   "title": "Cluster Cpu Capacity High",
+   "severity": "warning",
+   "description": "Warning: Cluster-wide CPU requests exceed 80% of allocatable. Uses clamp_max(100) to guard against telemetry unit mismatches (some clusters report CPU in millicores vs cores).",
+   "stream": "kube_pod_container_resource_requests",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_pod_container_resource_requests"
+   ],
+   "path": "packs/k8s/alerts/cluster/cluster_cpu_capacity_high.json",
+   "content_hash": "e601233c85a7"
+  },
+  {
+   "id": "k8s/cluster_memory_capacity_high",
+   "name": "cluster_memory_capacity_high",
+   "pack": "k8s",
+   "category": "cluster",
+   "title": "Cluster Memory Capacity High",
+   "severity": "warning",
+   "description": "Warning: Cluster-wide memory requests exceed 80% of allocatable. Uses clamp_max(100) to guard against telemetry unit mismatches.",
+   "stream": "kube_pod_container_resource_requests",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_pod_container_resource_requests"
+   ],
+   "path": "packs/k8s/alerts/cluster/cluster_memory_capacity_high.json",
+   "content_hash": "f6b4f6f1f841"
+  },
+  {
+   "id": "k8s/cluster_pod_count_high",
+   "name": "cluster_pod_count_high",
+   "pack": "k8s",
+   "category": "cluster",
+   "title": "Cluster Pod Count High",
+   "severity": "warning",
+   "description": "Warning: Cluster pod count exceeds 90% of max pod capacity. Review pod density and plan scaling.",
+   "stream": "kube_pod_info",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_pod_info"
+   ],
+   "path": "packs/k8s/alerts/cluster/cluster_pod_count_high.json",
+   "content_hash": "19eea8c6280b"
+  },
+  {
+   "id": "k8s/container_cpu_limit_high",
+   "name": "container_cpu_limit_high",
+   "pack": "k8s",
+   "category": "container",
+   "title": "Container Cpu Limit High",
+   "severity": "warning",
+   "description": "Warning: Pod CPU usage exceeds 80% of its configured limit. Risk of throttling. Review CPU limits or optimize the application.",
+   "stream": "k8s_pod_cpu_limit_utilization",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "k8s_pod_cpu_limit_utilization"
+   ],
+   "path": "packs/k8s/alerts/container/container_cpu_limit_high.json",
+   "content_hash": "7e758a9ed5e7"
+  },
+  {
+   "id": "k8s/container_memory_near_limit",
+   "name": "container_memory_near_limit",
+   "pack": "k8s",
+   "category": "container",
+   "title": "Container Memory Near Limit",
+   "severity": "warning",
+   "description": "Warning: Pod memory usage exceeds 90% of its configured limit. Risk of OOMKill. Increase memory limit or investigate leak.",
+   "stream": "k8s_pod_memory_limit_utilization",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "k8s_pod_memory_limit_utilization"
+   ],
+   "path": "packs/k8s/alerts/container/container_memory_near_limit.json",
+   "content_hash": "f168e2e62cb7"
+  },
+  {
+   "id": "k8s/container_not_ready",
+   "name": "container_not_ready",
+   "pack": "k8s",
+   "category": "container",
+   "title": "Container Not Ready",
+   "severity": "warning",
+   "description": "Warning: Container has been failing readiness probe for >5 minutes. Excludes pods in Succeeded phase (completed Jobs/CronJobs always show ready=0).",
+   "stream": "kube_pod_container_status_ready",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_pod_container_status_ready"
+   ],
+   "path": "packs/k8s/alerts/container/container_not_ready.json",
+   "content_hash": "086894c3d1a5"
+  },
+  {
+   "id": "k8s/container_restarted",
+   "name": "container_restarted",
+   "pack": "k8s",
+   "category": "container",
+   "title": "Container Restarted",
+   "severity": "info",
+   "description": "Info: Container has restarted. Monitor for pattern; investigate if restarts are frequent.",
+   "stream": "kube_pod_container_status_restarts_total",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_pod_container_status_restarts_total"
+   ],
+   "path": "packs/k8s/alerts/container/container_restarted.json",
+   "content_hash": "95a99cb4c16c"
+  },
+  {
+   "id": "k8s/admission_webhook_failures_high",
+   "name": "admission_webhook_failures_high",
+   "pack": "k8s",
+   "category": "control-plane",
+   "title": "Admission Webhook Failures High",
+   "severity": "warning",
+   "description": "Warning: Admission webhook rejection rate exceeds 0.5/s. Check webhook endpoint health and configuration.",
+   "stream": "apiserver_admission_webhook_request_total",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "apiserver_admission_webhook_request_total"
+   ],
+   "path": "packs/k8s/alerts/control-plane/admission_webhook_failures_high.json",
+   "content_hash": "9fe400d2a8ba"
+  },
+  {
+   "id": "k8s/apiserver_error_rate_high",
+   "name": "apiserver_error_rate_high",
+   "pack": "k8s",
+   "category": "control-plane",
+   "title": "Apiserver Error Rate High",
+   "severity": "critical",
+   "description": "Critical: API server 5xx error rate exceeds 1/s. Investigate API server health and etcd performance.",
+   "stream": "apiserver_request_total",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "apiserver_request_total"
+   ],
+   "path": "packs/k8s/alerts/control-plane/apiserver_error_rate_high.json",
+   "content_hash": "7878ee9da06f"
+  },
+  {
+   "id": "k8s/apiserver_inflight_requests_high",
+   "name": "apiserver_inflight_requests_high",
+   "pack": "k8s",
+   "category": "control-plane",
+   "title": "Apiserver Inflight Requests High",
+   "severity": "warning",
+   "description": "Warning: API server has >400 in-flight requests. Risk of request queue overflow and latency spikes.",
+   "stream": "apiserver_current_inflight_requests",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "apiserver_current_inflight_requests"
+   ],
+   "path": "packs/k8s/alerts/control-plane/apiserver_inflight_requests_high.json",
+   "content_hash": "a48f6fbea2a8"
+  },
+  {
+   "id": "k8s/controller_queue_processing_slow",
+   "name": "controller_queue_processing_slow",
+   "pack": "k8s",
+   "category": "control-plane",
+   "title": "Controller Queue Processing Slow",
+   "severity": "warning",
+   "description": "Warning: Work queue P99 processing wait time exceeds 1 second. Controller is overloaded or reconciliation is blocked.",
+   "stream": "workqueue_queue_duration_seconds_bucket",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "workqueue_queue_duration_seconds_bucket"
+   ],
+   "path": "packs/k8s/alerts/control-plane/controller_queue_processing_slow.json",
+   "content_hash": "5245256d9a14"
+  },
+  {
+   "id": "k8s/controller_reconcile_errors_high",
+   "name": "controller_reconcile_errors_high",
+   "pack": "k8s",
+   "category": "control-plane",
+   "title": "Controller Reconcile Errors High",
+   "severity": "warning",
+   "description": "Warning: Controller Manager reconcile error rate exceeds 0.1/s. Check controller logs for reconciliation failures.",
+   "stream": "controller_runtime_reconcile_errors_total",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "controller_runtime_reconcile_errors_total"
+   ],
+   "path": "packs/k8s/alerts/control-plane/controller_reconcile_errors_high.json",
+   "content_hash": "d88bace43193"
+  },
+  {
+   "id": "k8s/controller_workqueue_depth_high",
+   "name": "controller_workqueue_depth_high",
+   "pack": "k8s",
+   "category": "control-plane",
+   "title": "Controller Workqueue Depth High",
+   "severity": "warning",
+   "description": "Warning: Controller Manager work queue depth exceeds 50. Controller is falling behind on reconciliation.",
+   "stream": "workqueue_depth",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "workqueue_depth"
+   ],
+   "path": "packs/k8s/alerts/control-plane/controller_workqueue_depth_high.json",
+   "content_hash": "886764f011e9"
+  },
+  {
+   "id": "k8s/azure_maintenance_scheduled_events",
+   "name": "azure_maintenance_scheduled_events",
+   "pack": "k8s",
+   "category": "k8s-events",
+   "title": "Azure Maintenance Scheduled Events",
+   "severity": "warning",
+   "description": "Warning: Azure scheduled VM maintenance event detected (Freeze/Preempt/Terminate/Redeploy). Node will be unavailable soon. Review workload disruption budget.",
+   "stream": "k8s_events",
+   "stream_type": "logs",
+   "query_type": "sql",
+   "required_streams": [
+    "k8s_events"
+   ],
+   "path": "packs/k8s/alerts/k8s-events/azure_maintenance_scheduled_events.json",
+   "content_hash": "f02d6b4f3930"
+  },
+  {
+   "id": "k8s/azure_storage_provisioning_failed_events",
+   "name": "azure_storage_provisioning_failed_events",
+   "pack": "k8s",
+   "category": "k8s-events",
+   "title": "Azure Storage Provisioning Failed Events",
+   "severity": "warning",
+   "description": "Warning: Azure disk/storage provisioning failures detected. PVCs may be stuck in Pending. Check Azure storage backend and quota.",
+   "stream": "k8s_events",
+   "stream_type": "logs",
+   "query_type": "sql",
+   "required_streams": [
+    "k8s_events"
+   ],
+   "path": "packs/k8s/alerts/k8s-events/azure_storage_provisioning_failed_events.json",
+   "content_hash": "6fb35f4c2c7b"
+  },
+  {
+   "id": "k8s/coredns_unreachable_events",
+   "name": "coredns_unreachable_events",
+   "pack": "k8s",
+   "category": "k8s-events",
+   "title": "Coredns Unreachable Events",
+   "severity": "critical",
+   "description": "Critical: CoreDNS is unreachable. All in-cluster DNS resolution is failing. Check CoreDNS pods and kube-dns service immediately.",
+   "stream": "k8s_events",
+   "stream_type": "logs",
+   "query_type": "sql",
+   "required_streams": [
+    "k8s_events"
+   ],
+   "path": "packs/k8s/alerts/k8s-events/coredns_unreachable_events.json",
+   "content_hash": "b9f6d57c9b66"
+  },
+  {
+   "id": "k8s/high_warning_event_rate",
+   "name": "high_warning_event_rate",
+   "pack": "k8s",
+   "category": "k8s-events",
+   "title": "High Warning Event Rate",
+   "severity": "warning",
+   "description": "Warning: >100 Kubernetes warning events in 5 minutes. Cluster may be unstable. Investigate the source.",
+   "stream": "k8s_events",
+   "stream_type": "logs",
+   "query_type": "sql",
+   "required_streams": [
+    "k8s_events"
+   ],
+   "path": "packs/k8s/alerts/k8s-events/high_warning_event_rate.json",
+   "content_hash": "9a0bcc20d3d1"
+  },
+  {
+   "id": "k8s/hpa_metric_unavailable_events",
+   "name": "hpa_metric_unavailable_events",
+   "pack": "k8s",
+   "category": "k8s-events",
+   "title": "Hpa Metric Unavailable Events",
+   "severity": "warning",
+   "description": "Warning: HPA cannot retrieve resource metrics for autoscaling decisions. Scaling is blind. Check metrics-server and HPA configuration.",
+   "stream": "k8s_events",
+   "stream_type": "logs",
+   "query_type": "sql",
+   "required_streams": [
+    "k8s_events"
+   ],
+   "path": "packs/k8s/alerts/k8s-events/hpa_metric_unavailable_events.json",
+   "content_hash": "8be6180cb9e1"
+  },
+  {
+   "id": "k8s/image_pull_errors_events",
+   "name": "image_pull_errors_events",
+   "pack": "k8s",
+   "category": "k8s-events",
+   "title": "Image Pull Errors Events",
+   "severity": "warning",
+   "description": "Warning: >3 image pull error events in 10 minutes. Verify image registry access and credentials.",
+   "stream": "k8s_events",
+   "stream_type": "logs",
+   "query_type": "sql",
+   "required_streams": [
+    "k8s_events"
+   ],
+   "path": "packs/k8s/alerts/k8s-events/image_pull_errors_events.json",
+   "content_hash": "7985190bdedb"
+  },
+  {
+   "id": "k8s/image_pull_secret_missing_events",
+   "name": "image_pull_secret_missing_events",
+   "pack": "k8s",
+   "category": "k8s-events",
+   "title": "Image Pull Secret Missing Events",
+   "severity": "warning",
+   "description": "Warning: Pods cannot retrieve image pull secret. Images will fail to pull. Check secret existence, name, and namespace.",
+   "stream": "k8s_events",
+   "stream_type": "logs",
+   "query_type": "sql",
+   "required_streams": [
+    "k8s_events"
+   ],
+   "path": "packs/k8s/alerts/k8s-events/image_pull_secret_missing_events.json",
+   "content_hash": "c7725d2165d2"
+  },
+  {
+   "id": "k8s/network_not_ready_events",
+   "name": "network_not_ready_events",
+   "pack": "k8s",
+   "category": "k8s-events",
+   "title": "Network Not Ready Events",
+   "severity": "warning",
+   "description": "Warning: CNI network plugin not ready on node. New pods cannot be scheduled. Check CNI DaemonSet and plugin logs.",
+   "stream": "k8s_events",
+   "stream_type": "logs",
+   "query_type": "sql",
+   "required_streams": [
+    "k8s_events"
+   ],
+   "path": "packs/k8s/alerts/k8s-events/network_not_ready_events.json",
+   "content_hash": "987a59cb0c7e"
+  },
+  {
+   "id": "k8s/node_condition_change_events",
+   "name": "node_condition_change_events",
+   "pack": "k8s",
+   "category": "k8s-events",
+   "title": "Node Condition Change Events",
+   "severity": "warning",
+   "description": "Warning: Node condition change events detected (NotReady/DiskPressure/MemoryPressure). Investigate node health.",
+   "stream": "k8s_events",
+   "stream_type": "logs",
+   "query_type": "sql",
+   "required_streams": [
+    "k8s_events"
+   ],
+   "path": "packs/k8s/alerts/k8s-events/node_condition_change_events.json",
+   "content_hash": "8d06e91cc227"
+  },
+  {
+   "id": "k8s/node_drain_failed_events",
+   "name": "node_drain_failed_events",
+   "pack": "k8s",
+   "category": "k8s-events",
+   "title": "Node Drain Failed Events",
+   "severity": "warning",
+   "description": "Warning: Node drain is failing. Cluster upgrades or maintenance may be stalled. Check PodDisruptionBudgets and stuck pods.",
+   "stream": "k8s_events",
+   "stream_type": "logs",
+   "query_type": "sql",
+   "required_streams": [
+    "k8s_events"
+   ],
+   "path": "packs/k8s/alerts/k8s-events/node_drain_failed_events.json",
+   "content_hash": "33eb925ca24d"
+  },
+  {
+   "id": "k8s/node_shutdown_events",
+   "name": "node_shutdown_events",
+   "pack": "k8s",
+   "category": "k8s-events",
+   "title": "Node Shutdown Events",
+   "severity": "critical",
+   "description": "Critical: Multiple node shutdown events detected (3+ events per period). Groups by cluster to avoid 1 node shutdown generating 20+ separate alerts from DaemonSet pod terminations.",
+   "stream": "k8s_events",
+   "stream_type": "logs",
+   "query_type": "sql",
+   "required_streams": [
+    "k8s_events"
+   ],
+   "path": "packs/k8s/alerts/k8s-events/node_shutdown_events.json",
+   "content_hash": "55783d73f58a"
+  },
+  {
+   "id": "k8s/oom_killing_events",
+   "name": "oom_killing_events",
+   "pack": "k8s",
+   "category": "k8s-events",
+   "title": "Oom Killing Events",
+   "severity": "critical",
+   "description": "Critical: Node OOM killer is actively terminating processes (node-level event). Check which pods on the node are consuming excessive memory.",
+   "stream": "k8s_events",
+   "stream_type": "logs",
+   "query_type": "sql",
+   "required_streams": [
+    "k8s_events"
+   ],
+   "path": "packs/k8s/alerts/k8s-events/oom_killing_events.json",
+   "content_hash": "851f14d0c26f"
+  },
+  {
+   "id": "k8s/pod_sandbox_failed_events",
+   "name": "pod_sandbox_failed_events",
+   "pack": "k8s",
+   "category": "k8s-events",
+   "title": "Pod Sandbox Failed Events",
+   "severity": "warning",
+   "description": "Warning: Pod network sandbox creation failing. CNI plugin or container runtime issues. Pods will not start networking.",
+   "stream": "k8s_events",
+   "stream_type": "logs",
+   "query_type": "sql",
+   "required_streams": [
+    "k8s_events"
+   ],
+   "path": "packs/k8s/alerts/k8s-events/pod_sandbox_failed_events.json",
+   "content_hash": "ec77f0cc9b0c"
+  },
+  {
+   "id": "k8s/pod_scheduling_failures_events",
+   "name": "pod_scheduling_failures_events",
+   "pack": "k8s",
+   "category": "k8s-events",
+   "title": "Pod Scheduling Failures Events",
+   "severity": "warning",
+   "description": "Warning: >30 pod scheduling failure events in 5 minutes. Review resource requests and cluster capacity. Excludes arc-runners-* and devzero-system (on-demand autoscaling namespaces where transient FailedScheduling bursts are expected; stuck pods there are still caught by pod_pending_too_long). Threshold accounts for duplicate event ingestion (~5-10x per event).",
+   "stream": "k8s_events",
+   "stream_type": "logs",
+   "query_type": "sql",
+   "required_streams": [
+    "k8s_events"
+   ],
+   "path": "packs/k8s/alerts/k8s-events/pod_scheduling_failures_events.json",
+   "content_hash": "1ea50a87323d"
+  },
+  {
+   "id": "k8s/pod_unhealthy_probe_events",
+   "name": "pod_unhealthy_probe_events",
+   "pack": "k8s",
+   "category": "k8s-events",
+   "title": "Pod Unhealthy Probe Events",
+   "severity": "warning",
+   "description": "Warning: >10 readiness or liveness probe failure events in 5 minutes. Pods are failing health checks. Check application health and probe configuration.",
+   "stream": "k8s_events",
+   "stream_type": "logs",
+   "query_type": "sql",
+   "required_streams": [
+    "k8s_events"
+   ],
+   "path": "packs/k8s/alerts/k8s-events/pod_unhealthy_probe_events.json",
+   "content_hash": "a3e542ebf977"
+  },
+  {
+   "id": "k8s/volume_mount_failures_events",
+   "name": "volume_mount_failures_events",
+   "pack": "k8s",
+   "category": "k8s-events",
+   "title": "Volume Mount Failures Events",
+   "severity": "critical",
+   "description": "Critical: Volume mount failure events detected. Check PVC binding and storage backend health.",
+   "stream": "k8s_events",
+   "stream_type": "logs",
+   "query_type": "sql",
+   "required_streams": [
+    "k8s_events"
+   ],
+   "path": "packs/k8s/alerts/k8s-events/volume_mount_failures_events.json",
+   "content_hash": "8de75634a097"
+  },
+  {
+   "id": "k8s/dns_high_latency",
+   "name": "dns_high_latency",
+   "pack": "k8s",
+   "category": "network",
+   "title": "Dns High Latency",
+   "severity": "warning",
+   "description": "Warning: CoreDNS P99 request latency exceeds 500ms. Investigate CoreDNS pod health and upstream DNS servers.",
+   "stream": "coredns_dns_request_duration_seconds_bucket",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "coredns_dns_request_duration_seconds_bucket"
+   ],
+   "path": "packs/k8s/alerts/network/dns_high_latency.json",
+   "content_hash": "c2e042d8ea3b"
+  },
+  {
+   "id": "k8s/dns_resolution_failures_high",
+   "name": "dns_resolution_failures_high",
+   "pack": "k8s",
+   "category": "network",
+   "title": "Dns Resolution Failures High",
+   "severity": "warning",
+   "description": "Warning: CoreDNS error response rate exceeds 10/s. Check CoreDNS pods and upstream DNS configuration.",
+   "stream": "coredns_dns_responses_total",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "coredns_dns_responses_total"
+   ],
+   "path": "packs/k8s/alerts/network/dns_resolution_failures_high.json",
+   "content_hash": "94a7ddf1c52d"
+  },
+  {
+   "id": "k8s/node_network_errors_high",
+   "name": "node_network_errors_high",
+   "pack": "k8s",
+   "category": "network",
+   "title": "Node Network Errors High",
+   "severity": "warning",
+   "description": "Warning: Node network error rate exceeds 10/s. Investigate network configuration and CNI plugin.",
+   "stream": "k8s_node_network_errors",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "k8s_node_network_errors"
+   ],
+   "path": "packs/k8s/alerts/network/node_network_errors_high.json",
+   "content_hash": "9a74dede89dc"
+  },
+  {
+   "id": "k8s/service_no_ready_endpoints",
+   "name": "service_no_ready_endpoints",
+   "pack": "k8s",
+   "category": "network",
+   "title": "Service No Ready Endpoints",
+   "severity": "critical",
+   "description": "Critical: Service has no ready endpoints — all pods are failing health checks. Check pod readiness and deployment status.",
+   "stream": "kube_endpoint_address",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_endpoint_address"
+   ],
+   "path": "packs/k8s/alerts/network/service_no_ready_endpoints.json",
+   "content_hash": "0d542f17bb91"
+  },
+  {
+   "id": "k8s/node_critical_cpu_utilization",
+   "name": "node_critical_cpu_utilization",
+   "pack": "k8s",
+   "category": "node",
+   "title": "Node Critical Cpu Utilization",
+   "severity": "critical",
+   "description": "Critical: Node CPU utilization exceeds 90%. Immediate investigation and capacity planning required.",
+   "stream": "system_cpu_utilization",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "system_cpu_utilization"
+   ],
+   "path": "packs/k8s/alerts/node/node_critical_cpu_utilization.json",
+   "content_hash": "05e1aa3b1caa"
+  },
+  {
+   "id": "k8s/node_critical_disk_usage",
+   "name": "node_critical_disk_usage",
+   "pack": "k8s",
+   "category": "node",
+   "title": "Node Critical Disk Usage",
+   "severity": "critical",
+   "description": "Critical: Node filesystem usage exceeds 90%. Immediate action required to prevent disk exhaustion.",
+   "stream": "k8s_node_filesystem_usage",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "k8s_node_filesystem_usage"
+   ],
+   "path": "packs/k8s/alerts/node/node_critical_disk_usage.json",
+   "content_hash": "fc559737c71b"
+  },
+  {
+   "id": "k8s/node_critical_memory_usage",
+   "name": "node_critical_memory_usage",
+   "pack": "k8s",
+   "category": "node",
+   "title": "Node Critical Memory Usage",
+   "severity": "critical",
+   "description": "Critical: Node memory utilization exceeds 95%, high risk of OOM kills and pod evictions.",
+   "stream": "k8s_node_memory_usage",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "k8s_node_memory_usage"
+   ],
+   "path": "packs/k8s/alerts/node/node_critical_memory_usage.json",
+   "content_hash": "2923ec85bf90"
+  },
+  {
+   "id": "k8s/node_disk_pressure",
+   "name": "node_disk_pressure",
+   "pack": "k8s",
+   "category": "node",
+   "title": "Node Disk Pressure",
+   "severity": "warning",
+   "description": "Warning: Node DiskPressure condition sustained for 10+ continuous minutes. Uses min_over_time to filter transient kubelet flag toggling. Also check actual disk usage with node_critical_disk_usage.",
+   "stream": "k8s_node_condition_disk_pressure",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "k8s_node_condition_disk_pressure"
+   ],
+   "path": "packs/k8s/alerts/node/node_disk_pressure.json",
+   "content_hash": "5de5065dc5af"
+  },
+  {
+   "id": "k8s/node_high_cpu_utilization",
+   "name": "node_high_cpu_utilization",
+   "pack": "k8s",
+   "category": "node",
+   "title": "Node High Cpu Utilization",
+   "severity": "warning",
+   "description": "Warning: Node CPU utilization exceeds 80% for 5 minutes. Scale workloads or add nodes.",
+   "stream": "system_cpu_utilization",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "system_cpu_utilization"
+   ],
+   "path": "packs/k8s/alerts/node/node_high_cpu_utilization.json",
+   "content_hash": "18661b01c6f5"
+  },
+  {
+   "id": "k8s/node_high_disk_usage",
+   "name": "node_high_disk_usage",
+   "pack": "k8s",
+   "category": "node",
+   "title": "Node High Disk Usage",
+   "severity": "warning",
+   "description": "Warning: Node filesystem usage exceeds 80%. Clean up or expand disk capacity.",
+   "stream": "k8s_node_filesystem_usage",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "k8s_node_filesystem_usage"
+   ],
+   "path": "packs/k8s/alerts/node/node_high_disk_usage.json",
+   "content_hash": "65853004d768"
+  },
+  {
+   "id": "k8s/node_high_memory_usage",
+   "name": "node_high_memory_usage",
+   "pack": "k8s",
+   "category": "node",
+   "title": "Node High Memory Usage",
+   "severity": "warning",
+   "description": "Warning: Node memory utilization exceeds 85%, approaching OOM conditions. Review memory-intensive workloads.",
+   "stream": "k8s_node_memory_usage",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "k8s_node_memory_usage"
+   ],
+   "path": "packs/k8s/alerts/node/node_high_memory_usage.json",
+   "content_hash": "558e68c357d6"
+  },
+  {
+   "id": "k8s/node_memory_pressure",
+   "name": "node_memory_pressure",
+   "pack": "k8s",
+   "category": "node",
+   "title": "Node Memory Pressure",
+   "severity": "warning",
+   "description": "Warning: Node MemoryPressure condition sustained for 10+ continuous minutes. Uses min_over_time to filter transient kubelet flag toggling. Also check actual memory utilization with node_critical_memory_usage.",
+   "stream": "k8s_node_condition_memory_pressure",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "k8s_node_condition_memory_pressure"
+   ],
+   "path": "packs/k8s/alerts/node/node_memory_pressure.json",
+   "content_hash": "ffbade5d7712"
+  },
+  {
+   "id": "k8s/node_not_ready",
+   "name": "node_not_ready",
+   "pack": "k8s",
+   "category": "node",
+   "title": "Node Not Ready",
+   "severity": "critical",
+   "description": "Critical: Node has been in NotReady state continuously for 5+ minutes. Uses min_over_time to filter out node churn during scale-in/termination.",
+   "stream": "k8s_node_condition_ready",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "k8s_node_condition_ready"
+   ],
+   "path": "packs/k8s/alerts/node/node_not_ready.json",
+   "content_hash": "21257e9c0638"
+  },
+  {
+   "id": "k8s/node_unschedulable",
+   "name": "node_unschedulable",
+   "pack": "k8s",
+   "category": "node",
+   "title": "Node Unschedulable",
+   "severity": "warning",
+   "description": "Warning: Node is marked unschedulable (cordoned) for >5 minutes.",
+   "stream": "kube_node_spec_taint",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_node_spec_taint"
+   ],
+   "path": "packs/k8s/alerts/node/node_unschedulable.json",
+   "content_hash": "027723c4e7fe"
+  },
+  {
+   "id": "k8s/kube_state_metrics_stale_data",
+   "name": "kube_state_metrics_stale_data",
+   "pack": "k8s",
+   "category": "other",
+   "title": "Kube State Metrics Stale Data",
+   "severity": "info",
+   "description": "Info: kube-state-metrics reports PVs in Failed/Released state that don't exist in the actual cluster. Stale time series from previously deleted resources. Restart kube-state-metrics to flush. Runs every 60min with 24h silence.",
+   "stream": "kube_persistentvolume_status_phase",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_persistentvolume_status_phase"
+   ],
+   "path": "packs/k8s/alerts/other/kube_state_metrics_stale_data.json",
+   "content_hash": "62837ae60f1f"
+  },
+  {
+   "id": "k8s/pod_crashloop_backoff",
+   "name": "pod_crashloop_backoff",
+   "pack": "k8s",
+   "category": "pod",
+   "title": "Pod Crashloop Backoff",
+   "severity": "critical",
+   "description": "Critical: Container is in CrashLoopBackOff state. Check pod logs, resource limits, and application configuration.",
+   "stream": "kube_pod_container_status_waiting_reason",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_pod_container_status_waiting_reason"
+   ],
+   "path": "packs/k8s/alerts/pod/pod_crashloop_backoff.json",
+   "content_hash": "f3f83fa83d52"
+  },
+  {
+   "id": "k8s/pod_evicted",
+   "name": "pod_evicted",
+   "pack": "k8s",
+   "category": "pod",
+   "title": "Pod Evicted",
+   "severity": "warning",
+   "description": "Warning: Pod was evicted from node due to resource pressure. Review node resource usage and pod resource requests.",
+   "stream": "kube_pod_status_reason",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_pod_status_reason"
+   ],
+   "path": "packs/k8s/alerts/pod/pod_evicted.json",
+   "content_hash": "c9180f75bbe6"
+  },
+  {
+   "id": "k8s/pod_failed_state",
+   "name": "pod_failed_state",
+   "pack": "k8s",
+   "category": "pod",
+   "title": "Pod Failed State",
+   "severity": "critical",
+   "description": "Critical: Pod has entered Failed state. Excludes trivy-system (scan pods), kube-system (system pods) which normally show transient Failed state during completion.",
+   "stream": "kube_pod_status_phase",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_pod_status_phase"
+   ],
+   "path": "packs/k8s/alerts/pod/pod_failed_state.json",
+   "content_hash": "c75d84f8fa89"
+  },
+  {
+   "id": "k8s/pod_high_restart_rate",
+   "name": "pod_high_restart_rate",
+   "pack": "k8s",
+   "category": "pod",
+   "title": "Pod High Restart Rate",
+   "severity": "warning",
+   "description": "Warning: Pod has restarted 10+ times in 15 minutes indicating instability. Investigate pod logs and application health.",
+   "stream": "k8s_container_restarts",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "k8s_container_restarts"
+   ],
+   "path": "packs/k8s/alerts/pod/pod_high_restart_rate.json",
+   "content_hash": "3599f948cf9e"
+  },
+  {
+   "id": "k8s/pod_image_pull_backoff",
+   "name": "pod_image_pull_backoff",
+   "pack": "k8s",
+   "category": "pod",
+   "title": "Pod Image Pull Backoff",
+   "severity": "warning",
+   "description": "Warning: Pod cannot pull container image. Verify image name, registry access, and credentials.",
+   "stream": "kube_pod_container_status_waiting_reason",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_pod_container_status_waiting_reason"
+   ],
+   "path": "packs/k8s/alerts/pod/pod_image_pull_backoff.json",
+   "content_hash": "955cb3a8ecce"
+  },
+  {
+   "id": "k8s/pod_oom_killed",
+   "name": "pod_oom_killed",
+   "pack": "k8s",
+   "category": "pod",
+   "title": "Pod Oom Killed",
+   "severity": "critical",
+   "description": "Critical: Container was OOMKilled. Increase memory limits or investigate memory leak.",
+   "stream": "kube_pod_container_status_terminated_reason",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_pod_container_status_terminated_reason"
+   ],
+   "path": "packs/k8s/alerts/pod/pod_oom_killed.json",
+   "content_hash": "ea291ef21102"
+  },
+  {
+   "id": "k8s/pod_pending_too_long",
+   "name": "pod_pending_too_long",
+   "pack": "k8s",
+   "category": "pod",
+   "title": "Pod Pending Too Long",
+   "severity": "warning",
+   "description": "Warning: Pod has been in Pending state for >5 minutes. Check resource requests, node capacity, and affinity rules. Note: trivy-system excluded (scan pods legitimately queue).",
+   "stream": "kube_pod_status_phase",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_pod_status_phase"
+   ],
+   "path": "packs/k8s/alerts/pod/pod_pending_too_long.json",
+   "content_hash": "f943249874d9"
+  },
+  {
+   "id": "k8s/container_cpu_over_provisioned",
+   "name": "container_cpu_over_provisioned",
+   "pack": "k8s",
+   "category": "resource-optimization",
+   "title": "Container Cpu Over Provisioned",
+   "severity": "info",
+   "description": "Info: Pod is using less than 10% of its requested CPU over 1 hour. Right-size CPU requests to improve scheduling efficiency.",
+   "stream": "k8s_pod_cpu_request_utilization",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "k8s_pod_cpu_request_utilization"
+   ],
+   "path": "packs/k8s/alerts/resource-optimization/container_cpu_over_provisioned.json",
+   "content_hash": "c57f21c16d70"
+  },
+  {
+   "id": "k8s/container_memory_over_provisioned",
+   "name": "container_memory_over_provisioned",
+   "pack": "k8s",
+   "category": "resource-optimization",
+   "title": "Container Memory Over Provisioned",
+   "severity": "info",
+   "description": "Info: Pod is using less than 10% of its requested memory over 1 hour. Right-size memory requests to free up scheduling capacity.",
+   "stream": "k8s_pod_memory_request_utilization",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "k8s_pod_memory_request_utilization"
+   ],
+   "path": "packs/k8s/alerts/resource-optimization/container_memory_over_provisioned.json",
+   "content_hash": "0a06a93851a2"
+  },
+  {
+   "id": "k8s/container_resource_under_requested",
+   "name": "container_resource_under_requested",
+   "pack": "k8s",
+   "category": "resource-optimization",
+   "title": "Container Resource Under Requested",
+   "severity": "warning",
+   "description": "Warning: Pod CPU usage consistently exceeds 95% of its request. Increase CPU request to avoid throttling and poor scheduling decisions.",
+   "stream": "k8s_pod_cpu_request_utilization",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "k8s_pod_cpu_request_utilization"
+   ],
+   "path": "packs/k8s/alerts/resource-optimization/container_resource_under_requested.json",
+   "content_hash": "1e0c78470ac6"
+  },
+  {
+   "id": "k8s/node_low_utilization",
+   "name": "node_low_utilization",
+   "pack": "k8s",
+   "category": "resource-optimization",
+   "title": "Node Low Utilization",
+   "severity": "info",
+   "description": "Info: Node CPU utilization below 10% for 1 hour. Consider node consolidation to reduce infrastructure costs.",
+   "stream": "system_cpu_utilization",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "system_cpu_utilization"
+   ],
+   "path": "packs/k8s/alerts/resource-optimization/node_low_utilization.json",
+   "content_hash": "fbeb15945bfd"
+  },
+  {
+   "id": "k8s/pods_without_resource_requests",
+   "name": "pods_without_resource_requests",
+   "pack": "k8s",
+   "category": "resource-optimization",
+   "title": "Pods Without Resource Requests",
+   "severity": "warning",
+   "description": "Warning: Container running without resource requests. Affects scheduler decisions and cluster stability. Define CPU and memory requests.",
+   "stream": "kube_pod_container_info",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_pod_container_info"
+   ],
+   "path": "packs/k8s/alerts/resource-optimization/pods_without_resource_requests.json",
+   "content_hash": "06c7e601f77e"
+  },
+  {
+   "id": "k8s/image_from_untrusted_registry",
+   "name": "image_from_untrusted_registry",
+   "pack": "k8s",
+   "category": "security",
+   "title": "Image From Untrusted Registry",
+   "severity": "warning",
+   "description": "Warning: Container image pulled from non-standard registry. Review image source and update image pull policies. Customize trusted registries in the alert query.",
+   "stream": "kube_pod_container_info",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_pod_container_info"
+   ],
+   "path": "packs/k8s/alerts/security/image_from_untrusted_registry.json",
+   "content_hash": "fe187539cda9"
+  },
+  {
+   "id": "k8s/namespace_without_network_policy",
+   "name": "namespace_without_network_policy",
+   "pack": "k8s",
+   "category": "security",
+   "title": "Namespace Without Network Policy",
+   "severity": "warning",
+   "description": "Warning: Active namespace has no NetworkPolicy configured. Unrestricted pod-to-pod communication. Implement network segmentation.",
+   "stream": "kube_namespace_status_phase",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_namespace_status_phase"
+   ],
+   "path": "packs/k8s/alerts/security/namespace_without_network_policy.json",
+   "content_hash": "54696e0dca5b"
+  },
+  {
+   "id": "k8s/pod_missing_resource_limits",
+   "name": "pod_missing_resource_limits",
+   "pack": "k8s",
+   "category": "security",
+   "title": "Pod Missing Resource Limits",
+   "severity": "warning",
+   "description": "Warning: Container running without memory limits. Risk of OOMKill and noisy-neighbour issues. Define resource limits.",
+   "stream": "kube_pod_container_info",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_pod_container_info"
+   ],
+   "path": "packs/k8s/alerts/security/pod_missing_resource_limits.json",
+   "content_hash": "ecc3cbd23461"
+  },
+  {
+   "id": "k8s/unauthorized_api_access_high",
+   "name": "unauthorized_api_access_high",
+   "pack": "k8s",
+   "category": "security",
+   "title": "Unauthorized Api Access High",
+   "severity": "critical",
+   "description": "Critical: High rate of 401/403 API responses. Potential unauthorized access or misconfigured RBAC. Review audit logs.",
+   "stream": "apiserver_request_total",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "apiserver_request_total"
+   ],
+   "path": "packs/k8s/alerts/security/unauthorized_api_access_high.json",
+   "content_hash": "634138884277"
+  },
+  {
+   "id": "k8s/pv_available_unused",
+   "name": "pv_available_unused",
+   "pack": "k8s",
+   "category": "storage",
+   "title": "Pv Available Unused",
+   "severity": "info",
+   "description": "Info: PersistentVolume has been Available (unclaimed) for >1 hour. Disk is provisioned and costing money but no PVC is using it. Delete if not needed.",
+   "stream": "kube_persistentvolume_status_phase",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_persistentvolume_status_phase"
+   ],
+   "path": "packs/k8s/alerts/storage/pv_available_unused.json",
+   "content_hash": "ce48d7343bba"
+  },
+  {
+   "id": "k8s/pv_failed",
+   "name": "pv_failed",
+   "pack": "k8s",
+   "category": "storage",
+   "title": "Pv Failed",
+   "severity": "critical",
+   "description": "Critical: PersistentVolume is in Failed state. Data access issues likely. Check storage backend and PV configuration.",
+   "stream": "kube_persistentvolume_status_phase",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_persistentvolume_status_phase"
+   ],
+   "path": "packs/k8s/alerts/storage/pv_failed.json",
+   "content_hash": "1751f59beb7b"
+  },
+  {
+   "id": "k8s/pv_released_orphaned",
+   "name": "pv_released_orphaned",
+   "pack": "k8s",
+   "category": "storage",
+   "title": "Pv Released Orphaned",
+   "severity": "warning",
+   "description": "Warning: PersistentVolume in Released state for >30 minutes. The PVC was deleted but the underlying disk (EBS/Azure Disk) still exists and is incurring storage costs. Delete the PV or set reclaimPolicy: Delete to clean up.",
+   "stream": "kube_persistentvolume_status_phase",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_persistentvolume_status_phase"
+   ],
+   "path": "packs/k8s/alerts/storage/pv_released_orphaned.json",
+   "content_hash": "1a164e0584a5"
+  },
+  {
+   "id": "k8s/pv_usage_high",
+   "name": "pv_usage_high",
+   "pack": "k8s",
+   "category": "storage",
+   "title": "Pv Usage High",
+   "severity": "warning",
+   "description": "Warning: PersistentVolume usage exceeds 85%. Expand volume or clean up data to prevent pod failures.",
+   "stream": "kubelet_volume_stats_used_bytes",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kubelet_volume_stats_used_bytes"
+   ],
+   "path": "packs/k8s/alerts/storage/pv_usage_high.json",
+   "content_hash": "8243c4eb201b"
+  },
+  {
+   "id": "k8s/pvc_bound_no_pod_attached",
+   "name": "pvc_bound_no_pod_attached",
+   "pack": "k8s",
+   "category": "storage",
+   "title": "Pvc Bound No Pod Attached",
+   "severity": "info",
+   "description": "Info: PVC has been Bound (disk provisioned) but not attached to any running pod for more than 24 hours. Common causes: StatefulSet scaled to 0, deployment deleted without PVC cleanup, or orphaned dev volume. Review and delete if no longer needed to reduce storage costs.",
+   "stream": "kube_persistentvolumeclaim_status_phase",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_persistentvolumeclaim_status_phase"
+   ],
+   "path": "packs/k8s/alerts/storage/pvc_bound_no_pod_attached.json",
+   "content_hash": "d37201aa4d2e"
+  },
+  {
+   "id": "k8s/pvc_lost",
+   "name": "pvc_lost",
+   "pack": "k8s",
+   "category": "storage",
+   "title": "Pvc Lost",
+   "severity": "critical",
+   "description": "Critical: PVC is in Lost state — backing PV no longer exists. Immediate investigation required to prevent data loss.",
+   "stream": "kube_persistentvolumeclaim_status_phase",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_persistentvolumeclaim_status_phase"
+   ],
+   "path": "packs/k8s/alerts/storage/pvc_lost.json",
+   "content_hash": "c5c4d8fd9623"
+  },
+  {
+   "id": "k8s/pvc_pending",
+   "name": "pvc_pending",
+   "pack": "k8s",
+   "category": "storage",
+   "title": "Pvc Pending",
+   "severity": "warning",
+   "description": "Warning: PVC has been in Pending state for >5 minutes. Check PV availability and StorageClass configuration.",
+   "stream": "kube_persistentvolumeclaim_status_phase",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_persistentvolumeclaim_status_phase"
+   ],
+   "path": "packs/k8s/alerts/storage/pvc_pending.json",
+   "content_hash": "0b346f2794e2"
+  },
+  {
+   "id": "k8s/storage_volume_under_utilized",
+   "name": "storage_volume_under_utilized",
+   "pack": "k8s",
+   "category": "storage",
+   "title": "Storage Volume Under Utilized",
+   "severity": "info",
+   "description": "Info: PersistentVolume is less than 20% utilized. Consider downsizing the volume to reduce storage costs.",
+   "stream": "kubelet_volume_stats_used_bytes",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kubelet_volume_stats_used_bytes"
+   ],
+   "path": "packs/k8s/alerts/storage/storage_volume_under_utilized.json",
+   "content_hash": "7c62018d8f0c"
+  },
+  {
+   "id": "k8s/cronjob_job_stuck_running",
+   "name": "cronjob_job_stuck_running",
+   "pack": "k8s",
+   "category": "workload",
+   "title": "Cronjob Job Stuck Running",
+   "severity": "warning",
+   "description": "Warning: CronJob has an active job running for more than 2 hours. The job may be stuck or hanging. Check pod logs and consider setting activeDeadlineSeconds on the job spec to auto-terminate long-running jobs.",
+   "stream": "kube_cronjob_status_active",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_cronjob_status_active"
+   ],
+   "path": "packs/k8s/alerts/workload/cronjob_job_stuck_running.json",
+   "content_hash": "74bbcae0f54b"
+  },
+  {
+   "id": "k8s/cronjob_missed_schedule",
+   "name": "cronjob_missed_schedule",
+   "pack": "k8s",
+   "category": "workload",
+   "title": "Cronjob Missed Schedule",
+   "severity": "warning",
+   "description": "Warning: CronJob has missed its scheduled execution by >5 minutes. Multiplied by (next_schedule_time > 0) to exclude KSM setting metric to 0 during active job execution — avoids false positives when job is currently running.",
+   "stream": "kube_cronjob_next_schedule_time",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_cronjob_next_schedule_time"
+   ],
+   "path": "packs/k8s/alerts/workload/cronjob_missed_schedule.json",
+   "content_hash": "563907f66b19"
+  },
+  {
+   "id": "k8s/cronjob_suspended",
+   "name": "cronjob_suspended",
+   "pack": "k8s",
+   "category": "workload",
+   "title": "Cronjob Suspended",
+   "severity": "warning",
+   "description": "Warning: CronJob has been suspended (spec.suspend=true) for more than 1 hour. If this was intentional for maintenance, re-enable it when done. Suspended CronJobs will miss their schedules silently.",
+   "stream": "kube_cronjob_spec_suspend",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_cronjob_spec_suspend"
+   ],
+   "path": "packs/k8s/alerts/workload/cronjob_suspended.json",
+   "content_hash": "73e32942cbd5"
+  },
+  {
+   "id": "k8s/daemonset_pods_not_scheduled",
+   "name": "daemonset_pods_not_scheduled",
+   "pack": "k8s",
+   "category": "workload",
+   "title": "Daemonset Pods Not Scheduled",
+   "severity": "warning",
+   "description": "Warning: DaemonSet is missing pods on some nodes for a sustained 15-minute window. Compares min desired vs max ready over the window so node autoscaling churn (new nodes whose pods are still starting) does not fire the alert.",
+   "stream": "kube_daemonset_status_number_ready",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_daemonset_status_number_ready"
+   ],
+   "path": "packs/k8s/alerts/workload/daemonset_pods_not_scheduled.json",
+   "content_hash": "4dd051d1543e"
+  },
+  {
+   "id": "k8s/deployment_replica_mismatch",
+   "name": "deployment_replica_mismatch",
+   "pack": "k8s",
+   "category": "workload",
+   "title": "Deployment Replica Mismatch",
+   "severity": "warning",
+   "description": "Warning: Deployment has fewer available replicas than desired for a sustained 15-minute window. Compares min desired vs max available over the window so rolling updates and HPA scale-ups do not fire the alert.",
+   "stream": "kube_deployment_status_replicas_available",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_deployment_status_replicas_available"
+   ],
+   "path": "packs/k8s/alerts/workload/deployment_replica_mismatch.json",
+   "content_hash": "86850d4ed5b1"
+  },
+  {
+   "id": "k8s/hpa_at_max_replicas",
+   "name": "hpa_at_max_replicas",
+   "pack": "k8s",
+   "category": "workload",
+   "title": "Hpa At Max Replicas",
+   "severity": "warning",
+   "description": "Warning: HPA has reached maximum replicas. Workload may still be under pressure. Review max replica limit and application load.",
+   "stream": "kube_horizontalpodautoscaler_status_current_replicas",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_horizontalpodautoscaler_status_current_replicas"
+   ],
+   "path": "packs/k8s/alerts/workload/hpa_at_max_replicas.json",
+   "content_hash": "82b1989f2d27"
+  },
+  {
+   "id": "k8s/hpa_unable_to_scale",
+   "name": "hpa_unable_to_scale",
+   "pack": "k8s",
+   "category": "workload",
+   "title": "Hpa Unable To Scale",
+   "severity": "warning",
+   "description": "Warning: HPA is unable to scale workload. Check metrics server and HPA configuration.",
+   "stream": "kube_horizontalpodautoscaler_status_condition",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_horizontalpodautoscaler_status_condition"
+   ],
+   "path": "packs/k8s/alerts/workload/hpa_unable_to_scale.json",
+   "content_hash": "ea52f4a688fe"
+  },
+  {
+   "id": "k8s/job_backoff_limit_exceeded_events",
+   "name": "job_backoff_limit_exceeded_events",
+   "pack": "k8s",
+   "category": "workload",
+   "title": "Job Backoff Limit Exceeded Events",
+   "severity": "warning",
+   "description": "Warning: Job has exceeded its backoff retry limit and will not be retried. Check job logs for root cause.",
+   "stream": "k8s_events",
+   "stream_type": "logs",
+   "query_type": "sql",
+   "required_streams": [
+    "k8s_events"
+   ],
+   "path": "packs/k8s/alerts/workload/job_backoff_limit_exceeded_events.json",
+   "content_hash": "fc9a5eb4b954"
+  },
+  {
+   "id": "k8s/job_failed",
+   "name": "job_failed",
+   "pack": "k8s",
+   "category": "workload",
+   "title": "Job Failed",
+   "severity": "warning",
+   "description": "Warning: Kubernetes Job has failed. Check job logs and pod events.",
+   "stream": "kube_job_failed",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_job_failed"
+   ],
+   "path": "packs/k8s/alerts/workload/job_failed.json",
+   "content_hash": "854800ee0bf1"
+  },
+  {
+   "id": "k8s/statefulset_replica_mismatch",
+   "name": "statefulset_replica_mismatch",
+   "pack": "k8s",
+   "category": "workload",
+   "title": "Statefulset Replica Mismatch",
+   "severity": "warning",
+   "description": "Warning: StatefulSet has fewer ready replicas than desired for a sustained 15-minute window. Compares min desired vs max ready over the window so rolling updates, scale-ups, and node drains do not fire the alert.",
+   "stream": "kube_statefulset_status_replicas_ready",
+   "stream_type": "metrics",
+   "query_type": "promql",
+   "required_streams": [
+    "kube_statefulset_status_replicas_ready"
+   ],
+   "path": "packs/k8s/alerts/workload/statefulset_replica_mismatch.json",
+   "content_hash": "11ca47e41ef5"
+  },
+  {
+   "id": "openobserve/memory_table_overflow_error",
+   "name": "memory_table_overflow_error",
+   "pack": "openobserve",
+   "category": "self-monitoring",
+   "title": "Memory Table Overflow Error",
+   "severity": "critical",
+   "description": "Critical: MemoryTableOverflowError detected in logs. Investigate memory pressure on the affected node/pod.",
+   "stream": "default",
+   "stream_type": "logs",
+   "query_type": "sql",
+   "required_streams": [
+    "default"
+   ],
+   "path": "packs/openobserve/alerts/self-monitoring/memory_table_overflow_error.json",
+   "content_hash": "01da8a1dc21a"
+  }
+ ]
+}
