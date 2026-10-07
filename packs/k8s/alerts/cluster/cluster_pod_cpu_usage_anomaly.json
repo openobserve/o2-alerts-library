@@ -1,0 +1,37 @@
+{
+  "name": "cluster_pod_cpu_usage_anomaly",
+  "title": "Total pod CPU demand is unusual",
+  "severity": "info",
+  "description": "Total CPU used by all pods (sum over pods of each pod's mean k8s_pod_cpu_usage in the bucket) is outside its learned weekday/weekend hour-of-day band, above or below, in at least 2 of the last 3 five-minute buckets. Unit: CPU cores. Whole cluster; add a WHERE clause on k8s_cluster or k8s_namespace_name inside the subquery after install for a per-entity alert (one config per entity). Uses a histogram inside a subquery; keep only after a live _search returns one row per bucket.",
+  "tags": [
+    "anomaly",
+    "metrics",
+    "saturation"
+  ],
+  "source": {
+    "project": "openobserve",
+    "license": "CC-BY-4.0",
+    "inspired_by": [
+      "grafana/promql-anomaly-detection rules/adaptive.yml (Apache-2.0)"
+    ]
+  },
+  "alert_type": "anomaly_detection",
+  "stream_type": "metrics",
+  "stream_name": "k8s_pod_cpu_usage",
+  "enabled": true,
+  "anomaly_config": {
+    "query_mode": "custom_sql",
+    "custom_sql": "SELECT time_bucket, SUM(v) AS cpu_cores FROM (SELECT histogram(_timestamp, '5m') AS time_bucket, __hash__, AVG(value) AS v FROM \"k8s_pod_cpu_usage\" GROUP BY time_bucket, __hash__) GROUP BY time_bucket ORDER BY time_bucket",
+    "detection_function": "avg",
+    "detection_function_field": "cpu_cores",
+    "histogram_interval": "5m",
+    "schedule_interval": "5m",
+    "detection_window_seconds": 900,
+    "training_window_days": 28,
+    "retrain_interval_days": 7,
+    "alert_direction": "both",
+    "alert_window_buckets": 3,
+    "alert_window_fire_pct": 60,
+    "alert_window_recover_pct": 34
+  }
+}

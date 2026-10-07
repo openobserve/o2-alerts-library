@@ -1,0 +1,36 @@
+{
+  "name": "logs_volume_spike_anomaly",
+  "title": "Pod log volume spiked",
+  "severity": "info",
+  "description": "The number of pod log lines per five-minute bucket in the default logs stream is above its learned weekday/weekend hour-of-day band in at least 2 of the last 3 buckets, a sign of a log storm or an ingest cost surprise. Unit: log lines per 5 minutes. Whole stream (all clusters, namespaces and pods); add a k8s_cluster or k8s_namespace_name filter after install for a per-entity alert (one config per entity).",
+  "tags": [
+    "anomaly",
+    "logs",
+    "traffic"
+  ],
+  "source": {
+    "project": "openobserve",
+    "license": "CC-BY-4.0",
+    "inspired_by": [
+      "grafana/promql-anomaly-detection rules/adaptive.yml (Apache-2.0)"
+    ]
+  },
+  "alert_type": "anomaly_detection",
+  "stream_type": "logs",
+  "stream_name": "default",
+  "enabled": true,
+  "anomaly_config": {
+    "query_mode": "filters",
+    "filters": [],
+    "detection_function": "count",
+    "histogram_interval": "5m",
+    "schedule_interval": "5m",
+    "detection_window_seconds": 900,
+    "training_window_days": 28,
+    "retrain_interval_days": 7,
+    "alert_direction": "above",
+    "alert_window_buckets": 3,
+    "alert_window_fire_pct": 60,
+    "alert_window_recover_pct": 34
+  }
+}

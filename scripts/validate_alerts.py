@@ -92,6 +92,92 @@ TAG_CHARS_EXTRA = set("_-./:")
 MAX_TAG_LEN = 200
 MAX_TAGS = 64
 
+# Engine rules are not mirrored here: a copy would drift from the backend, so the live create is authoritative.
+ANOMALY_SEVERITIES = ("info", "warning")
+ANOMALY_QUERY_MODES = ("filters", "custom_sql")
+ANOMALY_FUNCTIONS = ("count", "avg", "sum", "min", "max", "p50", "p95", "p99")
+ANOMALY_DIRECTIONS = ("both", "above", "below")
+ANOMALY_REQUIRED = (
+    "query_mode",
+    "detection_function",
+    "histogram_interval",
+    "schedule_interval",
+    "detection_window_seconds",
+    "alert_direction",
+    "alert_window_buckets",
+    "alert_window_fire_pct",
+    "alert_window_recover_pct",
+)
+ANOMALY_TYPES = {
+    "custom_sql": str,
+    "histogram_interval": str,
+    "schedule_interval": str,
+    "detection_window_seconds": int,
+    "alert_window_buckets": int,
+    "alert_window_fire_pct": (int, float),
+    "alert_window_recover_pct": (int, float),
+}
+ANOMALY_FORBIDDEN = (
+    "query_condition",
+    "trigger_condition",
+    "row_template",
+    "is_real_time",
+    "context_attributes",
+    "priority",
+    "percentile",
+    "threshold",
+    "alert_budget_per_day",
+    "level_half_width_seconds",
+)
+
+
+def validate_anomaly(alert: dict, err) -> None:
+    """The library contract for an `alert_type: anomaly_detection` file."""
+    cfg = alert.get("anomaly_config")
+    for where in (alert, cfg if isinstance(cfg, dict) else {}):
+        for key in where:
+            if key in ANOMALY_FORBIDDEN or key.startswith("rcf_"):
+                err(f"'{key}' is not allowed in an anomaly-detection alert")
+    if not str(alert.get("name")).endswith("_anomaly"):
+        err("anomaly-detection alert names must end with '_anomaly'")
+    if not isinstance(alert.get("source"), dict):
+        err("source is required")
+    tags = alert.get("tags")
+    if not isinstance(tags, list) or "anomaly" not in tags:
+        err("tags must include 'anomaly'")
+    # Other invalid values are already reported by the shared severity check.
+    if alert.get("severity") == "critical":
+        err(f"severity must be one of {ANOMALY_SEVERITIES}, got 'critical'")
+
+    if not isinstance(cfg, dict):
+        err("anomaly_config object is required")
+        return
+    missing = [k for k in ANOMALY_REQUIRED if k not in cfg]
+    if missing:
+        err(f"anomaly_config is missing {missing}")
+    for key, kind in ANOMALY_TYPES.items():
+        value = cfg.get(key)
+        # bool is an int subclass, so it must be excluded explicitly.
+        if key in cfg and (not isinstance(value, kind) or isinstance(value, bool)):
+            err(f"anomaly_config.{key} has the wrong type: {type(value).__name__}")
+    mode = cfg.get("query_mode")
+    if mode not in ANOMALY_QUERY_MODES:
+        err(f"anomaly_config.query_mode '{mode}' is not one of {ANOMALY_QUERY_MODES}")
+    elif mode == "filters" and not isinstance(cfg.get("filters"), list):
+        err("anomaly_config.filters must be a list in filters mode")
+    elif mode == "custom_sql" and not (isinstance(cfg.get("custom_sql"), str) and cfg["custom_sql"].strip()):
+        err("anomaly_config.custom_sql is required in custom_sql mode")
+    func = cfg.get("detection_function")
+    if func not in ANOMALY_FUNCTIONS:
+        err(f"anomaly_config.detection_function '{func}' is not one of {ANOMALY_FUNCTIONS}")
+    if not (mode == "filters" and func == "count") and not cfg.get("detection_function_field"):
+        err("anomaly_config.detection_function_field is required")
+    if cfg.get("alert_direction") not in ANOMALY_DIRECTIONS:
+        err(
+            f"anomaly_config.alert_direction '{cfg.get('alert_direction')}' "
+            f"is not one of {ANOMALY_DIRECTIONS}"
+        )
+
 
 def main() -> int:
     errors: list[str] = []
@@ -117,6 +203,7 @@ def main() -> int:
         if not isinstance(alert, dict):
             err("top level must be a JSON object")
             continue
+        alert_type = alert.get("alert_type")
 
         if alert.get("name") != path.stem:
             err(f"filename '{path.stem}' != internal name '{alert.get('name')}'")
@@ -135,8 +222,6 @@ def main() -> int:
             )
         if alert.get("enabled") is not True:
             err("enabled must be true")
-        if alert.get("is_real_time") is not False:
-            err("is_real_time must be false — library alerts are scheduled")
 
         stream = alert.get("stream_name")
         if not stream or not isinstance(stream, str):
@@ -144,56 +229,64 @@ def main() -> int:
         if alert.get("stream_type") not in ("logs", "metrics", "traces"):
             err(f"stream_type '{alert.get('stream_type')}' is not a stream type")
 
-        qc = alert.get("query_condition") or {}
-        qtype = qc.get("type")
-        if qtype == "promql":
-            promql = (qc.get("promql") or "").strip()
-            if not promql:
-                err("promql query is empty")
-            # The mis-split check, for imported alerts only.
-            #
-            # OpenObserve runs `({promql}) {operator} {value}`, so a set
-            # operator sitting at the top level of `promql` is FINE — the
-            # wrapping parentheses put it back exactly where it was. What is
-            # not fine is lifting a threshold out of an upstream expression
-            # whose OUTERMOST operator is `and`/`or`/`unless`: those bind
-            # looser than comparison, so the trailing comparison belonged to a
-            # nested operand and the re-wrapped form parses differently from
-            # the rule it came from. That is checked against the upstream
-            # expression, which is the only place the original grouping
-            # survives — and it is exactly the check that would have caught
-            # `probe_http_status_code <= 199 OR probe_http_status_code >= 400`
-            # being split into `(… <= 199 OR …) >= 400`.
-            source = alert.get("source") or {}
-            upstream = source.get("upstream_query")
-            if upstream and "query_normalized" not in source:
-                set_op = has_top_level_set_op(upstream)
-                if set_op:
-                    err(
-                        f"the threshold was lifted out of an upstream expression "
-                        f"whose outermost operator is '{set_op}' — the result "
-                        "parses differently from the upstream rule; this query "
-                        "must use the normalised form instead"
-                    )
-            if stream and stream.lower() in PROMQL_KEYWORDS:
-                err(f"stream_name '{stream}' is a PromQL keyword, not a metric")
-            cond = qc.get("promql_condition") or {}
-            # OpenObserve runs `({promql}) {operator} {value}`; without the
-            # condition the alert is rejected at save (AlertError::PromqlMissingQuery).
-            if cond.get("operator") not in ("=", "!=", ">", ">=", "<", "<="):
-                err(f"promql_condition.operator '{cond.get('operator')}' is invalid")
-            if not isinstance(cond.get("value"), (int, float)):
-                err("promql_condition.value must be a number")
-        elif qtype == "sql":
-            if not (qc.get("sql") or "").strip():
-                err("sql query is empty")
-        elif qtype != "custom":
-            err(f"query_condition.type '{qtype}' is not one of promql/sql/custom")
+        if alert_type == "anomaly_detection":
+            validate_anomaly(alert, err)
+        elif alert_type is not None:
+            err(f"unknown alert_type '{alert_type}'")
+        else:
+            if alert.get("is_real_time") is not False:
+                err("is_real_time must be false — library alerts are scheduled")
 
-        tc = alert.get("trigger_condition") or {}
-        for field in ("period", "threshold", "frequency", "silence"):
-            if not isinstance(tc.get(field), int) or tc[field] < 0:
-                err(f"trigger_condition.{field} must be a non-negative integer")
+            qc = alert.get("query_condition") or {}
+            qtype = qc.get("type")
+            if qtype == "promql":
+                promql = (qc.get("promql") or "").strip()
+                if not promql:
+                    err("promql query is empty")
+                # The mis-split check, for imported alerts only.
+                #
+                # OpenObserve runs `({promql}) {operator} {value}`, so a set
+                # operator sitting at the top level of `promql` is FINE — the
+                # wrapping parentheses put it back exactly where it was. What is
+                # not fine is lifting a threshold out of an upstream expression
+                # whose OUTERMOST operator is `and`/`or`/`unless`: those bind
+                # looser than comparison, so the trailing comparison belonged to a
+                # nested operand and the re-wrapped form parses differently from
+                # the rule it came from. That is checked against the upstream
+                # expression, which is the only place the original grouping
+                # survives — and it is exactly the check that would have caught
+                # `probe_http_status_code <= 199 OR probe_http_status_code >= 400`
+                # being split into `(… <= 199 OR …) >= 400`.
+                source = alert.get("source") or {}
+                upstream = source.get("upstream_query")
+                if upstream and "query_normalized" not in source:
+                    set_op = has_top_level_set_op(upstream)
+                    if set_op:
+                        err(
+                            f"the threshold was lifted out of an upstream expression "
+                            f"whose outermost operator is '{set_op}' — the result "
+                            "parses differently from the upstream rule; this query "
+                            "must use the normalised form instead"
+                        )
+                if stream and stream.lower() in PROMQL_KEYWORDS:
+                    err(f"stream_name '{stream}' is a PromQL keyword, not a metric")
+                cond = qc.get("promql_condition") or {}
+                # OpenObserve runs `({promql}) {operator} {value}`; without the
+                # condition the alert is rejected at save (AlertError::PromqlMissingQuery).
+                if cond.get("operator") not in ("=", "!=", ">", ">=", "<", "<="):
+                    err(f"promql_condition.operator '{cond.get('operator')}' is invalid")
+                if not isinstance(cond.get("value"), (int, float)):
+                    err("promql_condition.value must be a number")
+            elif qtype == "sql":
+                if not (qc.get("sql") or "").strip():
+                    err("sql query is empty")
+            elif qtype != "custom":
+                err(f"query_condition.type '{qtype}' is not one of promql/sql/custom")
+
+            tc = alert.get("trigger_condition") or {}
+            for field in ("period", "threshold", "frequency", "silence"):
+                if not isinstance(tc.get(field), int) or tc[field] < 0:
+                    err(f"trigger_condition.{field} must be a non-negative integer")
 
         tags = alert.get("tags")
         if tags is not None:
@@ -212,7 +305,8 @@ def main() -> int:
                     elif len(tag) > MAX_TAG_LEN:
                         err(f"tag '{tag}' is longer than {MAX_TAG_LEN} characters")
 
-        if pack in BACKFILL_PENDING_PACKS:
+        # Anomaly files are new, so the backfill exemption never applies to them.
+        if pack in BACKFILL_PENDING_PACKS and alert_type is None:
             continue
 
         if alert.get("severity") not in SEVERITIES:

@@ -1,0 +1,38 @@
+{
+  "name": "traces_client_error_ratio_anomaly",
+  "title": "Outbound call error ratio is unusually high",
+  "severity": "info",
+  "description": "Share of CLIENT spans (outbound calls to dependencies) with status ERROR is above its learned band in at least 2 of the last 3 five-minute buckets. Unit: ratio 0-1. Ratios are floored at 1% (0.01) and buckets with fewer than 50 client spans report the floor, so the alert fires only above roughly 1.2% and never on low traffic. Edit the two constants in custom_sql to tune. Whole stream; add AND service_name = '...' to the WHERE clause after install for a per-service alert (one config per service). Needs applications sending OpenTelemetry traces to the traces stream named default.",
+  "tags": [
+    "anomaly",
+    "traces",
+    "errors"
+  ],
+  "source": {
+    "project": "openobserve",
+    "license": "CC-BY-4.0",
+    "inspired_by": [
+      "newrelic-quickstarts alert-policies/roku/HTTPErrors.yml (Apache-2.0)",
+      "splunk/security_content detections/endpoint/excessive_usage_of_nslookup_app.yml floor-plus-sigma pattern (Apache-2.0)"
+    ]
+  },
+  "alert_type": "anomaly_detection",
+  "stream_type": "traces",
+  "stream_name": "default",
+  "enabled": true,
+  "anomaly_config": {
+    "query_mode": "custom_sql",
+    "custom_sql": "SELECT histogram(_timestamp, '5m') AS time_bucket, CASE WHEN COUNT(*) < 50 THEN 0.01 ELSE GREATEST(CAST(SUM(CASE WHEN span_status = 'ERROR' THEN 1 ELSE 0 END) AS DOUBLE) / CAST(COUNT(*) AS DOUBLE), 0.01) END AS error_ratio FROM \"default\" WHERE span_kind = '3' GROUP BY time_bucket ORDER BY time_bucket",
+    "detection_function": "avg",
+    "detection_function_field": "error_ratio",
+    "histogram_interval": "5m",
+    "schedule_interval": "5m",
+    "detection_window_seconds": 900,
+    "training_window_days": 28,
+    "retrain_interval_days": 7,
+    "alert_direction": "above",
+    "alert_window_buckets": 3,
+    "alert_window_fire_pct": 60,
+    "alert_window_recover_pct": 34
+  }
+}

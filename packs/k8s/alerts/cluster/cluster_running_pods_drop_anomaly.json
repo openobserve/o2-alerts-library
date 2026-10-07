@@ -1,0 +1,38 @@
+{
+  "name": "cluster_running_pods_drop_anomaly",
+  "title": "Running pod count dropped",
+  "severity": "warning",
+  "description": "Number of pods in phase Running (kube-state-metrics kube_pod_status_phase) is below its learned weekday/weekend hour-of-day band in at least 2 of the last 3 five-minute buckets, a sign of mass eviction or node loss. Unit: pods. On a steady count the band is about 5% of the count per sigma, so only a drop of roughly 15-30% or more fires; losing a few pods does not, and the static pod alerts cover that. Whole cluster; add a condition on namespace or k8s_cluster inside the subquery after install for a per-entity alert (one config per entity). Uses a histogram inside a subquery; keep only after a live _search returns one row per bucket.",
+  "tags": [
+    "anomaly",
+    "metrics",
+    "telemetry-loss"
+  ],
+  "source": {
+    "project": "openobserve",
+    "license": "CC-BY-4.0",
+    "inspired_by": [
+      "newrelic-quickstarts alert-policies/redis-otel/ClusterNodeDeparted.yml (Apache-2.0)",
+      "grafana/promql-anomaly-detection rules/adaptive.yml (Apache-2.0)"
+    ]
+  },
+  "alert_type": "anomaly_detection",
+  "stream_type": "metrics",
+  "stream_name": "kube_pod_status_phase",
+  "enabled": true,
+  "anomaly_config": {
+    "query_mode": "custom_sql",
+    "custom_sql": "SELECT time_bucket, SUM(v) AS running_pods FROM (SELECT histogram(_timestamp, '5m') AS time_bucket, __hash__, AVG(value) AS v FROM \"kube_pod_status_phase\" WHERE phase = 'Running' GROUP BY time_bucket, __hash__) GROUP BY time_bucket ORDER BY time_bucket",
+    "detection_function": "avg",
+    "detection_function_field": "running_pods",
+    "histogram_interval": "5m",
+    "schedule_interval": "5m",
+    "detection_window_seconds": 900,
+    "training_window_days": 28,
+    "retrain_interval_days": 7,
+    "alert_direction": "below",
+    "alert_window_buckets": 3,
+    "alert_window_fire_pct": 60,
+    "alert_window_recover_pct": 34
+  }
+}

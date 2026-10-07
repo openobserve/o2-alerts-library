@@ -1,0 +1,38 @@
+{
+  "name": "logs_error_keyword_ratio_anomaly",
+  "title": "Share of log lines mentioning \"error\" is unusually high",
+  "severity": "info",
+  "description": "Share of pod log lines whose body contains the text 'error' (case-insensitive substring) is above its learned band in both of the last 2 fifteen-minute buckets. Unit: ratio 0-1. Ratios are floored at 1% (0.01) and buckets with fewer than 100 lines report the floor. Edit the two constants in custom_sql to tune. The query scans every log body, so it runs every 15 minutes and training reads 21-28 days of logs. Whole stream; add a WHERE clause on k8s_cluster or k8s_namespace_name after install for a per-entity alert (one config per entity).",
+  "tags": [
+    "anomaly",
+    "logs",
+    "errors"
+  ],
+  "source": {
+    "project": "openobserve",
+    "license": "CC-BY-4.0",
+    "inspired_by": [
+      "splunk/security_content detections/endpoint/excessive_usage_of_nslookup_app.yml floor-plus-sigma pattern (Apache-2.0)",
+      "newrelic-quickstarts alert-policies/roku/HTTPErrors.yml (Apache-2.0)"
+    ]
+  },
+  "alert_type": "anomaly_detection",
+  "stream_type": "logs",
+  "stream_name": "default",
+  "enabled": true,
+  "anomaly_config": {
+    "query_mode": "custom_sql",
+    "custom_sql": "SELECT histogram(_timestamp, '15m') AS time_bucket, CASE WHEN COUNT(*) < 100 THEN 0.01 ELSE GREATEST(CAST(SUM(CASE WHEN str_match_ignore_case(body, 'error') THEN 1 ELSE 0 END) AS DOUBLE) / CAST(COUNT(*) AS DOUBLE), 0.01) END AS error_ratio FROM \"default\" GROUP BY time_bucket ORDER BY time_bucket",
+    "detection_function": "avg",
+    "detection_function_field": "error_ratio",
+    "histogram_interval": "15m",
+    "schedule_interval": "15m",
+    "detection_window_seconds": 2700,
+    "training_window_days": 28,
+    "retrain_interval_days": 7,
+    "alert_direction": "above",
+    "alert_window_buckets": 2,
+    "alert_window_fire_pct": 100,
+    "alert_window_recover_pct": 50
+  }
+}

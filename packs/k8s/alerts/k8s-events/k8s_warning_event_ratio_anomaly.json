@@ -1,0 +1,38 @@
+{
+  "name": "k8s_warning_event_ratio_anomaly",
+  "title": "Share of Warning events is unusually high",
+  "severity": "info",
+  "description": "Share of Kubernetes events of type Warning in the k8s_events stream is above its learned band in at least 2 of the last 3 five-minute buckets. Counts all watch records (ADDED, MODIFIED and DELETED). Unit: ratio 0-1. Ratios are floored at 1% (0.01) and buckets with fewer than 20 events report the floor. Edit the two constants in custom_sql to tune. Whole stream; add AND k8s_cluster = '...' or a k8s_namespace_name condition to the WHERE clause after install for a per-entity alert (one config per entity). Needs steady event activity: a five-minute bucket with no Event watch record returns no row (the floor applies only to non-empty buckets), and training needs at least 100 non-empty five-minute buckets; on a quiet cluster training fails and keeps retrying.",
+  "tags": [
+    "anomaly",
+    "k8s-events",
+    "errors"
+  ],
+  "source": {
+    "project": "openobserve",
+    "license": "CC-BY-4.0",
+    "inspired_by": [
+      "splunk/security_content detections/endpoint/excessive_usage_of_nslookup_app.yml floor-plus-sigma pattern (Apache-2.0)",
+      "newrelic-quickstarts alert-policies/roku/HTTPErrors.yml (Apache-2.0)"
+    ]
+  },
+  "alert_type": "anomaly_detection",
+  "stream_type": "logs",
+  "stream_name": "k8s_events",
+  "enabled": true,
+  "anomaly_config": {
+    "query_mode": "custom_sql",
+    "custom_sql": "SELECT histogram(_timestamp, '5m') AS time_bucket, CASE WHEN COUNT(*) < 20 THEN 0.01 ELSE GREATEST(CAST(SUM(CASE WHEN body_object_type = 'Warning' THEN 1 ELSE 0 END) AS DOUBLE) / CAST(COUNT(*) AS DOUBLE), 0.01) END AS warning_ratio FROM \"k8s_events\" WHERE k8s_resource_name = 'events' GROUP BY time_bucket ORDER BY time_bucket",
+    "detection_function": "avg",
+    "detection_function_field": "warning_ratio",
+    "histogram_interval": "5m",
+    "schedule_interval": "5m",
+    "detection_window_seconds": 900,
+    "training_window_days": 28,
+    "retrain_interval_days": 7,
+    "alert_direction": "above",
+    "alert_window_buckets": 3,
+    "alert_window_fire_pct": 60,
+    "alert_window_recover_pct": 34
+  }
+}

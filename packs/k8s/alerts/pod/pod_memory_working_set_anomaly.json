@@ -1,0 +1,37 @@
+{
+  "name": "pod_memory_working_set_anomaly",
+  "title": "Mean pod memory working set is unusually high",
+  "severity": "info",
+  "description": "Mean memory working set per pod (k8s_pod_memory_working_set, averaged over all pod samples) is above its learned weekday/weekend hour-of-day band in at least 2 of the last 3 five-minute buckets, a sign of a leak or a memory regression. Unit: bytes. Whole cluster; add a k8s_namespace_name or k8s_deployment_name filter after install for a per-entity alert (one config per entity).",
+  "tags": [
+    "anomaly",
+    "metrics",
+    "saturation"
+  ],
+  "source": {
+    "project": "openobserve",
+    "license": "CC-BY-4.0",
+    "inspired_by": [
+      "grafana/promql-anomaly-detection rules/adaptive.yml (Apache-2.0)"
+    ]
+  },
+  "alert_type": "anomaly_detection",
+  "stream_type": "metrics",
+  "stream_name": "k8s_pod_memory_working_set",
+  "enabled": true,
+  "anomaly_config": {
+    "query_mode": "filters",
+    "filters": [],
+    "detection_function": "avg",
+    "detection_function_field": "value",
+    "histogram_interval": "5m",
+    "schedule_interval": "5m",
+    "detection_window_seconds": 900,
+    "training_window_days": 28,
+    "retrain_interval_days": 7,
+    "alert_direction": "above",
+    "alert_window_buckets": 3,
+    "alert_window_fire_pct": 60,
+    "alert_window_recover_pct": 34
+  }
+}

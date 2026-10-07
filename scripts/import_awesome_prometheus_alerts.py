@@ -11,7 +11,7 @@ Run:
 The script is idempotent: same rules.yml in, byte-identical tree out. It only
 writes under the packs it owns (PACKS_OWNED), wiping them first, so a re-run
 after an upstream refresh also removes rules upstream deleted. It never touches
-`packs/k8s` or `packs/openobserve`.
+the hand-authored `packs/k8s`, `packs/openobserve` or `packs/apm`.
 
 ## How a Prometheus rule becomes an OpenObserve alert
 
@@ -82,7 +82,7 @@ PACKS_OWNED = sorted(set(GROUP_PACK.values()) | set(SERVICE_PACK.values()))
 
 # Hand-authored packs. The mappings above are edited by humans, and a typo that
 # pointed one at "k8s" would silently delete 86 curated alerts on the next run.
-PACKS_NEVER_TOUCHED = {"k8s", "openobserve"}
+PACKS_NEVER_TOUCHED = {"k8s", "openobserve", "apm"}
 assert not (set(PACKS_OWNED) & PACKS_NEVER_TOUCHED), (
     "a pack mapping targets a hand-authored pack, which this script deletes: "
     f"{sorted(set(PACKS_OWNED) & PACKS_NEVER_TOUCHED)}"
