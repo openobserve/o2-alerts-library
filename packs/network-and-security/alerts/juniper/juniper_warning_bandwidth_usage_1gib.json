@@ -18,6 +18,7 @@
     "upstream_query": "rate(junos_interface_transmit_bytes[1m]) * 8 > 1e+9 * 0.80",
     "upstream_description": "Interface is getting saturated. (> 0.80GiB/s)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "junos_interface_transmit_bytes",
   "is_real_time": false,

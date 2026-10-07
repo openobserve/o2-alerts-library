@@ -18,6 +18,7 @@
     "upstream_query": "rate(haproxy_backend_check_up_down_total[5m]) != 0",
     "upstream_description": "Backend {{ $labels.proxy }} on {{ $labels.instance }} has servers repeatedly transitioning between UP and DOWN health-check states, which points to unstable health checks or a flaky network path rather than a hard failure."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "haproxy_backend_check_up_down_total",
   "is_real_time": false,

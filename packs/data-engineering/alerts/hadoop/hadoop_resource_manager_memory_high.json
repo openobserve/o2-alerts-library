@@ -18,6 +18,7 @@
     "upstream_query": "100 * hadoop_resourcemanager_allocatedmb / clamp_min(hadoop_resourcemanager_availablemb + hadoop_resourcemanager_allocatedmb, 1) > 80",
     "upstream_description": "The Hadoop ResourceManager is approaching its memory limit."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "hadoop_resourcemanager_allocatedmb",
   "is_real_time": false,

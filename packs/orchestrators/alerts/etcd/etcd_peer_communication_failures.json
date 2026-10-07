@@ -18,6 +18,7 @@
     "upstream_query": "sum(rate(etcd_network_peer_sent_failures_total[1m])) by (To) > 0.01",
     "upstream_description": "Etcd member is experiencing more than 0.01 failed peer sends per second to peer {{ $labels.To }}, which usually indicates the member is unreachable or network-partitioned."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "etcd_network_peer_sent_failures_total",
   "is_real_time": false,

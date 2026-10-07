@@ -18,6 +18,7 @@
     "upstream_query": "increase(systemd_socket_refused_connections_total[5m]) > 3",
     "upstream_description": "Systemd socket {{ $labels.name }} is refusing connections. ({{ $value }} refused in last 5m, instance {{ $labels.instance }})"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "systemd_socket_refused_connections_total",
   "is_real_time": false,

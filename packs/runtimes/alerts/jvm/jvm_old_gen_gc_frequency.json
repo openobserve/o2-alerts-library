@@ -18,6 +18,7 @@
     "upstream_query": "rate(jvm_gc_collection_seconds_count{gc=~\".*old.*|.*major.*\"}[5m]) > 0.3",
     "upstream_description": "Frequent old/major GC cycles, indicating memory pressure"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "jvm_gc_collection_seconds_count",
   "is_real_time": false,

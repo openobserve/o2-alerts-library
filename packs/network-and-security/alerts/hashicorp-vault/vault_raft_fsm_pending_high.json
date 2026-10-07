@@ -18,6 +18,7 @@
     "upstream_query": "vault_raft_storage_stats_fsm_pending > 100",
     "upstream_description": "Vault Raft peer {{ $labels.peer_id }} on {{ $labels.instance }} has {{ $value }} pending FSM operations, indicating a storage apply backlog on the integrated Raft storage backend."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "vault_raft_storage_stats_fsm_pending",
   "is_real_time": false,

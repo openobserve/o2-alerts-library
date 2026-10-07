@@ -18,6 +18,7 @@
     "upstream_query": "(abs((sum by (instance, name) (rate(container_cpu_usage_seconds_total{name!=\"\"}[1m])) * 100) - (sum by (instance, name) (rate(container_cpu_usage_seconds_total{name!=\"\"}[1m] offset 1m)) * 100)) or abs((sum by (instance, name) (rate(container_cpu_usage_seconds_total{name!=\"\"}[1m])) * 100) - (sum by (instance, name) (rate(container_cpu_usage_seconds_total{name!=\"\"}[5m] offset 1m)) * 100))) > 25",
     "upstream_description": "This alert rule monitors the absolute change in CPU usage within a time window and triggers an alert when the change exceeds 25%."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "container_cpu_usage_seconds_total",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "ceph_pg_down > 0",
     "upstream_description": "Some Ceph placement groups are down. Please ensure that all the data are available."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ceph_pg_down",
   "is_real_time": false,

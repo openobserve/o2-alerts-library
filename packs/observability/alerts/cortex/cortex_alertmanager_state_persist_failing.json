@@ -18,6 +18,7 @@
     "upstream_query": "rate(cortex_alertmanager_state_persist_failed_total[15m]) > 0.05",
     "upstream_description": "Cortex Alertmanager {{ $labels.instance }} is unable to persist full state snapshots to remote storage, risking loss of silences and notification state on restart."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cortex_alertmanager_state_persist_failed_total",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "apache_uptime_seconds_total / 60 < 1",
     "upstream_description": "Apache has just been restarted."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "apache_uptime_seconds_total",
   "is_real_time": false,

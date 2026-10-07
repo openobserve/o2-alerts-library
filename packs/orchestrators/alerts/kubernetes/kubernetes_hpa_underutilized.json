@@ -19,6 +19,7 @@
     "upstream_description": "HPA {{ $labels.namespace }}/{{ $labels.horizontalpodautoscaler }} is constantly at minimum replicas for 50% of the time. Potential cost saving here.",
     "labels_dropped": "The upstream annotation interpolates namespace, but this expression aggregates those labels away, so they are not in row_template — they would render as literal placeholders."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_horizontalpodautoscaler_status_desired_replicas",
   "is_real_time": false,

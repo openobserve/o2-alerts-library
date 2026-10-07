@@ -18,6 +18,7 @@
     "upstream_query": "count(count by (version) (gitlab_build_info)) > 1",
     "upstream_description": "Multiple GitLab versions are running across the fleet."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "gitlab_build_info",
   "is_real_time": false,

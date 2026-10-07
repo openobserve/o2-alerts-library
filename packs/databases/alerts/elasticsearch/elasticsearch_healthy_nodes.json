@@ -18,6 +18,7 @@
     "upstream_query": "elasticsearch_cluster_health_number_of_nodes < 3",
     "upstream_description": "Missing node in Elasticsearch cluster"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "elasticsearch_cluster_health_number_of_nodes",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "pg_up == 0",
     "upstream_description": "Postgresql instance is down"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "pg_up",
   "is_real_time": false,

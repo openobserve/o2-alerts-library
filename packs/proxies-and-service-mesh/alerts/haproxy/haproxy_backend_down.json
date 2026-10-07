@@ -18,6 +18,7 @@
     "upstream_query": "haproxy_backend_up == 0",
     "upstream_description": "HAProxy backend is down"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "haproxy_backend_up",
   "is_real_time": false,

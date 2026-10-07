@@ -18,6 +18,7 @@
     "upstream_query": "eth_rpc_status == 1",
     "upstream_description": "Failed net_version for Provider `{{$labels.provider}}` in Graph node `{{$labels.instance}}`"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "eth_rpc_status",
   "is_real_time": false,

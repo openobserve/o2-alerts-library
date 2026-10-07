@@ -18,6 +18,7 @@
     "upstream_query": "ceph_osd_weight < 1",
     "upstream_description": "Ceph Object Storage Daemon takes too much time to resize."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ceph_osd_weight",
   "is_real_time": false,

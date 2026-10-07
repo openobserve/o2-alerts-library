@@ -18,6 +18,7 @@
     "upstream_query": "junos_up == 0",
     "upstream_description": "The switch appears to be down"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "junos_up",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "rate(otelcol_receiver_refused_log_records[5m]) > 0.05",
     "upstream_description": "OpenTelemetry Collector is refusing {{ $value | humanize }}/s log records on {{ $labels.receiver }}."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "otelcol_receiver_refused_log_records",
   "is_real_time": false,

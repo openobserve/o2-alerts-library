@@ -18,6 +18,7 @@
     "upstream_query": "changes(cassandra_stats{name=\"org:apache:cassandra:metrics:clientrequest:read:unavailables:count\"}[1m]) > 0",
     "upstream_description": "Read failures have occurred because too many nodes are unavailable"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cassandra_stats",
   "is_real_time": false,

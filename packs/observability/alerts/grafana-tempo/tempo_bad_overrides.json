@@ -18,6 +18,7 @@
     "upstream_query": "sum by (job) (tempo_runtime_config_last_reload_successful == 0) > 0",
     "upstream_description": "{{ $labels.job }} failed to reload runtime overrides."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "tempo_runtime_config_last_reload_successful",
   "is_real_time": false,

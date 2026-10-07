@@ -18,6 +18,7 @@
     "upstream_query": "thanos_compact_halted == 1",
     "upstream_description": "Thanos Compact {{$labels.job}} has failed to run and now is halted."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "thanos_compact_halted",
   "is_real_time": false,

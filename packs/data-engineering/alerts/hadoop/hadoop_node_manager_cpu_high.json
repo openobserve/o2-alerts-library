@@ -18,6 +18,7 @@
     "upstream_query": "max without(job,name)(100*hadoop_nodemanager_nodecpuutilization) > 80",
     "upstream_description": "YARN NodeManager CPU utilization is above 80%, which can degrade container scheduling and task execution on this node."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "hadoop_nodemanager_nodecpuutilization",
   "is_real_time": false,

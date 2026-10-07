@@ -2,6 +2,7 @@
   "id": "3EDr3soAeJ2ZZ5VYmRWwCOXRGIh",
   "name": "memory_table_overflow_error",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "logs",
   "stream_name": "default",
   "is_real_time": false,

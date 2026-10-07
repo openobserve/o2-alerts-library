@@ -18,6 +18,7 @@
     "upstream_query": "mysql_heartbeat_now_timestamp_seconds - mysql_heartbeat_stored_timestamp_seconds > 30",
     "upstream_description": "MySQL replication lag on {{ $labels.instance }}"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "mysql_heartbeat_now_timestamp_seconds",
   "is_real_time": false,

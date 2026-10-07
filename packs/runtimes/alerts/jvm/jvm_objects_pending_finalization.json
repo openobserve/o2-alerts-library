@@ -18,6 +18,7 @@
     "upstream_query": "jvm_memory_objects_pending_finalization > 1000",
     "upstream_description": "JVM has objects pending finalization, potential memory leak"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "jvm_memory_objects_pending_finalization",
   "is_real_time": false,

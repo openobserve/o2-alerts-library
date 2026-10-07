@@ -18,6 +18,7 @@
     "upstream_query": "rate(go_gc_duration_seconds_sum[5m]) > 0.05",
     "upstream_description": "Go GC is consuming too much CPU (> 5%)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "go_gc_duration_seconds_sum",
   "is_real_time": false,

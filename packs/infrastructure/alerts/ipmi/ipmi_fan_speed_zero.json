@@ -18,6 +18,7 @@
     "upstream_query": "ipmi_fan_speed_rpm == 0",
     "upstream_description": "IPMI fan {{ $labels.name }} on {{ $labels.instance }} reports 0 RPM. The fan may have failed."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ipmi_fan_speed_rpm",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "vmware_vm_snapshots > 3",
     "upstream_description": "High snapshots number on {{ $labels.instance }}: {{ $value }}"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "vmware_vm_snapshots",
   "is_real_time": false,

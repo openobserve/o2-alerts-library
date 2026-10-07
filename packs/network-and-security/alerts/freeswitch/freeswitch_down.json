@@ -18,6 +18,7 @@
     "upstream_query": "freeswitch_up == 0",
     "upstream_description": "Freeswitch {{ $labels.instance }} is unresponsive."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "freeswitch_up",
   "is_real_time": false,

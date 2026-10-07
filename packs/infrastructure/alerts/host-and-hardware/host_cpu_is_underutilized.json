@@ -19,6 +19,7 @@
     "upstream_description": "CPU load has been < 20% for 1 week. Consider reducing the number of CPUs.",
     "period_clamped_from": "Upstream `for` is 1w (10080 minutes); the evaluation window is capped at 60 minutes. Widen trigger_condition.period if you want the full upstream window."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "node_cpu_seconds_total",
   "is_real_time": false,

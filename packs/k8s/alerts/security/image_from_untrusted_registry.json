@@ -2,6 +2,7 @@
   "id": "3DnnfnQux98Sw62Wig1mb4gPpTv",
   "name": "image_from_untrusted_registry",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_pod_container_info",
   "is_real_time": false,

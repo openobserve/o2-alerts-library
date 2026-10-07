@@ -18,6 +18,7 @@
     "upstream_query": "increase(node_systemd_service_restart_total[5m]) > 2",
     "upstream_description": "Systemd service {{ $labels.name }} on {{ $labels.instance }} has restarted more than twice in the last 5 minutes, indicating a crash loop that a simple 'failed' state check would miss because the service keeps restarting successfully."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "node_systemd_service_restart_total",
   "is_real_time": false,

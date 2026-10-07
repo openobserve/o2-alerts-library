@@ -18,6 +18,7 @@
     "upstream_query": "histogram_quantile(0.99, sum(rate(promtail_request_duration_seconds_bucket[5m])) by (namespace, job, route, le)) > 1",
     "upstream_description": "The {{ $labels.job }} {{ $labels.route }} is experiencing {{ printf \"%.2f\" $value }}s 99th percentile latency."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "promtail_request_duration_seconds_bucket",
   "is_real_time": false,

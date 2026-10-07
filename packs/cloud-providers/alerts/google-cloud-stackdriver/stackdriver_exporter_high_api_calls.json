@@ -18,6 +18,7 @@
     "upstream_query": "rate(stackdriver_monitoring_api_calls_total[5m]) * 60 > 100",
     "upstream_description": "Stackdriver exporter is making {{ $value }} API calls per minute for project {{ $labels.project_id }}. This may hit Google Cloud Monitoring API quotas."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "stackdriver_monitoring_api_calls_total",
   "is_real_time": false,

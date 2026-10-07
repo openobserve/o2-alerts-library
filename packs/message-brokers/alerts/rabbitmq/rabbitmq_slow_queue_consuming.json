@@ -18,6 +18,7 @@
     "upstream_query": "time() - rabbitmq_queue_head_message_timestamp{queue=\"my-queue\"} > 60",
     "upstream_description": "Queue messages are consumed slowly (> 60s)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "rabbitmq_queue_head_message_timestamp",
   "is_real_time": false,

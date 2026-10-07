@@ -18,6 +18,7 @@
     "upstream_query": "probe_success == 0",
     "upstream_description": "Probe failed"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "probe_success",
   "is_real_time": false,

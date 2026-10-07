@@ -18,6 +18,7 @@
     "upstream_query": "sum(bookie_ledger_dir__pulsar_data_bookkeeper_ledgers_usage) by (kubernetes_pod_name) > 75",
     "upstream_description": "Observing Ledger Disk Usage (> 75%)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "bookie_ledger_dir__pulsar_data_bookkeeper_ledgers_usage",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "sum(cilium_bpf_map_pressure{map_name=~\"cilium_policy_.*\"}) by (pod) > 0.9",
     "upstream_description": "Cilium agent {{ $labels.pod }} policy BPF map is above 90% utilization. New policies may fail to apply."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cilium_bpf_map_pressure",
   "is_real_time": false,

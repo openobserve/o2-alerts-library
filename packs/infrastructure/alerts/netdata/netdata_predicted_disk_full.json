@@ -18,6 +18,7 @@
     "upstream_query": "predict_linear(netdata_disk_space_GB_average{dimension=~\"avail|cached\"}[3h], 24 * 3600) < 0",
     "upstream_description": "Netdata predicted disk full in 24 hours"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "netdata_disk_space_GB_average",
   "is_real_time": false,

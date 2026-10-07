@@ -18,6 +18,7 @@
     "upstream_query": "digitalocean_incidents_total > 0",
     "upstream_description": "DigitalOcean platform has {{ $value }} active incident(s)."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "digitalocean_incidents_total",
   "is_real_time": false,

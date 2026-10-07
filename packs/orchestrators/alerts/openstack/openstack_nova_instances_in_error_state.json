@@ -18,6 +18,7 @@
     "upstream_query": "sum(openstack_nova_server_status{status=\"ERROR\"}) > 0",
     "upstream_description": "{{ $value }} Nova instances are in ERROR state"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "openstack_nova_server_status",
   "is_real_time": false,

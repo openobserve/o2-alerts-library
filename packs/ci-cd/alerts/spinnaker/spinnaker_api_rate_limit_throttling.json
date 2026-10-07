@@ -18,6 +18,7 @@
     "upstream_query": "rate(rateLimitThrottling_total[5m]) > 0.05",
     "upstream_description": "Gate is actively throttling API requests on {{ $labels.instance }} ({{ $value }} throttled requests per second)."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "rateLimitThrottling_total",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "increase(prometheus_target_scrapes_exceeded_sample_limit_total[10m]) > 10",
     "upstream_description": "Prometheus has many scrapes that exceed the sample limit ({{ $value }} scrapes)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "prometheus_target_scrapes_exceeded_sample_limit_total",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "etcd_server_has_leader == 0",
     "upstream_description": "Etcd cluster have no leader"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "etcd_server_has_leader",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "increase(prometheus_target_scrapes_sample_out_of_order_total[5m]) > 3",
     "upstream_description": "Prometheus is dropping samples because their timestamps arrive out of order ({{ $value }} samples in the last 5 minutes), indicating a misbehaving target or clock skew."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "prometheus_target_scrapes_sample_out_of_order_total",
   "is_real_time": false,

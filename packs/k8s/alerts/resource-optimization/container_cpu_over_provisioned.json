@@ -2,6 +2,7 @@
   "id": "3DnoH3GedOv6Cx2x7dsZN4A3YiW",
   "name": "container_cpu_over_provisioned",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "k8s_pod_cpu_request_utilization",
   "is_real_time": false,

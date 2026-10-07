@@ -18,6 +18,7 @@
     "upstream_query": "kube_poddisruptionbudget_status_desired_healthy - kube_poddisruptionbudget_status_current_healthy > 0",
     "upstream_description": "PodDisruptionBudget {{ $labels.namespace }}/{{ $labels.poddisruptionbudget }} does not have the desired number of healthy pods, so voluntary disruptions such as node drains or cluster upgrades may be blocked or the application may be under-provisioned during maintenance."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_poddisruptionbudget_status_desired_healthy",
   "is_real_time": false,

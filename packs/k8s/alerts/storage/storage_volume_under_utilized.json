@@ -2,6 +2,7 @@
   "id": "3DnoIeDW7NLEvcjfQbuNhmCscng",
   "name": "storage_volume_under_utilized",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kubelet_volume_stats_used_bytes",
   "is_real_time": false,

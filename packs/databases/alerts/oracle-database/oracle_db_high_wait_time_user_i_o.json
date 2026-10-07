@@ -18,6 +18,7 @@
     "upstream_query": "oracledb_wait_time_user_io > 300",
     "upstream_description": "Oracle Database on {{ $labels.instance }} is experiencing high user I/O wait time"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "oracledb_wait_time_user_io",
   "is_real_time": false,

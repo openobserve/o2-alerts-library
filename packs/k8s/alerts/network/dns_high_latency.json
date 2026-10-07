@@ -2,6 +2,7 @@
   "id": "3DnlFNsWnYYW2gNFXBO7mJedFEl",
   "name": "dns_high_latency",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "coredns_dns_request_duration_seconds_bucket",
   "is_real_time": false,

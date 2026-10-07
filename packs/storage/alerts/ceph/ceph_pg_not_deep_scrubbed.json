@@ -18,6 +18,7 @@
     "upstream_query": "ceph_health_detail{name=\"PG_NOT_DEEP_SCRUBBED\"} == 1",
     "upstream_description": "One or more placement groups have missed their deep scrub interval, which compares data replicas to protect against silent bit-rot."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ceph_health_detail",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "kube_job_status_failed > 0",
     "upstream_description": "Job {{ $labels.namespace }}/{{ $labels.job_name }} failed to complete"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_job_status_failed",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "sysUpTime / 100 < 300",
     "upstream_description": "SNMP device {{ $labels.instance }} has restarted (uptime < 5 minutes)."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "sysUpTime",
   "is_real_time": false,

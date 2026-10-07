@@ -1,6 +1,7 @@
 {
   "name": "kube_state_metrics_stale_data",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_persistentvolume_status_phase",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "sum by (zone) (100 * (rate(cloudflare_zone_requests_total[10m]) / clamp_min(rate(cloudflare_zone_requests_total[50m] offset 10m), 1))) > 150",
     "upstream_description": "Cloudflare zone {{ $labels.zone }} request rate over the last 10 minutes is {{ $value }}% of the preceding 50-minute baseline, indicating an abnormal traffic spike (possible DDoS or misconfigured client)."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cloudflare_zone_requests_total",
   "is_real_time": false,

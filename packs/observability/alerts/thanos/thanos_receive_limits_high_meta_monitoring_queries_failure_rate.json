@@ -18,6 +18,7 @@
     "upstream_query": "(sum by (job) (increase(thanos_receive_metamonitoring_failed_queries_total[5m])) / 20) * 100 > 20",
     "upstream_description": "Thanos Receive {{$labels.job}} is failing to execute {{ $value | humanize }}% of its meta-monitoring queries."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "thanos_receive_metamonitoring_failed_queries_total",
   "is_real_time": false,

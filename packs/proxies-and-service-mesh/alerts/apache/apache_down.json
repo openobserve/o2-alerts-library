@@ -18,6 +18,7 @@
     "upstream_query": "apache_up == 0",
     "upstream_description": "Apache down"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "apache_up",
   "is_real_time": false,

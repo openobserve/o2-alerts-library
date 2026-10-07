@@ -17,6 +17,7 @@
     "upstream_query": "rate(namedprocess_namegroup_write_bytes_total[5m]) > 100e+06",
     "upstream_description": "Process group {{ $labels.groupname }} is performing {{ $value | humanize }}B/s of disk writes. (instance {{ $labels.instance }})"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "namedprocess_namegroup_write_bytes_total",
   "is_real_time": false,

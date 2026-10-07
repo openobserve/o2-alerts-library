@@ -18,6 +18,7 @@
     "upstream_query": "vault_token_count_by_ttl{creation_ttl=\"+Inf\"} > 3",
     "upstream_description": "Too many non-expiring tokens on {{ $labels.instance }}: {{ $value }} tokens with infinite TTL."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "vault_token_count_by_ttl",
   "is_real_time": false,

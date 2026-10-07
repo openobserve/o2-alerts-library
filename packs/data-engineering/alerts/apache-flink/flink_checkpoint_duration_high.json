@@ -18,6 +18,7 @@
     "upstream_query": "flink_jobmanager_job_lastCheckpointDuration / 1000 > 60",
     "upstream_description": "Flink job {{ $labels.job_name }} last checkpoint took {{ $value | humanizeDuration }} to complete."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "flink_jobmanager_job_lastCheckpointDuration",
   "is_real_time": false,

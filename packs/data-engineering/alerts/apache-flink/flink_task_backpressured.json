@@ -18,6 +18,7 @@
     "upstream_query": "flink_taskmanager_job_task_isBackPressured == 1",
     "upstream_description": "Flink task {{ $labels.task_name }} in job {{ $labels.job_name }} is backpressured."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "flink_taskmanager_job_task_isBackPressured",
   "is_real_time": false,

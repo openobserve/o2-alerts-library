@@ -180,7 +180,7 @@ def main() -> None:
                     )
                 seen_names[data["name"]] = rel
 
-                anomaly = data.get("alert_type") == "anomaly_detection"
+                anomaly = data["alert_type"] == "anomaly_detection"
                 qc = data.get("query_condition") or {}
                 entry = {
                     "id": f"{pack}/{data['name']}",
@@ -192,7 +192,7 @@ def main() -> None:
                     "description": (data.get("description") or "").strip(),
                     "stream": data.get("stream_name"),
                     "stream_type": data.get("stream_type"),
-                    "alert_type": "anomaly_detection" if anomaly else "scheduled",
+                    "alert_type": data["alert_type"],
                     "query_type": "sql" if anomaly else qc.get("type"),
                     "required_streams": [data["stream_name"]] if data.get("stream_name") else [],
                     "path": rel,

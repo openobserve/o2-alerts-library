@@ -2,6 +2,7 @@
   "id": "3Dnuf3TmM0PDXERfptvHfICDN2L",
   "name": "network_not_ready_events",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "logs",
   "stream_name": "k8s_events",
   "is_real_time": false,

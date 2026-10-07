@@ -18,6 +18,7 @@
     "upstream_query": "deployment_status == 4",
     "upstream_description": "Subgraph deployment `{{$labels.deployment}}` has failed and indexing has stopped in Graph node `{{$labels.instance}}`; check the graph-node logs for the deployment to find the root cause."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "deployment_status",
   "is_real_time": false,

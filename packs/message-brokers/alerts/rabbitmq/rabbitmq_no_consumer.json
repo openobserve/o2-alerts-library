@@ -18,6 +18,7 @@
     "upstream_query": "rabbitmq_queue_consumers == 0",
     "upstream_description": "Queue has no consumer"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "rabbitmq_queue_consumers",
   "is_real_time": false,

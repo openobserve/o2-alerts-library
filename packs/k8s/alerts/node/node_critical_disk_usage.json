@@ -2,6 +2,7 @@
   "id": "3DnilVzfxGCM8KVQSTmdBNwFWQl",
   "name": "node_critical_disk_usage",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "k8s_node_filesystem_usage",
   "is_real_time": false,

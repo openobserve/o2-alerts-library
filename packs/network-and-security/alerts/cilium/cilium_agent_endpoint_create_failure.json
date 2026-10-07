@@ -18,6 +18,7 @@
     "upstream_query": "sum(rate(cilium_api_limiter_processed_requests_total{api_call=~\"endpoint-create\", outcome=\"fail\"}[1m])) by (pod, api_call) > 0.05",
     "upstream_description": "Cilium agent {{ $labels.pod }} is failing CNI endpoint-create calls. New pods may fail to get networking."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cilium_api_limiter_processed_requests_total",
   "is_real_time": false,

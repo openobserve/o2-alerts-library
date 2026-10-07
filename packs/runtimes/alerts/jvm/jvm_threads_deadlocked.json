@@ -18,6 +18,7 @@
     "upstream_query": "jvm_threads_deadlocked > 0",
     "upstream_description": "JVM has deadlocked threads"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "jvm_threads_deadlocked",
   "is_real_time": false,

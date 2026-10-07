@@ -18,6 +18,7 @@
     "upstream_query": "cassandra_stats{name=\"org:apache:cassandra:metrics:commitlog:pendingtasks:value\"} > 15",
     "upstream_description": "Unexpected number of Cassandra commitlog pending tasks"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cassandra_stats",
   "is_real_time": false,

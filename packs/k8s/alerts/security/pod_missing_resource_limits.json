@@ -2,6 +2,7 @@
   "id": "3Dnnf3wiBMW4oLrc3X7z0F6iABP",
   "name": "pod_missing_resource_limits",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_pod_container_info",
   "is_real_time": false,

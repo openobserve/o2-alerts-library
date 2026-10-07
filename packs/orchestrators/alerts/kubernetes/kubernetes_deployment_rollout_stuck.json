@@ -18,6 +18,7 @@
     "upstream_query": "kube_deployment_status_condition{condition=\"Progressing\",status=\"false\"} != 0",
     "upstream_description": "Deployment {{ $labels.namespace }}/{{ $labels.deployment }} rollout is not progressing, as reported by its Progressing=false condition."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_deployment_status_condition",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "sum(loki_boltdb_shipper_compactor_running) by (cluster) > 1",
     "upstream_description": "More than one Loki compactor is running in cluster {{ $labels.cluster }}; the compactor must run as a singleton, or index compaction and retention can be duplicated or corrupted."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "loki_boltdb_shipper_compactor_running",
   "is_real_time": false,

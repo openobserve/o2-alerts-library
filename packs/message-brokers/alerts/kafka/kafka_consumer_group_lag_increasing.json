@@ -18,6 +18,7 @@
     "upstream_query": "sum by (topic, consumergroup) (delta(kafka_consumergroup_lag{topic!=\"__consumer_offsets\",consumergroup!=\"\"}[5m])) > 0",
     "upstream_description": "Kafka consumer group {{ $labels.consumergroup }} lag on topic {{ $labels.topic }} is continuously increasing over the last 15 minutes, meaning the consumer is falling further behind even though the absolute lag threshold hasn't been crossed yet."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kafka_consumergroup_lag",
   "is_real_time": false,

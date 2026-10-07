@@ -18,6 +18,7 @@
     "upstream_query": "ruby_rss > 1e9",
     "upstream_description": "Ruby process RSS is high (> 1GB)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ruby_rss",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "rate(go_memstats_alloc_bytes_total[5m]) > 1e9",
     "upstream_description": "Go application has sustained high allocation rate (> 1GB/s), potential memory leak"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "go_memstats_alloc_bytes_total",
   "is_real_time": false,

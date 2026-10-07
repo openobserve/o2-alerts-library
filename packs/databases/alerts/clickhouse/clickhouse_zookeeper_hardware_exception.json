@@ -18,6 +18,7 @@
     "upstream_query": "increase(ClickHouseProfileEvents_ZooKeeperHardwareExceptions[1m]) > 0",
     "upstream_description": "Zookeeper hardware exception: network issues communicating with ZooKeeper"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ClickHouseProfileEvents_ZooKeeperHardwareExceptions",
   "is_real_time": false,

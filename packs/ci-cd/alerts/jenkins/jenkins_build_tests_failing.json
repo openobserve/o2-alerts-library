@@ -18,6 +18,7 @@
     "upstream_query": "default_jenkins_builds_last_build_tests_failing > 0",
     "upstream_description": "Last build tests failed: {{$labels.jenkins_job}}. Failed build Tests for job `{{$labels.jenkins_job}}` on {{$labels.instance}}/{{$labels.env}} ({{$labels.region}})"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "default_jenkins_builds_last_build_tests_failing",
   "is_real_time": false,

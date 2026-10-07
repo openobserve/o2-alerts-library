@@ -18,6 +18,7 @@
     "upstream_query": "deriv(go_goroutines[5m]) > 10",
     "upstream_description": "Go goroutine count is growing rapidly ({{ $value | printf \"%.0f\" }} goroutines/s)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "go_goroutines",
   "is_real_time": false,

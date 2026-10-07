@@ -18,6 +18,7 @@
     "upstream_query": "sum by (job) (cortex_query_scheduler_queue_length) > 0",
     "upstream_description": "There are {{ $value }} queued up queries in Cortex query-scheduler {{ $labels.job }}, indicating queriers are not keeping up or are unavailable."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cortex_query_scheduler_queue_length",
   "is_real_time": false,

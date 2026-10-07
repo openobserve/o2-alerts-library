@@ -18,6 +18,7 @@
     "upstream_query": "increase(envoy_listener_ssl_connection_error[5m]) > 5",
     "upstream_description": "Envoy listener is experiencing SSL/TLS connection errors on {{ $labels.instance }} ({{ $value }} in the last 5m)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "envoy_listener_ssl_connection_error",
   "is_real_time": false,

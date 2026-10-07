@@ -18,6 +18,7 @@
     "upstream_query": "digitalocean_kubernetes_cluster_up == 0",
     "upstream_description": "DigitalOcean Kubernetes cluster {{ $labels.name }} ({{ $labels.version }}) in {{ $labels.region }} is not running."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "digitalocean_kubernetes_cluster_up",
   "is_real_time": false,

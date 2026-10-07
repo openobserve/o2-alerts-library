@@ -18,6 +18,7 @@
     "upstream_query": "opensearch_jvm_mem_heap_used_percent > 75",
     "upstream_description": "OpenSearch heap usage on cluster {{ $labels.cluster }} is too high"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "opensearch_jvm_mem_heap_used_percent",
   "is_real_time": false,

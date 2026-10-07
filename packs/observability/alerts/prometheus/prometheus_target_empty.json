@@ -18,6 +18,7 @@
     "upstream_query": "prometheus_sd_discovered_targets == 0",
     "upstream_description": "Prometheus has no target in service discovery"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "prometheus_sd_discovered_targets",
   "is_real_time": false,

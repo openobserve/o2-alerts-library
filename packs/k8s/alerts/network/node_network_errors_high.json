@@ -2,6 +2,7 @@
   "id": "3DnlE55Cah49FIAxYoeZWrFIoCp",
   "name": "node_network_errors_high",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "k8s_node_network_errors",
   "is_real_time": false,

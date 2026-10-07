@@ -18,6 +18,7 @@
     "upstream_query": "kube_node_status_condition{condition=\"Ready\",status=\"true\"} == 0",
     "upstream_description": "Node {{ $labels.node }} has been unready for a long time"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_node_status_condition",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "histogram_quantile(0.99, sum(rate(jaeger_storage_latency_seconds_bucket[5m])) by (le, instance, job, namespace, operation)) > 1",
     "upstream_description": "Jaeger on {{ $labels.instance }} storage p99 latency for {{ $labels.operation }} is {{ $value | humanizeDuration }}."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "jaeger_storage_latency_seconds_bucket",
   "is_real_time": false,

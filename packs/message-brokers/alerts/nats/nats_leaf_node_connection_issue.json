@@ -18,6 +18,7 @@
     "upstream_query": "gnatsd_varz_leafnodes == 0",
     "upstream_description": "No leaf node connections on {{ $labels.instance }}"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "gnatsd_varz_leafnodes",
   "is_real_time": false,

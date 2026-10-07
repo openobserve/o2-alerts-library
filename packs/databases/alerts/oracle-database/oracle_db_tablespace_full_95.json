@@ -18,6 +18,7 @@
     "upstream_query": "oracledb_tablespace_used_percent > 95",
     "upstream_description": "Oracle Database tablespace {{ $labels.tablespace }} is critically full on {{ $labels.instance }} (current value: {{ $value }}%)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "oracledb_tablespace_used_percent",
   "is_real_time": false,

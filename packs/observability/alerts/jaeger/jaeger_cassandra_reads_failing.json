@@ -19,6 +19,7 @@
     "upstream_description": "Jaeger on {{ $labels.instance }} is failing {{ $value | humanize }}% of reads from the Cassandra storage backend, which impacts trace query availability.",
     "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "jaeger_cassandra_read_errors_total",
   "is_real_time": false,

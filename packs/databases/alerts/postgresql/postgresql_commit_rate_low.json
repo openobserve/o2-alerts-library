@@ -18,6 +18,7 @@
     "upstream_query": "increase(pg_stat_database_xact_commit{datname!~\"template.*|postgres\",datid!=\"0\"}[5m]) < 5",
     "upstream_description": "Postgresql seems to be processing very few transactions"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "pg_stat_database_xact_commit",
   "is_real_time": false,

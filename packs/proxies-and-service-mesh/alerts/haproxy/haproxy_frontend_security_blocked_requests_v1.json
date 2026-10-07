@@ -18,6 +18,7 @@
     "upstream_query": "sum by (frontend) (rate(haproxy_frontend_requests_denied_total[2m])) > 10",
     "upstream_description": "HAProxy is blocking requests for security reason"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "haproxy_frontend_requests_denied_total",
   "is_real_time": false,

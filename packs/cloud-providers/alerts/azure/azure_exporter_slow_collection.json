@@ -18,6 +18,7 @@
     "upstream_query": "azurerm_stats_metric_collecttime_sum > 300",
     "upstream_description": "Azure metrics exporter on {{ $labels.instance }} metric collection is taking more than 5 minutes ({{ $value }}s)."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "azurerm_stats_metric_collecttime_sum",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "gnatsd_varz_slow_consumers > 0",
     "upstream_description": "There are slow consumers in NATS for {{ $labels.instance }}"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "gnatsd_varz_slow_consumers",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "increase(pg_stat_database_deadlocks{datname!~\"template.*|postgres\",datid!=\"0\"}[1m]) > 5",
     "upstream_description": "PostgreSQL has dead-locks ({{ $value }} in the last minute)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "pg_stat_database_deadlocks",
   "is_real_time": false,

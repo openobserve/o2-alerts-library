@@ -18,6 +18,7 @@
     "upstream_query": "increase(stackdriver_monitoring_scrape_errors_total[15m]) > 5",
     "upstream_description": "Stackdriver exporter has had {{ $value }} scrape errors in the last 15 minutes for project {{ $labels.project_id }}."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "stackdriver_monitoring_scrape_errors_total",
   "is_real_time": false,

@@ -2,6 +2,7 @@
   "id": "3DnnfNMdIt7hMXSm9KJLTQXQJS9",
   "name": "unauthorized_api_access_high",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "apiserver_request_total",
   "is_real_time": false,

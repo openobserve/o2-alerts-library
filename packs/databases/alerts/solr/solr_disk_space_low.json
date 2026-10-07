@@ -18,6 +18,7 @@
     "upstream_query": "min by (base_url) (solr_metrics_core_fs_bytes{item=\"usableSpace\"}) / max by (base_url) (solr_metrics_core_fs_bytes{item=\"totalSpace\"}) <= 0.2",
     "upstream_description": "Solr node {{ $labels.base_url }} has less than 20% usable disk space remaining, risking index corruption if it fills up."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "solr_metrics_core_fs_bytes",
   "is_real_time": false,

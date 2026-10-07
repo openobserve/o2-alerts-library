@@ -18,6 +18,7 @@
     "upstream_query": "opensearch_cluster_shards_active_percent < 100.0",
     "upstream_description": "OpenSearch cluster {{ $labels.cluster }} has inactive shards"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "opensearch_cluster_shards_active_percent",
   "is_real_time": false,

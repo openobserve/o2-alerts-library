@@ -17,6 +17,7 @@
     "upstream_query": "namedprocess_namegroup_states{state=\"Zombie\"} > 5",
     "upstream_description": "Process group {{ $labels.groupname }} has {{ $value }} zombie processes. (instance {{ $labels.instance }})"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "namedprocess_namegroup_states",
   "is_real_time": false,

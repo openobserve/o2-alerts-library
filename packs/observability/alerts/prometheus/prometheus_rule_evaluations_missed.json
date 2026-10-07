@@ -18,6 +18,7 @@
     "upstream_query": "increase(prometheus_rule_group_iterations_missed_total[5m]) > 0",
     "upstream_description": "Prometheus missed {{ $value }} rule group evaluations in the last 5 minutes, usually caused by rule groups taking longer to evaluate than their configured interval."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "prometheus_rule_group_iterations_missed_total",
   "is_real_time": false,

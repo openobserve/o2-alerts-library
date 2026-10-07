@@ -18,6 +18,7 @@
     "upstream_query": "count without (instance, job) (redis_connected_slaves) - sum without (instance, job) (redis_connected_slaves) - 1 > 0",
     "upstream_description": "Redis not replicating for all slaves. Consider reviewing the redis replication status."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "redis_connected_slaves",
   "is_real_time": false,

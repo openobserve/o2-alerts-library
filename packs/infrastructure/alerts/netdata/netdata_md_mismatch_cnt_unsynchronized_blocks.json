@@ -18,6 +18,7 @@
     "upstream_query": "netdata_md_mismatch_cnt_unsynchronized_blocks_average > 1024",
     "upstream_description": "RAID Array have unsynchronized blocks"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "netdata_md_mismatch_cnt_unsynchronized_blocks_average",
   "is_real_time": false,

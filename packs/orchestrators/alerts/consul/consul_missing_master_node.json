@@ -18,6 +18,7 @@
     "upstream_query": "consul_raft_peers < 3",
     "upstream_description": "Numbers of consul raft peers should be 3, in order to preserve quorum."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "consul_raft_peers",
   "is_real_time": false,

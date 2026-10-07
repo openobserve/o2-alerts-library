@@ -18,6 +18,7 @@
     "upstream_query": "increase(ClickHouseErrorMetric_AUTHENTICATION_FAILED[5m]) > 3",
     "upstream_description": "Authentication failures detected, indicating potential security issues or misconfiguration."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ClickHouseErrorMetric_AUTHENTICATION_FAILED",
   "is_real_time": false,

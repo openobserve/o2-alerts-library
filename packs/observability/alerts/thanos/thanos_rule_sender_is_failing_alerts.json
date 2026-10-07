@@ -18,6 +18,7 @@
     "upstream_query": "sum by (job, instance) (rate(thanos_alert_sender_alerts_dropped_total[5m])) > 0",
     "upstream_description": "Thanos Rule {{$labels.instance}} is failing to send alerts to alertmanager ({{ $value | humanize }}/s)."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "thanos_alert_sender_alerts_dropped_total",
   "is_real_time": false,

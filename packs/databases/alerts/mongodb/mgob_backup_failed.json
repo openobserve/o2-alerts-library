@@ -18,6 +18,7 @@
     "upstream_query": "changes(mgob_scheduler_backup_total{status=\"500\"}[1h]) > 0",
     "upstream_description": "MongoDB backup has failed"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "mgob_scheduler_backup_total",
   "is_real_time": false,

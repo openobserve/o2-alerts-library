@@ -2,6 +2,7 @@
   "id": "3Dnk7h5xMJj4xWg21QiEWtguGGh",
   "name": "cluster_cpu_capacity_high",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_pod_container_resource_requests",
   "is_real_time": false,

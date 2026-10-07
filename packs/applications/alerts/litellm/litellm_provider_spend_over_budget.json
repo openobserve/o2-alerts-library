@@ -18,6 +18,7 @@
     "upstream_query": "sum(increase(litellm_spend_metric_total{model=~\"(claude-|anthropic/).*\"}[24h])) > 1",
     "upstream_description": "Cumulative spend for an LLM provider has exceeded the daily budget threshold. Replace the regex `(claude-|anthropic/).*` with your provider's model-name pattern. Useful as a soft-warning when `provider_budget_config` hard-cap is unavailable or disabled."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "litellm_spend_metric_total",
   "is_real_time": false,

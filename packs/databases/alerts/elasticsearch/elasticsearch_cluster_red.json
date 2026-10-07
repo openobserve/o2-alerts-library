@@ -18,6 +18,7 @@
     "upstream_query": "elasticsearch_cluster_health_status{color=\"red\"} == 1",
     "upstream_description": "Elastic Cluster Red status"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "elasticsearch_cluster_health_status",
   "is_real_time": false,

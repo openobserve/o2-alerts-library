@@ -2,6 +2,7 @@
   "id": "3DnlvmqXP83r94foWqQBAXW6hQ2",
   "name": "hpa_at_max_replicas",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_horizontalpodautoscaler_status_current_replicas",
   "is_real_time": false,

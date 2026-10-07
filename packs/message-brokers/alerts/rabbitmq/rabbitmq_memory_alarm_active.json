@@ -18,6 +18,7 @@
     "upstream_query": "rabbitmq_alarms_memory_used_watermark > 0",
     "upstream_description": "Memory alarm is active on node {{ $labels.instance }} (vm_memory_high_watermark reached); publishers are blocked cluster-wide until memory is freed."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "rabbitmq_alarms_memory_used_watermark",
   "is_real_time": false,

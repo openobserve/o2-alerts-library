@@ -18,6 +18,7 @@
     "upstream_query": "increase(etcd_server_leader_changes_seen_total[10m]) > 2",
     "upstream_description": "Etcd leader changed {{ $value }} times during 10 minutes"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "etcd_server_leader_changes_seen_total",
   "is_real_time": false,

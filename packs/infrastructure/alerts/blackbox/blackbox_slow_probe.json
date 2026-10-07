@@ -18,6 +18,7 @@
     "upstream_query": "probe_duration_seconds > 1",
     "upstream_description": "Blackbox probe took more than 1s to complete"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "probe_duration_seconds",
   "is_real_time": false,

@@ -17,6 +17,7 @@
     "upstream_query": "namedprocess_namegroup_memory_bytes{memtype=\"swapped\"} > 512e+06",
     "upstream_description": "Process group {{ $labels.groupname }} is using {{ $value | humanize }}B of swap. (instance {{ $labels.instance }})"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "namedprocess_namegroup_memory_bytes",
   "is_real_time": false,

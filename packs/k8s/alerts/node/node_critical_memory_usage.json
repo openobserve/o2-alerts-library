@@ -2,6 +2,7 @@
   "id": "3DnRj0SU5HQNoWly3boz6FPUICZ",
   "name": "node_critical_memory_usage",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "k8s_node_memory_usage",
   "is_real_time": false,

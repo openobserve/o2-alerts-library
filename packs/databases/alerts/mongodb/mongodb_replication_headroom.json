@@ -18,6 +18,7 @@
     "upstream_query": "sum(avg(mongodb_mongod_replset_oplog_head_timestamp - mongodb_mongod_replset_oplog_tail_timestamp)) - sum(avg(mongodb_rs_members_optimeDate{member_state=\"PRIMARY\"} - on (set) group_right mongodb_rs_members_optimeDate{member_state=\"SECONDARY\"})) <= 0",
     "upstream_description": "MongoDB replication headroom is <= 0"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "mongodb_mongod_replset_oplog_head_timestamp",
   "is_real_time": false,

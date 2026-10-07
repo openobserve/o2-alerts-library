@@ -18,6 +18,7 @@
     "upstream_query": "ceph_health_detail{name=\"OSD_FULL\"} == 1",
     "upstream_description": "One or more Ceph OSDs have reached the full ratio; writes to the affected pools are blocked until space is freed or OSDs are added."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ceph_health_detail",
   "is_real_time": false,

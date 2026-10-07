@@ -18,6 +18,7 @@
     "upstream_query": "increase(etcd_server_proposals_failed_total[1h]) > 5",
     "upstream_description": "Etcd server got {{ $value }} failed proposals in the past hour"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "etcd_server_proposals_failed_total",
   "is_real_time": false,

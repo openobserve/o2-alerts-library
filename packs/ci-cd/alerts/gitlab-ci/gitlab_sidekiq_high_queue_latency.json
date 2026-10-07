@@ -19,6 +19,7 @@
     "upstream_description": "GitLab Sidekiq jobs on {{ $labels.instance }} are waiting more than 60 seconds before being processed.",
     "labels_dropped": "The upstream annotation interpolates instance, but this expression aggregates those labels away, so they are not in row_template — they would render as literal placeholders."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "sidekiq_jobs_queue_duration_seconds_bucket",
   "is_real_time": false,

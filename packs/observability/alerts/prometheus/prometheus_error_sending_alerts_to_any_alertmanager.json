@@ -18,6 +18,7 @@
     "upstream_query": "min without (alertmanager) (rate(prometheus_notifications_errors_total[5m]) / rate(prometheus_notifications_sent_total[5m])) * 100 > 3",
     "upstream_description": "Prometheus is failing to send at least {{ $value | humanize }}% of alerts to every configured Alertmanager, meaning alert delivery is broadly impaired."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "prometheus_notifications_errors_total",
   "is_real_time": false,

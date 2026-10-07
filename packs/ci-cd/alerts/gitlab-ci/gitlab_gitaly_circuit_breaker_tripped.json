@@ -18,6 +18,7 @@
     "upstream_query": "increase(gitaly_circuit_breaker_transitions_total{to_state=\"open\"}[5m]) > 0",
     "upstream_description": "Gitaly circuit breaker has tripped on {{ $labels.instance }}. Git operations are failing."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "gitaly_circuit_breaker_transitions_total",
   "is_real_time": false,

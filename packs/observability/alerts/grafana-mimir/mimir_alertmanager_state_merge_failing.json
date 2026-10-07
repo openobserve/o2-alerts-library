@@ -18,6 +18,7 @@
     "upstream_query": "rate(cortex_alertmanager_partial_state_merges_failed_total[5m]) > 0.05",
     "upstream_description": "Mimir alertmanager {{ $labels.job }} is failing to merge state updates ({{ $value | humanize }}/s)."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cortex_alertmanager_partial_state_merges_failed_total",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "ClickHouseMetrics_ZooKeeperSession != 1",
     "upstream_description": "ClickHouse is experiencing issues with ZooKeeper connections, which may affect cluster state and coordination."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ClickHouseMetrics_ZooKeeperSession",
   "is_real_time": false,

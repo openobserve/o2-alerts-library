@@ -18,6 +18,7 @@
     "upstream_query": "rate(cortex_ingester_tsdb_compactions_failed_total[5m]) > 0.05",
     "upstream_description": "Mimir ingester {{ $labels.instance }} is failing to compact TSDB head ({{ $value | humanize }}/s)."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cortex_ingester_tsdb_compactions_failed_total",
   "is_real_time": false,

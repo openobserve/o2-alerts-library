@@ -18,6 +18,7 @@
     "upstream_query": "histogram_quantile(0.99, sum(rate(apiserver_request_duration_seconds_bucket{verb!~\"(?:CONNECT|WATCHLIST|WATCH|PROXY)\"} [10m])) WITHOUT (subresource)) > 1",
     "upstream_description": "Kubernetes API server has a 99th percentile latency of {{ $value }} seconds for {{ $labels.verb }} {{ $labels.resource }}."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "apiserver_request_duration_seconds_bucket",
   "is_real_time": false,

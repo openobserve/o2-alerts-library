@@ -18,6 +18,7 @@
     "upstream_query": "zfs_scrape_collector_success != 1",
     "upstream_description": "ZFS collector for {{ $labels.instance }} has failed to collect information"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "zfs_scrape_collector_success",
   "is_real_time": false,

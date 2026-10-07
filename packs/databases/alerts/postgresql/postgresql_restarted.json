@@ -18,6 +18,7 @@
     "upstream_query": "time() - pg_postmaster_start_time_seconds < 60",
     "upstream_description": "Postgresql restarted"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "pg_postmaster_start_time_seconds",
   "is_real_time": false,

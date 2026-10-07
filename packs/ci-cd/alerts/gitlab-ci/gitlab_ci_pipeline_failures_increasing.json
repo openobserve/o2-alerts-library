@@ -18,6 +18,7 @@
     "upstream_query": "deriv(gitlab_ci_pipeline_failure_reasons[5m]) > 0.05",
     "upstream_description": "GitLab CI pipeline failures are increasing on {{ $labels.instance }} ({{ $value }}/s)."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "gitlab_ci_pipeline_failure_reasons",
   "is_real_time": false,

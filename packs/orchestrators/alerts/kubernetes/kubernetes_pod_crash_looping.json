@@ -18,6 +18,7 @@
     "upstream_query": "max_over_time(kube_pod_container_status_waiting_reason{reason=\"CrashLoopBackOff\"}[5m]) >= 1",
     "upstream_description": "Pod {{ $labels.namespace }}/{{ $labels.pod }} is crash looping"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_pod_container_status_waiting_reason",
   "is_real_time": false,

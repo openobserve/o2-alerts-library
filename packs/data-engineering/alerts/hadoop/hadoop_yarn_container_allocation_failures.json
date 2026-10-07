@@ -18,6 +18,7 @@
     "upstream_query": "increase(hadoop_yarn_container_allocation_failures_total[1h]) > 10",
     "upstream_description": "There is a significant number of YARN container allocation failures."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "hadoop_yarn_container_allocation_failures_total",
   "is_real_time": false,

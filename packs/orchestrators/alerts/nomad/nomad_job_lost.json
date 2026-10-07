@@ -18,6 +18,7 @@
     "upstream_query": "nomad_nomad_job_summary_lost > 0",
     "upstream_description": "Nomad job {{ $labels.job }} has {{ $value }} lost allocations."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "nomad_nomad_job_summary_lost",
   "is_real_time": false,

@@ -2,6 +2,7 @@
   "id": "3DnmQS37qj99vAoERGo8naaFpbw",
   "name": "controller_reconcile_errors_high",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "controller_runtime_reconcile_errors_total",
   "is_real_time": false,

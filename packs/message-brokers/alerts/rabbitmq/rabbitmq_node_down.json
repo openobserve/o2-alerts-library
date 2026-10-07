@@ -18,6 +18,7 @@
     "upstream_query": "sum(rabbitmq_build_info) < 3",
     "upstream_description": "Less than 3 nodes running in RabbitMQ cluster"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "rabbitmq_build_info",
   "is_real_time": false,

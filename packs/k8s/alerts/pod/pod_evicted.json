@@ -2,6 +2,7 @@
   "id": "3DniyfpBLuYWtpQAh5WujNmETH4",
   "name": "pod_evicted",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_pod_status_reason",
   "is_real_time": false,

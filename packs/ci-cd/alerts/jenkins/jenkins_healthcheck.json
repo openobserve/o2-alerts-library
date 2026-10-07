@@ -18,6 +18,7 @@
     "upstream_query": "jenkins_health_check_score < 1",
     "upstream_description": "Jenkins healthcheck score: {{$value}}. Healthcheck failure for `{{$labels.instance}}` in realm {{$labels.realm}}/{{$labels.env}} ({{$labels.region}})"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "jenkins_health_check_score",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "oracledb_sessions_value{status=\"ACTIVE\", type=\"USER\"} > 200",
     "upstream_description": "Oracle Database on {{ $labels.instance }} has too many active user sessions (current value: {{ $value }})"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "oracledb_sessions_value",
   "is_real_time": false,

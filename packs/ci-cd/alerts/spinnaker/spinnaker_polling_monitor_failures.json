@@ -18,6 +18,7 @@
     "upstream_query": "rate(pollingMonitor_failed_total[5m]) > 0.05",
     "upstream_description": "Igor polling monitor is experiencing failures ({{ $value }} per second). CI/SCM integrations may not trigger pipelines."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "pollingMonitor_failed_total",
   "is_real_time": false,

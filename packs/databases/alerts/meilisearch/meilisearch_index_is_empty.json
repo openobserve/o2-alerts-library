@@ -18,6 +18,7 @@
     "upstream_query": "meilisearch_index_docs_count == 0",
     "upstream_description": "Meilisearch index {{ $labels.index }} has zero documents"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "meilisearch_index_docs_count",
   "is_real_time": false,

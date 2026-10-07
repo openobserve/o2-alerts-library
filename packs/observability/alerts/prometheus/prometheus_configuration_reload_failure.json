@@ -18,6 +18,7 @@
     "upstream_query": "prometheus_config_last_reload_successful != 1",
     "upstream_description": "Prometheus configuration reload error"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "prometheus_config_last_reload_successful",
   "is_real_time": false,

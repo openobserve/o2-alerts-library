@@ -18,6 +18,7 @@
     "upstream_query": "increase(couchdb_replicator_connections{metric=\"owner_crashes\"}[5m]) > 0",
     "upstream_description": "Replicator HTTP connection owner processes are crashing, which can disrupt replication."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "couchdb_replicator_connections",
   "is_real_time": false,

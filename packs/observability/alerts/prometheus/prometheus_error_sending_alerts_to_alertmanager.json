@@ -18,6 +18,7 @@
     "upstream_query": "(rate(prometheus_notifications_errors_total[5m]) / rate(prometheus_notifications_sent_total[5m])) * 100 > 1",
     "upstream_description": "Prometheus is failing to send {{ $value | humanize }}% of alerts to a specific Alertmanager instance, meaning some alerts may not be delivered."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "prometheus_notifications_errors_total",
   "is_real_time": false,

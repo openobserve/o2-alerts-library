@@ -18,6 +18,7 @@
     "upstream_query": "increase(envoy_cluster_upstream_cx_connect_fail[5m]) > 100",
     "upstream_description": "High rate of upstream connection failures in cluster {{ $labels.envoy_cluster_name }} on {{ $labels.instance }} ({{ $value }} in the last 5m)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "envoy_cluster_upstream_cx_connect_fail",
   "is_real_time": false,

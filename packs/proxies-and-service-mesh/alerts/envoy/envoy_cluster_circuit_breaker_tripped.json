@@ -19,6 +19,7 @@
     "upstream_description": "Circuit breaker is open for cluster {{ $labels.envoy_cluster_name }} on {{ $labels.instance }}",
     "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "envoy_cluster_circuit_breakers_default_cx_open",
   "is_real_time": false,

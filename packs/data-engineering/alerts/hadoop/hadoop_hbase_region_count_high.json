@@ -18,6 +18,7 @@
     "upstream_query": "hadoop_hbase_region_count > 5000",
     "upstream_description": "The HBase cluster has an unusually high number of regions."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "hadoop_hbase_region_count",
   "is_real_time": false,

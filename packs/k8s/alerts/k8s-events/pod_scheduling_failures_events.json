@@ -2,6 +2,7 @@
   "id": "3Dnq3QkzLiF82aNGAITx0YIJamH",
   "name": "pod_scheduling_failures_events",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "logs",
   "stream_name": "k8s_events",
   "is_real_time": false,

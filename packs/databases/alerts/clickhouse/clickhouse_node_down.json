@@ -18,6 +18,7 @@
     "upstream_query": "up{job=\"clickhouse\"} == 0",
     "upstream_description": "No metrics received from ClickHouse exporter for over 2 minutes."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "up",
   "is_real_time": false,

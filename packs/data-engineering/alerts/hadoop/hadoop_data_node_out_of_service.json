@@ -18,6 +18,7 @@
     "upstream_query": "hadoop_namenode_numdeaddatanodes > 0",
     "upstream_description": "The Hadoop DataNode is not sending heartbeats."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "hadoop_namenode_numdeaddatanodes",
   "is_real_time": false,

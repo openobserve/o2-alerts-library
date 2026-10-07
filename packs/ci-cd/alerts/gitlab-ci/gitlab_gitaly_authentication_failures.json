@@ -18,6 +18,7 @@
     "upstream_query": "increase(gitaly_authentications_total{status=\"denied\"}[5m]) > 3",
     "upstream_description": "Gitaly on {{ $labels.instance }} has authentication failures ({{ $value }})."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "gitaly_authentications_total",
   "is_real_time": false,

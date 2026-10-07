@@ -18,6 +18,7 @@
     "upstream_query": "mongodb_up == 0",
     "upstream_description": "MongoDB instance is down"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "mongodb_up",
   "is_real_time": false,

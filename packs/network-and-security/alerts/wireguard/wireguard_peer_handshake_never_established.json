@@ -18,6 +18,7 @@
     "upstream_query": "wireguard_latest_handshake_seconds == 0",
     "upstream_description": "WireGuard peer {{ $labels.public_key }} on interface {{ $labels.interface }} has never completed a handshake. Check peer configuration and network connectivity."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "wireguard_latest_handshake_seconds",
   "is_real_time": false,

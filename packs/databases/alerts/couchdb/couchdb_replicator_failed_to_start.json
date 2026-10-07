@@ -18,6 +18,7 @@
     "upstream_query": "increase(couchdb_replicator_failed_starts[5m]) > 0",
     "upstream_description": "One or more replication tasks failed to start"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "couchdb_replicator_failed_starts",
   "is_real_time": false,

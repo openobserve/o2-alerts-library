@@ -18,6 +18,7 @@
     "upstream_query": "delta(flink_jobmanager_job_numRestarts[5m]) > 1",
     "upstream_description": "Flink job {{ $labels.job_name }} has restarted {{ $value }} times in the last 5 minutes."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "flink_jobmanager_job_numRestarts",
   "is_real_time": false,

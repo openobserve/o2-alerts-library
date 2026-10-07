@@ -18,6 +18,7 @@
     "upstream_query": "cassandra_stats{name=\"org:apache:cassandra:metrics:table:tombstonescannedhistogram:99thpercentile\"} > 1000",
     "upstream_description": "Too much tombstones scanned in queries"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cassandra_stats",
   "is_real_time": false,

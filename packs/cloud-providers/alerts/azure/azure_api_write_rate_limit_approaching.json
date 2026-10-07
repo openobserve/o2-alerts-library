@@ -18,6 +18,7 @@
     "upstream_query": "azurerm_api_ratelimit{type=\"writes\"} < 50",
     "upstream_description": "Azure API write rate limit for subscription {{ $labels.subscriptionID }} is running low ({{ $value }} remaining)."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "azurerm_api_ratelimit",
   "is_real_time": false,

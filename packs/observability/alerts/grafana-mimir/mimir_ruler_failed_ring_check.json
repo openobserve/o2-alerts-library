@@ -18,6 +18,7 @@
     "upstream_query": "sum by (job) (rate(cortex_ruler_ring_check_errors_total[5m])) > 0.05",
     "upstream_description": "Mimir ruler {{ $labels.job }} is failing ring checks ({{ $value | humanize }}/s)."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cortex_ruler_ring_check_errors_total",
   "is_real_time": false,

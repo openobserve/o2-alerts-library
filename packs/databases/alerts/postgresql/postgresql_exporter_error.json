@@ -18,6 +18,7 @@
     "upstream_query": "pg_exporter_last_scrape_error > 0",
     "upstream_description": "Postgresql exporter is showing errors. A query may be buggy in query.yaml"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "pg_exporter_last_scrape_error",
   "is_real_time": false,

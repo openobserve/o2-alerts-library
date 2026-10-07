@@ -2,6 +2,7 @@
   "id": "3DnRk5mYga4Q9e1LfofWnm4A1Yp",
   "name": "pod_high_restart_rate",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "k8s_container_restarts",
   "is_real_time": false,

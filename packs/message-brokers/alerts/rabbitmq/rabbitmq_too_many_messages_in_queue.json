@@ -18,6 +18,7 @@
     "upstream_query": "rabbitmq_queue_messages_ready{queue=\"my-queue\"} > 1000",
     "upstream_description": "Queue is filling up (> 1000 msgs)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "rabbitmq_queue_messages_ready",
   "is_real_time": false,

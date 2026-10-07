@@ -18,6 +18,7 @@
     "upstream_query": "delta(redis_connected_slaves[1m]) < 0",
     "upstream_description": "Redis instance lost a slave"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "redis_connected_slaves",
   "is_real_time": false,

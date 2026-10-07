@@ -18,6 +18,7 @@
     "upstream_query": "sum(rate(elasticsearch_indices_search_query_total[1m])) > 100",
     "upstream_description": "The query rate on Elasticsearch cluster is higher than the threshold."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "elasticsearch_indices_search_query_total",
   "is_real_time": false,

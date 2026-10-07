@@ -18,6 +18,7 @@
     "upstream_query": "metrics_executor_diskUsed_bytes > 1e9",
     "upstream_description": "Spark executor {{ $labels.executor_id }} is spilling data to disk. Consider increasing executor memory."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "metrics_executor_diskUsed_bytes",
   "is_real_time": false,

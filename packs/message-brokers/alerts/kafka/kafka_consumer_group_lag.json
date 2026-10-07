@@ -18,6 +18,7 @@
     "upstream_query": "sum(kafka_consumergroup_lag) by (consumergroup) > 10000",
     "upstream_description": "Kafka consumer group {{ $labels.consumergroup }} is lagging behind ({{ $value }} messages)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kafka_consumergroup_lag",
   "is_real_time": false,

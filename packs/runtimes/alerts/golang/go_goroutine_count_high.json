@@ -18,6 +18,7 @@
     "upstream_query": "go_goroutines > 1000",
     "upstream_description": "Go application has too many goroutines (> 1000), potential goroutine leak"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "go_goroutines",
   "is_real_time": false,

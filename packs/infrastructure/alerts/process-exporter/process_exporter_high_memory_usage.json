@@ -17,6 +17,7 @@
     "upstream_query": "namedprocess_namegroup_memory_bytes{memtype=\"resident\"} > 4e+09",
     "upstream_description": "Process group {{ $labels.groupname }} is using {{ $value | humanize }}B of resident memory. (instance {{ $labels.instance }})"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "namedprocess_namegroup_memory_bytes",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "increase(ClickHouseProfileEvents_DelayedInserts[5m]) > 10",
     "upstream_description": "INSERTs delayed due to high number of active parts."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ClickHouseProfileEvents_DelayedInserts",
   "is_real_time": false,

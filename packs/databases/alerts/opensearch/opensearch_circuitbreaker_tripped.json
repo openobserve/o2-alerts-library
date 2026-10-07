@@ -18,6 +18,7 @@
     "upstream_query": "increase(opensearch_circuitbreaker_tripped_count[5m]) > 0",
     "upstream_description": "The circuitbreaker on OpenSearch cluster {{ $labels.cluster }} has tripped to prevent Java OutOfMemoryError"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "opensearch_circuitbreaker_tripped_count",
   "is_real_time": false,

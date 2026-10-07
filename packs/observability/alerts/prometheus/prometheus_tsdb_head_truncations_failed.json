@@ -18,6 +18,7 @@
     "upstream_query": "increase(prometheus_tsdb_head_truncations_failed_total[1m]) > 0",
     "upstream_description": "Prometheus encountered {{ $value }} TSDB head truncation failures"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "prometheus_tsdb_head_truncations_failed_total",
   "is_real_time": false,

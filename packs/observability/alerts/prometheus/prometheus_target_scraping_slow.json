@@ -18,6 +18,7 @@
     "upstream_query": "prometheus_target_interval_length_seconds{quantile=\"0.9\"} / on (interval, instance, job) prometheus_target_interval_length_seconds{quantile=\"0.5\"} > 1.05",
     "upstream_description": "Prometheus is scraping exporters slowly since it exceeded the requested interval time. Your Prometheus server is under-provisioned."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "prometheus_target_interval_length_seconds",
   "is_real_time": false,

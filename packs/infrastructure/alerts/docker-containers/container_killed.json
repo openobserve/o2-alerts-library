@@ -18,6 +18,7 @@
     "upstream_query": "time() - container_last_seen > 60",
     "upstream_description": "A container has disappeared"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "container_last_seen",
   "is_real_time": false,

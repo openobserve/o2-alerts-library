@@ -2,6 +2,7 @@
   "id": "3DnoICMmSvjq8jIS5w8oLwREZP9",
   "name": "node_low_utilization",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "system_cpu_utilization",
   "is_real_time": false,

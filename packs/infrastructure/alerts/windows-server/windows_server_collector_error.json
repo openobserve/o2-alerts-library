@@ -18,6 +18,7 @@
     "upstream_query": "windows_exporter_collector_success == 0",
     "upstream_description": "Collector {{ $labels.collector }} was not successful"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "windows_exporter_collector_success",
   "is_real_time": false,

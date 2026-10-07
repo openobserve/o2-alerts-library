@@ -18,6 +18,7 @@
     "upstream_query": "changes(cassandra_client_request_unavailable_exceptions_total{operation=\"write\"}[1m]) > 0",
     "upstream_description": "Some Cassandra client requests are unavailable to write - {{ $labels.cassandra_cluster }}"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cassandra_client_request_unavailable_exceptions_total",
   "is_real_time": false,

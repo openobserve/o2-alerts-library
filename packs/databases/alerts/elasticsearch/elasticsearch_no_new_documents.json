@@ -18,6 +18,7 @@
     "upstream_query": "increase(elasticsearch_indices_indexing_index_total{es_data_node=\"true\"}[10m]) < 1",
     "upstream_description": "No new documents for 10 min!"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "elasticsearch_indices_indexing_index_total",
   "is_real_time": false,

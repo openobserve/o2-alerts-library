@@ -18,6 +18,7 @@
     "upstream_query": "(time() - vmware_vm_snapshot_timestamp_seconds) / (60 * 60 * 24) >= 7",
     "upstream_description": "Outdated snapshots on {{ $labels.instance }}: {{ $value | printf \"%.0f\"}} days"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "vmware_vm_snapshot_timestamp_seconds",
   "is_real_time": false,

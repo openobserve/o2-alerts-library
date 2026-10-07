@@ -18,6 +18,7 @@
     "upstream_query": "mongodb_metrics_cursor_open{state=\"total_open\"} > 10000",
     "upstream_description": "Too many cursors opened by MongoDB for clients (> 10k)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "mongodb_metrics_cursor_open",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "ipmi_fan_speed_state == 2",
     "upstream_description": "IPMI fan sensor {{ $labels.name }} on {{ $labels.instance }} is in critical state. A fan may have failed."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ipmi_fan_speed_state",
   "is_real_time": false,

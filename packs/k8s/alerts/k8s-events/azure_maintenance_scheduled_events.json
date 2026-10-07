@@ -2,6 +2,7 @@
   "id": "3Dnugu1ql8djDPxcIJs4VL52Hkn",
   "name": "azure_maintenance_scheduled_events",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "logs",
   "stream_name": "k8s_events",
   "is_real_time": false,

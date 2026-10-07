@@ -18,6 +18,7 @@
     "upstream_query": "sum(rate(mixer_runtime_dispatches_total{adapter=~\"prometheus\"}[1m])) < 180",
     "upstream_description": "Number of Mixer dispatches to Prometheus is too low. Istio metrics might not be being exported properly."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "mixer_runtime_dispatches_total",
   "is_real_time": false,

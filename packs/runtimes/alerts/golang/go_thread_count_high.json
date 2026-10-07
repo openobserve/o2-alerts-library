@@ -18,6 +18,7 @@
     "upstream_query": "go_threads > 500",
     "upstream_description": "Go OS thread count is high (> 500), potential blocking syscall or CGo leak"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "go_threads",
   "is_real_time": false,

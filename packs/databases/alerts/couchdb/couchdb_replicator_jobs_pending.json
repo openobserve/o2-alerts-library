@@ -18,6 +18,7 @@
     "upstream_query": "couchdb_replicator_jobs{metric=\"pending\"} > 10",
     "upstream_description": "More than 10 replicator jobs are pending, which may mean replication is falling behind."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "couchdb_replicator_jobs",
   "is_real_time": false,

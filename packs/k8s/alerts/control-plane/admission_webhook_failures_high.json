@@ -2,6 +2,7 @@
   "id": "3DnmRukUhpDaC11SxRwscG03iZd",
   "name": "admission_webhook_failures_high",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "apiserver_admission_webhook_request_total",
   "is_real_time": false,

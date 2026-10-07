@@ -18,6 +18,7 @@
     "upstream_query": "pgbouncer_pools_server_active_connections > 200",
     "upstream_description": "PGBouncer pools are filling up"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "pgbouncer_pools_server_active_connections",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "apcupsd_battery_charge_percent < 10",
     "upstream_description": "Battery is almost empty (< 10% left)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "apcupsd_battery_charge_percent",
   "is_real_time": false,

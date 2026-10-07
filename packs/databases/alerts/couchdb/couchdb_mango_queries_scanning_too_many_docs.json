@@ -18,6 +18,7 @@
     "upstream_query": "rate(couchdb_mango_too_many_docs_scanned[5m]) > 50",
     "upstream_description": "Some Mango queries are scanning too many documents, consider adding indexes"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "couchdb_mango_too_many_docs_scanned",
   "is_real_time": false,

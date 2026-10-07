@@ -18,6 +18,7 @@
     "upstream_query": "3 <= round((last_over_time(probe_ssl_earliest_cert_expiry[10m]) - time()) / 86400, 0.1) < 20",
     "upstream_description": "SSL certificate expires in less than 20 days"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "probe_ssl_earliest_cert_expiry",
   "is_real_time": false,

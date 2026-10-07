@@ -18,6 +18,7 @@
     "upstream_query": "ceph_osd_up == 0",
     "upstream_description": "Ceph Object Storage Daemon Down"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ceph_osd_up",
   "is_real_time": false,

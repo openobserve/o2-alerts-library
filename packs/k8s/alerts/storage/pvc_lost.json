@@ -2,6 +2,7 @@
   "id": "3DnkfrmHgQL1p1ROL1AV6Nx2EaT",
   "name": "pvc_lost",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_persistentvolumeclaim_status_phase",
   "is_real_time": false,

@@ -2,6 +2,7 @@
   "id": "3DnlvN8CMIhGX4qRAUdOZtOpqxA",
   "name": "hpa_unable_to_scale",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_horizontalpodautoscaler_status_condition",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "ClickHouseAsyncMetrics_MaxPartCountForPartition > 100",
     "upstream_description": "The number of data parts per partition on {{ $labels.instance }} is high, an early warning sign of merge pressure before ClickHouse starts rejecting or delaying INSERTs."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ClickHouseAsyncMetrics_MaxPartCountForPartition",
   "is_real_time": false,

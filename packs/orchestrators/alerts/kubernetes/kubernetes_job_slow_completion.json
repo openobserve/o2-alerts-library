@@ -19,6 +19,7 @@
     "upstream_description": "Kubernetes Job {{ $labels.namespace }}/{{ $labels.job_name }} did not complete in time.",
     "period_clamped_from": "Upstream `for` is 12h (720 minutes); the evaluation window is capped at 60 minutes. Widen trigger_condition.period if you want the full upstream window."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_job_spec_completions",
   "is_real_time": false,

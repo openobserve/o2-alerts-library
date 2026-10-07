@@ -18,6 +18,7 @@
     "upstream_query": "node_filesystem_device_error{fstype!~\"^(fuse.*|tmpfs|cifs|nfs)\"} == 1",
     "upstream_description": "Error stat-ing the {{ $labels.mountpoint }} filesystem"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "node_filesystem_device_error",
   "is_real_time": false,

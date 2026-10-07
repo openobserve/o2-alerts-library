@@ -18,6 +18,7 @@
     "upstream_query": "rate(couchdb_mango_query_invalid_index[5m]) > 5",
     "upstream_description": "Some Mango queries failed to execute because the index was missing or invalid"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "couchdb_mango_query_invalid_index",
   "is_real_time": false,

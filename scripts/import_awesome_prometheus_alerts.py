@@ -713,6 +713,7 @@ def build_alert(
         "tags": sorted({UPSTREAM, category, exporter}),
         "docs_url": source["url"],
         "source": source,
+        "alert_type": "scheduled",
         "stream_type": "metrics",
         "stream_name": metric,
         "is_real_time": False,

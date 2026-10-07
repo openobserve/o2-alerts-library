@@ -18,6 +18,7 @@
     "upstream_query": "cloudwatch_exporter_scrape_duration_seconds > 300",
     "upstream_description": "CloudWatch exporter on {{ $labels.instance }} scrape is taking more than 5 minutes ({{ $value }}s). Consider reducing the number of metrics or splitting across multiple exporters."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cloudwatch_exporter_scrape_duration_seconds",
   "is_real_time": false,

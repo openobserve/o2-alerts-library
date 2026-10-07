@@ -18,6 +18,7 @@
     "upstream_query": "(sum(container_memory_working_set_bytes{name!=\"\"}) BY (instance, name) / sum(container_spec_memory_limit_bytes > 0) BY (instance, name) * 100) > 80",
     "upstream_description": "Container Memory usage is above 80%"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "container_memory_working_set_bytes",
   "is_real_time": false,

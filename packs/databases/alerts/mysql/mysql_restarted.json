@@ -18,6 +18,7 @@
     "upstream_query": "mysql_global_status_uptime < 60",
     "upstream_description": "MySQL has just been restarted, less than one minute ago on {{ $labels.instance }}."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "mysql_global_status_uptime",
   "is_real_time": false,

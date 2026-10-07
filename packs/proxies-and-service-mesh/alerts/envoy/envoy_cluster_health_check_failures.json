@@ -18,6 +18,7 @@
     "upstream_query": "increase(envoy_cluster_health_check_failure[5m]) > 5",
     "upstream_description": "Health checks are consistently failing in cluster {{ $labels.envoy_cluster_name }} on {{ $labels.instance }} ({{ $value }} in the last 5m)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "envoy_cluster_health_check_failure",
   "is_real_time": false,

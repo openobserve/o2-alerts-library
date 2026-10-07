@@ -18,6 +18,7 @@
     "upstream_query": "ipmi_up == 0",
     "upstream_description": "IPMI collector {{ $labels.collector }} on {{ $labels.instance }} failed to scrape sensor data. Check FreeIPMI tools and BMC connectivity."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ipmi_up",
   "is_real_time": false,

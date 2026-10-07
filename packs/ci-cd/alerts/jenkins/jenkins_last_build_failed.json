@@ -18,6 +18,7 @@
     "upstream_query": "default_jenkins_builds_last_build_result_ordinal == 2",
     "upstream_description": "Last build failed: {{$labels.jenkins_job}}. Failed build for job `{{$labels.jenkins_job}}` on {{$labels.instance}}/{{$labels.env}} ({{$labels.region}})"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "default_jenkins_builds_last_build_result_ordinal",
   "is_real_time": false,

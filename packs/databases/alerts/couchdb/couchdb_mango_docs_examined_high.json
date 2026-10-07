@@ -18,6 +18,7 @@
     "upstream_query": "rate(couchdb_mango_docs_examined[5m]) > 1000",
     "upstream_description": "High number of documents examined per Mango queries, consider indexing"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "couchdb_mango_docs_examined",
   "is_real_time": false,

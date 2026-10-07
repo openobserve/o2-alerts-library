@@ -18,6 +18,7 @@
     "upstream_query": "gnatsd_varz_routes > 10",
     "upstream_description": "High number of NATS routes ({{ $value }}) for {{ $labels.instance }}"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "gnatsd_varz_routes",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "ClickHouseAsyncMetrics_ReplicasMaxAbsoluteDelay > 300",
     "upstream_description": "Replication lag between the freshest replicated data part and the most stale part still to be replicated is high, meaning reads from lagging replicas may return stale data."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ClickHouseAsyncMetrics_ReplicasMaxAbsoluteDelay",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "histogram_quantile(0.99, sum(rate(nginx_http_request_duration_seconds_bucket[2m])) by (host, node, le)) > 3",
     "upstream_description": "Nginx p99 latency is higher than 3 seconds"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "nginx_http_request_duration_seconds_bucket",
   "is_real_time": false,

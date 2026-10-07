@@ -18,6 +18,7 @@
     "upstream_query": "mongodb_rs_members_health == 0",
     "upstream_description": "MongoDB replica member is not healthy"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "mongodb_rs_members_health",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "(avg_over_time(smartctl_device_temperature{temperature_type=\"current\"} [5m]) unless on (instance, device) smartctl_device_temperature{temperature_type=\"drive_trip\"}) > 60",
     "upstream_description": "Device temperature warning on {{ $labels.instance }} drive {{ $labels.device }} over 60°C"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "smartctl_device_temperature",
   "is_real_time": false,

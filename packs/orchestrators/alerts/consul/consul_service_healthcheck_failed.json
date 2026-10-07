@@ -18,6 +18,7 @@
     "upstream_query": "consul_catalog_service_node_healthy == 0",
     "upstream_description": "Service: `{{ $labels.service_name }}` Healthcheck: `{{ $labels.service_id }}`"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "consul_catalog_service_node_healthy",
   "is_real_time": false,

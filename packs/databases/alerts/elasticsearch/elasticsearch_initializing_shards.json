@@ -18,6 +18,7 @@
     "upstream_query": "elasticsearch_cluster_health_initializing_shards > 0",
     "upstream_description": "Elasticsearch is initializing shards"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "elasticsearch_cluster_health_initializing_shards",
   "is_real_time": false,

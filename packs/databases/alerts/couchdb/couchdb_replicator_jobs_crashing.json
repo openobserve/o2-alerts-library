@@ -18,6 +18,7 @@
     "upstream_query": "increase(couchdb_replicator_jobs{metric=\"crashes\"}[5m]) > 0",
     "upstream_description": "Replicator jobs are crashing, indicating replication tasks are failing unexpectedly."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "couchdb_replicator_jobs",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "go_memstats_stack_inuse_bytes > 1e9",
     "upstream_description": "Go stack memory usage is high (> 1GB), likely excessive goroutines or deep recursion"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "go_memstats_stack_inuse_bytes",
   "is_real_time": false,

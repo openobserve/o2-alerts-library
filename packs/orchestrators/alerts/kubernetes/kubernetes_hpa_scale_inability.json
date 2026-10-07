@@ -18,6 +18,7 @@
     "upstream_query": "(kube_horizontalpodautoscaler_spec_max_replicas - kube_horizontalpodautoscaler_status_desired_replicas) * on (horizontalpodautoscaler,namespace) (kube_horizontalpodautoscaler_status_condition{condition=\"ScalingLimited\", status=\"true\"} == 1) == 0",
     "upstream_description": "HPA {{ $labels.namespace }}/{{ $labels.horizontalpodautoscaler }} is unable to scale"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_horizontalpodautoscaler_spec_max_replicas",
   "is_real_time": false,

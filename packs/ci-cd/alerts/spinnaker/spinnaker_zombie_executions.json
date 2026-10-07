@@ -18,6 +18,7 @@
     "upstream_query": "rate(queue_zombies_total[5m]) > 0.05",
     "upstream_description": "Zombie pipeline executions rate is {{ $value | humanize }}/s. These are executions with no corresponding queue messages."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "queue_zombies_total",
   "is_real_time": false,

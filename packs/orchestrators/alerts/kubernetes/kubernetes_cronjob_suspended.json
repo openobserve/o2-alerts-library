@@ -18,6 +18,7 @@
     "upstream_query": "kube_cronjob_spec_suspend != 0",
     "upstream_description": "CronJob {{ $labels.namespace }}/{{ $labels.cronjob }} is suspended"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_cronjob_spec_suspend",
   "is_real_time": false,

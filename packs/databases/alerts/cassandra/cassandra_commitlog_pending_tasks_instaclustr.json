@@ -18,6 +18,7 @@
     "upstream_query": "cassandra_commit_log_pending_tasks > 15",
     "upstream_description": "Cassandra commitlog pending tasks - {{ $labels.cassandra_cluster }}"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cassandra_commit_log_pending_tasks",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "sum by (instance) (probe_http_duration_seconds) > 1",
     "upstream_description": "HTTP request took more than 1s"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "probe_http_duration_seconds",
   "is_real_time": false,

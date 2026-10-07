@@ -18,6 +18,7 @@
     "upstream_query": "sum by (base_url) (solr_metrics_jvm_memory_heap_bytes{item=\"used\"}) / sum by (base_url) (solr_metrics_jvm_memory_heap_bytes{item=\"max\"}) > 0.9",
     "upstream_description": "Solr node {{ $labels.base_url }} is using more than 90% of its JVM heap, which can lead to node instability, stop-the-world GC pauses, or OutOfMemory crashes."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "solr_metrics_jvm_memory_heap_bytes",
   "is_real_time": false,

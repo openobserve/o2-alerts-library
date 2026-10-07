@@ -18,6 +18,7 @@
     "upstream_query": "rate(jvm_compilation_time_seconds_total[5m]) > 0.1",
     "upstream_description": "Excessive JIT compilation time consuming CPU"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "jvm_compilation_time_seconds_total",
   "is_real_time": false,

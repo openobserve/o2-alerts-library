@@ -18,6 +18,7 @@
     "upstream_query": "up{job=~\".*otel.*collector.*\"} == 0",
     "upstream_description": "OpenTelemetry Collector instance has disappeared or is not being scraped"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "up",
   "is_real_time": false,

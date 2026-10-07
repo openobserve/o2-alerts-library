@@ -18,6 +18,7 @@
     "upstream_query": "rabbitmq_queue_consumers < 1",
     "upstream_description": "A queue has less than 1 consumer"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "rabbitmq_queue_consumers",
   "is_real_time": false,

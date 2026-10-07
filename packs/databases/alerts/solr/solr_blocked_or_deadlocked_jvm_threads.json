@@ -18,6 +18,7 @@
     "upstream_query": "max by (base_url) (solr_metrics_jvm_threads{item=~\"blocked|deadlock\"}) > 0",
     "upstream_description": "Solr node {{ $labels.base_url }} has blocked or deadlocked JVM threads, indicating the JVM may be stuck and unable to serve requests."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "solr_metrics_jvm_threads",
   "is_real_time": false,

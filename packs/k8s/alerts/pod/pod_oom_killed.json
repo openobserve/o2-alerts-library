@@ -2,6 +2,7 @@
   "id": "3DniyT4u8Nrh2wgSSVPYHRIMedu",
   "name": "pod_oom_killed",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_pod_container_status_terminated_reason",
   "is_real_time": false,

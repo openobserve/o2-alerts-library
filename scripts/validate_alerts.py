@@ -231,8 +231,8 @@ def main() -> int:
 
         if alert_type == "anomaly_detection":
             validate_anomaly(alert, err)
-        elif alert_type is not None:
-            err(f"unknown alert_type '{alert_type}'")
+        elif alert_type != "scheduled":
+            err(f"alert_type {alert_type!r} is not one of scheduled/anomaly_detection")
         else:
             if alert.get("is_real_time") is not False:
                 err("is_real_time must be false — library alerts are scheduled")
@@ -306,7 +306,7 @@ def main() -> int:
                         err(f"tag '{tag}' is longer than {MAX_TAG_LEN} characters")
 
         # Anomaly files are new, so the backfill exemption never applies to them.
-        if pack in BACKFILL_PENDING_PACKS and alert_type is None:
+        if pack in BACKFILL_PENDING_PACKS and alert_type == "scheduled":
             continue
 
         if alert.get("severity") not in SEVERITIES:

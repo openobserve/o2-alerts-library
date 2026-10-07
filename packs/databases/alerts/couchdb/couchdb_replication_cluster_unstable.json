@@ -18,6 +18,7 @@
     "upstream_query": "couchdb_replicator_cluster_is_stable == 0",
     "upstream_description": "The replication cluster is unstable, replication may be interrupted"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "couchdb_replicator_cluster_is_stable",
   "is_real_time": false,

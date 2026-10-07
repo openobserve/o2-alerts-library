@@ -18,6 +18,7 @@
     "upstream_query": "avg(cassandra_table_tombstones_scanned{quantile=\"0.99\"}) by (instance,cassandra_cluster,keyspace) > 100",
     "upstream_description": "Cassandra tombstone dump - {{ $labels.cassandra_cluster }}"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cassandra_table_tombstones_scanned",
   "is_real_time": false,

@@ -2,6 +2,7 @@
   "id": "3DnixXebPhBZnJClI0LpqFaxcfU",
   "name": "pod_failed_state",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_pod_status_phase",
   "is_real_time": false,

@@ -2,6 +2,7 @@
   "id": "3DnoJ5ZhZgV54by9TJMZri3UVfl",
   "name": "pods_without_resource_requests",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_pod_container_info",
   "is_real_time": false,

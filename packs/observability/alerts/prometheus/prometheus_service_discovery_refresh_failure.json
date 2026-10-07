@@ -18,6 +18,7 @@
     "upstream_query": "increase(prometheus_sd_refresh_failures_total[10m]) > 0",
     "upstream_description": "Prometheus failed to refresh service discovery targets using mechanism {{ $labels.mechanism }}, meaning target lists may become stale."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "prometheus_sd_refresh_failures_total",
   "is_real_time": false,

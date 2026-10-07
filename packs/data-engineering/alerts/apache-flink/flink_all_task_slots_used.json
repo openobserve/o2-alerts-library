@@ -18,6 +18,7 @@
     "upstream_query": "flink_jobmanager_taskSlotsAvailable == 0",
     "upstream_description": "All Flink task slots are in use ({{ $value }} available). New jobs cannot be scheduled."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "flink_jobmanager_taskSlotsAvailable",
   "is_real_time": false,

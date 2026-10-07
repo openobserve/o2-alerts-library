@@ -18,6 +18,7 @@
     "upstream_query": "zk_up == 0",
     "upstream_description": "Zookeeper down on instance {{ $labels.instance }}"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "zk_up",
   "is_real_time": false,

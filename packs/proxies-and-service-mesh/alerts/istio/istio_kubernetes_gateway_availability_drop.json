@@ -18,6 +18,7 @@
     "upstream_query": "min(kube_deployment_status_replicas_available{deployment=\"istio-ingressgateway\", namespace=\"istio-system\"}) without (instance, pod) < 2",
     "upstream_description": "Istio ingress gateway has only {{ $value }} available pod(s). Inbound traffic will likely be affected."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_deployment_status_replicas_available",
   "is_real_time": false,

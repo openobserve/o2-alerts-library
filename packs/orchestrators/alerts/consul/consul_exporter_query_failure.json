@@ -18,6 +18,7 @@
     "upstream_query": "consul_up != 1",
     "upstream_description": "The consul_exporter's last query against the local Consul agent failed, meaning the exported Consul metrics on {{ $labels.instance }} are stale or missing even though the exporter itself is still being scraped successfully."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "consul_up",
   "is_real_time": false,

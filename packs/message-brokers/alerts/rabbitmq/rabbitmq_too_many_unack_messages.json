@@ -18,6 +18,7 @@
     "upstream_query": "sum(rabbitmq_queue_messages_unacked) BY (queue) > 1000",
     "upstream_description": "Too many unacknowledged messages on queue {{ $labels.queue }} ({{ $value }})"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "rabbitmq_queue_messages_unacked",
   "is_real_time": false,

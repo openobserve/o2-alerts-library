@@ -18,6 +18,7 @@
     "upstream_query": "sum(pulsar_subscription_back_log) by (subscription) > 100000",
     "upstream_description": "The number of subscription backlog entries is over 100k"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "pulsar_subscription_back_log",
   "is_real_time": false,

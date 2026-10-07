@@ -19,6 +19,7 @@
     "upstream_description": "GitLab Sidekiq job p95 completion time on {{ $labels.instance }} is above 5 minutes ({{ $value | humanizeDuration }}).",
     "labels_dropped": "The upstream annotation interpolates instance, but this expression aggregates those labels away, so they are not in row_template — they would render as literal placeholders."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "sidekiq_jobs_completion_seconds_bucket",
   "is_real_time": false,

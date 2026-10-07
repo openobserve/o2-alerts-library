@@ -18,6 +18,7 @@
     "upstream_query": "gitlab_database_connection_pool_dead > 0",
     "upstream_description": "GitLab database connection pool on {{ $labels.instance }} ({{ $labels.class }}) has {{ $value }} dead connections."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "gitlab_database_connection_pool_dead",
   "is_real_time": false,

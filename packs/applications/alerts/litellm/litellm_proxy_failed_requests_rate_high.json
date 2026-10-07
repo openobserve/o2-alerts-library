@@ -18,6 +18,7 @@
     "upstream_query": "sum(rate(litellm_proxy_failed_requests_metric_total[5m])) / sum(rate(litellm_proxy_total_requests_metric_total[5m])) > 0.05",
     "upstream_description": "LiteLLM proxy is returning failed responses to clients (>5% error rate over 5min). Investigate downstream LLM provider availability or auth issues."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "litellm_proxy_failed_requests_metric_total",
   "is_real_time": false,

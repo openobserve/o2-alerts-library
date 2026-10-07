@@ -18,6 +18,7 @@
     "upstream_query": "memcached_up == 0",
     "upstream_description": "Memcached instance is down on {{ $labels.instance }}"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "memcached_up",
   "is_real_time": false,

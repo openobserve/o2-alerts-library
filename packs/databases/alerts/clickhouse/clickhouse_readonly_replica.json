@@ -18,6 +18,7 @@
     "upstream_query": "ClickHouseMetrics_ReadonlyReplica > 0",
     "upstream_description": "A Replicated table on {{ $labels.instance }} is stuck in readonly mode, usually after losing its ZooKeeper session or starting up without ZooKeeper available."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ClickHouseMetrics_ReadonlyReplica",
   "is_real_time": false,

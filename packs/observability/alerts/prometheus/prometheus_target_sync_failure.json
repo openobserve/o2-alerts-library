@@ -18,6 +18,7 @@
     "upstream_query": "increase(prometheus_target_sync_failed_total[10m]) > 0",
     "upstream_description": "{{ $value }} Prometheus targets failed to sync because invalid scrape configuration was supplied, meaning those targets are not being scraped."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "prometheus_target_sync_failed_total",
   "is_real_time": false,

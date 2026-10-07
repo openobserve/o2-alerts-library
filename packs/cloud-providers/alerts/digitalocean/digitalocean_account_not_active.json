@@ -18,6 +18,7 @@
     "upstream_query": "digitalocean_account_active != 1",
     "upstream_description": "DigitalOcean account is not active. It may be suspended or locked."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "digitalocean_account_active",
   "is_real_time": false,

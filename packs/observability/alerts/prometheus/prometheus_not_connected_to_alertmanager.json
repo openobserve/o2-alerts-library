@@ -18,6 +18,7 @@
     "upstream_query": "prometheus_notifications_alertmanagers_discovered < 1",
     "upstream_description": "Prometheus cannot connect the alertmanager"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "prometheus_notifications_alertmanagers_discovered",
   "is_real_time": false,

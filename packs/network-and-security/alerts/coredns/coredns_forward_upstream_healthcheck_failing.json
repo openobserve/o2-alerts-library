@@ -18,6 +18,7 @@
     "upstream_query": "sum without (pod, instance) (rate(coredns_forward_healthcheck_failures_total[5m])) > 0",
     "upstream_description": "CoreDNS health checks are failing for upstream server {{ $labels.to }}, which may be removed from the forwarding rotation if it stays unhealthy."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "coredns_forward_healthcheck_failures_total",
   "is_real_time": false,

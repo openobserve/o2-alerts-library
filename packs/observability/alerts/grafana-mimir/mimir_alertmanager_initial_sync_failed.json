@@ -18,6 +18,7 @@
     "upstream_query": "increase(cortex_alertmanager_state_initial_sync_completed_total{outcome=\"failed\"}[1m]) > 0",
     "upstream_description": "Mimir alertmanager {{ $labels.job }} failed initial state sync."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cortex_alertmanager_state_initial_sync_completed_total",
   "is_real_time": false,

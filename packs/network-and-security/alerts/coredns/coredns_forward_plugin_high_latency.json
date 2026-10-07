@@ -18,6 +18,7 @@
     "upstream_query": "histogram_quantile(0.99, sum(rate(coredns_forward_request_duration_seconds_bucket[5m])) without (pod, instance, rcode)) > 4",
     "upstream_description": "CoreDNS 99th percentile latency forwarding requests to upstream {{ $labels.to }} is {{ $value }}s, indicating the upstream resolver is slow or overloaded."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "coredns_forward_request_duration_seconds_bucket",
   "is_real_time": false,

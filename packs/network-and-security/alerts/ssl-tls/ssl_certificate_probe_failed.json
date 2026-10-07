@@ -18,6 +18,7 @@
     "upstream_query": "ssl_probe_success == 0",
     "upstream_description": "Failed to fetch SSL information {{ $labels.instance }}"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ssl_probe_success",
   "is_real_time": false,

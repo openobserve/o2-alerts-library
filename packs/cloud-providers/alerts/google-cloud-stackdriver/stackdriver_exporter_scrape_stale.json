@@ -18,6 +18,7 @@
     "upstream_query": "time() - stackdriver_monitoring_last_scrape_timestamp > 600",
     "upstream_description": "Stackdriver exporter has not successfully scraped metrics for project {{ $labels.project_id }} in the last 10 minutes."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "stackdriver_monitoring_last_scrape_timestamp",
   "is_real_time": false,

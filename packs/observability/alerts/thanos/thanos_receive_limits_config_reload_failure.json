@@ -18,6 +18,7 @@
     "upstream_query": "sum by (job) (increase(thanos_receive_limits_config_reload_err_total[5m])) > 0",
     "upstream_description": "Thanos Receive {{$labels.job}} has not been able to reload the per-tenant limits configuration file."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "thanos_receive_limits_config_reload_err_total",
   "is_real_time": false,

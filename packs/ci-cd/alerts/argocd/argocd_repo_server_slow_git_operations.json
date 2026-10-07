@@ -18,6 +18,7 @@
     "upstream_query": "histogram_quantile(0.95, sum(rate(argocd_git_request_duration_seconds_bucket[5m])) by (le, repo)) > 30",
     "upstream_description": "The 95th percentile duration of git operations against repository {{ $labels.repo }} is above 30 seconds, which can be caused by a large repository, network latency, or an overloaded repo server."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "argocd_git_request_duration_seconds_bucket",
   "is_real_time": false,

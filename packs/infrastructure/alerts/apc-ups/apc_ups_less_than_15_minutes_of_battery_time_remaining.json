@@ -18,6 +18,7 @@
     "upstream_query": "apcupsd_battery_time_left_seconds < 900",
     "upstream_description": "Battery is almost empty (< 15 Minutes remaining)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "apcupsd_battery_time_left_seconds",
   "is_real_time": false,

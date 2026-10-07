@@ -18,6 +18,7 @@
     "upstream_query": "increase(haproxy_server_check_failures_total[1m]) > 2",
     "upstream_description": "Some server healthcheck are failing on {{ $labels.server }} ({{ $value }} in the last 1m)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "haproxy_server_check_failures_total",
   "is_real_time": false,

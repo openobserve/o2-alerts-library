@@ -18,6 +18,7 @@
     "upstream_query": "changes(cassandra_stats{name=\"org:apache:cassandra:metrics:storage:totalhints:count\"}[1m]) > 3",
     "upstream_description": "Cassandra hints count has changed on {{ $labels.instance }} some nodes may go down"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cassandra_stats",
   "is_real_time": false,

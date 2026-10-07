@@ -18,6 +18,7 @@
     "upstream_query": "redis_cluster_slots_fail > 0",
     "upstream_description": "Some hash slots of the Redis Cluster are marked as FAIL, meaning part of the keyspace is unreachable and requires manual intervention or a failover."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "redis_cluster_slots_fail",
   "is_real_time": false,

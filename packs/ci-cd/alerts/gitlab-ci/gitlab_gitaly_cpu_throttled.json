@@ -18,6 +18,7 @@
     "upstream_query": "rate(gitaly_cgroup_cpu_cfs_throttled_seconds_total[5m]) > 0.1",
     "upstream_description": "Gitaly processes on {{ $labels.instance }} are being CPU throttled by cgroups."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "gitaly_cgroup_cpu_cfs_throttled_seconds_total",
   "is_real_time": false,

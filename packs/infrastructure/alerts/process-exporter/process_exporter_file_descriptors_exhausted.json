@@ -17,6 +17,7 @@
     "upstream_query": "namedprocess_namegroup_worst_fd_ratio > 0.95",
     "upstream_description": "Process group {{ $labels.groupname }} has nearly exhausted its file descriptor limit. (instance {{ $labels.instance }})"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "namedprocess_namegroup_worst_fd_ratio",
   "is_real_time": false,

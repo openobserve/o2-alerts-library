@@ -29,7 +29,7 @@ OpenObserve ingests data via the **OpenTelemetry Collector** and exposes a Prome
 
 ## How Alerting Works in OpenObserve
 
-Most alerts in OpenObserve are **scheduled rules** that periodically evaluate a query and send notifications when conditions are met; two query types are supported. A smaller set are **anomaly-detection alerts**, which fire when a series leaves its learned baseline (see below).
+Most alerts in OpenObserve are **scheduled rules** that periodically evaluate a query and send notifications when conditions are met; two query types are supported. A smaller set are **anomaly-detection alerts**, which fire when a series leaves its learned baseline (see below). Every library file names its kind in `alert_type`: `"scheduled"` or `"anomaly_detection"`.
 
 ### PromQL Alerts (Metrics)
 

@@ -18,6 +18,7 @@
     "upstream_query": "cluster_node_gossip_health_score > 0",
     "upstream_description": "Alloy node under job {{ $labels.job }} is reporting a gossip protocol health score above 0, indicating clustering issues that may prevent the node from properly participating in the cluster."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cluster_node_gossip_health_score",
   "is_real_time": false,

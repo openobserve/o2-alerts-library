@@ -2,6 +2,7 @@
   "id": "3DnixwyCK4xlfai4YY9aOESO9IT",
   "name": "pod_image_pull_backoff",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_pod_container_status_waiting_reason",
   "is_real_time": false,

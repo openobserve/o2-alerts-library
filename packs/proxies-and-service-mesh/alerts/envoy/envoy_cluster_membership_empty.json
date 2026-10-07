@@ -18,6 +18,7 @@
     "upstream_query": "envoy_cluster_membership_healthy == 0",
     "upstream_description": "Envoy cluster {{ $labels.envoy_cluster_name }} on {{ $labels.instance }} has no healthy members"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "envoy_cluster_membership_healthy",
   "is_real_time": false,

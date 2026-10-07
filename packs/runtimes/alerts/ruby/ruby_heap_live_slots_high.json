@@ -18,6 +18,7 @@
     "upstream_query": "ruby_heap_live_slots > 500000",
     "upstream_description": "Ruby heap has too many live slots (> 500k), heap bloat"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ruby_heap_live_slots",
   "is_real_time": false,

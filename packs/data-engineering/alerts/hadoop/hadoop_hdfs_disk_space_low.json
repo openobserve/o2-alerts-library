@@ -18,6 +18,7 @@
     "upstream_query": "100 * hadoop_namenode_capacityremaining / clamp_min(hadoop_namenode_capacitytotal, 1) < 20",
     "upstream_description": "Available HDFS disk space is running low."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "hadoop_namenode_capacityremaining",
   "is_real_time": false,

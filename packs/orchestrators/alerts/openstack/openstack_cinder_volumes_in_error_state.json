@@ -18,6 +18,7 @@
     "upstream_query": "openstack_cinder_volume_status_counter{status=~\"error.*\"} > 0",
     "upstream_description": "{{ $value }} Cinder volumes are in an error state"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "openstack_cinder_volume_status_counter",
   "is_real_time": false,

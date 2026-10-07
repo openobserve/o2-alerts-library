@@ -18,6 +18,7 @@
     "upstream_query": "(sum by (instance)(jvm_memory_used_bytes{area=\"nonheap\"}) / (sum by (instance)(jvm_memory_max_bytes{area=\"nonheap\"}) > 0)) * 100 > 80",
     "upstream_description": "JVM non-heap memory (metaspace/code cache) is filling up (> 80%)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "jvm_memory_used_bytes",
   "is_real_time": false,

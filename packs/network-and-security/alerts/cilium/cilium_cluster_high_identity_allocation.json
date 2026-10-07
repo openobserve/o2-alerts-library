@@ -18,6 +18,7 @@
     "upstream_query": "(sum(cilium_identity{type=\"cluster_local\"}) by () / (2^16-256)) > 0.8",
     "upstream_description": "Cilium cluster-wide identity allocation is above 80%. Approaching the maximum identity limit."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cilium_identity",
   "is_real_time": false,

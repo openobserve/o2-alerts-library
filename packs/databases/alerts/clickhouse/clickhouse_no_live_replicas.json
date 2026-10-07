@@ -18,6 +18,7 @@
     "upstream_query": "increase(ClickHouseErrorMetric_TOO_FEW_LIVE_REPLICAS[5m]) > 0",
     "upstream_description": "There are too few live replicas available, risking data loss and service disruption."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ClickHouseErrorMetric_TOO_FEW_LIVE_REPLICAS",
   "is_real_time": false,

@@ -2,6 +2,7 @@
   "id": "3DnRfIdrjT9D5tms8FwFYKPlOdW",
   "name": "node_memory_pressure",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "k8s_node_condition_memory_pressure",
   "is_real_time": false,

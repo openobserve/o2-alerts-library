@@ -18,6 +18,7 @@
     "upstream_query": "increase(ClickHouseErrorMetric_NO_AVAILABLE_REPLICA[5m]) > 0",
     "upstream_description": "No available replicas in ClickHouse."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ClickHouseErrorMetric_NO_AVAILABLE_REPLICA",
   "is_real_time": false,

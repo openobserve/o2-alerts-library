@@ -17,6 +17,7 @@
     "upstream_query": "rate(namedprocess_namegroup_context_switches_total{ctxswitchtype=\"voluntary\"}[5m]) > 50000",
     "upstream_description": "Process group {{ $labels.groupname }} has a high rate of context switches ({{ $value }}/s). (instance {{ $labels.instance }})"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "namedprocess_namegroup_context_switches_total",
   "is_real_time": false,

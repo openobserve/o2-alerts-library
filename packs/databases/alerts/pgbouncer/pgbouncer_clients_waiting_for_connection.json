@@ -18,6 +18,7 @@
     "upstream_query": "pgbouncer_pools_client_waiting_connections > 20",
     "upstream_description": "{{ $value }} client connections are queued in pool {{ $labels.database }}/{{ $labels.user }} waiting for a server connection, indicating pool exhaustion."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "pgbouncer_pools_client_waiting_connections",
   "is_real_time": false,

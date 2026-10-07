@@ -18,6 +18,7 @@
     "upstream_query": "sum without (pod, instance, rcode) (rate(coredns_forward_responses_total{rcode=\"SERVFAIL\"}[5m])) / sum without (pod, instance, rcode) (rate(coredns_forward_responses_total[5m])) > 0.01",
     "upstream_description": "CoreDNS is returning SERVFAIL for {{ $value | humanizePercentage }} of requests forwarded to upstream {{ $labels.to }}, indicating the upstream resolver is unhealthy."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "coredns_forward_responses_total",
   "is_real_time": false,

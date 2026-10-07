@@ -2,6 +2,7 @@
   "id": "3DnjV1XfSqvulIr8lEMrZD24wAV",
   "name": "container_restarted",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_pod_container_status_restarts_total",
   "is_real_time": false,

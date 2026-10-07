@@ -19,6 +19,7 @@
     "upstream_description": "Mimir compactor {{ $labels.instance }} has not run compaction since it started, over 6 hours ago.",
     "period_clamped_from": "Upstream `for` is 6h (360 minutes); the evaluation window is capped at 60 minutes. Widen trigger_condition.period if you want the full upstream window."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cortex_compactor_last_successful_run_timestamp_seconds",
   "is_real_time": false,

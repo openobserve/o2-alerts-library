@@ -18,6 +18,7 @@
     "upstream_query": "rabbitmq_queue_messages{queue=\"my-dead-letter-queue\"} > 10",
     "upstream_description": "Dead letter queue is filling up (> 10 msgs)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "rabbitmq_queue_messages",
   "is_real_time": false,

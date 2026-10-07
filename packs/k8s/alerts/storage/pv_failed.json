@@ -2,6 +2,7 @@
   "id": "3DnkfB3dfyx1kNZe7WHgk71hDbh",
   "name": "pv_failed",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_persistentvolume_status_phase",
   "is_real_time": false,

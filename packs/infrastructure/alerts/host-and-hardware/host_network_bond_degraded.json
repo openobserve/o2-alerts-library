@@ -18,6 +18,7 @@
     "upstream_query": "((node_bonding_active - node_bonding_slaves) != 0)",
     "upstream_description": "Bond \"{{ $labels.device }}\" degraded on \"{{ $labels.instance }}\"."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "node_bonding_active",
   "is_real_time": false,

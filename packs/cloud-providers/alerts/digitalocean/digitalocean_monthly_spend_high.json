@@ -18,6 +18,7 @@
     "upstream_query": "sum(digitalocean_droplet_price_monthly) + sum(digitalocean_volume_size_bytes) / 1024 / 1024 / 1024 / 10 + sum(digitalocean_snapshot_size_bytes) / 1024 / 1024 / 1024 / 20 > 100",
     "upstream_description": "Estimated total DigitalOcean monthly cost (droplets + volumes + snapshots) is {{ $value }} USD, above the $100 budget threshold."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "digitalocean_droplet_price_monthly",
   "is_real_time": false,

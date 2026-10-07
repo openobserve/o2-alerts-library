@@ -18,6 +18,7 @@
     "upstream_query": "increase(ClickHouseProfileEvents_RejectedInserts[1m]) > 2",
     "upstream_description": "INSERTs rejected due to too many active data parts. Reduce insert frequency."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ClickHouseProfileEvents_RejectedInserts",
   "is_real_time": false,

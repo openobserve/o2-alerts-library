@@ -18,6 +18,7 @@
     "upstream_query": "solr_collections_live_nodes < 2",
     "upstream_description": "Solr collection {{ $labels.collection }} has less than two live nodes for replica {{ $labels.replica }} on {{ $labels.base_url }}."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "solr_collections_live_nodes",
   "is_real_time": false,

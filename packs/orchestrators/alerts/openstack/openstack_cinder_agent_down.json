@@ -18,6 +18,7 @@
     "upstream_query": "openstack_cinder_agent_state{adminState=\"enabled\"} == 0",
     "upstream_description": "Cinder agent {{ $labels.hostname }} ({{ $labels.service }}) is down in zone {{ $labels.zone }}"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "openstack_cinder_agent_state",
   "is_real_time": false,

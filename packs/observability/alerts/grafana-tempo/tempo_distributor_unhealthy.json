@@ -18,6 +18,7 @@
     "upstream_query": "max by (job) (tempo_ring_members{state=\"Unhealthy\", name=\"distributor\"}) > 0",
     "upstream_description": "Tempo has {{ $value }} unhealthy distributor(s)."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "tempo_ring_members",
   "is_real_time": false,

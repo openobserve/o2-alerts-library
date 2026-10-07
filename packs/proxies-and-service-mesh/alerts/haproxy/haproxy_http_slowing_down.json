@@ -18,6 +18,7 @@
     "upstream_query": "avg by (instance, proxy) (haproxy_backend_max_total_time_seconds) > 1",
     "upstream_description": "HAProxy backend max total time is above 1s on {{ $labels.proxy }} - {{ $value | printf \"%.2f\"}}s"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "haproxy_backend_max_total_time_seconds",
   "is_real_time": false,

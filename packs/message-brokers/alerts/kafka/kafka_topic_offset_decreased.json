@@ -18,6 +18,7 @@
     "upstream_query": "delta(kafka_burrow_partition_current_offset[1m]) < 0",
     "upstream_description": "Kafka topic offset has decreased"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kafka_burrow_partition_current_offset",
   "is_real_time": false,

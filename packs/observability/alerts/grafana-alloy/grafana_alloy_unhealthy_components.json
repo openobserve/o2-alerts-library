@@ -18,6 +18,7 @@
     "upstream_query": "sum by (job) (alloy_component_controller_running_components{health_type!=\"healthy\"}) > 0",
     "upstream_description": "One or more Alloy pipeline components (receivers, exporters, processors, discovery, etc.) under job {{ $labels.job }} are reporting a non-healthy status, even though the Alloy process itself is still running."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "alloy_component_controller_running_components",
   "is_real_time": false,

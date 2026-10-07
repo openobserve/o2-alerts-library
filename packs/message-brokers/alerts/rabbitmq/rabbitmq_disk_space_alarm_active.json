@@ -18,6 +18,7 @@
     "upstream_query": "rabbitmq_alarms_free_disk_space_watermark > 0",
     "upstream_description": "Disk space alarm is active on node {{ $labels.instance }} (disk_free_limit reached); publishers are blocked cluster-wide until disk space is freed."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "rabbitmq_alarms_free_disk_space_watermark",
   "is_real_time": false,

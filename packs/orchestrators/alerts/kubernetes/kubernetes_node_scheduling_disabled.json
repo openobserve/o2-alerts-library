@@ -18,6 +18,7 @@
     "upstream_query": "kube_node_spec_taint{key=\"node.kubernetes.io/unschedulable\"} == 1",
     "upstream_description": "Node {{ $labels.node }} has been marked as unschedulable for more than 30 minutes."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_node_spec_taint",
   "is_real_time": false,

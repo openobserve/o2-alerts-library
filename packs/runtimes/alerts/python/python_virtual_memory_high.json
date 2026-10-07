@@ -18,6 +18,7 @@
     "upstream_query": "process_virtual_memory_bytes > 4e9",
     "upstream_description": "Python process virtual memory is high (> 4GB)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "process_virtual_memory_bytes",
   "is_real_time": false,

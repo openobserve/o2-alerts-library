@@ -18,6 +18,7 @@
     "upstream_query": "avg by (exported_namespace, namespace, name) (certmanager_certificate_expiration_timestamp_seconds - time()) < (21 * 24 * 3600)",
     "upstream_description": "The certificate {{ $labels.name }} is expiring in less than 21 days."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "certmanager_certificate_expiration_timestamp_seconds",
   "is_real_time": false,

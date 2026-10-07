@@ -18,6 +18,7 @@
     "upstream_query": "ceph_health_detail{name=\"RECENT_CRASH\"} == 1",
     "upstream_description": "One or more Ceph daemons (OSD, mon, mgr, mds...) have crashed recently and the crash has not been acknowledged. Investigate and archive with 'ceph crash archive <id>'."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ceph_health_detail",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "avg by (job, instance) (thanos_rule_config_last_reload_successful) != 1",
     "upstream_description": "Thanos Rule {{$labels.job}} has not been able to reload its configuration."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "thanos_rule_config_last_reload_successful",
   "is_real_time": false,

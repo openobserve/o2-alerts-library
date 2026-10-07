@@ -18,6 +18,7 @@
     "upstream_query": "digitalocean_loadbalancer_droplets == 0",
     "upstream_description": "DigitalOcean load balancer {{ $labels.name }} ({{ $labels.ip }}) has no droplets attached."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "digitalocean_loadbalancer_droplets",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "jvm_threads_state{state=\"BLOCKED\"} > 50",
     "upstream_description": "JVM has high number of BLOCKED threads, indicating lock contention"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "jvm_threads_state",
   "is_real_time": false,

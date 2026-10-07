@@ -18,6 +18,7 @@
     "upstream_query": "max by (tenant) (tempodb_blocklist_tenant_index_age_seconds) > 600",
     "upstream_description": "Tenant index for {{ $labels.tenant }} is {{ $value }}s old."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "tempodb_blocklist_tenant_index_age_seconds",
   "is_real_time": false,

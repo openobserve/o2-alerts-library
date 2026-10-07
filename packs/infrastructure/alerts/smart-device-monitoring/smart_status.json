@@ -18,6 +18,7 @@
     "upstream_query": "smartctl_device_smart_status != 1",
     "upstream_description": "Device has a SMART status failure on {{ $labels.instance }} drive {{ $labels.device }}"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "smartctl_device_smart_status",
   "is_real_time": false,

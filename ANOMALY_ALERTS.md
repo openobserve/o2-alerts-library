@@ -111,7 +111,7 @@ installer derives it from `severity`); legacy budget-mode fields (`percentile`,
 ## Pre-merge checklist
 
 1. File at `packs/<k8s|apm>/alerts/<category>/<name>.json`, name ends
-   `_anomaly`, `alert_type` present, `enabled: true`, no forbidden keys.
+   `_anomaly`, `alert_type: "anomaly_detection"`, `enabled: true`, no forbidden keys.
 2. `python3 scripts/validate_alerts.py` passes.
 3. The stream and every field used exist with the collector's default
    `values.yaml`, or the description marks the alert conditional.

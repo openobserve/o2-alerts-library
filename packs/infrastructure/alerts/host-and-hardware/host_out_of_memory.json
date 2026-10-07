@@ -18,6 +18,7 @@
     "upstream_query": "(node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes < .10)",
     "upstream_description": "Node memory is filling up (< 10% left)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "node_memory_MemAvailable_bytes",
   "is_real_time": false,
