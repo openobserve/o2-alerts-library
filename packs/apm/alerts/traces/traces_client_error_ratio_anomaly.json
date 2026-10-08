@@ -2,7 +2,7 @@
   "name": "traces_client_error_ratio_anomaly",
   "title": "Outbound call error ratio is unusually high",
   "severity": "info",
-  "description": "Share of CLIENT spans (outbound calls to dependencies) with status ERROR is above its learned band in at least 2 of the last 3 five-minute buckets. Unit: ratio 0-1. Ratios are floored at 1% (0.01) and buckets with fewer than 50 client spans report the floor, so the alert fires only above roughly 1.2% and never on low traffic. Edit the two constants in custom_sql to tune. Whole stream; add AND service_name = '...' to the WHERE clause after install for a per-service alert (one config per service). Needs applications sending OpenTelemetry traces to the traces stream named default.",
+  "description": "Share of CLIENT spans (outbound calls to dependencies) with status ERROR is above its learned band in at least 2 of the last 3 five-minute buckets. Unit: ratio 0-1. Ratios are floored at 1% (0.01) and buckets with fewer than 50 client spans report the floor, so it never fires below roughly 1.2% or on low traffic; above that it fires when the ratio is roughly 15% or more above its learned level. Edit the two constants in custom_sql to tune. Whole stream; add AND service_name = '...' to the WHERE clause after install for a per-service alert (one config per service). Needs applications sending OpenTelemetry traces to the traces stream named default.",
   "tags": [
     "anomaly",
     "traces",

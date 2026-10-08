@@ -2,7 +2,7 @@
   "name": "logs_error_keyword_ratio_anomaly",
   "title": "Share of log lines mentioning \"error\" is unusually high",
   "severity": "info",
-  "description": "Share of pod log lines whose body contains the text 'error' (case-insensitive substring) is above its learned band in both of the last 2 fifteen-minute buckets. Unit: ratio 0-1. Ratios are floored at 1% (0.01) and buckets with fewer than 100 lines report the floor. Edit the two constants in custom_sql to tune. The query scans every log body, so it runs every 15 minutes and training reads 21-28 days of logs. Whole stream; add a WHERE clause on k8s_cluster or k8s_namespace_name after install for a per-entity alert (one config per entity).",
+  "description": "Share of pod log lines whose body contains the text 'error' (case-insensitive substring) is above its learned band in both of the last 2 fifteen-minute buckets. Unit: ratio 0-1. Ratios are floored at 1% (0.01) and buckets with fewer than 100 lines report the floor. Edit the two constants in custom_sql to tune. The query scans every log body, so it runs every 15 minutes and training reads 21-28 days of logs. With 15-minute buckets it needs about 25 hours of logs (100 buckets) before it trains, and shows as failed until then. Whole stream; add a WHERE clause on k8s_cluster or k8s_namespace_name after install for a per-entity alert (one config per entity).",
   "tags": [
     "anomaly",
     "logs",
