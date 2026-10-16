@@ -18,6 +18,7 @@
     "upstream_query": "rate(node_disk_io_time_seconds_total[5m]) > 0.8",
     "upstream_description": "Disk usage >80%. Check storage for issues or increase IOPS capabilities."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "node_disk_io_time_seconds_total",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "sum(gnatsd_varz_jetstream_stats_accounts) > 100",
     "upstream_description": "JetStream has more than 100 active accounts"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "gnatsd_varz_jetstream_stats_accounts",
   "is_real_time": false,

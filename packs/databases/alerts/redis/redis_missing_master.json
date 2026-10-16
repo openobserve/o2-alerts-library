@@ -18,6 +18,7 @@
     "upstream_query": "(count(redis_instance_info{role=\"master\"}) or vector(0)) < 1",
     "upstream_description": "Redis cluster has no node marked as master."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "redis_instance_info",
   "is_real_time": false,

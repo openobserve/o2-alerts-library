@@ -18,6 +18,7 @@
     "upstream_query": "cortex_ring_members{state=\"Unhealthy\", name=\"ingester\"} > 0",
     "upstream_description": "Cortex has an unhealthy ingester"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cortex_ring_members",
   "is_real_time": false,

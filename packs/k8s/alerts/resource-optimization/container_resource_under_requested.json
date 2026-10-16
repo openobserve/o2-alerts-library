@@ -2,6 +2,7 @@
   "id": "3DnoHtpNhwXJHZ9hlJD48vUCgi4",
   "name": "container_resource_under_requested",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "k8s_pod_cpu_request_utilization",
   "is_real_time": false,

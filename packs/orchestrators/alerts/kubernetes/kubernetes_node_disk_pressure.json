@@ -18,6 +18,7 @@
     "upstream_query": "kube_node_status_condition{condition=\"DiskPressure\",status=\"true\"} == 1",
     "upstream_description": "Node {{ $labels.node }} has DiskPressure condition"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_node_status_condition",
   "is_real_time": false,

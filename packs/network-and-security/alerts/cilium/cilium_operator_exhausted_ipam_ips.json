@@ -18,6 +18,7 @@
     "upstream_query": "sum(cilium_operator_ipam_ips{type=\"available\"}) by () <= 0",
     "upstream_description": "Cilium operator has no available IPAM IPs. New pods will fail to schedule networking."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cilium_operator_ipam_ips",
   "is_real_time": false,

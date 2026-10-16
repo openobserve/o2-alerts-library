@@ -18,6 +18,7 @@
     "upstream_query": "(1 - (sum by (job) (rate({__name__=~\"otelcol_receiver_refused_(spans|metric_points|log_records)_total\"}[1m])) / (sum by (job) (rate({__name__=~\"otelcol_receiver_refused_(spans|metric_points|log_records)_total\"}[1m])) + sum by (job) (rate({__name__=~\"otelcol_receiver_accepted_(spans|metric_points|log_records)_total\"}[1m]))))) < 0.95",
     "upstream_description": "The OpenTelemetry receiver in Alloy under job {{ $labels.job }} has a success rate below 95% for pushing spans, metrics, or logs into the pipeline, meaning telemetry data is being dropped, possibly due to limits imposed by otelcol.processor.memory_limiter."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "otelcol_receiver_refused_spans_total",
   "is_real_time": false,

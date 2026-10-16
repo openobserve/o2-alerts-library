@@ -60,3 +60,18 @@ not derived from awesome-prometheus-alerts. This repository as a whole is
 licensed CC BY 4.0 (see `LICENSE`), the same licence as the imported material,
 so there is no licence boundary between the two — only the additional
 requirement to credit Samuel Berthe for the packs listed above.
+
+## Anomaly-detection alerts
+
+The anomaly-detection alerts (`alert_type: "anomaly_detection"`, in the `k8s`
+and `apm` packs) are original work by OpenObserve Inc. Their signal choices,
+directions and noise controls were informed by New Relic
+[`newrelic-quickstarts`](https://github.com/newrelic/newrelic-quickstarts),
+Grafana
+[`promql-anomaly-detection`](https://github.com/grafana/promql-anomaly-detection)
+and Splunk [`security_content`](https://github.com/splunk/security_content), all
+licensed Apache-2.0; each alert names the files that informed it in
+`source.inspired_by`. No files or text are copied from them. If any text is
+ever adapted verbatim, the Apache-2.0 licence text and any NOTICE file must be
+included with it. Elastic material (Elastic License 2.0) is not used as a
+source and is never referenced in alert files.

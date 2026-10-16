@@ -18,6 +18,7 @@
     "upstream_query": "sum(rate(cilium_kvstoremesh_remote_cluster_failures[5m])) by (source_cluster, target_cluster) > 0",
     "upstream_description": "Cilium KVStoreMesh remote cluster {{ $labels.target_cluster }} from {{ $labels.source_cluster }} is experiencing failures ({{ $value }} failures)."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cilium_kvstoremesh_remote_cluster_failures",
   "is_real_time": false,

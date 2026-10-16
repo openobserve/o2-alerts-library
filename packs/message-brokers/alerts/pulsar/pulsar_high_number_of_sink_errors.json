@@ -18,6 +18,7 @@
     "upstream_query": "sum(rate(pulsar_sink_sink_exceptions_total[1m])) by (name) > 10",
     "upstream_description": "Pulsar sink {{ $labels.name }} has more than 10 errors per second ({{ $value | printf \"%.2f\" }}/s)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "pulsar_sink_sink_exceptions_total",
   "is_real_time": false,

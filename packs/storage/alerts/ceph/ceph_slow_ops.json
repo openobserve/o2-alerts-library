@@ -18,6 +18,7 @@
     "upstream_query": "ceph_healthcheck_slow_ops > 0",
     "upstream_description": "{{ $value }} OSD/mon requests are taking longer than the configured complaint time to complete, an early symptom of client-facing latency and cluster degradation."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ceph_healthcheck_slow_ops",
   "is_real_time": false,

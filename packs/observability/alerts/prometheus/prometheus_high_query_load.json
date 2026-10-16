@@ -18,6 +18,7 @@
     "upstream_query": "prometheus_engine_queries / prometheus_engine_queries_concurrent_max > 0.8",
     "upstream_description": "Prometheus query engine has less than 20% available capacity for concurrent queries, meaning it is approaching its configured concurrency limit and may start rejecting queries."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "prometheus_engine_queries",
   "is_real_time": false,

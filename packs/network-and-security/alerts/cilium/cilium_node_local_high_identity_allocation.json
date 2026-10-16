@@ -18,6 +18,7 @@
     "upstream_query": "(sum(cilium_identity{type=\"node_local\"}) by (pod) / (2^16-1)) > 0.8",
     "upstream_description": "Cilium agent {{ $labels.pod }} node-local identity allocation is above 80%. Approaching the 65535 identity limit."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cilium_identity",
   "is_real_time": false,

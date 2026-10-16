@@ -18,6 +18,7 @@
     "upstream_query": "ssl_ocsp_response_status == 2",
     "upstream_description": "Failed to get the OCSP status for {{ $labels.instance }}"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ssl_ocsp_response_status",
   "is_real_time": false,

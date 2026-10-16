@@ -18,6 +18,7 @@
     "upstream_query": "histogram_quantile(0.99, sum(rate(cilium_policy_implementation_delay_bucket[5m])) by (le, pod)) > 60",
     "upstream_description": "Cilium agent {{ $labels.pod }} P99 policy deployment latency exceeds 60 seconds. Endpoints may run with stale policies."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cilium_policy_implementation_delay_bucket",
   "is_real_time": false,

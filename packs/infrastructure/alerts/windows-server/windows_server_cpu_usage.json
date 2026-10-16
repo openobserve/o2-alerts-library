@@ -18,6 +18,7 @@
     "upstream_query": "100 - (avg by (instance) (rate(windows_cpu_time_total{mode=\"idle\"}[2m])) * 100) > 80",
     "upstream_description": "CPU Usage is more than 80%"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "windows_cpu_time_total",
   "is_real_time": false,

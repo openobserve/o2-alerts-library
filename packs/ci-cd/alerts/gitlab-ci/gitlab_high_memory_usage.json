@@ -18,6 +18,7 @@
     "upstream_query": "process_resident_memory_bytes{job=~\".*gitlab.*\"} > 2e+9",
     "upstream_description": "GitLab process on {{ $labels.instance }} is using {{ $value | humanize1024 }}B of RSS memory."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "process_resident_memory_bytes",
   "is_real_time": false,

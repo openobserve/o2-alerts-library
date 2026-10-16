@@ -18,6 +18,7 @@
     "upstream_query": "sum(pilot_duplicate_envoy_clusters{}) > 0",
     "upstream_description": "Istio Pilot has detected {{ $value }} duplicate Envoy cluster(s), indicating misconfigured DestinationRules or ServiceEntries."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "pilot_duplicate_envoy_clusters",
   "is_real_time": false,

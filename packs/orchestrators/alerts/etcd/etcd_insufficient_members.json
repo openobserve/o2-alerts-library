@@ -18,6 +18,7 @@
     "upstream_query": "count(etcd_server_id) % 2 == 0",
     "upstream_description": "Etcd cluster should have an odd number of members"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "etcd_server_id",
   "is_real_time": false,

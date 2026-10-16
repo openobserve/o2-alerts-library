@@ -18,6 +18,7 @@
     "upstream_query": "ceph_pg_backfill_toofull > 0",
     "upstream_description": "Some Ceph placement groups are located on full Object Storage Daemon on cluster. Those PGs can be unavailable shortly. Please check OSDs, change weight or reconfigure CRUSH rules."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ceph_pg_backfill_toofull",
   "is_real_time": false,

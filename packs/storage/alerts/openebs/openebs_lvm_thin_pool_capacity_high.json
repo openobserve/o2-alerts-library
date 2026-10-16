@@ -18,6 +18,7 @@
     "upstream_query": "lvm_lv_used_percent{segtype=\"thin-pool\"} > 90",
     "upstream_description": "OpenEBS LVM LocalPV thin pool {{ $labels.instance }} is using more than 90% of its capacity ({{ $value }}%). A thin pool can run out of space even when the underlying volume group has free capacity."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "lvm_lv_used_percent",
   "is_real_time": false,

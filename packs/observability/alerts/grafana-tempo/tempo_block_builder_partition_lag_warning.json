@@ -18,6 +18,7 @@
     "upstream_query": "avg_over_time(tempo_ingest_group_partition_lag_seconds{container=\"block-builder\"}[6m]) > 200",
     "upstream_description": "Tempo block-builder {{ $labels.instance }} (group {{ $labels.group }}) is lagging by {{ $value }}s behind Kafka ingest partition {{ $labels.partition }}; traces are delayed in being flushed into durable blocks."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "tempo_ingest_group_partition_lag_seconds",
   "is_real_time": false,

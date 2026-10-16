@@ -18,6 +18,7 @@
     "upstream_query": "kube_pod_container_status_waiting_reason{reason!=\"CrashLoopBackOff\"} > 0",
     "upstream_description": "Container {{ $labels.container }} in pod {{ $labels.namespace }}/{{ $labels.pod }} has been in waiting state for longer than 1 hour, for a reason other than CrashLoopBackOff (e.g. ImagePullBackOff, CreateContainerConfigError, InvalidImageName)."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_pod_container_status_waiting_reason",
   "is_real_time": false,

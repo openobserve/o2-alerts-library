@@ -18,6 +18,7 @@
     "upstream_query": "count(count by (job, sha256) (cortex_runtime_config_hash)) without(sha256) > 1",
     "upstream_description": "An inconsistent runtime config file is used across Mimir instances."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cortex_runtime_config_hash",
   "is_real_time": false,

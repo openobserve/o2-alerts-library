@@ -18,6 +18,7 @@
     "upstream_query": "sum by (instance) (pg_stat_ssl_compression) > 0",
     "upstream_description": "Database allows connections with SSL compression enabled. This may add significant jitter in replication delay. Replicas should turn off SSL compression via `sslcompression=0` in `recovery.conf`."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "pg_stat_ssl_compression",
   "is_real_time": false,

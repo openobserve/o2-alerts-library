@@ -18,6 +18,7 @@
     "upstream_query": "jaeger_collector_queue_length > 1000",
     "upstream_description": "Jaeger collector on {{ $labels.instance }} has an internal span queue length of {{ $value }}, a leading indicator that the collector is falling behind on processing before spans start being dropped."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "jaeger_collector_queue_length",
   "is_real_time": false,

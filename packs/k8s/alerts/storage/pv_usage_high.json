@@ -2,6 +2,7 @@
   "id": "3DnkgLNtU9JF7dttDRX0iud1lFe",
   "name": "pv_usage_high",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kubelet_volume_stats_used_bytes",
   "is_real_time": false,

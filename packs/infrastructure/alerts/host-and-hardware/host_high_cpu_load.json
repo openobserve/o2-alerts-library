@@ -18,6 +18,7 @@
     "upstream_query": "1 - (avg without (cpu) (rate(node_cpu_seconds_total{mode=\"idle\"}[5m]))) > .80",
     "upstream_description": "CPU load is > 80%"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "node_cpu_seconds_total",
   "is_real_time": false,

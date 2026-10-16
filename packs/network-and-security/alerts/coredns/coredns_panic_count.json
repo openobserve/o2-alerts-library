@@ -18,6 +18,7 @@
     "upstream_query": "increase(coredns_panics_total[1m]) > 0",
     "upstream_description": "Number of CoreDNS panics encountered"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "coredns_panics_total",
   "is_real_time": false,

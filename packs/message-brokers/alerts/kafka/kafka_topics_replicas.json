@@ -18,6 +18,7 @@
     "upstream_query": "min(kafka_topic_partition_in_sync_replica) by (topic) < 3",
     "upstream_description": "Kafka topic {{ $labels.topic }} has fewer than 3 in-sync replicas ({{ $value }}), data durability is at risk."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kafka_topic_partition_in_sync_replica",
   "is_real_time": false,

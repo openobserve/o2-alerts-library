@@ -18,6 +18,7 @@
     "upstream_query": "increase(couchdb_replicator_changes_read_failures[5m]) > 5",
     "upstream_description": "Replication changes feed has failed reads more than 5 times in 5 minutes"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "couchdb_replicator_changes_read_failures",
   "is_real_time": false,

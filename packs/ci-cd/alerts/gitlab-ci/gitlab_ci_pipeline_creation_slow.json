@@ -19,6 +19,7 @@
     "upstream_description": "GitLab CI pipeline creation p95 latency on {{ $labels.instance }} is above 30 seconds.",
     "labels_dropped": "The upstream annotation interpolates instance, but this expression aggregates those labels away, so they are not in row_template — they would render as literal placeholders."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "gitlab_ci_pipeline_creation_duration_seconds_bucket",
   "is_real_time": false,

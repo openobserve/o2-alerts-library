@@ -18,6 +18,7 @@
     "upstream_query": "cassandra_thread_pool_blocked_tasks{pool=\"CompactionExecutor\"} > 15",
     "upstream_description": "Some Cassandra compaction executor tasks are blocked - {{ $labels.cassandra_cluster }}"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cassandra_thread_pool_blocked_tasks",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "ceph_health_detail{name=\"POOL_BACKFILLFULL\"} == 1",
     "upstream_description": "A Ceph pool is approaching its near-full threshold, which will prevent recovery/backfill operations from completing until more capacity is added."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ceph_health_detail",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "haproxy_backend_active_servers + haproxy_backend_backup_servers == 0",
     "upstream_description": "HAProxy has no alive active or backup backends for {{ $labels.proxy }}"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "haproxy_backend_active_servers",
   "is_real_time": false,

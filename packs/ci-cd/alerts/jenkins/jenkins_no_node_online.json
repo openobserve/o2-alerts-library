@@ -18,6 +18,7 @@
     "upstream_query": "jenkins_node_online_value == 0",
     "upstream_description": "No Jenkins nodes are online: `{{$labels.instance}}` in realm {{$labels.realm}}/{{$labels.env}} ({{$labels.region}})"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "jenkins_node_online_value",
   "is_real_time": false,

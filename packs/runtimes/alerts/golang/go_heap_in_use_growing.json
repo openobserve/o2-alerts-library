@@ -18,6 +18,7 @@
     "upstream_query": "deriv(go_memstats_heap_inuse_bytes[10m]) > 1e7",
     "upstream_description": "Go heap in-use memory is growing steadily, potential memory leak or under-sized heap"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "go_memstats_heap_inuse_bytes",
   "is_real_time": false,

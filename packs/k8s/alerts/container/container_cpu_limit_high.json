@@ -2,6 +2,7 @@
   "id": "3DnjTvH3VBDc785BB0I86h57qbw",
   "name": "container_cpu_limit_high",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "k8s_pod_cpu_limit_utilization",
   "is_real_time": false,

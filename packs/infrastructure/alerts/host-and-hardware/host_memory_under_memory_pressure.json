@@ -18,6 +18,7 @@
     "upstream_query": "(rate(node_vmstat_pgmajfault[5m]) > 1000)",
     "upstream_description": "The node is under heavy memory pressure. High rate of major page faults ({{ $value }}/s)."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "node_vmstat_pgmajfault",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "vault_core_unsealed == 0",
     "upstream_description": "Vault instance is sealed on {{ $labels.instance }}"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "vault_core_unsealed",
   "is_real_time": false,

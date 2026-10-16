@@ -18,6 +18,7 @@
     "upstream_query": "increase(prometheus_target_scrapes_sample_duplicate_timestamp_total[5m]) > 3",
     "upstream_description": "Prometheus has many samples rejected due to duplicate timestamps but different values ({{ $value }} samples)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "prometheus_target_scrapes_sample_duplicate_timestamp_total",
   "is_real_time": false,

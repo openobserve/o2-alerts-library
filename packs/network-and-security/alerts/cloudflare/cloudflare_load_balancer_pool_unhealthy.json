@@ -18,6 +18,7 @@
     "upstream_query": "cloudflare_zone_pool_health_status == 0",
     "upstream_description": "Cloudflare load balancer pool {{ $labels.pool_name }} for zone {{ $labels.zone }} is reporting as unhealthy, meaning origin servers behind this pool may be unreachable."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cloudflare_zone_pool_health_status",
   "is_real_time": false,

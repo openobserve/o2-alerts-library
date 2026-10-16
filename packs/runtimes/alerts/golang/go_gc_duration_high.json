@@ -18,6 +18,7 @@
     "upstream_query": "go_gc_duration_seconds{quantile=\"1\"} > 1",
     "upstream_description": "Go GC pause duration is too high (max > 1s)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "go_gc_duration_seconds",
   "is_real_time": false,

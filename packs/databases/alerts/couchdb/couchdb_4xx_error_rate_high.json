@@ -18,6 +18,7 @@
     "upstream_query": "increase(couchdb_httpd_status_codes{code=~\"4..\"}[5m]) > 5",
     "upstream_description": "CouchDB returned more than 5 4xx HTTP responses in the last 5 minutes, which may indicate client-side issues such as bad requests, authentication failures, or document conflicts."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "couchdb_httpd_status_codes",
   "is_real_time": false,

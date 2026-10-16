@@ -18,6 +18,7 @@
     "upstream_query": "windows_time_computed_time_offset_seconds > 1",
     "upstream_description": "System clock on {{ $labels.instance }} is offset from its configured time source by more than 1 second, which can break Kerberos authentication, Active Directory replication and log correlation."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "windows_time_computed_time_offset_seconds",
   "is_real_time": false,

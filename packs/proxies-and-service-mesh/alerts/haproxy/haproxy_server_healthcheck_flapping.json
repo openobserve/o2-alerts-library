@@ -18,6 +18,7 @@
     "upstream_query": "rate(haproxy_server_check_up_down_total[5m]) != 0",
     "upstream_description": "Server {{ $labels.server }} on {{ $labels.instance }} is repeatedly transitioning between UP and DOWN health-check states, which may indicate an unstable backend node or overly sensitive health-check thresholds."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "haproxy_server_check_up_down_total",
   "is_real_time": false,

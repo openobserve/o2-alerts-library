@@ -18,6 +18,7 @@
     "upstream_query": "gnatsd_connz_pending_bytes > 100000",
     "upstream_description": "NATS server has more than 100,000 pending bytes"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "gnatsd_connz_pending_bytes",
   "is_real_time": false,

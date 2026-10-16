@@ -18,6 +18,7 @@
     "upstream_query": "pve_up{id=~\"(qemu|lxc)/.*\"} == 0",
     "upstream_description": "Proxmox VE guest {{ $labels.id }} is not running."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "pve_up",
   "is_real_time": false,

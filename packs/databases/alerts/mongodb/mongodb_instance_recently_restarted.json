@@ -18,6 +18,7 @@
     "upstream_query": "mongodb_ss_uptime < 300",
     "upstream_description": "MongoDB instance {{ $labels.instance }} was restarted {{ $value }} seconds ago."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "mongodb_ss_uptime",
   "is_real_time": false,

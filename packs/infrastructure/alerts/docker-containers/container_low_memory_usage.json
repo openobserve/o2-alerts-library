@@ -19,6 +19,7 @@
     "upstream_description": "Container Memory usage is under 20% for 1 week. Consider reducing the allocated memory.",
     "period_clamped_from": "Upstream `for` is 7d (10080 minutes); the evaluation window is capped at 60 minutes. Widen trigger_condition.period if you want the full upstream window."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "container_memory_working_set_bytes",
   "is_real_time": false,

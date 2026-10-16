@@ -18,6 +18,7 @@
     "upstream_query": "threadpool_blockingQueueSize > 0",
     "upstream_description": "Orca message handler thread pool has {{ $value }} blocked threads on {{ $labels.instance }}. Pipeline execution throughput is degraded."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "threadpool_blockingQueueSize",
   "is_real_time": false,

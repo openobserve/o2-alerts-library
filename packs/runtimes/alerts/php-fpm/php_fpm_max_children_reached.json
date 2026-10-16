@@ -18,6 +18,7 @@
     "upstream_query": "sum(increase(phpfpm_max_children_reached_total[5m])) by (instance) > 3",
     "upstream_description": "PHP-FPM reached max children on {{ $labels.instance }} ({{ $value }} times in the last 5m)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "phpfpm_max_children_reached_total",
   "is_real_time": false,

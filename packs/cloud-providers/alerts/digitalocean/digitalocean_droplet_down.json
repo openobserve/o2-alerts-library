@@ -18,6 +18,7 @@
     "upstream_query": "digitalocean_droplet_up == 0",
     "upstream_description": "DigitalOcean droplet {{ $labels.name }} ({{ $labels.id }}) in {{ $labels.region }} is not running."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "digitalocean_droplet_up",
   "is_real_time": false,

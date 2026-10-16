@@ -18,6 +18,7 @@
     "upstream_query": "consul_health_node_status{status=\"critical\"} == 1",
     "upstream_description": "A Consul agent is down"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "consul_health_node_status",
   "is_real_time": false,

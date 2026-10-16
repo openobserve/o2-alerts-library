@@ -18,6 +18,7 @@
     "upstream_query": "sum(rate(argocd_git_fetch_fail_total[5m])) by (repo) > 0",
     "upstream_description": "ArgoCD is failing to fetch git repository {{ $labels.repo }}, which will block application sync and manifest generation."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "argocd_git_fetch_fail_total",
   "is_real_time": false,

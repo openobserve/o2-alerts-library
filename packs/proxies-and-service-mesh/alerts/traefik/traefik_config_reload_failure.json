@@ -18,6 +18,7 @@
     "upstream_query": "sum(rate(traefik_config_reloads_failure_total[3m])) by (job) > 0",
     "upstream_description": "Traefik dynamic configuration reload is failing on {{ $labels.job }}, so recent routing and provider configuration changes may not be applied."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "traefik_config_reloads_failure_total",
   "is_real_time": false,

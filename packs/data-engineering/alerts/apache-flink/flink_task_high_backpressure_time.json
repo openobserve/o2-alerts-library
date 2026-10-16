@@ -18,6 +18,7 @@
     "upstream_query": "flink_taskmanager_job_task_backPressuredTimeMsPerSecond > 500",
     "upstream_description": "Flink task {{ $labels.task_name }} is spending {{ $value | humanize }}ms/sec in backpressure."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "flink_taskmanager_job_task_backPressuredTimeMsPerSecond",
   "is_real_time": false,

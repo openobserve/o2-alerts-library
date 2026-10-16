@@ -18,6 +18,7 @@
     "upstream_query": "rate(rack_uncaught_errors_total[5m]) > 0.05",
     "upstream_description": "GitLab is experiencing uncaught errors in the Rack layer on {{ $labels.instance }} ({{ $value }}/s)."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "rack_uncaught_errors_total",
   "is_real_time": false,

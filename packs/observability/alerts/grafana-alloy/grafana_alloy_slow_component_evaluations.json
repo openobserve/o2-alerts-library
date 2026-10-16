@@ -18,6 +18,7 @@
     "upstream_query": "sum by (job, component_path, component_id) (rate(alloy_component_evaluation_slow_seconds[10m])) > 0",
     "upstream_description": "Component {{ $labels.component_id }} at path {{ $labels.component_path }} under job {{ $labels.job }} is taking too long to evaluate, which can lead to stale scrape targets or delayed pipeline processing."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "alloy_component_evaluation_slow_seconds",
   "is_real_time": false,

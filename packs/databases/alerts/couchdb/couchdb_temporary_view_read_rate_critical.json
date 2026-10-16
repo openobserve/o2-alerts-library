@@ -18,6 +18,7 @@
     "upstream_query": "rate(couchdb_httpd_temporary_view_reads[5m]) > 100",
     "upstream_description": "Temporary view read rate exceeds 100 reads/sec, high risk of performance degradation"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "couchdb_httpd_temporary_view_reads",
   "is_real_time": false,

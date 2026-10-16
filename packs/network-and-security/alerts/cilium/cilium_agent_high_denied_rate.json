@@ -18,6 +18,7 @@
     "upstream_query": "sum(rate(cilium_drop_count_total{reason=\"Policy denied\"}[1m])) by (pod) > 0",
     "upstream_description": "Cilium agent {{ $labels.pod }} is dropping packets due to policy denial. Verify network policies are correct."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cilium_drop_count_total",
   "is_real_time": false,

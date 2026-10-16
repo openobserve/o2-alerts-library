@@ -18,6 +18,7 @@
     "upstream_query": "couchdb_httpd_open_os_files > 0.9 * 65535",
     "upstream_description": "CouchDB is using more than 90% of allowed OS file descriptors, may fail to open new files"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "couchdb_httpd_open_os_files",
   "is_real_time": false,

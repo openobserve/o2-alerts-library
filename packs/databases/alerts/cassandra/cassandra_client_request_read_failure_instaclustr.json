@@ -18,6 +18,7 @@
     "upstream_query": "increase(cassandra_client_request_failures_total{operation=\"read\"}[1m]) > 5",
     "upstream_description": "Read failures have occurred, ensure there are not too many unavailable nodes - {{ $labels.cassandra_cluster }}"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cassandra_client_request_failures_total",
   "is_real_time": false,

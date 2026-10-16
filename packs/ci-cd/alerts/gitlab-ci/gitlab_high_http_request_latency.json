@@ -19,6 +19,7 @@
     "upstream_description": "GitLab p95 HTTP request latency on {{ $labels.instance }} is above 10 seconds.",
     "labels_dropped": "The upstream annotation interpolates instance, but this expression aggregates those labels away, so they are not in row_template — they would render as literal placeholders."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "http_request_duration_seconds_bucket",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "netdata_cpu_cpu_percentage_average{dimension=\"steal\"} > 10",
     "upstream_description": "CPU steal is > 10%. A noisy neighbor is killing VM performances or a spot instance may be out of credit."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "netdata_cpu_cpu_percentage_average",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "minio_cluster_kms_online == 0",
     "upstream_description": "Minio KMS backend is offline; encryption and decryption of SSE-KMS objects will fail until KMS connectivity is restored."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "minio_cluster_kms_online",
   "is_real_time": false,

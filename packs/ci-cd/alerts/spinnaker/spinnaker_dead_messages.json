@@ -18,6 +18,7 @@
     "upstream_query": "rate(queue_dead_messages_total[5m]) > 0.05",
     "upstream_description": "Orca is producing dead-lettered messages ({{ $value | humanize }}/s). These are tasks that exhausted all retries and will not be executed."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "queue_dead_messages_total",
   "is_real_time": false,

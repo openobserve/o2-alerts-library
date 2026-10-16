@@ -18,6 +18,7 @@
     "upstream_query": "increase(prometheus_tsdb_checkpoint_deletions_failed_total[1m]) > 0",
     "upstream_description": "Prometheus encountered {{ $value }} checkpoint deletion failures"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "prometheus_tsdb_checkpoint_deletions_failed_total",
   "is_real_time": false,

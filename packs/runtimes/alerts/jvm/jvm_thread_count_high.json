@@ -18,6 +18,7 @@
     "upstream_query": "jvm_threads_current > 300",
     "upstream_description": "JVM thread count is high (> 300), potential thread leak"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "jvm_threads_current",
   "is_real_time": false,

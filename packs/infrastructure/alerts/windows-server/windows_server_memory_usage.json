@@ -18,6 +18,7 @@
     "upstream_query": "100 - ((windows_memory_physical_free_bytes / windows_memory_physical_total_bytes) * 100) > 90",
     "upstream_description": "Memory usage is more than 90%"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "windows_memory_physical_free_bytes",
   "is_real_time": false,

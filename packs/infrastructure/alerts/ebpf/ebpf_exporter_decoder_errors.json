@@ -18,6 +18,7 @@
     "upstream_query": "rate(ebpf_exporter_decoder_errors_total[5m]) > 0.05",
     "upstream_description": "eBPF exporter is experiencing decoder errors for config {{ $labels.config }}. Kernel data is not being correctly transformed into labels. (instance {{ $labels.instance }})"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ebpf_exporter_decoder_errors_total",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "rabbitmq_up == 0",
     "upstream_description": "RabbitMQ node down"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "rabbitmq_up",
   "is_real_time": false,

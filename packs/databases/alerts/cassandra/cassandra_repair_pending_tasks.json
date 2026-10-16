@@ -18,6 +18,7 @@
     "upstream_query": "cassandra_stats{name=\"org:apache:cassandra:metrics:threadpools:internal:antientropystage:pendingtasks:value\"} > 2",
     "upstream_description": "Some Cassandra repair tasks are pending"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cassandra_stats",
   "is_real_time": false,

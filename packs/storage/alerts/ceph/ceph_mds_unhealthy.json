@@ -18,6 +18,7 @@
     "upstream_query": "ceph_health_detail{name=~\"MDS_DAMAGE|MDS_ALL_DOWN|FS_DEGRADED|FS_WITH_FAILED_MDS|MDS_HEALTH_READ_ONLY\"} == 1",
     "upstream_description": "The CephFS filesystem is damaged, fully offline, degraded, has a failed MDS rank with no standby, or has switched to read-only mode. Data may be partially or fully inaccessible; check 'ceph fs status' for details."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ceph_health_detail",
   "is_real_time": false,

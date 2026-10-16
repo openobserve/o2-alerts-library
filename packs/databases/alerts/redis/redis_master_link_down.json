@@ -18,6 +18,7 @@
     "upstream_query": "redis_master_link_up == 0",
     "upstream_description": "Redis replica {{ $labels.instance }} has lost its connection to master {{ $labels.master_host }}:{{ $labels.master_port }} and is no longer receiving updates."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "redis_master_link_up",
   "is_real_time": false,

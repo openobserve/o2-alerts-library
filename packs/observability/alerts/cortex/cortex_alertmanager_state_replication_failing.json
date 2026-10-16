@@ -18,6 +18,7 @@
     "upstream_query": "rate(cortex_alertmanager_state_replication_failed_total[5m]) > 0.05",
     "upstream_description": "Cortex Alertmanager {{ $labels.instance }} is failing to replicate its state to replicas, risking loss of silence/notification state on failover."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cortex_alertmanager_state_replication_failed_total",
   "is_real_time": false,

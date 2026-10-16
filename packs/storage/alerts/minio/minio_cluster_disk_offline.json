@@ -18,6 +18,7 @@
     "upstream_query": "minio_cluster_drive_offline_total > 0",
     "upstream_description": "Minio cluster disk is offline"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "minio_cluster_drive_offline_total",
   "is_real_time": false,

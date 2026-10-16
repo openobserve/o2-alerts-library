@@ -18,6 +18,7 @@
     "upstream_query": "avg_over_time(speedtest_upload[10m]) < 20",
     "upstream_description": "Internet upload speed is currently {{humanize $value}} Mbps."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "speedtest_upload",
   "is_real_time": false,

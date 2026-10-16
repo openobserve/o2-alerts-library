@@ -18,6 +18,7 @@
     "upstream_query": "caddy_reverse_proxy_upstreams_healthy == 0",
     "upstream_description": "Caddy reverse proxy upstream {{ $labels.upstream }} is unhealthy"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "caddy_reverse_proxy_upstreams_healthy",
   "is_real_time": false,

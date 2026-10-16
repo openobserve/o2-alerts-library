@@ -18,6 +18,7 @@
     "upstream_query": "sum(cassandra_stats{name=\"org:apache:cassandra:net:failuredetector:downendpointcount\"}) by (service,group,cluster,env) > 0",
     "upstream_description": "Cassandra node down"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cassandra_stats",
   "is_real_time": false,

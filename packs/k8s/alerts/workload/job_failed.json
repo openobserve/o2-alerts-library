@@ -2,6 +2,7 @@
   "id": "3DnluBFNXaKUppUpgMdH4PhL6S5",
   "name": "job_failed",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_job_failed",
   "is_real_time": false,

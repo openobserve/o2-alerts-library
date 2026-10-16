@@ -18,6 +18,7 @@
     "upstream_query": "vmware_vm_mem_usage_average / 100 >= 95",
     "upstream_description": "High memory usage on {{ $labels.instance }}: {{ $value | printf \"%.2f\"}}%"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "vmware_vm_mem_usage_average",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "sum by (proxy) (haproxy_backend_current_queue) > 0",
     "upstream_description": "Some HAProxy requests are pending on {{ $labels.proxy }} - {{ $value | printf \"%.2f\"}}"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "haproxy_backend_current_queue",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "changes(cassandra_stats{name=\"org:apache:cassandra:metrics:storage:exceptions:count\"}[1m]) > 1",
     "upstream_description": "Something is going wrong with cassandra storage"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cassandra_stats",
   "is_real_time": false,

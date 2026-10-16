@@ -18,6 +18,7 @@
     "upstream_query": "rate(haproxy_process_dropped_logs_total[5m]) != 0",
     "upstream_description": "HAProxy {{ $labels.instance }} is dropping log messages, which usually indicates the syslog/logging backend cannot keep up or is unreachable."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "haproxy_process_dropped_logs_total",
   "is_real_time": false,

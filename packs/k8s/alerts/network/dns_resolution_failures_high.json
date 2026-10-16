@@ -2,6 +2,7 @@
   "id": "3DnlEyGh6fqKPGwC898UeF8cduS",
   "name": "dns_resolution_failures_high",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "coredns_dns_responses_total",
   "is_real_time": false,

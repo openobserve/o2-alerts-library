@@ -18,6 +18,7 @@
     "upstream_query": "ceph_pg_activating > 0",
     "upstream_description": "Some Ceph placement groups are too long to activate."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ceph_pg_activating",
   "is_real_time": false,

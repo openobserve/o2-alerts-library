@@ -18,6 +18,7 @@
     "upstream_query": "windows_disk_drive_status{status=\"OK\"} != 1",
     "upstream_description": "Physical disk {{ $labels.name }} on {{ $labels.instance }} is reporting a status other than OK, which can indicate an imminent physical disk failure or a degraded array member."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "windows_disk_drive_status",
   "is_real_time": false,

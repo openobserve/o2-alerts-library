@@ -18,6 +18,7 @@
     "upstream_query": "apcupsd_battery_time_on_seconds > 0",
     "upstream_description": "UPS now running on battery (since {{$value | humanizeDuration}})"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "apcupsd_battery_time_on_seconds",
   "is_real_time": false,

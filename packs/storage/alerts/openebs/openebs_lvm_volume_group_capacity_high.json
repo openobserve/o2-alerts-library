@@ -18,6 +18,7 @@
     "upstream_query": "((lvm_vg_total_size_bytes - lvm_vg_free_size_bytes) / lvm_vg_total_size_bytes) * 100 > 90",
     "upstream_description": "OpenEBS LVM LocalPV volume group {{ $labels.instance }} is using more than 90% of its capacity ({{ $value }}%). Free up space or expand the volume group to avoid provisioning failures."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "lvm_vg_total_size_bytes",
   "is_real_time": false,

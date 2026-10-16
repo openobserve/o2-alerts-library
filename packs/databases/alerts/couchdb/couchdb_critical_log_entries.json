@@ -18,6 +18,7 @@
     "upstream_query": "increase(couchdb_server_couch_log{level=~\"error|critical\"}[5m]) > 5",
     "upstream_description": "Critical or error log entries detected in the last 5 minutes"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "couchdb_server_couch_log",
   "is_real_time": false,

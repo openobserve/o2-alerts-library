@@ -18,6 +18,7 @@
     "upstream_query": "sum(cilium_unreachable_health_endpoints{}) by (pod) > 0",
     "upstream_description": "Cilium agent {{ $labels.pod }} cannot reach {{ $value }} health endpoint(s). Node-to-node health probes are failing."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cilium_unreachable_health_endpoints",
   "is_real_time": false,

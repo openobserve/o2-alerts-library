@@ -18,6 +18,7 @@
     "upstream_query": "sum by (host) (rate(certmanager_acme_client_request_count{status=\"429\"}[5m])) > 0",
     "upstream_description": "Cert-Manager is being rate-limited by the ACME provider. Certificate issuance and renewal may be blocked for up to a week."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "certmanager_acme_client_request_count",
   "is_real_time": false,

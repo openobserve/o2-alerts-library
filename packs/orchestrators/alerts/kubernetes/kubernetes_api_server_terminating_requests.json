@@ -18,6 +18,7 @@
     "upstream_query": "sum(rate(apiserver_request_terminations_total[10m])) / (sum(rate(apiserver_request_total[10m])) + sum(rate(apiserver_request_terminations_total[10m]))) > 0.20",
     "upstream_description": "The Kubernetes API server is terminating {{ $value | humanizePercentage }} of incoming requests, indicating it is shedding load under overload (e.g. via priority and fairness flow control) rather than just returning error responses."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "apiserver_request_terminations_total",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "avg by (job) (thanos_receive_config_last_reload_successful) != 1",
     "upstream_description": "Thanos Receive {{$labels.job}} has not been able to reload hashring configurations."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "thanos_receive_config_last_reload_successful",
   "is_real_time": false,

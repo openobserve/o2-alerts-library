@@ -18,6 +18,7 @@
     "upstream_query": "min(vault_autopilot_healthy) by (instance) == 0",
     "upstream_description": "Vault Autopilot reports the Raft integrated storage cluster on {{ $labels.instance }} as unhealthy, which may indicate node health, quorum, or version mismatch issues."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "vault_autopilot_healthy",
   "is_real_time": false,

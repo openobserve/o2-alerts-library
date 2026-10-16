@@ -18,6 +18,7 @@
     "upstream_query": "sum(pulsar_storage_size) by (topic) > 20*1024*1024*1024",
     "upstream_description": "The topic backlog storage size is over 20 GB"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "pulsar_storage_size",
   "is_real_time": false,

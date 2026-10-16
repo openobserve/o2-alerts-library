@@ -18,6 +18,7 @@
     "upstream_query": "windows_time_ntp_round_trip_delay_seconds > 1",
     "upstream_description": "NTP round-trip delay between {{ $labels.instance }} and its time source exceeds 1 second, which reduces time synchronization accuracy and may point to network issues."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "windows_time_ntp_round_trip_delay_seconds",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "changes(cassandra_storage_exceptions_total[1m]) > 1",
     "upstream_description": "Something is going wrong with cassandra storage - {{ $labels.cassandra_cluster }}"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cassandra_storage_exceptions_total",
   "is_real_time": false,

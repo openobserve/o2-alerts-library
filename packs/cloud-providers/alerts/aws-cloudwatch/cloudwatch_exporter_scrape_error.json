@@ -18,6 +18,7 @@
     "upstream_query": "cloudwatch_exporter_scrape_error > 0",
     "upstream_description": "CloudWatch exporter on {{ $labels.instance }} failed to scrape metrics from AWS CloudWatch API."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cloudwatch_exporter_scrape_error",
   "is_real_time": false,

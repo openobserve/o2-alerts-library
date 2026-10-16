@@ -18,6 +18,7 @@
     "upstream_query": "sum(rate(cilium_bpf_map_ops_total{outcome=\"fail\"}[5m])) by (map_name, pod) > 0.05",
     "upstream_description": "Cilium agent {{ $labels.pod }} has eBPF map operation failures on {{ $labels.map_name }}. Datapath may be degraded."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cilium_bpf_map_ops_total",
   "is_real_time": false,

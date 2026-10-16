@@ -18,6 +18,7 @@
     "upstream_query": "count(traefik_service_server_up) by (service) == 0",
     "upstream_description": "All Traefik services are down"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "traefik_service_server_up",
   "is_real_time": false,

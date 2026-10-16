@@ -18,6 +18,7 @@
     "upstream_query": "envoy_server_live != 1",
     "upstream_description": "Envoy server is not live (draining or shutting down) on {{ $labels.instance }}"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "envoy_server_live",
   "is_real_time": false,

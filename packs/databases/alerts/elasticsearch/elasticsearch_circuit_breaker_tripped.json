@@ -18,6 +18,7 @@
     "upstream_query": "increase(elasticsearch_breakers_tripped[5m]) > 0",
     "upstream_description": "The {{ $labels.breaker }} circuit breaker on Elasticsearch node {{ $labels.name }} has tripped in the last 5 minutes, meaning the node is rejecting operations to prevent a Java OutOfMemoryError."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "elasticsearch_breakers_tripped",
   "is_real_time": false,

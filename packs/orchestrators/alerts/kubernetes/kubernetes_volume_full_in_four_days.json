@@ -18,6 +18,7 @@
     "upstream_query": "predict_linear(kubelet_volume_stats_available_bytes[6h:5m], 4 * 24 * 3600) < 0",
     "upstream_description": "Volume under {{ $labels.namespace }}/{{ $labels.persistentvolumeclaim }} is expected to fill up within four days. Currently {{ $value | humanize }}% is available."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kubelet_volume_stats_available_bytes",
   "is_real_time": false,

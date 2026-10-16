@@ -18,6 +18,7 @@
     "upstream_query": "changes(redis_connected_slaves[1m]) > 1",
     "upstream_description": "Changes have been detected in Redis replica connection. This can occur when replica nodes lose connection to the master and reconnect (a.k.a flapping)."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "redis_connected_slaves",
   "is_real_time": false,

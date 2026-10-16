@@ -18,6 +18,7 @@
     "upstream_query": "sum by (monitor, partition) (pollingMonitor_itemsOverThreshold) > 0",
     "upstream_description": "Igor polling monitor {{ $labels.monitor }} for {{ $labels.partition }} has exceeded its item threshold, preventing pipeline triggers."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "pollingMonitor_itemsOverThreshold",
   "is_real_time": false,

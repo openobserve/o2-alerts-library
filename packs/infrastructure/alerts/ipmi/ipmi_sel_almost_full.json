@@ -18,6 +18,7 @@
     "upstream_query": "ipmi_sel_free_space_bytes < 512",
     "upstream_description": "IPMI System Event Log on {{ $labels.instance }} has only {{ printf \"%.0f\" $value }} bytes free. Clear the SEL to prevent loss of new events."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ipmi_sel_free_space_bytes",
   "is_real_time": false,

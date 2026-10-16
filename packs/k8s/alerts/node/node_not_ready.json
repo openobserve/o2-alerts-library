@@ -2,6 +2,7 @@
   "id": "3DnRbFkLhteVIMdMpJlGSv4k9OG",
   "name": "node_not_ready",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "k8s_node_condition_ready",
   "is_real_time": false,

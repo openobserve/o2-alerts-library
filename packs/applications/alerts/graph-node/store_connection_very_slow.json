@@ -18,6 +18,7 @@
     "upstream_query": "store_connection_wait_time_ms > 20",
     "upstream_description": "Store connection is very slow to `{{$labels.pool}}` pool, `{{$labels.shard}}` shard in Graph node `{{$labels.instance}}`"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "store_connection_wait_time_ms",
   "is_real_time": false,

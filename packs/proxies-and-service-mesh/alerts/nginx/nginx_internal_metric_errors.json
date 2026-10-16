@@ -18,6 +18,7 @@
     "upstream_query": "increase(nginx_metric_errors_total[5m]) > 0",
     "upstream_description": "The nginx-lua-prometheus library failed to record one or more metrics (e.g. the shared dictionary used to store metrics is full or an LRU eviction occurred), which may mean other Nginx metrics are incomplete."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "nginx_metric_errors_total",
   "is_real_time": false,

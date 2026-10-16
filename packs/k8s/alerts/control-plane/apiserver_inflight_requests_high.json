@@ -2,6 +2,7 @@
   "id": "3DnmRVakj7FG2sNpJsH0a3W1rRn",
   "name": "apiserver_inflight_requests_high",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "apiserver_current_inflight_requests",
   "is_real_time": false,

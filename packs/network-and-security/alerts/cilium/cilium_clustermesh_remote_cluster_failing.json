@@ -18,6 +18,7 @@
     "upstream_query": "sum(rate(cilium_clustermesh_remote_cluster_failures[5m])) by (source_cluster, target_cluster) > 0",
     "upstream_description": "Cilium ClusterMesh connectivity to remote cluster {{ $labels.target_cluster }} from {{ $labels.source_cluster }} is failing ({{ $value }} failures)."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cilium_clustermesh_remote_cluster_failures",
   "is_real_time": false,

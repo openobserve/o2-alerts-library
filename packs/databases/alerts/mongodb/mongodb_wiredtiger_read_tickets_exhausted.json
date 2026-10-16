@@ -18,6 +18,7 @@
     "upstream_query": "mongodb_ss_wt_concurrentTransactions_available{txn_rw_type=\"read\"} < 50",
     "upstream_description": "WiredTiger available read tickets on {{ $labels.instance }} have dropped to {{ $value }}, which causes read requests to queue and latency to spike."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "mongodb_ss_wt_concurrentTransactions_available",
   "is_real_time": false,

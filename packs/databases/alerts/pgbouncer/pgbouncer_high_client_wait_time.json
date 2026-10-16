@@ -18,6 +18,7 @@
     "upstream_query": "pgbouncer_pools_client_maxwait_seconds > 15",
     "upstream_description": "The oldest queued client in pool {{ $labels.database }}/{{ $labels.user }} has been waiting {{ $value }}s for a server connection, which may indicate pool saturation or slow backend performance."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "pgbouncer_pools_client_maxwait_seconds",
   "is_real_time": false,

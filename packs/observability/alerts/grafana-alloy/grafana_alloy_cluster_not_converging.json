@@ -18,6 +18,7 @@
     "upstream_query": "stddev by (job) (sum without (state) (cluster_node_peers)) != 0",
     "upstream_description": "Alloy cluster nodes under job {{ $labels.job }} report a different number of peers, meaning the gossip-based cluster is not converging."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cluster_node_peers",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "sum without (pod, instance, server, zone, view, rcode, plugin) (rate(coredns_dns_responses_total{rcode=\"SERVFAIL\"}[5m])) / sum without (pod, instance, server, zone, view, rcode, plugin) (rate(coredns_dns_responses_total[5m])) > 0.03",
     "upstream_description": "CoreDNS is returning SERVFAIL for {{ $value | humanizePercentage }} of DNS responses, meaning a large share of client queries are failing to resolve."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "coredns_dns_responses_total",
   "is_real_time": false,

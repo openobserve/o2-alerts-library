@@ -18,6 +18,7 @@
     "upstream_query": "ceph_health_status == 2",
     "upstream_description": "Ceph cluster is in HEALTH_ERR state"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ceph_health_status",
   "is_real_time": false,

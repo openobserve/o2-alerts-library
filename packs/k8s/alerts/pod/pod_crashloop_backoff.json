@@ -2,6 +2,7 @@
   "id": "3DniwyICKA8iPPFCZKWLYPTOk7y",
   "name": "pod_crashloop_backoff",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_pod_container_status_waiting_reason",
   "is_real_time": false,

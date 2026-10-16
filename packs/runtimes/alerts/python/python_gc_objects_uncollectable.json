@@ -18,6 +18,7 @@
     "upstream_query": "increase(python_gc_objects_uncollectable_total[5m]) > 1",
     "upstream_description": "Python has uncollectable objects ({{ $value }}), potential memory leak via reference cycles"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "python_gc_objects_uncollectable_total",
   "is_real_time": false,

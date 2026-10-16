@@ -19,6 +19,7 @@
     "upstream_description": "{{ $value }} plugins need update",
     "period_clamped_from": "Upstream `for` is 1d (1440 minutes); the evaluation window is capped at 60 minutes. Widen trigger_condition.period if you want the full upstream window."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "jenkins_plugins_withUpdate",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "minio_cluster_health_erasure_set_status < 1",
     "upstream_description": "Minio erasure set has lost quorum, meaning MinIO can no longer guarantee reads or writes for objects in this pool/set until enough drives are restored."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "minio_cluster_health_erasure_set_status",
   "is_real_time": false,

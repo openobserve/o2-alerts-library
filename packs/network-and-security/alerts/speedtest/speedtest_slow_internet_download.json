@@ -18,6 +18,7 @@
     "upstream_query": "avg_over_time(speedtest_download[10m]) < 100",
     "upstream_description": "Internet download speed is currently {{humanize $value}} Mbps."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "speedtest_download",
   "is_real_time": false,

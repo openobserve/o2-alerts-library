@@ -18,6 +18,7 @@
     "upstream_query": "sum without (slab) (rate(memcached_slab_items_outofmemory_total[5m])) > 0.05",
     "upstream_description": "Memcached is returning out-of-memory errors on {{ $labels.instance }} ({{ $value }} errors/s)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "memcached_slab_items_outofmemory_total",
   "is_real_time": false,

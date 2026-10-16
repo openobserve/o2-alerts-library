@@ -18,6 +18,7 @@
     "upstream_query": "delta(cassandra_stats{name=\"org:apache:cassandra:metrics:connection:totaltimeouts:count\"}[1m]) > 5",
     "upstream_description": "Some connection between nodes are ending in timeout"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cassandra_stats",
   "is_real_time": false,

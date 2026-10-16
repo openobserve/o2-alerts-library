@@ -18,6 +18,7 @@
     "upstream_query": "rate(pg_txid_current[1m]) < 5",
     "upstream_description": "Postgresql seems to be consuming transaction IDs very slowly"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "pg_txid_current",
   "is_real_time": false,

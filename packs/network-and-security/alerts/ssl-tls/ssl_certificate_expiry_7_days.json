@@ -18,6 +18,7 @@
     "upstream_query": "ssl_verified_cert_not_after{chain_no=\"0\"} - time() < 86400 * 7",
     "upstream_description": "{{ $labels.instance }} Certificate is expiring in 7 days"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ssl_verified_cert_not_after",
   "is_real_time": false,

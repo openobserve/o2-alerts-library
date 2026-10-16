@@ -18,6 +18,7 @@
     "upstream_query": "rate(rabbitmq_exchange_messages_published_in_total{exchange=\"my-exchange\"}[1m]) < 5",
     "upstream_description": "Exchange receive less than 5 msgs per second"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "rabbitmq_exchange_messages_published_in_total",
   "is_real_time": false,

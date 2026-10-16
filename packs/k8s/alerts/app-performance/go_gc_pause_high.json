@@ -2,6 +2,7 @@
   "id": "3Dnovc9lnVMx1H6gvcRZbN01FYu",
   "name": "go_gc_pause_high",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "go_gc_duration_seconds_sum",
   "is_real_time": false,

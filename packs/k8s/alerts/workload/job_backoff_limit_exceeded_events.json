@@ -2,6 +2,7 @@
   "id": "3DnucQfDKpaYyJNgtLv1TlFVXkd",
   "name": "job_backoff_limit_exceeded_events",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "logs",
   "stream_name": "k8s_events",
   "is_real_time": false,

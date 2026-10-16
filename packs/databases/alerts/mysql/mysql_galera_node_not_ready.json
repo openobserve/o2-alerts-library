@@ -18,6 +18,7 @@
     "upstream_query": "mysql_global_status_wsrep_ready != 1",
     "upstream_description": "Galera cluster node {{ $labels.instance }} is not ready and is not accepting reads or writes."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "mysql_global_status_wsrep_ready",
   "is_real_time": false,

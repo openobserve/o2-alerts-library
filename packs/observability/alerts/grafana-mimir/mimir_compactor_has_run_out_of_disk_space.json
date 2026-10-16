@@ -18,6 +18,7 @@
     "upstream_query": "delta(cortex_compactor_disk_out_of_space_errors_total[24h]) >= 1",
     "upstream_description": "Mimir compactor {{ $labels.instance }} has run out of disk space."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cortex_compactor_disk_out_of_space_errors_total",
   "is_real_time": false,

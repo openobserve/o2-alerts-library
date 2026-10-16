@@ -18,6 +18,7 @@
     "upstream_query": "kube_resourcequota{type=\"used\"} / ignoring(type) (kube_resourcequota{type=\"hard\"} > 0) > 1",
     "upstream_description": "Namespace {{ $labels.namespace }} is using more of its {{ $labels.resource }} ResourceQuota than the configured hard limit ({{ $value | humanizePercentage }} of quota), indicating a misconfiguration or inconsistency between actual usage and the enforced quota."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_resourcequota",
   "is_real_time": false,

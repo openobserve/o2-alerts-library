@@ -18,6 +18,7 @@
     "upstream_query": "zk_ruok == 0",
     "upstream_description": "Zookeeper instance {{ $labels.instance }} is not ok (ruok check failed)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "zk_ruok",
   "is_real_time": false,

@@ -2,6 +2,7 @@
   "id": "3DnkfXsbLmdLBi1Nn8iLxFQnOQv",
   "name": "pvc_pending",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_persistentvolumeclaim_status_phase",
   "is_real_time": false,

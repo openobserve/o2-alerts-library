@@ -18,6 +18,7 @@
     "upstream_query": "rate(node_disk_io_time_weighted_seconds_total[5m]) > 10",
     "upstream_description": "Weighted disk I/O time on {{ $labels.instance }} indicates a growing request queue depth (similar to iostat's aqu-sz), a distinct saturation symptom from raw disk busy-time utilization."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "node_disk_io_time_weighted_seconds_total",
   "is_real_time": false,

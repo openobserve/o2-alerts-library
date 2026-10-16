@@ -18,6 +18,7 @@
     "upstream_query": "mysql_global_variables_innodb_force_recovery != 0",
     "upstream_description": "MySQL InnoDB force recovery is enabled on {{ $labels.instance }}"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "mysql_global_variables_innodb_force_recovery",
   "is_real_time": false,

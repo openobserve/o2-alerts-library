@@ -18,6 +18,7 @@
     "upstream_query": "rate(otelcol_exporter_send_failed_spans[5m]) > 0.05",
     "upstream_description": "OpenTelemetry Collector failing to send {{ $value | humanize }}/s spans via {{ $labels.exporter }}."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "otelcol_exporter_send_failed_spans",
   "is_real_time": false,

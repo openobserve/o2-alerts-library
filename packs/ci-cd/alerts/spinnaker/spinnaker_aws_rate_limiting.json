@@ -18,6 +18,7 @@
     "upstream_query": "amazonClientProvider_rateLimitDelayMil > 1000",
     "upstream_description": "Clouddriver is being rate-limited by AWS on {{ $labels.instance }} ({{ $value }}ms delay). Cloud operations will be slower."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "amazonClientProvider_rateLimitDelayMil",
   "is_real_time": false,

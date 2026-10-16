@@ -18,6 +18,7 @@
     "upstream_query": "pve_not_backed_up_total > 0",
     "upstream_description": "{{ $value }} Proxmox VE guest(s) are not covered by any backup job."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "pve_not_backed_up_total",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "max without(job,name)(hadoop_namenode_missingblocks) > 0",
     "upstream_description": "HDFS has one or more blocks with no surviving replica, meaning permanent data loss has occurred."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "hadoop_namenode_missingblocks",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "openstack_loadbalancer_loadbalancer_status{operating_status!=\"ONLINE\"} > 0",
     "upstream_description": "Load balancer {{ $labels.name }} ({{ $labels.id }}) operating status is {{ $labels.operating_status }}"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "openstack_loadbalancer_loadbalancer_status",
   "is_real_time": false,

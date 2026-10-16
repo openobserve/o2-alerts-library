@@ -18,6 +18,7 @@
     "upstream_query": "histogram_quantile(0.99, sum(rate(coredns_dns_request_duration_seconds_bucket[5m])) without (instance, pod)) > 4",
     "upstream_description": "CoreDNS 99th percentile request duration on server {{ $labels.server }} zone {{ $labels.zone }} is {{ $value }}s, indicating the resolver is overloaded or struggling to answer queries in time."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "coredns_dns_request_duration_seconds_bucket",
   "is_real_time": false,

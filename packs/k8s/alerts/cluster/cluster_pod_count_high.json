@@ -2,6 +2,7 @@
   "id": "3Dnk8Zgh4FCqj6ogJ6BF1m2EoYS",
   "name": "cluster_pod_count_high",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_pod_info",
   "is_real_time": false,

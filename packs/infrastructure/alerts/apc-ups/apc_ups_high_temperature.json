@@ -18,6 +18,7 @@
     "upstream_query": "apcupsd_internal_temperature_celsius >= 40",
     "upstream_description": "Internal temperature is high ({{$value}}°C)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "apcupsd_internal_temperature_celsius",
   "is_real_time": false,

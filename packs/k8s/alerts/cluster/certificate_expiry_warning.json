@@ -2,6 +2,7 @@
   "id": "3Dnrk3Vz0WBqwRFoZHQswUNBjUR",
   "name": "certificate_expiry_warning",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "apiserver_client_certificate_expiration_seconds_bucket",
   "is_real_time": false,

@@ -2,6 +2,7 @@
   "id": "3DnlEdCZPeETt8MpH7pBaN83LHP",
   "name": "service_no_ready_endpoints",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_endpoint_address",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "digitalocean_loadbalancer_status == 0",
     "upstream_description": "DigitalOcean load balancer {{ $labels.name }} ({{ $labels.ip }}) is not active."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "digitalocean_loadbalancer_status",
   "is_real_time": false,

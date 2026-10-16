@@ -18,6 +18,7 @@
     "upstream_query": "(mongodb_rs_members_optimeDate{member_state=\"PRIMARY\"} - on (set) group_right mongodb_rs_members_optimeDate{member_state=\"SECONDARY\"}) / 1000 > 30",
     "upstream_description": "Mongodb replication lag is more than 30s"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "mongodb_rs_members_optimeDate",
   "is_real_time": false,

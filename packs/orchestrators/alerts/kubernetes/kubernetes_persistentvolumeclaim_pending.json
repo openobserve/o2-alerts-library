@@ -18,6 +18,7 @@
     "upstream_query": "kube_persistentvolumeclaim_status_phase{phase=\"Pending\"} == 1",
     "upstream_description": "PersistentVolumeClaim {{ $labels.namespace }}/{{ $labels.persistentvolumeclaim }} is pending"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_persistentvolumeclaim_status_phase",
   "is_real_time": false,

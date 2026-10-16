@@ -18,6 +18,7 @@
     "upstream_query": "kube_daemonset_status_number_misscheduled > 0",
     "upstream_description": "Some Pods of DaemonSet {{ $labels.namespace }}/{{ $labels.daemonset }} are running where they are not supposed to run"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_daemonset_status_number_misscheduled",
   "is_real_time": false,

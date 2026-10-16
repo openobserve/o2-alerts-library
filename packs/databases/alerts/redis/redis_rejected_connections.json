@@ -18,6 +18,7 @@
     "upstream_query": "increase(redis_rejected_connections_total[1m]) > 5",
     "upstream_description": "Some connections to Redis has been rejected"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "redis_rejected_connections_total",
   "is_real_time": false,

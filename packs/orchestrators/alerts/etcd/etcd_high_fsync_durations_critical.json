@@ -18,6 +18,7 @@
     "upstream_query": "histogram_quantile(0.99, sum(rate(etcd_disk_wal_fsync_duration_seconds_bucket[5m])) by (instance, le)) > 1",
     "upstream_description": "Etcd WAL fsync duration is critically high, 99th percentile is over 1s, which can cause request timeouts and trigger leader elections."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "etcd_disk_wal_fsync_duration_seconds_bucket",
   "is_real_time": false,

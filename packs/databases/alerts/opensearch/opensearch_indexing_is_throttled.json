@@ -18,6 +18,7 @@
     "upstream_query": "opensearch_indices_indexing_is_throttled_bool > 0",
     "upstream_description": "Indexing on OpenSearch cluster {{ $labels.cluster }} is throttled"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "opensearch_indices_indexing_is_throttled_bool",
   "is_real_time": false,

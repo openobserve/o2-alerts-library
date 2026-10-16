@@ -18,6 +18,7 @@
     "upstream_query": "sum(rate(cilium_policy_change_total{outcome=\"fail\"}[5m])) by (pod) > 0.05",
     "upstream_description": "Cilium agent {{ $labels.pod }} is failing to import network policies. Policy enforcement may be incomplete."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cilium_policy_change_total",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "cassandra_stats{name=\"org:apache:cassandra:metrics:compaction:pendingtasks:value\"} > 100",
     "upstream_description": "Many Cassandra compaction tasks are pending. You might need to increase I/O capacity by adding nodes to the cluster."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cassandra_stats",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "increase(memcached_connections_rejected_total[5m]) > 3",
     "upstream_description": "Memcached is rejecting connections on {{ $labels.instance }} ({{ $value }} rejections in the last 5m)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "memcached_connections_rejected_total",
   "is_real_time": false,

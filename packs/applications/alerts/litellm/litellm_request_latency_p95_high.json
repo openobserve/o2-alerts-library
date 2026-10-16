@@ -18,6 +18,7 @@
     "upstream_query": "histogram_quantile(0.95, sum(rate(litellm_request_total_latency_metric_bucket[5m])) by (le)) > 10",
     "upstream_description": "LiteLLM request total latency p95 exceeds 10 seconds over 5min. Check downstream LLM provider response-times and proxy queue-depth."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "litellm_request_total_latency_metric_bucket",
   "is_real_time": false,

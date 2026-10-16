@@ -18,6 +18,7 @@
     "upstream_query": "increase(envoy_listener_downstream_cx_overflow[5m]) > 5",
     "upstream_description": "Downstream connections are being rejected due to listener overflow on {{ $labels.instance }} ({{ $value }} in the last 5m)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "envoy_listener_downstream_cx_overflow",
   "is_real_time": false,

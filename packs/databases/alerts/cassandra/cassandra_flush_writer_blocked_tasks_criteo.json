@@ -18,6 +18,7 @@
     "upstream_query": "cassandra_stats{name=\"org:apache:cassandra:metrics:threadpools:internal:memtableflushwriter:currentlyblockedtasks:count\"} > 0",
     "upstream_description": "Some Cassandra flush writer tasks are blocked"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cassandra_stats",
   "is_real_time": false,

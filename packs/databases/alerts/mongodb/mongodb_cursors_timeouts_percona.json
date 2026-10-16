@@ -18,6 +18,7 @@
     "upstream_query": "increase(mongodb_ss_metrics_cursor_timedOut[1m]) > 100",
     "upstream_description": "Too many cursors are timing out ({{ $value }} in the last minute)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "mongodb_ss_metrics_cursor_timedOut",
   "is_real_time": false,

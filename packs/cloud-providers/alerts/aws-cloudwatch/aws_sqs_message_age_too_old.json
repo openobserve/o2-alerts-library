@@ -18,6 +18,7 @@
     "upstream_query": "aws_sqs_approximate_age_of_oldest_message_maximum offset 10m > 3600",
     "upstream_description": "SQS queue {{ $labels.queue_name }} has messages older than 1 hour ({{ $value }}s)."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "aws_sqs_approximate_age_of_oldest_message_maximum",
   "is_real_time": false,

@@ -2,6 +2,7 @@
   "id": "3DnowSMEUo70Ski1pY99T7vTgMA",
   "name": "controller_queue_processing_slow",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "workqueue_queue_duration_seconds_bucket",
   "is_real_time": false,

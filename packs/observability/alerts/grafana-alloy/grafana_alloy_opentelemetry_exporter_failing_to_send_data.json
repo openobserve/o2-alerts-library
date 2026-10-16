@@ -18,6 +18,7 @@
     "upstream_query": "(1 - (sum by (job) (rate({__name__=~\"otelcol_exporter_send_failed_(spans|metric_points|log_records)_total\"}[1m])) / (sum by (job) (rate({__name__=~\"otelcol_exporter_send_failed_(spans|metric_points|log_records)_total\"}[1m])) + sum by (job) (rate({__name__=~\"otelcol_exporter_sent_(spans|metric_points|log_records)_total\"}[1m]))))) < 0.95",
     "upstream_description": "The OpenTelemetry exporter in Alloy under job {{ $labels.job }} has a success rate below 95% for sending spans, metrics, or logs to their destination, meaning telemetry data delivery is failing, possibly due to a payload issue or an unreachable endpoint."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "otelcol_exporter_send_failed_spans_total",
   "is_real_time": false,

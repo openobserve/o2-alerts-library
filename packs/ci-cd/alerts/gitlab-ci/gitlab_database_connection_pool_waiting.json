@@ -18,6 +18,7 @@
     "upstream_query": "gitlab_database_connection_pool_waiting > 0",
     "upstream_description": "GitLab on {{ $labels.instance }} has {{ $value }} threads waiting for a database connection."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "gitlab_database_connection_pool_waiting",
   "is_real_time": false,

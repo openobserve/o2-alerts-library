@@ -18,6 +18,7 @@
     "upstream_query": "count(count_values(\"config_hash\", alertmanager_config_hash)) > 1",
     "upstream_description": "Configurations of AlertManager cluster instances are out of sync"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "alertmanager_config_hash",
   "is_real_time": false,

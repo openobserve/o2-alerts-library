@@ -18,6 +18,7 @@
     "upstream_query": "increase(solr_metrics_core_errors_total{category=\"REPLICATION\"}[1m]) > 1",
     "upstream_description": "Solr collection {{ $labels.collection }} has replication errors for replica {{ $labels.replica }} on {{ $labels.base_url }}."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "solr_metrics_core_errors_total",
   "is_real_time": false,

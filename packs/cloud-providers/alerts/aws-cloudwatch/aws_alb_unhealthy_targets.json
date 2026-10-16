@@ -18,6 +18,7 @@
     "upstream_query": "aws_applicationelb_unhealthy_host_count_average offset 10m > 0",
     "upstream_description": "ALB {{ $labels.load_balancer }} has {{ $value }} unhealthy target(s) in target group {{ $labels.target_group }}."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "aws_applicationelb_unhealthy_host_count_average",
   "is_real_time": false,

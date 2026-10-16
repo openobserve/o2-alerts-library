@@ -18,6 +18,7 @@
     "upstream_query": "rate(ruby_allocated_objects_total[5m]) > 100000",
     "upstream_description": "Ruby is allocating objects at a high rate"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ruby_allocated_objects_total",
   "is_real_time": false,

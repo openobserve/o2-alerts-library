@@ -18,6 +18,7 @@
     "upstream_query": "digitalocean_database_status == 0",
     "upstream_description": "DigitalOcean managed database {{ $labels.name }} ({{ $labels.engine }}) in {{ $labels.region }} is offline."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "digitalocean_database_status",
   "is_real_time": false,

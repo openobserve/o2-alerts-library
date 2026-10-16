@@ -18,6 +18,7 @@
     "upstream_query": "lvm_vg_missing_pv_count > 0",
     "upstream_description": "OpenEBS LVM LocalPV volume group {{ $labels.instance }} is missing {{ $value }} underlying physical volume(s), which puts data at risk of loss."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "lvm_vg_missing_pv_count",
   "is_real_time": false,

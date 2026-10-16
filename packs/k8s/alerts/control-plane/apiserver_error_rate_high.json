@@ -2,6 +2,7 @@
   "id": "3DnmR95FBUGoPi9hljyFPDREswn",
   "name": "apiserver_error_rate_high",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "apiserver_request_total",
   "is_real_time": false,

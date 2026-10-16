@@ -18,6 +18,7 @@
     "upstream_query": "sum(rate(cilium_datapath_conntrack_gc_runs_total{status=\"uncompleted\"}[5m])) by (pod) > 0.05",
     "upstream_description": "Cilium agent {{ $labels.pod }} conntrack garbage collection is failing. Stale entries may accumulate."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cilium_datapath_conntrack_gc_runs_total",
   "is_real_time": false,

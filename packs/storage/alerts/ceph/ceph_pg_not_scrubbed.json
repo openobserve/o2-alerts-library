@@ -18,6 +18,7 @@
     "upstream_query": "ceph_health_detail{name=\"PG_NOT_SCRUBBED\"} == 1",
     "upstream_description": "One or more placement groups have missed their scrub interval, which checks metadata integrity and consistency across replicas. Run 'ceph pg scrub <pgid>' to trigger manually."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ceph_health_detail",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "increase(gnatsd_varz_jetstream_stats_api_errors[5m]) > 5",
     "upstream_description": "NATS server has encountered {{ $value }} JetStream API errors in the last 5 minutes"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "gnatsd_varz_jetstream_stats_api_errors",
   "is_real_time": false,

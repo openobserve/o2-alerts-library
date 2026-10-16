@@ -18,6 +18,7 @@
     "upstream_query": "nomad_nomad_blocked_evals_total_blocked > 0",
     "upstream_description": "Nomad has {{ $value }} blocked evaluations. The cluster may lack resources to place allocations."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "nomad_nomad_blocked_evals_total_blocked",
   "is_real_time": false,

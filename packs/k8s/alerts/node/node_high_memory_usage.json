@@ -2,6 +2,7 @@
   "id": "3DnRik2Keh3M0Y1TsAQkHAnm8Sp",
   "name": "node_high_memory_usage",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "k8s_node_memory_usage",
   "is_real_time": false,

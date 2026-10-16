@@ -18,6 +18,7 @@
     "upstream_query": "increase(ClickHouseErrorMetric_RESOURCE_ACCESS_DENIED[5m]) > 3",
     "upstream_description": "Access denied errors have been logged, which could indicate permission issues or unauthorized access attempts."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ClickHouseErrorMetric_RESOURCE_ACCESS_DENIED",
   "is_real_time": false,

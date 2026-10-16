@@ -18,6 +18,7 @@
     "upstream_query": "ethereum_chain_head_number - ignoring(deployment,shard) group_right(deployment,shard) deployment_head > 100",
     "upstream_description": "Subgraph deployment `{{$labels.deployment}}` is more than 100 blocks behind the `{{$labels.network}}` chain head in Graph node `{{$labels.instance}}`, indicating indexing is stalled or too slow to keep up with new blocks."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ethereum_chain_head_number",
   "is_real_time": false,

@@ -2,6 +2,7 @@
   "id": "3DnoHWMuUAI2KOTENN1GUHTSwxq",
   "name": "container_memory_over_provisioned",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "k8s_pod_memory_request_utilization",
   "is_real_time": false,

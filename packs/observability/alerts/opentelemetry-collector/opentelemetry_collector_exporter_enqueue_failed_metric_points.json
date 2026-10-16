@@ -18,6 +18,7 @@
     "upstream_query": "rate(otelcol_exporter_enqueue_failed_metric_points_total[5m]) > 0.05",
     "upstream_description": "OpenTelemetry Collector exporter {{ $labels.exporter }} is dropping {{ $value | humanize }}/s metric points because its sending queue is full and rejects new items before they can be queued."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "otelcol_exporter_enqueue_failed_metric_points_total",
   "is_real_time": false,

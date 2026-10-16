@@ -18,6 +18,7 @@
     "upstream_query": "sum by (job, instance) (rate(thanos_objstore_bucket_operation_failures_total{job=~\".*thanos-sidecar.*\"}[5m])) > 0.05",
     "upstream_description": "Thanos Sidecar {{$labels.instance}} bucket operations are failing ({{ $value | humanize }}/s)."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "thanos_objstore_bucket_operation_failures_total",
   "is_real_time": false,

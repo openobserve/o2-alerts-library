@@ -1,0 +1,44 @@
+{
+  "name": "traces_server_request_drop_anomaly",
+  "title": "Server request volume dropped",
+  "severity": "warning",
+  "description": "The number of SERVER spans per five-minute bucket across the whole traces stream is below its learned weekday/weekend hour-of-day band in at least 2 of the last 3 buckets. Unit: spans per 5 minutes. Whole stream; add a service_name filter after install for a per-service alert (one config per service). Needs applications sending OpenTelemetry traces to the traces stream named default.",
+  "tags": [
+    "anomaly",
+    "traces",
+    "traffic"
+  ],
+  "source": {
+    "project": "openobserve",
+    "license": "CC-BY-4.0",
+    "inspired_by": [
+      "newrelic-quickstarts alert-policies/browser/Throughput.yml (Apache-2.0)",
+      "newrelic-quickstarts alert-policies/browser/AjaxThroughput.yml (Apache-2.0)",
+      "grafana/promql-anomaly-detection rules/adaptive.yml (Apache-2.0)"
+    ]
+  },
+  "alert_type": "anomaly_detection",
+  "stream_type": "traces",
+  "stream_name": "default",
+  "enabled": true,
+  "anomaly_config": {
+    "query_mode": "filters",
+    "filters": [
+      {
+        "field": "span_kind",
+        "operator": "=",
+        "value": "2"
+      }
+    ],
+    "detection_function": "count",
+    "histogram_interval": "5m",
+    "schedule_interval": "5m",
+    "detection_window_seconds": 900,
+    "training_window_days": 28,
+    "retrain_interval_days": 7,
+    "alert_direction": "below",
+    "alert_window_buckets": 3,
+    "alert_window_fire_pct": 60,
+    "alert_window_recover_pct": 34
+  }
+}

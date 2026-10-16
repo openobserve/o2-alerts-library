@@ -18,6 +18,7 @@
     "upstream_query": "avg_over_time(probe_success{job=\"blackbox-exporter\"}[30d]) * 100 < 99.9",
     "upstream_description": "Blackbox probe has had lower uptime than 99.9% over the last 30 days, which may indicate cumulative outages or repeated flapping not caught by immediate down alerts."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "probe_success",
   "is_real_time": false,

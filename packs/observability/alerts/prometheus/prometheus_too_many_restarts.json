@@ -18,6 +18,7 @@
     "upstream_query": "changes(process_start_time_seconds{job=~\"prometheus|pushgateway|alertmanager\"}[15m]) > 2",
     "upstream_description": "Prometheus has restarted more than twice in the last 15 minutes. It might be crashlooping."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "process_start_time_seconds",
   "is_real_time": false,

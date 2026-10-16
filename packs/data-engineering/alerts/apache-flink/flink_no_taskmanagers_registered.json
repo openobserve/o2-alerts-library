@@ -18,6 +18,7 @@
     "upstream_query": "flink_jobmanager_numRegisteredTaskManagers == 0",
     "upstream_description": "No TaskManagers are registered with the JobManager. The cluster has no processing capacity."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "flink_jobmanager_numRegisteredTaskManagers",
   "is_real_time": false,

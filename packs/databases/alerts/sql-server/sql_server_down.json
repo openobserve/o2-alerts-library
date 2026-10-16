@@ -18,6 +18,7 @@
     "upstream_query": "mssql_up == 0",
     "upstream_description": "SQL server instance is down"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "mssql_up",
   "is_real_time": false,

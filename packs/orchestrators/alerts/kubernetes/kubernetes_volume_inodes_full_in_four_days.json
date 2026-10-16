@@ -18,6 +18,7 @@
     "upstream_query": "predict_linear(kubelet_volume_stats_inodes_free[6h:5m], 4 * 24 * 3600) < 0",
     "upstream_description": "PersistentVolume claimed by {{ $labels.namespace }}/{{ $labels.persistentvolumeclaim }} is expected to run out of free inodes within four days at the current rate."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kubelet_volume_stats_inodes_free",
   "is_real_time": false,

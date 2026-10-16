@@ -18,6 +18,7 @@
     "upstream_query": "sum(rate(cilium_drop_count_total{reason=\"No mapping for NAT masquerade\"}[1m])) by (pod) > 0",
     "upstream_description": "Cilium agent {{ $labels.pod }} NAT table is full, causing masquerade failures. Increase NAT map size or investigate."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cilium_drop_count_total",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "(increase(node_vmstat_oom_kill[30m]) > 0)",
     "upstream_description": "OOM kill detected"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "node_vmstat_oom_kill",
   "is_real_time": false,

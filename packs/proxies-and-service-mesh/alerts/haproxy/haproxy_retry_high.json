@@ -18,6 +18,7 @@
     "upstream_query": "sum by (proxy) (rate(haproxy_backend_retry_warnings_total[1m])) > 10",
     "upstream_description": "High rate of retry on {{ $labels.proxy }} - {{ $value | printf \"%.2f\"}}"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "haproxy_backend_retry_warnings_total",
   "is_real_time": false,

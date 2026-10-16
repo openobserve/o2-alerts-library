@@ -18,6 +18,7 @@
     "upstream_query": "deriv(flink_taskmanager_Status_JVM_GarbageCollector_All_Time[5m]) > 100",
     "upstream_description": "Flink TaskManager {{ $labels.instance }} is spending more than 10% of time in garbage collection."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "flink_taskmanager_Status_JVM_GarbageCollector_All_Time",
   "is_real_time": false,

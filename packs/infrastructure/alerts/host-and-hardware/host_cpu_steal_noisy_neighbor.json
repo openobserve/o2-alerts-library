@@ -18,6 +18,7 @@
     "upstream_query": "avg without (cpu) (rate(node_cpu_seconds_total{mode=\"steal\"}[5m])) * 100 > 10",
     "upstream_description": "CPU steal is > 10%. A noisy neighbor is killing VM performances or a spot instance may be out of credit."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "node_cpu_seconds_total",
   "is_real_time": false,

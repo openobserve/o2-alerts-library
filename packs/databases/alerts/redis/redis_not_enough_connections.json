@@ -18,6 +18,7 @@
     "upstream_query": "redis_connected_clients < 5",
     "upstream_description": "Redis instance should have more connections (> 5)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "redis_connected_clients",
   "is_real_time": false,

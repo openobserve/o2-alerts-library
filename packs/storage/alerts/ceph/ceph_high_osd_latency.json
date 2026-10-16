@@ -18,6 +18,7 @@
     "upstream_query": "ceph_osd_apply_latency_ms > 5000",
     "upstream_description": "Ceph Object Storage Daemon latency is high. Please check if it doesn't stuck in weird state."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ceph_osd_apply_latency_ms",
   "is_real_time": false,

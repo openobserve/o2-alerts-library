@@ -2,6 +2,7 @@
   "id": "3DnubCLcF7bJyTjn7E0WM9vYeqZ",
   "name": "pod_unhealthy_probe_events",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "logs",
   "stream_name": "k8s_events",
   "is_real_time": false,

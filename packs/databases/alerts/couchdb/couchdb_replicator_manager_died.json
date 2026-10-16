@@ -18,6 +18,7 @@
     "upstream_query": "increase(couchdb_replicator_changes_manager_deaths[5m]) > 0",
     "upstream_description": "Replication manager process has crashed"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "couchdb_replicator_changes_manager_deaths",
   "is_real_time": false,

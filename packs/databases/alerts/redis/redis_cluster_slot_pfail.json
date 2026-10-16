@@ -18,6 +18,7 @@
     "upstream_query": "redis_cluster_slots_pfail > 0",
     "upstream_description": "Some hash slots of the Redis Cluster are tentatively marked as PFAIL (possibly failing), an early warning sign of node problems before they escalate to a hard FAIL state."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "redis_cluster_slots_pfail",
   "is_real_time": false,

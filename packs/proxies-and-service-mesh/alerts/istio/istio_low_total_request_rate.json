@@ -18,6 +18,7 @@
     "upstream_query": "sum(rate(istio_requests_total{reporter=\"destination\"}[5m])) < 100",
     "upstream_description": "Global request rate in the service mesh is unusually low ({{ $value | printf \"%.2f\" }} req/s)."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "istio_requests_total",
   "is_real_time": false,

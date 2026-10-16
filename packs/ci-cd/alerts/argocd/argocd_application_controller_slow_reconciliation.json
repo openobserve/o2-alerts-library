@@ -18,6 +18,7 @@
     "upstream_query": "histogram_quantile(0.95, sum(rate(argocd_app_reconcile_bucket[5m])) by (le)) > 60",
     "upstream_description": "The 95th percentile application reconciliation duration is above 60 seconds, which can delay drift detection and slow down sync operations across the cluster."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "argocd_app_reconcile_bucket",
   "is_real_time": false,

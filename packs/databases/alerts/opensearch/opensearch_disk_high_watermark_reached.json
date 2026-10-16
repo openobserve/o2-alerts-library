@@ -18,6 +18,7 @@
     "upstream_query": "sum by (cluster, instance, node) (round((1 - (opensearch_fs_path_available_bytes / opensearch_fs_path_total_bytes)) * 100, 0.001)) > 90",
     "upstream_description": "Disk usage on OpenSearch node {{ $labels.node }} (cluster {{ $labels.cluster }}) is above the high watermark (90%): OpenSearch will start relocating existing shards away from this node."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "opensearch_fs_path_available_bytes",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "ClickHouseMetrics_InterserverConnection > 50",
     "upstream_description": "High number of interserver connections may indicate replication or distributed query handling issues."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ClickHouseMetrics_InterserverConnection",
   "is_real_time": false,

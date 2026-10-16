@@ -18,6 +18,7 @@
     "upstream_query": "sum without (pod, instance) (rate(coredns_forward_healthcheck_broken_total[5m])) > 0",
     "upstream_description": "CoreDNS health checks have failed for every configured upstream server, meaning forwarded DNS queries can no longer be resolved."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "coredns_forward_healthcheck_broken_total",
   "is_real_time": false,

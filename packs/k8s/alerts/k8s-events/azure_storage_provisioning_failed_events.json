@@ -2,6 +2,7 @@
   "id": "3DnuhTefhbhgWIvvkbagAjL338s",
   "name": "azure_storage_provisioning_failed_events",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "logs",
   "stream_name": "k8s_events",
   "is_real_time": false,

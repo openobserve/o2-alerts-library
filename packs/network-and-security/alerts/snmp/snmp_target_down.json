@@ -18,6 +18,7 @@
     "upstream_query": "up{job=~\"snmp.*\"} == 0",
     "upstream_description": "SNMP device {{ $labels.instance }} is unreachable."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "up",
   "is_real_time": false,

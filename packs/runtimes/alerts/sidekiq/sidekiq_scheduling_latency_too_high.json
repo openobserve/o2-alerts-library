@@ -18,6 +18,7 @@
     "upstream_query": "max(sidekiq_queue_latency_seconds) > 60",
     "upstream_description": "Sidekiq jobs are taking more than 1min to be picked up. Users may be seeing delays in background processing."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "sidekiq_queue_latency_seconds",
   "is_real_time": false,

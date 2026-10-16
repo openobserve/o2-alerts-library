@@ -1,0 +1,38 @@
+{
+  "name": "logs_stderr_ratio_anomaly",
+  "title": "Share of stderr log lines is unusually high",
+  "severity": "info",
+  "description": "Share of pod log lines written to stderr (log_iostream = 'stderr') is above its learned band in at least 2 of the last 3 five-minute buckets; the collector parses no log level, so stderr is the available error proxy. Unit: ratio 0-1. Ratios are floored at 1% (0.01) and buckets with fewer than 100 lines report the floor. Edit the two constants in custom_sql to tune. Whole stream; add a WHERE clause on k8s_cluster or k8s_namespace_name after install for a per-entity alert (one config per entity). Requires the log_iostream attribute set by the OpenObserve collector's filelog receiver; on a logs stream without it, training fails with 'No field named log_iostream' and keeps retrying.",
+  "tags": [
+    "anomaly",
+    "logs",
+    "errors"
+  ],
+  "source": {
+    "project": "openobserve",
+    "license": "CC-BY-4.0",
+    "inspired_by": [
+      "splunk/security_content detections/endpoint/excessive_usage_of_nslookup_app.yml floor-plus-sigma pattern (Apache-2.0)",
+      "newrelic-quickstarts alert-policies/roku/HTTPErrors.yml (Apache-2.0)"
+    ]
+  },
+  "alert_type": "anomaly_detection",
+  "stream_type": "logs",
+  "stream_name": "default",
+  "enabled": true,
+  "anomaly_config": {
+    "query_mode": "custom_sql",
+    "custom_sql": "SELECT histogram(_timestamp, '5m') AS time_bucket, CASE WHEN COUNT(*) < 100 THEN 0.01 ELSE GREATEST(CAST(SUM(CASE WHEN log_iostream = 'stderr' THEN 1 ELSE 0 END) AS DOUBLE) / CAST(COUNT(*) AS DOUBLE), 0.01) END AS stderr_ratio FROM \"default\" GROUP BY time_bucket ORDER BY time_bucket",
+    "detection_function": "avg",
+    "detection_function_field": "stderr_ratio",
+    "histogram_interval": "5m",
+    "schedule_interval": "5m",
+    "detection_window_seconds": 900,
+    "training_window_days": 28,
+    "retrain_interval_days": 7,
+    "alert_direction": "above",
+    "alert_window_buckets": 3,
+    "alert_window_fire_pct": 60,
+    "alert_window_recover_pct": 34
+  }
+}

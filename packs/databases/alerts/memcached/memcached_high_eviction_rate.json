@@ -18,6 +18,7 @@
     "upstream_query": "rate(memcached_items_evicted_total[5m]) > 10",
     "upstream_description": "Memcached is evicting items at a high rate on {{ $labels.instance }} ({{ $value }} evictions/s)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "memcached_items_evicted_total",
   "is_real_time": false,

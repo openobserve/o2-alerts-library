@@ -18,6 +18,7 @@
     "upstream_query": "rate(jaeger_agent_thrift_udp_server_packets_dropped_total[1m]) > 1",
     "upstream_description": "Jaeger agent on {{ $labels.instance }} is dropping UDP packets on its Thrift-compact span ingestion server ({{ $value }} packets/s), meaning spans are lost before they reach the collector."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "jaeger_agent_thrift_udp_server_packets_dropped_total",
   "is_real_time": false,

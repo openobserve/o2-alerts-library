@@ -18,6 +18,7 @@
     "upstream_query": "count(count(rabbitmq_build_info) by (rabbitmq_version)) > 1",
     "upstream_description": "Running different version of RabbitMQ in the same cluster, can lead to failure."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "rabbitmq_build_info",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "sum by (instance)(rate(jvm_gc_collection_seconds_sum[5m])) > 0.05",
     "upstream_description": "JVM is spending too much time in garbage collection (> 5% of wall clock time)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "jvm_gc_collection_seconds_sum",
   "is_real_time": false,

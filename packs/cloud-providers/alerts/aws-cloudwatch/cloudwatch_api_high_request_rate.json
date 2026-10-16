@@ -18,6 +18,7 @@
     "upstream_query": "sum by (instance, namespace) (rate(cloudwatch_requests_total[5m])) * 60 > 100",
     "upstream_description": "CloudWatch exporter on {{ $labels.instance }} is making {{ $value }} API calls per minute to namespace {{ $labels.namespace }}. This can lead to high AWS costs."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cloudwatch_requests_total",
   "is_real_time": false,

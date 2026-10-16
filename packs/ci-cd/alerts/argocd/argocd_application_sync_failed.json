@@ -18,6 +18,7 @@
     "upstream_query": "sum(increase(argocd_app_sync_total{phase!=\"Succeeded\"}[10m])) by (name, phase, project) > 0",
     "upstream_description": "ArgoCD application {{ $labels.name }} failed to sync (phase {{ $labels.phase }}) in project {{ $labels.project }}, check the application controller logs for the root cause."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "argocd_app_sync_total",
   "is_real_time": false,

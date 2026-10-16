@@ -17,6 +17,7 @@
     "upstream_query": "rate(namedprocess_namegroup_cpu_seconds_total[5m]) * 100 > 80",
     "upstream_description": "Process group {{ $labels.groupname }} is using {{ $value }}% CPU (core-equivalent). (instance {{ $labels.instance }})"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "namedprocess_namegroup_cpu_seconds_total",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "rate(mysql_global_status_innodb_log_waits[15m]) > 10",
     "upstream_description": "MySQL innodb log writes stalling ({{ $value }} waits/s)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "mysql_global_status_innodb_log_waits",
   "is_real_time": false,

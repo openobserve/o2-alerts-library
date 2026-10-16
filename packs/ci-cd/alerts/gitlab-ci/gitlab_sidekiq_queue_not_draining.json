@@ -18,6 +18,7 @@
     "upstream_query": "sum by (name) (sidekiq_queue_size) > 0",
     "upstream_description": "GitLab Sidekiq queue {{ $labels.name }} has had a persistent backlog of {{ $value }} jobs for 30 minutes, suggesting a stuck or crashed worker class rather than transient load."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "sidekiq_queue_size",
   "is_real_time": false,

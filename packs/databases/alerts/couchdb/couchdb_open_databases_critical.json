@@ -18,6 +18,7 @@
     "upstream_query": "couchdb_httpd_open_databases > 0.9 * 1000",
     "upstream_description": "Number of open databases exceeds 90% of node capacity"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "couchdb_httpd_open_databases",
   "is_real_time": false,

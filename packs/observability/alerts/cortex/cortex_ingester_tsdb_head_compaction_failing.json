@@ -18,6 +18,7 @@
     "upstream_query": "rate(cortex_ingester_tsdb_compactions_failed_total[5m]) > 0.05",
     "upstream_description": "Cortex ingester {{ $labels.instance }} is failing to compact its TSDB head into a block, which should never happen repeatedly and may lead to unbounded memory growth."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cortex_ingester_tsdb_compactions_failed_total",
   "is_real_time": false,

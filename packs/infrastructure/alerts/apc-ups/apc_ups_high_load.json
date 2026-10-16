@@ -18,6 +18,7 @@
     "upstream_query": "apcupsd_ups_load_percent > 80",
     "upstream_description": "UPS load is > 80%"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "apcupsd_ups_load_percent",
   "is_real_time": false,

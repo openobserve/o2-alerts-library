@@ -2,6 +2,7 @@
   "id": "3DnjUJcfXdGV8m5AAlrdePKrOsH",
   "name": "container_memory_near_limit",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "k8s_pod_memory_limit_utilization",
   "is_real_time": false,

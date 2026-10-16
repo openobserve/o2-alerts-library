@@ -18,6 +18,7 @@
     "upstream_query": "cilium_bpf_map_pressure{} > 0.9",
     "upstream_description": "Cilium agent {{ $labels.pod }} eBPF map {{ $labels.map_name }} is above 90% utilization. Map may become full."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cilium_bpf_map_pressure",
   "is_real_time": false,

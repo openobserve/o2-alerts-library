@@ -18,6 +18,7 @@
     "upstream_query": "increase(prometheus_rule_evaluation_failures_total[3m]) > 0",
     "upstream_description": "Prometheus encountered {{ $value }} rule evaluation failures, leading to potentially ignored alerts."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "prometheus_rule_evaluation_failures_total",
   "is_real_time": false,

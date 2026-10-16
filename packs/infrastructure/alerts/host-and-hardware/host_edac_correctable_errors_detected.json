@@ -18,6 +18,7 @@
     "upstream_query": "(increase(node_edac_correctable_errors_total[1m]) > 0)",
     "upstream_description": "Host {{ $labels.instance }} has had {{ printf \"%.0f\" $value }} correctable memory errors reported by EDAC in the last 1 minute."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "node_edac_correctable_errors_total",
   "is_real_time": false,

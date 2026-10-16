@@ -18,6 +18,7 @@
     "upstream_query": "go_memstats_heap_objects > 10000000",
     "upstream_description": "Go heap has too many live objects (> 10M), high GC pressure"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "go_memstats_heap_objects",
   "is_real_time": false,

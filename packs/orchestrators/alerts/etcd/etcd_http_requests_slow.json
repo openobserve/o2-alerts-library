@@ -18,6 +18,7 @@
     "upstream_query": "histogram_quantile(0.99, rate(etcd_http_successful_duration_seconds_bucket[1m])) > 0.15",
     "upstream_description": "HTTP requests slowing down, 99th percentile is over 0.15s"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "etcd_http_successful_duration_seconds_bucket",
   "is_real_time": false,

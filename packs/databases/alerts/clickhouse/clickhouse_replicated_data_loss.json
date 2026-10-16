@@ -18,6 +18,7 @@
     "upstream_query": "increase(ClickHouseProfileEvents_ReplicatedDataLoss[1m]) > 0",
     "upstream_description": "A wanted data part does not exist on any replica, including offline ones, indicating actual data loss on {{ $labels.instance }}."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ClickHouseProfileEvents_ReplicatedDataLoss",
   "is_real_time": false,

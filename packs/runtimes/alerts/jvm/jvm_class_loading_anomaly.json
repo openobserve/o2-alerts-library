@@ -18,6 +18,7 @@
     "upstream_query": "rate(jvm_classes_loaded_total[5m]) > 100",
     "upstream_description": "Rapid class loading detected, potential classloader leak"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "jvm_classes_loaded_total",
   "is_real_time": false,

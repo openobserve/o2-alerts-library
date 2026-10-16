@@ -18,6 +18,7 @@
     "upstream_query": "sum(rate(cilium_operator_ipam_interface_creation_ops[5m])) by () > 0.05",
     "upstream_description": "Cilium operator is creating IPAM network interfaces at a high rate. This indicates churn and may correlate with IPAM issues depending on your Cilium version."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cilium_operator_ipam_interface_creation_ops",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "increase(memcached_item_too_large_total[5m]) > 3",
     "upstream_description": "Memcached is rejecting items exceeding max-item-size on {{ $labels.instance }} ({{ $value }} rejections in the last 5m)"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "memcached_item_too_large_total",
   "is_real_time": false,

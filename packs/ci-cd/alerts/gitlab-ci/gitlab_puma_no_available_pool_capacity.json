@@ -18,6 +18,7 @@
     "upstream_query": "puma_pool_capacity == 0",
     "upstream_description": "GitLab Puma pool capacity on {{ $labels.instance }} has been at 0 for 5 minutes. All threads are busy."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "puma_pool_capacity",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "avg(mongodb_replset_member_optime_date{state=\"PRIMARY\"}) - avg(mongodb_replset_member_optime_date{state=\"SECONDARY\"}) > 10",
     "upstream_description": "Mongodb replication lag is more than 10s"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "mongodb_replset_member_optime_date",
   "is_real_time": false,

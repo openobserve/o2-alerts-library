@@ -18,6 +18,7 @@
     "upstream_query": "histogram_quantile(0.99, sum(rate(http_server_request_duration_seconds_bucket{http_route=\"/api/traces/{traceID}\"}[5m])) by (le, instance, job, namespace)) > 5",
     "upstream_description": "Jaeger on {{ $labels.instance }} p99 latency for single trace retrieval is {{ $value | humanizeDuration }}."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "http_server_request_duration_seconds_bucket",
   "is_real_time": false,

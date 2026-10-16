@@ -18,6 +18,7 @@
     "upstream_query": "ceph_health_detail{name=\"MON_DISK_LOW\"} == 1",
     "upstream_description": "Ceph monitor storage is low."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ceph_health_detail",
   "is_real_time": false,

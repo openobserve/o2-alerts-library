@@ -18,6 +18,7 @@
     "upstream_query": "sum by (zone) (increase(cloudflare_zone_threats_total[5m])) > 3",
     "upstream_description": "Cloudflare zone {{ $labels.zone }} recorded {{ $value }} threats (WAF/DDoS blocks) in the last 5 minutes, which may indicate an ongoing attack."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cloudflare_zone_threats_total",
   "is_real_time": false,

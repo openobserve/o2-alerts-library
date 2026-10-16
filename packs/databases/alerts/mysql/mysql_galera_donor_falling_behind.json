@@ -19,6 +19,7 @@
     "upstream_description": "Galera donor node {{ $labels.instance }} serving a state transfer has a growing receive queue ({{ $value }} entries), indicating it is falling behind the rest of the cluster.",
     "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "mysql_global_status_wsrep_local_state",
   "is_real_time": false,

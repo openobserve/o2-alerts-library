@@ -18,6 +18,7 @@
     "upstream_query": "rabbitmq_partitions > 0",
     "upstream_description": "RabbitMQ cluster has a network partition ({{ $value }} partitions detected). Messages may be lost or duplicated."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "rabbitmq_partitions",
   "is_real_time": false,

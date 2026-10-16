@@ -18,6 +18,7 @@
     "upstream_query": "rate(mysql_global_status_questions[1m]) > 10000",
     "upstream_description": "MySQL is being overload with unusual QPS (> 10k QPS)."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "mysql_global_status_questions",
   "is_real_time": false,

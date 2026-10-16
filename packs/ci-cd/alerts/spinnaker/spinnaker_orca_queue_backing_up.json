@@ -18,6 +18,7 @@
     "upstream_query": "queue_ready_depth > 0",
     "upstream_description": "Orca work queue has {{ $value }} messages ready for delivery but not yet picked up. Pipeline executions may be delayed."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "queue_ready_depth",
   "is_real_time": false,

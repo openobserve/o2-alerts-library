@@ -2,6 +2,7 @@
   "id": "3Dnuc6D0wy3kXHX7td9LrSfKefT",
   "name": "node_shutdown_events",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "logs",
   "stream_name": "k8s_events",
   "is_real_time": false,

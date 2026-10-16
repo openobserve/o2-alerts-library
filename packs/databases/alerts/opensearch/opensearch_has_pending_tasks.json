@@ -18,6 +18,7 @@
     "upstream_query": "opensearch_cluster_pending_tasks_number > 0",
     "upstream_description": "OpenSearch cluster {{ $labels.cluster }} has pending tasks"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "opensearch_cluster_pending_tasks_number",
   "is_real_time": false,

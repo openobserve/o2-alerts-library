@@ -18,6 +18,7 @@
     "upstream_query": "sum(vault_core_active) < 1",
     "upstream_description": "Vault cluster has no active node — the cluster cannot serve requests."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "vault_core_active",
   "is_real_time": false,

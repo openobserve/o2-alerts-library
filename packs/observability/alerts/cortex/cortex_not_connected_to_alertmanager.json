@@ -18,6 +18,7 @@
     "upstream_query": "cortex_prometheus_notifications_alertmanagers_discovered < 1",
     "upstream_description": "Cortex not connected to Alertmanager (instance {{ $labels.instance }})"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cortex_prometheus_notifications_alertmanagers_discovered",
   "is_real_time": false,

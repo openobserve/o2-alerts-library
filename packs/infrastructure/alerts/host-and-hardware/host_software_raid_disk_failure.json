@@ -18,6 +18,7 @@
     "upstream_query": "(node_md_disks{state=\"failed\"} > 0)",
     "upstream_description": "MD RAID array {{ $labels.device }} on {{ $labels.instance }} needs attention."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "node_md_disks",
   "is_real_time": false,

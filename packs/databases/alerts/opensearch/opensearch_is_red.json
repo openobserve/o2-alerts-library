@@ -18,6 +18,7 @@
     "upstream_query": "opensearch_cluster_status == 2",
     "upstream_description": "OpenSearch cluster {{ $labels.cluster }} is RED: some primary shards are unassigned"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "opensearch_cluster_status",
   "is_real_time": false,

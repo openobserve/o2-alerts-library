@@ -18,6 +18,7 @@
     "upstream_query": "couchdb_httpd_request_time{metric=\"ArithmeticMean\"} > 1000",
     "upstream_description": "Average CouchDB request time is above 1000ms, indicating severe performance degradation."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "couchdb_httpd_request_time",
   "is_real_time": false,

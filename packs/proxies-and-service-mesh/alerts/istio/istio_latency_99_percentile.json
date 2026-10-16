@@ -18,6 +18,7 @@
     "upstream_query": "histogram_quantile(0.99, sum(rate(istio_request_duration_milliseconds_bucket[1m])) by (destination_canonical_service, destination_workload_namespace, le)) > 1000",
     "upstream_description": "Istio p99 request latency is {{ $value }}ms (threshold: 1000ms)."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "istio_request_duration_milliseconds_bucket",
   "is_real_time": false,

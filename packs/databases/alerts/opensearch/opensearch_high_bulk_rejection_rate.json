@@ -18,6 +18,7 @@
     "upstream_query": "round((rate(opensearch_threadpool_threads_count{name=\"bulk\",type=\"rejected\"}[5m]) / rate(opensearch_threadpool_threads_count{name=\"bulk\",type=\"completed\"}[5m])) * 100, 0.001) > 5",
     "upstream_description": "The ratio of rejected to completed bulk indexing requests on OpenSearch node {{ $labels.node }} is {{ $value }}%, meaning the node cannot keep up with bulk indexing throughput."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "opensearch_threadpool_threads_count",
   "is_real_time": false,

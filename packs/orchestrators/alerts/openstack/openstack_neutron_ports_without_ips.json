@@ -18,6 +18,7 @@
     "upstream_query": "openstack_neutron_ports_no_ips > 0",
     "upstream_description": "{{ $value }} active ports have no IP addresses assigned"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "openstack_neutron_ports_no_ips",
   "is_real_time": false,

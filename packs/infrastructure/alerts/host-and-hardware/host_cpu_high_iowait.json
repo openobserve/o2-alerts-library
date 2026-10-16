@@ -18,6 +18,7 @@
     "upstream_query": "avg without (cpu) (rate(node_cpu_seconds_total{mode=\"iowait\"}[5m])) > .10",
     "upstream_description": "CPU iowait > 10%. Your CPU is idling waiting for storage to respond."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "node_cpu_seconds_total",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "sum by (backend) (rate(haproxy_backend_connection_errors_total[1m])) > 100",
     "upstream_description": "Too many connection errors to {{ $labels.backend }} backend (> 100 req/s). Request throughput may be too high."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "haproxy_backend_connection_errors_total",
   "is_real_time": false,

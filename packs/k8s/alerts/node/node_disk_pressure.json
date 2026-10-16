@@ -2,6 +2,7 @@
   "id": "3DnReHn2R8LETvLjjK6yRvgj4fE",
   "name": "node_disk_pressure",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "k8s_node_condition_disk_pressure",
   "is_real_time": false,

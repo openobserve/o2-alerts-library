@@ -18,6 +18,7 @@
     "upstream_query": "zfs_pool_health > 0",
     "upstream_description": "ZFS pool state is {{ $value }}. See comments for more information."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "zfs_pool_health",
   "is_real_time": false,

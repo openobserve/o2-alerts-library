@@ -18,6 +18,7 @@
     "upstream_query": "node_textfile_scrape_error == 1",
     "upstream_description": "Node exporter's textfile collector failed to scrape a custom .prom file on {{ $labels.instance }}, indicating a broken or misconfigured custom collector script that will silently stop reporting its metrics."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "node_textfile_scrape_error",
   "is_real_time": false,

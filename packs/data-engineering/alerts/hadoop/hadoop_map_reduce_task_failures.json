@@ -18,6 +18,7 @@
     "upstream_query": "increase(hadoop_mapreduce_task_failures_total[1h]) > 100",
     "upstream_description": "There is an unusually high number of MapReduce task failures."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "hadoop_mapreduce_task_failures_total",
   "is_real_time": false,

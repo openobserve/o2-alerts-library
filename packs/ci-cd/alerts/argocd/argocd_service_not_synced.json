@@ -18,6 +18,7 @@
     "upstream_query": "argocd_app_info{sync_status!=\"Synced\"} != 0",
     "upstream_description": "Service {{ $labels.name }} run by argo is currently not in sync."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "argocd_app_info",
   "is_real_time": false,

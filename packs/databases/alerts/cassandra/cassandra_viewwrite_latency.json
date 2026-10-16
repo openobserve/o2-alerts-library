@@ -18,6 +18,7 @@
     "upstream_query": "cassandra_stats{name=\"org:apache:cassandra:metrics:clientrequest:viewwrite:viewwritelatency:99thpercentile\"} > 100000",
     "upstream_description": "High viewwrite latency on {{ $labels.instance }} cassandra node"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cassandra_stats",
   "is_real_time": false,

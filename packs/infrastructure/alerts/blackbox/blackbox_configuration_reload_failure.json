@@ -18,6 +18,7 @@
     "upstream_query": "blackbox_exporter_config_last_reload_successful != 1",
     "upstream_description": "Blackbox configuration reload failure"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "blackbox_exporter_config_last_reload_successful",
   "is_real_time": false,

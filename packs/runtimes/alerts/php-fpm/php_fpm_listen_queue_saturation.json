@@ -18,6 +18,7 @@
     "upstream_query": "sum(phpfpm_listen_queue_connections) by (instance) / sum(phpfpm_listen_queue_length_connections) by (instance) > 0.8",
     "upstream_description": "PHP-FPM listen queue on {{ $labels.instance }} is at {{ $value | humanizePercentage }} of the socket backlog length, new connections may soon be queued or dropped."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "phpfpm_listen_queue_connections",
   "is_real_time": false,

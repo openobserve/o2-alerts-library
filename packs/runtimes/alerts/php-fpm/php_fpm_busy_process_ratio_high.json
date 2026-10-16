@@ -18,6 +18,7 @@
     "upstream_query": "(sum(phpfpm_processes_total{state=\"active\"}) by (instance) * 100) / sum(phpfpm_processes_total) by (instance) > 80",
     "upstream_description": "{{ $value }}% of PHP-FPM processes are active (busy) on {{ $labels.instance }}, the pool is approaching its max_children capacity."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "phpfpm_processes_total",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "count by (job) (rate(cortex_ingester_tsdb_wal_corruptions_total[5m]) > 0) > 1",
     "upstream_description": "Mimir ingester in {{ $labels.job }} detected a corrupted TSDB write-ahead log, risking sample loss when the ingester restarts and replays the WAL."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cortex_ingester_tsdb_wal_corruptions_total",
   "is_real_time": false,

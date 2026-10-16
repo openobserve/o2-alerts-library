@@ -18,6 +18,7 @@
     "upstream_query": "ClickHouseMetrics_TCPConnection > 400",
     "upstream_description": "High number of TCP connections, indicating heavy client or inter-cluster communication."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ClickHouseMetrics_TCPConnection",
   "is_real_time": false,

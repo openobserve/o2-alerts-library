@@ -18,6 +18,7 @@
     "upstream_query": "gnatsd_varz_mem > 200 * 1024 * 1024",
     "upstream_description": "NATS server memory usage is above 200MB for {{ $labels.instance }}"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "gnatsd_varz_mem",
   "is_real_time": false,

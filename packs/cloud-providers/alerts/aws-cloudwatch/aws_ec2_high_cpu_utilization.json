@@ -18,6 +18,7 @@
     "upstream_query": "aws_ec2_cpuutilization_average offset 10m > 90",
     "upstream_description": "EC2 instance {{ $labels.instance_id }} CPU utilization is above 90% ({{ $value }}%)."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "aws_ec2_cpuutilization_average",
   "is_real_time": false,

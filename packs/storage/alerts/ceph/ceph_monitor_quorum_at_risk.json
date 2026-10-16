@@ -18,6 +18,7 @@
     "upstream_query": "(ceph_health_detail{name=\"MON_DOWN\"} == 1) * on() group_right() (count(ceph_mon_quorum_status == 1) == bool (floor(count(ceph_mon_metadata) / 2) + 1)) == 1",
     "upstream_description": "Ceph monitor quorum is at the minimum required to stay operational; losing one more monitor will make the cluster inoperable for all clients."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ceph_health_detail",
   "is_real_time": false,

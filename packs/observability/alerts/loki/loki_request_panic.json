@@ -18,6 +18,7 @@
     "upstream_query": "sum(increase(loki_panic_total[5m])) by (namespace, job) > 0",
     "upstream_description": "{{ $labels.job }} is experiencing {{ $value | humanize }} panic(s) in the last 5 minutes."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "loki_panic_total",
   "is_real_time": false,

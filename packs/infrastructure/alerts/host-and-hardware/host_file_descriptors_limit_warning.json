@@ -18,6 +18,7 @@
     "upstream_query": "node_filefd_allocated * 100 / node_filefd_maximum > 70",
     "upstream_description": "Kernel file descriptor usage on {{ $labels.instance }} is above 70% of the configured maximum, risking failures for daemons or the kernel when they can no longer open new files."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "node_filefd_allocated",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "max without(job,name)(hadoop_namenode_volumefailurestotal) > 0",
     "upstream_description": "One or more HDFS DataNode storage volumes have failed since the DataNode last started, which is an early sign of failing disks."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "hadoop_namenode_volumefailurestotal",
   "is_real_time": false,

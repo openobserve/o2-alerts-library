@@ -2,6 +2,7 @@
   "id": "3DnRg79pjSHdfXKUqh9Fzl3GmRF",
   "name": "node_high_disk_usage",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "k8s_node_filesystem_usage",
   "is_real_time": false,

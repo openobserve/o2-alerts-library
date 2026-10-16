@@ -18,6 +18,7 @@
     "upstream_query": "increase(digitalocean_errors_total[5m]) > 3",
     "upstream_description": "DigitalOcean exporter {{ $labels.collector }} collector has {{ $value }} errors."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "digitalocean_errors_total",
   "is_real_time": false,

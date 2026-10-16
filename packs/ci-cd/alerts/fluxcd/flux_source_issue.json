@@ -18,6 +18,7 @@
     "upstream_query": "gotk_resource_info{ready=\"False\", customresource_kind=~\"GitRepository|HelmRepository|Bucket|OCIRepository\"} > 0",
     "upstream_description": "Flux source {{ $labels.customresource_kind }} '{{ $labels.name }}' has issue(s)."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "gotk_resource_info",
   "is_real_time": false,

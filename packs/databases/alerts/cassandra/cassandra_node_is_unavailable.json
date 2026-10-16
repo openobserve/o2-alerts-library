@@ -18,6 +18,7 @@
     "upstream_query": "cassandra_endpoint_active < 1",
     "upstream_description": "Cassandra Node is unavailable - {{ $labels.cassandra_cluster }} {{ $labels.exported_endpoint }}"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "cassandra_endpoint_active",
   "is_real_time": false,

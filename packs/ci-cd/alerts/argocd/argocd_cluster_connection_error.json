@@ -18,6 +18,7 @@
     "upstream_query": "argocd_cluster_connection_status < 1",
     "upstream_description": "ArgoCD lost connection to the managed Kubernetes cluster {{ $labels.server }}, sync operations targeting this cluster will fail until connectivity is restored."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "argocd_cluster_connection_status",
   "is_real_time": false,

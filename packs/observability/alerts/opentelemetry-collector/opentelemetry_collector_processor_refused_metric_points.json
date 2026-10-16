@@ -18,6 +18,7 @@
     "upstream_query": "rate(otelcol_processor_refused_metric_points[5m]) > 0.05",
     "upstream_description": "OpenTelemetry Collector processor {{ $labels.processor }} is refusing metric points ({{ $value | humanize }}/s), likely due to backpressure."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "otelcol_processor_refused_metric_points",
   "is_real_time": false,

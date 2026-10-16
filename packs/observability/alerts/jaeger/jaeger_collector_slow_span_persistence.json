@@ -18,6 +18,7 @@
     "upstream_query": "histogram_quantile(0.99, sum by (le, instance, job, namespace) (rate(jaeger_collector_save_latency_bucket[5m]))) > 0.5",
     "upstream_description": "Jaeger collector on {{ $labels.instance }} has a p99 span persistence latency of {{ $value }}s, indicating the storage backend is slow to accept span writes."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "jaeger_collector_save_latency_bucket",
   "is_real_time": false,

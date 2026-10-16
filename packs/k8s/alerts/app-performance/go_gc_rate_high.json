@@ -2,6 +2,7 @@
   "id": "3Dnow2oVDWJTDRKevz4Ko9a8KVa",
   "name": "go_gc_rate_high",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "go_gc_duration_seconds_count",
   "is_real_time": false,

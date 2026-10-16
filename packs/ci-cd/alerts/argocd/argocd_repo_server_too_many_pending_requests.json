@@ -18,6 +18,7 @@
     "upstream_query": "argocd_repo_pending_request_total > 50",
     "upstream_description": "ArgoCD repo server has more than 50 requests pending on the repository lock for {{ $labels.repo }}, indicating the repo server is overloaded and manifest generation is being delayed."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "argocd_repo_pending_request_total",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "oracledb_up == 0",
     "upstream_description": "Oracle Database instance is down on {{ $labels.instance }}"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "oracledb_up",
   "is_real_time": false,

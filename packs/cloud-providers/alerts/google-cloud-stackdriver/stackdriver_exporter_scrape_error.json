@@ -18,6 +18,7 @@
     "upstream_query": "stackdriver_monitoring_last_scrape_error > 0",
     "upstream_description": "Stackdriver exporter failed to scrape metrics from Google Cloud Monitoring API for project {{ $labels.project_id }}."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "stackdriver_monitoring_last_scrape_error",
   "is_real_time": false,

@@ -18,6 +18,7 @@
     "upstream_query": "increase(ClickHouseProfileEvents_DistributedRejectedInserts[5m]) > 3",
     "upstream_description": "INSERTs into Distributed tables rejected due to pending bytes limit."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ClickHouseProfileEvents_DistributedRejectedInserts",
   "is_real_time": false,

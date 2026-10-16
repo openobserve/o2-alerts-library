@@ -18,6 +18,7 @@
     "upstream_query": "ceph_health_detail{name=\"POOL_NEAR_FULL\"} == 1",
     "upstream_description": "A Ceph pool has exceeded its near-full threshold. Writes may still succeed, but the pool risks going read-only if more capacity isn't made available soon."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ceph_health_detail",
   "is_real_time": false,

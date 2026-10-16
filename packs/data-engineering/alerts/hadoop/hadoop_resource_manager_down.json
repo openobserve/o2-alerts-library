@@ -18,6 +18,7 @@
     "upstream_query": "up{job=\"hadoop-resourcemanager\"} == 0",
     "upstream_description": "The Hadoop ResourceManager service is unavailable."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "up",
   "is_real_time": false,

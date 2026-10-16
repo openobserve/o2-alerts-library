@@ -18,6 +18,7 @@
     "upstream_query": "count by (collection, shard) (solr_collections_replica_state{state=\"active\"}) < 1",
     "upstream_description": "Solr collection {{ $labels.collection }} shard {{ $labels.shard }} has no active replicas, causing a complete read/write outage for that shard."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "solr_collections_replica_state",
   "is_real_time": false,

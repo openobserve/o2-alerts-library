@@ -2,6 +2,7 @@
   "id": "3DnmQhn1rX6S5U5rCul105Sk51n",
   "name": "controller_workqueue_depth_high",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "workqueue_depth",
   "is_real_time": false,

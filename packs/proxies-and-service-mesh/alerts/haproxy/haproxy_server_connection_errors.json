@@ -18,6 +18,7 @@
     "upstream_query": "(sum by (proxy) (rate(haproxy_server_connection_errors_total[1m]))) > 100",
     "upstream_description": "Too many connection errors to {{ $labels.proxy }} (> 100 req/s). Request throughput may be too high."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "haproxy_server_connection_errors_total",
   "is_real_time": false,

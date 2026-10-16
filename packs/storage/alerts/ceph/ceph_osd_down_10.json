@@ -18,6 +18,7 @@
     "upstream_query": "count(ceph_osd_up == 0) / count(ceph_osd_up) * 100 >= 10",
     "upstream_description": "{{ $value | humanize }}% of OSDs are down on the cluster, exceeding the safe threshold and putting data availability at risk."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "ceph_osd_up",
   "is_real_time": false,

@@ -2,6 +2,7 @@
   "id": "3DnSP1GjV1ZWtJpl75gEFYOcJX0",
   "name": "node_unschedulable",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kube_node_spec_taint",
   "is_real_time": false,

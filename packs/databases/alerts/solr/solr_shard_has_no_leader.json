@@ -18,6 +18,7 @@
     "upstream_query": "max by (collection, shard) (solr_collections_shard_leader) < 1",
     "upstream_description": "Solr collection {{ $labels.collection }} shard {{ $labels.shard }} has no elected leader and cannot accept writes until a new leader is elected."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "solr_collections_shard_leader",
   "is_real_time": false,

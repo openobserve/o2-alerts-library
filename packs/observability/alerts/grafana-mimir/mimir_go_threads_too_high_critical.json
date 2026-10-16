@@ -18,6 +18,7 @@
     "upstream_query": "go_threads{job=~\".*(mimir|cortex).*\"} > 8000",
     "upstream_description": "Mimir {{ $labels.instance }} has {{ $value }} Go threads."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "go_threads",
   "is_real_time": false,

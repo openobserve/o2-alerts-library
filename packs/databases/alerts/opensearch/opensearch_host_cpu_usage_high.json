@@ -18,6 +18,7 @@
     "upstream_query": "sum by (cluster, instance, node) (opensearch_os_cpu_percent) > 90",
     "upstream_description": "System CPU usage on OpenSearch node {{ $labels.node }} (cluster {{ $labels.cluster }}) is above 90%, which may cause search and indexing latency."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "opensearch_os_cpu_percent",
   "is_real_time": false,

@@ -2,6 +2,7 @@
   "id": "3Dnk8onv657uuAyQsP8vtsOiYES",
   "name": "apiserver_high_latency",
   "org_id": "default",
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "apiserver_request_duration_seconds_bucket",
   "is_real_time": false,

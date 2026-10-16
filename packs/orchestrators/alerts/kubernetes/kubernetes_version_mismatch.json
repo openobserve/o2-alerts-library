@@ -19,6 +19,7 @@
     "upstream_description": "There are {{ $value }} different semantic versions of Kubernetes components running simultaneously, which may indicate a partial or stalled cluster upgrade.",
     "query_fixup": "The upstream expression above does not parse as PromQL; the corrected form this alert runs is in `query_condition.promql`. See QUERY_FIXUPS in scripts/import_awesome_prometheus_alerts.py."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "kubernetes_build_info",
   "is_real_time": false,

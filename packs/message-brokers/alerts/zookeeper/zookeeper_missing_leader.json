@@ -18,6 +18,7 @@
     "upstream_query": "sum(zk_server_leader) == 0",
     "upstream_description": "Zookeeper cluster has no node marked as leader"
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "zk_server_leader",
   "is_real_time": false,

@@ -19,6 +19,7 @@
     "upstream_description": "Vault failed to write to an audit device on {{ $labels.instance }} ({{ $value | printf \"%.2f\" }} failures/s), so audit log entries may be incomplete. Check audit device connectivity, disk space, or permissions.",
     "query_normalized": "The upstream threshold could not be lifted out of the expression (its outermost operator is and/or/unless, or it compares against another series), so the expression is normalised to 1 per matching series and the alert fires on any match. The observed value in the notification is therefore always 1."
   },
+  "alert_type": "scheduled",
   "stream_type": "metrics",
   "stream_name": "vault_audit_log_request_failure",
   "is_real_time": false,
