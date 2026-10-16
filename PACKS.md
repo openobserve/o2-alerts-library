@@ -6,6 +6,8 @@
 `packs/<pack>/alerts/<category>/<name>.json`; `manifest.json` is the
 machine-readable index of the same tree.
 
+Plus **19 anomaly-detection alerts** (enterprise only; listed under `anomaly_alerts` in manifest.json).
+
 | Pack | Alerts | Categories | Covers |
 |---|---:|---:|---|
 | [`applications`](./packs/applications/) | 11 | 2 | Application services with their own metrics endpoints |
