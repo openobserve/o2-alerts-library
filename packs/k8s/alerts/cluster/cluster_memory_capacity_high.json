@@ -52,7 +52,5 @@
   "tz_offset": 0,
   "last_triggered_at": 1778929825265378,
   "last_satisfied_at": 1778929825265378,
-  "owner": "introspectionroot@openobserve.ai",
-  "last_edited_by": "introspectionroot@openobserve.ai",
   "creates_incident": false
 }

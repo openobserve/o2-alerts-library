@@ -305,6 +305,11 @@ def main() -> int:
                     elif len(tag) > MAX_TAG_LEN:
                         err(f"tag '{tag}' is longer than {MAX_TAG_LEN} characters")
 
+        # A user's email is never template content, so no backfill exemption covers it.
+        personal = [f for f in ("owner", "last_edited_by") if f in alert]
+        if personal:
+            err(f"field(s) {personal} identify a user — drop them from the export")
+
         # Anomaly files are new, so the backfill exemption never applies to them.
         if pack in BACKFILL_PENDING_PACKS and alert_type == "scheduled":
             continue
