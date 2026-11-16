@@ -1,0 +1,56 @@
+{
+  "name": "host_disk_may_fill_in_24_hours_otel",
+  "title": "Host disk may fill in 24 hours",
+  "severity": "warning",
+  "description": "A writable filesystem on a host is more than 80% full and, at the rate it filled over the last 6 hours, will run out of space within 24 hours.",
+  "tags": [
+    "otel-collector",
+    "hosts",
+    "hostmetrics"
+  ],
+  "alert_type": "scheduled",
+  "stream_type": "metrics",
+  "stream_name": "system_filesystem_usage",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "predict_linear(system_filesystem_usage{state=\"free\", mode=\"rw\", type!~\"tmpfs|devtmpfs|devfs|overlay|squashfs|iso9660|nsfs|proc|sysfs|autofs|fuse.*\", mountpoint!~\"/(dev|proc|sys|run|snap|var/lib/docker|var/lib/kubelet)(/.*)?\"}[6h], 86400) and on (host_name, device, mountpoint) (system_filesystem_utilization{mode=\"rw\", type!~\"tmpfs|devtmpfs|devfs|overlay|squashfs|iso9660|nsfs|proc|sysfs|autofs|fuse.*\", mountpoint!~\"/(dev|proc|sys|run|snap|var/lib/docker|var/lib/kubelet)(/.*)?\"} > 0.8)",
+    "promql_condition": {
+      "column": "value",
+      "operator": "<",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 15,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 15,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 120,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | host: {host_name} | mount: {mountpoint}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

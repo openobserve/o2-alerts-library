@@ -1,0 +1,52 @@
+{
+  "name": "traces_operation_error_burst",
+  "title": "Error burst on an operation",
+  "severity": "warning",
+  "description": "One server or consumer operation (endpoint or queue handler) of a service had 20 or more spans with status ERROR in the last 10 minutes, and those errors were at least 5% of its spans. The ratio floor keeps a busy endpoint with a small, steady error share from firing. Uses span status, so it also covers non-HTTP services. Needs OpenTelemetry traces in the traces stream named default.",
+  "tags": [
+    "traces",
+    "apm",
+    "errors",
+    "endpoint"
+  ],
+  "alert_type": "scheduled",
+  "stream_type": "traces",
+  "stream_name": "default",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "sql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": "SELECT service_name, operation_name, SUM(CASE WHEN span_status = 'ERROR' THEN 1 ELSE 0 END) AS errors, COUNT(*) AS spans, SUM(CASE WHEN span_status = 'ERROR' THEN 1 ELSE 0 END) * 100.0 / COUNT(*) AS error_pct FROM \"default\" WHERE span_kind IN ('2', '5') GROUP BY service_name, operation_name HAVING SUM(CASE WHEN span_status = 'ERROR' THEN 1 ELSE 0 END) >= 20 AND SUM(CASE WHEN span_status = 'ERROR' THEN 1 ELSE 0 END) * 100.0 / COUNT(*) >= 5",
+    "promql": null,
+    "promql_condition": null,
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": null
+  },
+  "trigger_condition": {
+    "period": 10,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 30,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{service_name}* {operation_name}: {errors} errors in {spans} spans ({error_pct}%)",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

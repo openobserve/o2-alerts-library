@@ -1,0 +1,57 @@
+{
+  "name": "host_out_of_memory_otel",
+  "title": "Host out of memory",
+  "severity": "warning",
+  "description": "A host has used more than 90% of its memory for 15 minutes. On Linux, page cache and buffers do not count as used memory.",
+  "tags": [
+    "otel-collector",
+    "hosts",
+    "hostmetrics",
+    "memory"
+  ],
+  "alert_type": "scheduled",
+  "stream_type": "metrics",
+  "stream_name": "system_memory_utilization",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "max by (host_name) (min_over_time(system_memory_utilization{state=\"used\"}[15m]))",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0.9,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | host: {host_name} | used: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

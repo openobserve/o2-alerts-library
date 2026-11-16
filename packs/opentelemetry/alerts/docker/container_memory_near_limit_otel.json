@@ -1,0 +1,57 @@
+{
+  "name": "container_memory_near_limit_otel",
+  "title": "Container memory near limit",
+  "severity": "critical",
+  "description": "A container has used more than 95% of its memory limit for 10 minutes and is about to be killed for running out of memory. A container without a memory limit is measured against the host's memory.",
+  "tags": [
+    "otel-collector",
+    "docker",
+    "docker-stats",
+    "memory"
+  ],
+  "alert_type": "scheduled",
+  "stream_type": "metrics",
+  "stream_name": "container_memory_percent",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "max by (container_name) (min_over_time(container_memory_percent[10m]))",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 95,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | container: {container_name} | used %: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

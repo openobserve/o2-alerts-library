@@ -1,0 +1,57 @@
+{
+  "name": "postgresql_replication_lag_otel",
+  "title": "PostgreSQL replication lag",
+  "severity": "warning",
+  "description": "A replica has been more than 1 GiB of WAL behind the primary for 5 minutes. A lagging replica serves stale reads and makes failover risky. The monitoring role needs the pg_monitor role to see replication.",
+  "tags": [
+    "otel-collector",
+    "postgresql",
+    "postgresql-receiver",
+    "replication"
+  ],
+  "alert_type": "scheduled",
+  "stream_type": "metrics",
+  "stream_name": "postgresql_replication_data_delay",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "max by (service_instance_id, replication_client) (min_over_time(postgresql_replication_data_delay[5m]))",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 1073741824,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {service_instance_id} | replica: {replication_client} | bytes behind: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

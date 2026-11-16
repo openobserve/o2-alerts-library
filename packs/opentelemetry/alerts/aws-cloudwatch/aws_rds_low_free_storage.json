@@ -1,0 +1,53 @@
+{
+  "name": "aws_rds_low_free_storage",
+  "title": "RDS free storage below 10 GiB",
+  "severity": "critical",
+  "description": "An RDS DB instance had less than 10 GiB of free storage in the last 15 minutes. When storage is full the instance stops accepting writes. Small development databases may sit below 10 GiB by design; edit the threshold for them.",
+  "tags": [
+    "aws",
+    "cloudwatch",
+    "cloudwatch_metrics",
+    "rds",
+    "aws-cloudwatch"
+  ],
+  "alert_type": "scheduled",
+  "stream_type": "logs",
+  "stream_name": "cloudwatch_metrics",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "sql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": "SELECT dimensions_dbinstanceidentifier AS db_instance, account_id, region, min(value_min) / 1073741824 AS free_gib FROM \"cloudwatch_metrics\" WHERE namespace = 'AWS/RDS' AND metric_name = 'FreeStorageSpace' AND dimensions_dbinstanceidentifier IS NOT NULL GROUP BY db_instance, account_id, region HAVING min(value_min) < 10737418240",
+    "promql": null,
+    "promql_condition": null,
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": null
+  },
+  "trigger_condition": {
+    "period": 15,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 10,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "RDS {db_instance} ({account_id}/{region}) free storage {free_gib} GiB",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

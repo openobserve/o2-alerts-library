@@ -1,0 +1,53 @@
+{
+  "name": "aws_ec2_high_cpu",
+  "title": "EC2 CPU above 80%",
+  "severity": "warning",
+  "description": "An EC2 instance averaged more than 80% CPU over the last 20 minutes. Sustained saturation comes before latency and timeouts. Batch, CI and burstable hosts may run hot by design.",
+  "tags": [
+    "aws",
+    "cloudwatch",
+    "cloudwatch_metrics",
+    "ec2",
+    "aws-cloudwatch"
+  ],
+  "alert_type": "scheduled",
+  "stream_type": "logs",
+  "stream_name": "cloudwatch_metrics",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "sql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": "SELECT dimensions_instanceid AS instance, account_id, region, sum(value_sum) / sum(value_count) AS avg_cpu FROM \"cloudwatch_metrics\" WHERE namespace = 'AWS/EC2' AND metric_name = 'CPUUtilization' AND dimensions_instanceid IS NOT NULL GROUP BY instance, account_id, region HAVING sum(value_sum) / sum(value_count) > 80",
+    "promql": null,
+    "promql_condition": null,
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": null
+  },
+  "trigger_condition": {
+    "period": 20,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "EC2 {instance} ({account_id}/{region}) average CPU {avg_cpu}%",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

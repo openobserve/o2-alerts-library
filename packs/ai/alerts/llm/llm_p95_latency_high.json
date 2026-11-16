@@ -1,0 +1,52 @@
+{
+  "name": "llm_p95_latency_high",
+  "title": "LLM p95 latency above 15 s",
+  "severity": "warning",
+  "description": "The p95 duration of chat and completion calls to one model was above 15 seconds in the last 15 minutes, with at least 20 calls. Reasoning models and long outputs are slow by design; raise the threshold for them. Needs LLM spans in the traces stream named default; OpenObserve writes the gen_ai columns at ingest.",
+  "tags": [
+    "ai",
+    "llm",
+    "traces",
+    "latency"
+  ],
+  "alert_type": "scheduled",
+  "stream_type": "traces",
+  "stream_name": "default",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "sql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": "SELECT gen_ai_response_model, COUNT(*) AS calls, approx_percentile_cont(duration, 0.95) / 1000000.0 AS p95_s FROM \"default\" WHERE gen_ai_response_model IS NOT NULL AND gen_ai_operation_name IN ('chat', 'text_completion', 'generate_content') GROUP BY gen_ai_response_model HAVING COUNT(*) >= 20 AND approx_percentile_cont(duration, 0.95) > 15000000",
+    "promql": null,
+    "promql_condition": null,
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": null
+  },
+  "trigger_condition": {
+    "period": 15,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{gen_ai_response_model}* p95 {p95_s} s over {calls} calls",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}
