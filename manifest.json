@@ -1,7 +1,27 @@
 {
  "format_version": "1.1.0",
- "alert_count": 1242,
+ "alert_count": 1275,
  "packs": [
+  {
+   "id": "ai",
+   "categories": [
+    {
+     "id": "llm",
+     "alert_count": 5
+    }
+   ],
+   "alert_count": 5
+  },
+  {
+   "id": "apm",
+   "categories": [
+    {
+     "id": "traces",
+     "alert_count": 4
+    }
+   ],
+   "alert_count": 4
+  },
   {
    "id": "applications",
    "categories": [
@@ -409,6 +429,32 @@
    "alert_count": 1
   },
   {
+   "id": "opentelemetry",
+   "categories": [
+    {
+     "id": "aws-cloudwatch",
+     "alert_count": 7
+    },
+    {
+     "id": "docker",
+     "alert_count": 4
+    },
+    {
+     "id": "github-actions",
+     "alert_count": 2
+    },
+    {
+     "id": "hosts",
+     "alert_count": 6
+    },
+    {
+     "id": "postgresql",
+     "alert_count": 5
+    }
+   ],
+   "alert_count": 24
+  },
+  {
    "id": "orchestrators",
    "categories": [
     {
@@ -526,6 +572,223 @@
   }
  ],
  "alerts": [
+  {
+   "id": "ai/llm_error_rate_high",
+   "name": "llm_error_rate_high",
+   "pack": "ai",
+   "category": "llm",
+   "title": "LLM call error rate above 10%",
+   "severity": "critical",
+   "description": "More than 10% of a service's model calls (chat, text_completion, generate_content, embeddings) ended with status ERROR in the last 10 minutes, with at least 20 calls. Provider outages, rate limits and expired keys show here first. Needs LLM spans in the traces stream named default; OpenObserve writes the gen_ai columns at ingest.",
+   "stream": "default",
+   "stream_type": "traces",
+   "alert_type": "scheduled",
+   "query_type": "sql",
+   "required_streams": [
+    "default"
+   ],
+   "path": "packs/ai/alerts/llm/llm_error_rate_high.json",
+   "content_hash": "7d00ac3a77d1",
+   "tags": [
+    "ai",
+    "llm",
+    "traces",
+    "errors"
+   ]
+  },
+  {
+   "id": "ai/llm_hourly_spend_high",
+   "name": "llm_hourly_spend_high",
+   "pack": "ai",
+   "category": "llm",
+   "title": "LLM spend above 50 USD in an hour",
+   "severity": "warning",
+   "description": "Model calls cost more than 50 USD in the last 60 minutes, summed from gen_ai_usage_cost. Set the amount to your own budget after install. Unpriced models add no cost. Needs LLM spans in the traces stream named default; OpenObserve writes the gen_ai columns at ingest.",
+   "stream": "default",
+   "stream_type": "traces",
+   "alert_type": "scheduled",
+   "query_type": "sql",
+   "required_streams": [
+    "default"
+   ],
+   "path": "packs/ai/alerts/llm/llm_hourly_spend_high.json",
+   "content_hash": "b3eaf3a484a5",
+   "tags": [
+    "ai",
+    "llm",
+    "traces",
+    "cost"
+   ]
+  },
+  {
+   "id": "ai/llm_p95_latency_high",
+   "name": "llm_p95_latency_high",
+   "pack": "ai",
+   "category": "llm",
+   "title": "LLM p95 latency above 15 s",
+   "severity": "warning",
+   "description": "The p95 duration of chat and completion calls to one model was above 15 seconds in the last 15 minutes, with at least 20 calls. Reasoning models and long outputs are slow by design; raise the threshold for them. Needs LLM spans in the traces stream named default; OpenObserve writes the gen_ai columns at ingest.",
+   "stream": "default",
+   "stream_type": "traces",
+   "alert_type": "scheduled",
+   "query_type": "sql",
+   "required_streams": [
+    "default"
+   ],
+   "path": "packs/ai/alerts/llm/llm_p95_latency_high.json",
+   "content_hash": "8ea07a8f818e",
+   "tags": [
+    "ai",
+    "llm",
+    "traces",
+    "latency"
+   ]
+  },
+  {
+   "id": "ai/llm_token_burn_high",
+   "name": "llm_token_burn_high",
+   "pack": "ai",
+   "category": "llm",
+   "title": "Service used over 2M tokens in an hour",
+   "severity": "info",
+   "description": "A service used more than 2,000,000 tokens on model calls in the last 60 minutes. Works when pricing is missing; catches prompt bloat and agent loops. Tune the threshold to your normal hourly use. Needs LLM spans in the traces stream named default; OpenObserve writes the gen_ai columns at ingest.",
+   "stream": "default",
+   "stream_type": "traces",
+   "alert_type": "scheduled",
+   "query_type": "sql",
+   "required_streams": [
+    "default"
+   ],
+   "path": "packs/ai/alerts/llm/llm_token_burn_high.json",
+   "content_hash": "5c912670b237",
+   "tags": [
+    "ai",
+    "llm",
+    "traces",
+    "tokens"
+   ]
+  },
+  {
+   "id": "ai/llm_tool_agent_failures",
+   "name": "llm_tool_agent_failures",
+   "pack": "ai",
+   "category": "llm",
+   "title": "Tool or agent failed 5+ times in 15 minutes",
+   "severity": "warning",
+   "description": "A tool call or agent run failed 5 or more times in the last 15 minutes (execute_tool, invoke_agent or invoke_workflow spans with status ERROR). Tools that report not-found as an error can trigger it. Needs LLM spans in the traces stream named default; OpenObserve writes the gen_ai columns at ingest.",
+   "stream": "default",
+   "stream_type": "traces",
+   "alert_type": "scheduled",
+   "query_type": "sql",
+   "required_streams": [
+    "default"
+   ],
+   "path": "packs/ai/alerts/llm/llm_tool_agent_failures.json",
+   "content_hash": "ba89d1b6855f",
+   "tags": [
+    "ai",
+    "llm",
+    "traces",
+    "agents",
+    "tools"
+   ]
+  },
+  {
+   "id": "apm/traces_dependency_error_rate_high",
+   "name": "traces_dependency_error_rate_high",
+   "pack": "apm",
+   "category": "traces",
+   "title": "Downstream dependency error rate above 10%",
+   "severity": "warning",
+   "description": "Client and producer spans from a service to one downstream dependency (the server_address it calls) failed more than 10% of the time in the last 10 minutes, with at least 50 calls. All operations to the same dependency are counted together, so one failing database, cache or API shows as one row. Spans without server_address are grouped under an empty dependency. Needs OpenTelemetry traces in the traces stream named default.",
+   "stream": "default",
+   "stream_type": "traces",
+   "alert_type": "scheduled",
+   "query_type": "sql",
+   "required_streams": [
+    "default"
+   ],
+   "path": "packs/apm/alerts/traces/traces_dependency_error_rate_high.json",
+   "content_hash": "2735549fe502",
+   "tags": [
+    "traces",
+    "apm",
+    "errors",
+    "dependencies"
+   ]
+  },
+  {
+   "id": "apm/traces_operation_error_burst",
+   "name": "traces_operation_error_burst",
+   "pack": "apm",
+   "category": "traces",
+   "title": "Error burst on an operation",
+   "severity": "warning",
+   "description": "One server or consumer operation (endpoint or queue handler) of a service had 20 or more spans with status ERROR in the last 10 minutes, and those errors were at least 5% of its spans. The ratio floor keeps a busy endpoint with a small, steady error share from firing. Uses span status, so it also covers non-HTTP services. Needs OpenTelemetry traces in the traces stream named default.",
+   "stream": "default",
+   "stream_type": "traces",
+   "alert_type": "scheduled",
+   "query_type": "sql",
+   "required_streams": [
+    "default"
+   ],
+   "path": "packs/apm/alerts/traces/traces_operation_error_burst.json",
+   "content_hash": "29630e0b75e2",
+   "tags": [
+    "traces",
+    "apm",
+    "errors",
+    "endpoint"
+   ]
+  },
+  {
+   "id": "apm/traces_service_error_rate_high",
+   "name": "traces_service_error_rate_high",
+   "pack": "apm",
+   "category": "traces",
+   "title": "Service error rate above 5%",
+   "severity": "critical",
+   "description": "A service had more than 5% of its server and consumer spans (requests and queue messages it handled) with status ERROR in the last 10 minutes, with at least 50 requests. Uses span status, not HTTP status codes. Needs OpenTelemetry traces in the traces stream named default.",
+   "stream": "default",
+   "stream_type": "traces",
+   "alert_type": "scheduled",
+   "query_type": "sql",
+   "required_streams": [
+    "default"
+   ],
+   "path": "packs/apm/alerts/traces/traces_service_error_rate_high.json",
+   "content_hash": "63302eafc5c5",
+   "tags": [
+    "traces",
+    "apm",
+    "errors",
+    "red"
+   ]
+  },
+  {
+   "id": "apm/traces_service_p95_latency_high",
+   "name": "traces_service_p95_latency_high",
+   "pack": "apm",
+   "category": "traces",
+   "title": "Service p95 latency above 2 s",
+   "severity": "warning",
+   "description": "The p95 duration of a service's server and consumer spans (requests and queue messages it handled) was above 2 seconds in the last 10 minutes, with at least 50 requests. One threshold for every service; raise it for services that are slow by design. Needs OpenTelemetry traces in the traces stream named default.",
+   "stream": "default",
+   "stream_type": "traces",
+   "alert_type": "scheduled",
+   "query_type": "sql",
+   "required_streams": [
+    "default"
+   ],
+   "path": "packs/apm/alerts/traces/traces_service_p95_latency_high.json",
+   "content_hash": "44e2521b07d2",
+   "tags": [
+    "traces",
+    "apm",
+    "latency",
+    "red"
+   ]
+  },
   {
    "id": "applications/provider_failed_because_get_genesis_failed",
    "name": "provider_failed_because_get_genesis_failed",
@@ -23657,6 +23920,582 @@
    ],
    "path": "packs/openobserve/alerts/self-monitoring/memory_table_overflow_error.json",
    "content_hash": "0720860f6b19"
+  },
+  {
+   "id": "opentelemetry/aws_alb_high_5xx_rate",
+   "name": "aws_alb_high_5xx_rate",
+   "pack": "opentelemetry",
+   "category": "aws-cloudwatch",
+   "title": "ALB 5xx error rate above 5%",
+   "severity": "critical",
+   "description": "More than 5% of an Application Load Balancer's requests got a 5xx (load balancer or target) in the last 10 minutes, with at least 100 requests. Users are seeing server errors. Deploys can cause short spikes.",
+   "stream": "cloudwatch_metrics",
+   "stream_type": "logs",
+   "alert_type": "scheduled",
+   "query_type": "sql",
+   "required_streams": [
+    "cloudwatch_metrics"
+   ],
+   "path": "packs/opentelemetry/alerts/aws-cloudwatch/aws_alb_high_5xx_rate.json",
+   "content_hash": "bdeeae8dd0c1",
+   "tags": [
+    "aws",
+    "cloudwatch",
+    "cloudwatch_metrics",
+    "alb",
+    "aws-cloudwatch"
+   ]
+  },
+  {
+   "id": "opentelemetry/aws_cloudwatch_metric_stream_stopped",
+   "name": "aws_cloudwatch_metric_stream_stopped",
+   "pack": "opentelemetry",
+   "category": "aws-cloudwatch",
+   "title": "CloudWatch metric stream stopped",
+   "severity": "critical",
+   "description": "No rows reached the cloudwatch_metrics stream in the last 30 minutes. Firehose delivery has probably failed (for example a rotated passcode or a wrong endpoint), and every other CloudWatch alert has gone quiet. The query returns one row while data arrives; the alert fires when it returns none.",
+   "stream": "cloudwatch_metrics",
+   "stream_type": "logs",
+   "alert_type": "scheduled",
+   "query_type": "sql",
+   "required_streams": [
+    "cloudwatch_metrics"
+   ],
+   "path": "packs/opentelemetry/alerts/aws-cloudwatch/aws_cloudwatch_metric_stream_stopped.json",
+   "content_hash": "dcc1cecaff57",
+   "tags": [
+    "aws",
+    "cloudwatch",
+    "cloudwatch_metrics",
+    "metric-stream",
+    "aws-cloudwatch"
+   ]
+  },
+  {
+   "id": "opentelemetry/aws_ec2_high_cpu",
+   "name": "aws_ec2_high_cpu",
+   "pack": "opentelemetry",
+   "category": "aws-cloudwatch",
+   "title": "EC2 CPU above 80%",
+   "severity": "warning",
+   "description": "An EC2 instance averaged more than 80% CPU over the last 20 minutes. Sustained saturation comes before latency and timeouts. Batch, CI and burstable hosts may run hot by design.",
+   "stream": "cloudwatch_metrics",
+   "stream_type": "logs",
+   "alert_type": "scheduled",
+   "query_type": "sql",
+   "required_streams": [
+    "cloudwatch_metrics"
+   ],
+   "path": "packs/opentelemetry/alerts/aws-cloudwatch/aws_ec2_high_cpu.json",
+   "content_hash": "a15771e581a7",
+   "tags": [
+    "aws",
+    "cloudwatch",
+    "cloudwatch_metrics",
+    "ec2",
+    "aws-cloudwatch"
+   ]
+  },
+  {
+   "id": "opentelemetry/aws_ec2_status_check_failed",
+   "name": "aws_ec2_status_check_failed",
+   "pack": "opentelemetry",
+   "category": "aws-cloudwatch",
+   "title": "EC2 instance failing status checks",
+   "severity": "critical",
+   "description": "An EC2 instance failed its StatusCheckFailed check in at least 2 one-minute datapoints within 10 minutes. The instance or its host is broken. Stopping or terminating instances can also trip it. A datapoint delivered twice counts once (one row per instance and minute).",
+   "stream": "cloudwatch_metrics",
+   "stream_type": "logs",
+   "alert_type": "scheduled",
+   "query_type": "sql",
+   "required_streams": [
+    "cloudwatch_metrics"
+   ],
+   "path": "packs/opentelemetry/alerts/aws-cloudwatch/aws_ec2_status_check_failed.json",
+   "content_hash": "b31ab66260af",
+   "tags": [
+    "aws",
+    "cloudwatch",
+    "cloudwatch_metrics",
+    "ec2",
+    "aws-cloudwatch"
+   ]
+  },
+  {
+   "id": "opentelemetry/aws_lambda_high_error_rate_otel",
+   "name": "aws_lambda_high_error_rate_otel",
+   "pack": "opentelemetry",
+   "category": "aws-cloudwatch",
+   "title": "Lambda error rate above 5%",
+   "severity": "warning",
+   "description": "A Lambda function failed in more than 5% of its invocations in the last 15 minutes, with at least 5 errors. The 5-error floor keeps rarely run functions from firing on one failure.",
+   "stream": "cloudwatch_metrics",
+   "stream_type": "logs",
+   "alert_type": "scheduled",
+   "query_type": "sql",
+   "required_streams": [
+    "cloudwatch_metrics"
+   ],
+   "path": "packs/opentelemetry/alerts/aws-cloudwatch/aws_lambda_high_error_rate_otel.json",
+   "content_hash": "127b4d53a165",
+   "tags": [
+    "aws",
+    "cloudwatch",
+    "cloudwatch_metrics",
+    "lambda",
+    "aws-cloudwatch"
+   ]
+  },
+  {
+   "id": "opentelemetry/aws_rds_low_free_storage",
+   "name": "aws_rds_low_free_storage",
+   "pack": "opentelemetry",
+   "category": "aws-cloudwatch",
+   "title": "RDS free storage below 10 GiB",
+   "severity": "critical",
+   "description": "An RDS DB instance had less than 10 GiB of free storage in the last 15 minutes. When storage is full the instance stops accepting writes. Small development databases may sit below 10 GiB by design; edit the threshold for them.",
+   "stream": "cloudwatch_metrics",
+   "stream_type": "logs",
+   "alert_type": "scheduled",
+   "query_type": "sql",
+   "required_streams": [
+    "cloudwatch_metrics"
+   ],
+   "path": "packs/opentelemetry/alerts/aws-cloudwatch/aws_rds_low_free_storage.json",
+   "content_hash": "92d7703ae91c",
+   "tags": [
+    "aws",
+    "cloudwatch",
+    "cloudwatch_metrics",
+    "rds",
+    "aws-cloudwatch"
+   ]
+  },
+  {
+   "id": "opentelemetry/aws_sqs_old_messages",
+   "name": "aws_sqs_old_messages",
+   "pack": "opentelemetry",
+   "category": "aws-cloudwatch",
+   "title": "SQS oldest message older than 15 minutes",
+   "severity": "warning",
+   "description": "Every datapoint in the last 20 minutes showed a message older than 15 minutes in an SQS queue, so consumers are stuck or too slow. Queues whose name contains dlq or dead letter are left out, because messages stay there by design.",
+   "stream": "cloudwatch_metrics",
+   "stream_type": "logs",
+   "alert_type": "scheduled",
+   "query_type": "sql",
+   "required_streams": [
+    "cloudwatch_metrics"
+   ],
+   "path": "packs/opentelemetry/alerts/aws-cloudwatch/aws_sqs_old_messages.json",
+   "content_hash": "2a9239621893",
+   "tags": [
+    "aws",
+    "cloudwatch",
+    "cloudwatch_metrics",
+    "sqs",
+    "aws-cloudwatch"
+   ]
+  },
+  {
+   "id": "opentelemetry/container_absent_otel",
+   "name": "container_absent_otel",
+   "pack": "opentelemetry",
+   "category": "docker",
+   "title": "Container disappeared",
+   "severity": "info",
+   "description": "A container that was running 10 minutes ago is no longer running. It stopped, crashed without a restart policy, or was removed. Deploys that replace containers under new names also trigger this alert. Containers named k8s_* are left out: Kubernetes gives a restarted container a new name suffix, so they would fire on every restart; use the Kubernetes alerts for them.",
+   "stream": "container_memory_usage_total",
+   "stream_type": "metrics",
+   "alert_type": "scheduled",
+   "query_type": "promql",
+   "required_streams": [
+    "container_memory_usage_total"
+   ],
+   "path": "packs/opentelemetry/alerts/docker/container_absent_otel.json",
+   "content_hash": "e43a7fd3106f",
+   "tags": [
+    "otel-collector",
+    "docker",
+    "docker-stats"
+   ]
+  },
+  {
+   "id": "opentelemetry/container_high_memory_usage_otel",
+   "name": "container_high_memory_usage_otel",
+   "pack": "opentelemetry",
+   "category": "docker",
+   "title": "Container high memory usage",
+   "severity": "warning",
+   "description": "A container has used more than 90% of its memory limit for 10 minutes and is at risk of being killed for running out of memory. A container without a memory limit is measured against the host's memory.",
+   "stream": "container_memory_percent",
+   "stream_type": "metrics",
+   "alert_type": "scheduled",
+   "query_type": "promql",
+   "required_streams": [
+    "container_memory_percent"
+   ],
+   "path": "packs/opentelemetry/alerts/docker/container_high_memory_usage_otel.json",
+   "content_hash": "11f37982c7e3",
+   "tags": [
+    "otel-collector",
+    "docker",
+    "docker-stats",
+    "memory"
+   ]
+  },
+  {
+   "id": "opentelemetry/container_memory_near_limit_otel",
+   "name": "container_memory_near_limit_otel",
+   "pack": "opentelemetry",
+   "category": "docker",
+   "title": "Container memory near limit",
+   "severity": "critical",
+   "description": "A container has used more than 95% of its memory limit for 10 minutes and is about to be killed for running out of memory. A container without a memory limit is measured against the host's memory.",
+   "stream": "container_memory_percent",
+   "stream_type": "metrics",
+   "alert_type": "scheduled",
+   "query_type": "promql",
+   "required_streams": [
+    "container_memory_percent"
+   ],
+   "path": "packs/opentelemetry/alerts/docker/container_memory_near_limit_otel.json",
+   "content_hash": "ef9faf56e605",
+   "tags": [
+    "otel-collector",
+    "docker",
+    "docker-stats",
+    "memory"
+   ]
+  },
+  {
+   "id": "opentelemetry/docker_stopped_reporting",
+   "name": "docker_stopped_reporting",
+   "pack": "opentelemetry",
+   "category": "docker",
+   "title": "Docker container metrics stopped arriving",
+   "severity": "warning",
+   "description": "Container metrics arrived 15 minutes ago and none have arrived since, from any host. The Docker daemon may be down, every container may have stopped, or the OpenTelemetry Collector may have stopped. Docker stats data carries no host label, so this alert cannot see one host stopping while others keep reporting.",
+   "stream": "container_cpu_utilization",
+   "stream_type": "metrics",
+   "alert_type": "scheduled",
+   "query_type": "promql",
+   "required_streams": [
+    "container_cpu_utilization"
+   ],
+   "path": "packs/opentelemetry/alerts/docker/docker_stopped_reporting.json",
+   "content_hash": "08fbe68835d8",
+   "tags": [
+    "otel-collector",
+    "docker",
+    "docker-stats"
+   ]
+  },
+  {
+   "id": "opentelemetry/github_actions_job_errors",
+   "name": "github_actions_job_errors",
+   "pack": "opentelemetry",
+   "category": "github-actions",
+   "title": "GitHub Actions job errors",
+   "severity": "warning",
+   "description": "A workflow run's job logs contain an ##[error] line, so at least one step failed. Steps with continue-on-error also log ##[error]. Failed runs are sent only when the workflow's sender job runs with if: always().",
+   "stream": "githubactions",
+   "stream_type": "logs",
+   "alert_type": "scheduled",
+   "query_type": "sql",
+   "required_streams": [
+    "githubactions"
+   ],
+   "path": "packs/opentelemetry/alerts/github-actions/github_actions_job_errors.json",
+   "content_hash": "3786cc4dd54d",
+   "tags": [
+    "github",
+    "github-actions",
+    "ci-cd",
+    "githubactions"
+   ]
+  },
+  {
+   "id": "opentelemetry/github_actions_logs_stopped",
+   "name": "github_actions_logs_stopped",
+   "pack": "opentelemetry",
+   "category": "github-actions",
+   "title": "GitHub Actions logs stopped arriving",
+   "severity": "warning",
+   "description": "No job logs reached the githubactions stream in the last 24 hours. The ingestion token may have been rotated or the sender job removed. Quiet repositories can trip it over weekends. The query returns one row while data arrives; the alert fires when it returns none.",
+   "stream": "githubactions",
+   "stream_type": "logs",
+   "alert_type": "scheduled",
+   "query_type": "sql",
+   "required_streams": [
+    "githubactions"
+   ],
+   "path": "packs/opentelemetry/alerts/github-actions/github_actions_logs_stopped.json",
+   "content_hash": "bf3e92d13283",
+   "tags": [
+    "github",
+    "github-actions",
+    "ci-cd",
+    "githubactions"
+   ]
+  },
+  {
+   "id": "opentelemetry/host_cpu_load_saturation_otel",
+   "name": "host_cpu_load_saturation_otel",
+   "pack": "opentelemetry",
+   "category": "hosts",
+   "title": "Host CPU load saturation",
+   "severity": "warning",
+   "description": "The 15-minute load average of a host is more than twice its number of CPUs. Work is queuing for the CPU or for slow disks.",
+   "stream": "system_cpu_load_average_15m",
+   "stream_type": "metrics",
+   "alert_type": "scheduled",
+   "query_type": "promql",
+   "required_streams": [
+    "system_cpu_load_average_15m"
+   ],
+   "path": "packs/opentelemetry/alerts/hosts/host_cpu_load_saturation_otel.json",
+   "content_hash": "03134bd9fbcb",
+   "tags": [
+    "otel-collector",
+    "hosts",
+    "hostmetrics",
+    "cpu"
+   ]
+  },
+  {
+   "id": "opentelemetry/host_disk_may_fill_in_24_hours_otel",
+   "name": "host_disk_may_fill_in_24_hours_otel",
+   "pack": "opentelemetry",
+   "category": "hosts",
+   "title": "Host disk may fill in 24 hours",
+   "severity": "warning",
+   "description": "A writable filesystem on a host is more than 80% full and, at the rate it filled over the last 6 hours, will run out of space within 24 hours.",
+   "stream": "system_filesystem_usage",
+   "stream_type": "metrics",
+   "alert_type": "scheduled",
+   "query_type": "promql",
+   "required_streams": [
+    "system_filesystem_usage"
+   ],
+   "path": "packs/opentelemetry/alerts/hosts/host_disk_may_fill_in_24_hours_otel.json",
+   "content_hash": "7820464b32ed",
+   "tags": [
+    "otel-collector",
+    "hosts",
+    "hostmetrics"
+   ]
+  },
+  {
+   "id": "opentelemetry/host_high_cpu_load_otel",
+   "name": "host_high_cpu_load_otel",
+   "pack": "opentelemetry",
+   "category": "hosts",
+   "title": "Host high CPU usage",
+   "severity": "warning",
+   "description": "A host's CPUs have been more than 90% busy for 15 minutes without a break. Hosts that run batch work at full CPU on purpose can trigger this alert.",
+   "stream": "system_cpu_utilization",
+   "stream_type": "metrics",
+   "alert_type": "scheduled",
+   "query_type": "promql",
+   "required_streams": [
+    "system_cpu_utilization"
+   ],
+   "path": "packs/opentelemetry/alerts/hosts/host_high_cpu_load_otel.json",
+   "content_hash": "ccb5b1c8b6eb",
+   "tags": [
+    "otel-collector",
+    "hosts",
+    "hostmetrics",
+    "cpu"
+   ]
+  },
+  {
+   "id": "opentelemetry/host_out_of_disk_space_otel",
+   "name": "host_out_of_disk_space_otel",
+   "pack": "opentelemetry",
+   "category": "hosts",
+   "title": "Host out of disk space",
+   "severity": "critical",
+   "description": "A writable filesystem on a host has been more than 95% full for 10 minutes. Temporary, container overlay and snap filesystems are ignored.",
+   "stream": "system_filesystem_utilization",
+   "stream_type": "metrics",
+   "alert_type": "scheduled",
+   "query_type": "promql",
+   "required_streams": [
+    "system_filesystem_utilization"
+   ],
+   "path": "packs/opentelemetry/alerts/hosts/host_out_of_disk_space_otel.json",
+   "content_hash": "bf3f7acee0cb",
+   "tags": [
+    "otel-collector",
+    "hosts",
+    "hostmetrics"
+   ]
+  },
+  {
+   "id": "opentelemetry/host_out_of_memory_otel",
+   "name": "host_out_of_memory_otel",
+   "pack": "opentelemetry",
+   "category": "hosts",
+   "title": "Host out of memory",
+   "severity": "warning",
+   "description": "A host has used more than 90% of its memory for 15 minutes. On Linux, page cache and buffers do not count as used memory.",
+   "stream": "system_memory_utilization",
+   "stream_type": "metrics",
+   "alert_type": "scheduled",
+   "query_type": "promql",
+   "required_streams": [
+    "system_memory_utilization"
+   ],
+   "path": "packs/opentelemetry/alerts/hosts/host_out_of_memory_otel.json",
+   "content_hash": "e5f9fc0bb582",
+   "tags": [
+    "otel-collector",
+    "hosts",
+    "hostmetrics",
+    "memory"
+   ]
+  },
+  {
+   "id": "opentelemetry/host_stopped_reporting",
+   "name": "host_stopped_reporting",
+   "pack": "opentelemetry",
+   "category": "hosts",
+   "title": "Host stopped reporting",
+   "severity": "critical",
+   "description": "A host sent metrics 15 minutes ago and has sent none since. The host may be down, or its OpenTelemetry Collector may have stopped. A host removed on purpose fires this alert once.",
+   "stream": "system_cpu_load_average_1m",
+   "stream_type": "metrics",
+   "alert_type": "scheduled",
+   "query_type": "promql",
+   "required_streams": [
+    "system_cpu_load_average_1m"
+   ],
+   "path": "packs/opentelemetry/alerts/hosts/host_stopped_reporting.json",
+   "content_hash": "28e7be9d9b57",
+   "tags": [
+    "otel-collector",
+    "hosts",
+    "hostmetrics"
+   ]
+  },
+  {
+   "id": "opentelemetry/postgresql_down_otel",
+   "name": "postgresql_down_otel",
+   "pack": "opentelemetry",
+   "category": "postgresql",
+   "title": "PostgreSQL down",
+   "severity": "critical",
+   "description": "The OpenTelemetry Collector sent PostgreSQL metrics for this instance 10 minutes ago and has sent none since. The database may be down or unreachable, or the collector may have stopped.",
+   "stream": "postgresql_database_count",
+   "stream_type": "metrics",
+   "alert_type": "scheduled",
+   "query_type": "promql",
+   "required_streams": [
+    "postgresql_database_count"
+   ],
+   "path": "packs/opentelemetry/alerts/postgresql/postgresql_down_otel.json",
+   "content_hash": "9022e3f9ec33",
+   "tags": [
+    "otel-collector",
+    "postgresql",
+    "postgresql-receiver"
+   ]
+  },
+  {
+   "id": "opentelemetry/postgresql_high_rollback_rate_otel",
+   "name": "postgresql_high_rollback_rate_otel",
+   "pack": "opentelemetry",
+   "category": "postgresql",
+   "title": "PostgreSQL high rollback rate",
+   "severity": "warning",
+   "description": "More than 10% of transactions in a database rolled back over the last 10 minutes, while the database committed more than one transaction per second. This often means application errors or constraint violations.",
+   "stream": "postgresql_rollbacks",
+   "stream_type": "metrics",
+   "alert_type": "scheduled",
+   "query_type": "promql",
+   "required_streams": [
+    "postgresql_rollbacks"
+   ],
+   "path": "packs/opentelemetry/alerts/postgresql/postgresql_high_rollback_rate_otel.json",
+   "content_hash": "f0b748264380",
+   "tags": [
+    "otel-collector",
+    "postgresql",
+    "postgresql-receiver"
+   ]
+  },
+  {
+   "id": "opentelemetry/postgresql_low_cache_hit_rate_otel",
+   "name": "postgresql_low_cache_hit_rate_otel",
+   "pack": "opentelemetry",
+   "category": "postgresql",
+   "title": "PostgreSQL low cache hit rate",
+   "severity": "warning",
+   "description": "Less than 95% of table and index block reads in a database were served from shared buffers over the last 10 minutes, while the database read more than 100 blocks per second from disk. The working set may no longer fit in memory.",
+   "stream": "postgresql_blocks_read",
+   "stream_type": "metrics",
+   "alert_type": "scheduled",
+   "query_type": "promql",
+   "required_streams": [
+    "postgresql_blocks_read"
+   ],
+   "path": "packs/opentelemetry/alerts/postgresql/postgresql_low_cache_hit_rate_otel.json",
+   "content_hash": "254815e4249d",
+   "tags": [
+    "otel-collector",
+    "postgresql",
+    "postgresql-receiver",
+    "performance"
+   ]
+  },
+  {
+   "id": "opentelemetry/postgresql_replication_lag_otel",
+   "name": "postgresql_replication_lag_otel",
+   "pack": "opentelemetry",
+   "category": "postgresql",
+   "title": "PostgreSQL replication lag",
+   "severity": "warning",
+   "description": "A replica has been more than 1 GiB of WAL behind the primary for 5 minutes. A lagging replica serves stale reads and makes failover risky. The monitoring role needs the pg_monitor role to see replication.",
+   "stream": "postgresql_replication_data_delay",
+   "stream_type": "metrics",
+   "alert_type": "scheduled",
+   "query_type": "promql",
+   "required_streams": [
+    "postgresql_replication_data_delay"
+   ],
+   "path": "packs/opentelemetry/alerts/postgresql/postgresql_replication_lag_otel.json",
+   "content_hash": "e822a046e3a4",
+   "tags": [
+    "otel-collector",
+    "postgresql",
+    "postgresql-receiver",
+    "replication"
+   ]
+  },
+  {
+   "id": "opentelemetry/postgresql_too_many_connections_otel",
+   "name": "postgresql_too_many_connections_otel",
+   "pack": "opentelemetry",
+   "category": "postgresql",
+   "title": "PostgreSQL too many connections",
+   "severity": "warning",
+   "description": "PostgreSQL has used more than 80% of its max_connections for 10 minutes. New clients will be refused when it reaches 100%. Only connections to the databases the collector monitors are counted.",
+   "stream": "postgresql_backends",
+   "stream_type": "metrics",
+   "alert_type": "scheduled",
+   "query_type": "promql",
+   "required_streams": [
+    "postgresql_backends"
+   ],
+   "path": "packs/opentelemetry/alerts/postgresql/postgresql_too_many_connections_otel.json",
+   "content_hash": "f272b8beb6ab",
+   "tags": [
+    "otel-collector",
+    "postgresql",
+    "postgresql-receiver",
+    "connections"
+   ]
   },
   {
    "id": "orchestrators/consul_agent_unhealthy",

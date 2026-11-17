@@ -2,7 +2,7 @@
 
 # Packs
 
-**1242 alerts** across 15 packs. Every alert lives at
+**1275 alerts** across 18 packs. Every alert lives at
 `packs/<pack>/alerts/<category>/<name>.json`; `manifest.json` is the
 machine-readable index of the same tree.
 
@@ -10,6 +10,8 @@ Plus **19 anomaly-detection alerts** (enterprise only; listed under `anomaly_ale
 
 | Pack | Alerts | Categories | Covers |
 |---|---:|---:|---|
+| [`ai`](./packs/ai/) | 5 | 1 | LLM and AI agent apps from OpenTelemetry gen_ai spans — errors, latency, tokens, spend |
+| [`apm`](./packs/apm/) | 4 | 1 |  |
 | [`applications`](./packs/applications/) | 11 | 2 | Application services with their own metrics endpoints |
 | [`ci-cd`](./packs/ci-cd/) | 65 | 5 | Jenkins, ArgoCD, FluxCD, GitLab CI, Spinnaker |
 | [`cloud-providers`](./packs/cloud-providers/) | 32 | 4 | AWS CloudWatch, Azure, Google Cloud, DigitalOcean |
@@ -21,10 +23,23 @@ Plus **19 anomaly-detection alerts** (enterprise only; listed under `anomaly_ale
 | [`network-and-security`](./packs/network-and-security/) | 84 | 12 | CoreDNS, SSL/TLS, cert-manager, Vault, Keycloak, Cilium, WireGuard |
 | [`observability`](./packs/observability/) | 243 | 10 | Prometheus, Thanos, Loki, Tempo, Mimir, Cortex, Jaeger, OpenTelemetry |
 | [`openobserve`](./packs/openobserve/) | 1 | 1 | OpenObserve self-monitoring |
+| [`opentelemetry`](./packs/opentelemetry/) | 24 | 5 | OpenTelemetry Collector data — hosts, Docker, PostgreSQL, AWS CloudWatch metric streams, GitHub Actions logs |
 | [`orchestrators`](./packs/orchestrators/) | 94 | 5 | Kubernetes (kube-state-metrics), Nomad, Consul, etcd, OpenStack |
 | [`proxies-and-service-mesh`](./packs/proxies-and-service-mesh/) | 85 | 8 | Nginx, HAProxy, Traefik, Envoy, Istio, Linkerd, Caddy |
 | [`runtimes`](./packs/runtimes/) | 38 | 6 | JVM, Go, Python, Ruby, PHP-FPM, Sidekiq |
 | [`storage`](./packs/storage/) | 39 | 4 | Ceph, MinIO, OpenEBS, ZFS |
+
+## ai
+
+| Category | Alerts |
+|---|---:|
+| [`llm`](./packs/ai/alerts/llm/) | 5 |
+
+## apm
+
+| Category | Alerts |
+|---|---:|
+| [`traces`](./packs/apm/alerts/traces/) | 4 |
 
 ## applications
 
@@ -165,6 +180,16 @@ Plus **19 anomaly-detection alerts** (enterprise only; listed under `anomaly_ale
 | Category | Alerts |
 |---|---:|
 | [`self-monitoring`](./packs/openobserve/alerts/self-monitoring/) | 1 |
+
+## opentelemetry
+
+| Category | Alerts |
+|---|---:|
+| [`aws-cloudwatch`](./packs/opentelemetry/alerts/aws-cloudwatch/) | 7 |
+| [`docker`](./packs/opentelemetry/alerts/docker/) | 4 |
+| [`github-actions`](./packs/opentelemetry/alerts/github-actions/) | 2 |
+| [`hosts`](./packs/opentelemetry/alerts/hosts/) | 6 |
+| [`postgresql`](./packs/opentelemetry/alerts/postgresql/) | 5 |
 
 ## orchestrators
 
