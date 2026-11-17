@@ -1,0 +1,57 @@
+{
+  "name": "host_cpu_load_saturation_otel",
+  "title": "Host CPU load saturation",
+  "severity": "warning",
+  "description": "The 15-minute load average of a host is more than twice its number of CPUs. Work is queuing for the CPU or for slow disks.",
+  "tags": [
+    "otel-collector",
+    "hosts",
+    "hostmetrics",
+    "cpu"
+  ],
+  "alert_type": "scheduled",
+  "stream_type": "metrics",
+  "stream_name": "system_cpu_load_average_15m",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "max by (host_name) (system_cpu_load_average_15m) / on (host_name) max by (host_name) (system_cpu_logical_count)",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 2,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | host: {host_name} | load per CPU: {value}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

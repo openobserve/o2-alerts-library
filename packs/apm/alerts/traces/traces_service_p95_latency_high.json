@@ -1,0 +1,52 @@
+{
+  "name": "traces_service_p95_latency_high",
+  "title": "Service p95 latency above 2 s",
+  "severity": "warning",
+  "description": "The p95 duration of a service's server and consumer spans (requests and queue messages it handled) was above 2 seconds in the last 10 minutes, with at least 50 requests. One threshold for every service; raise it for services that are slow by design. Needs OpenTelemetry traces in the traces stream named default.",
+  "tags": [
+    "traces",
+    "apm",
+    "latency",
+    "red"
+  ],
+  "alert_type": "scheduled",
+  "stream_type": "traces",
+  "stream_name": "default",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "sql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": "SELECT service_name, COUNT(*) AS requests, approx_percentile_cont(duration, 0.95) / 1000.0 AS p95_ms FROM \"default\" WHERE span_kind IN ('2', '5') GROUP BY service_name HAVING COUNT(*) >= 50 AND approx_percentile_cont(duration, 0.95) > 2000000",
+    "promql": null,
+    "promql_condition": null,
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": null
+  },
+  "trigger_condition": {
+    "period": 10,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{service_name}* p95 {p95_ms} ms over {requests} requests",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

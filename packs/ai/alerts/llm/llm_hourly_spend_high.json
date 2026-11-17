@@ -1,0 +1,52 @@
+{
+  "name": "llm_hourly_spend_high",
+  "title": "LLM spend above 50 USD in an hour",
+  "severity": "warning",
+  "description": "Model calls cost more than 50 USD in the last 60 minutes, summed from gen_ai_usage_cost. Set the amount to your own budget after install. Unpriced models add no cost. Needs LLM spans in the traces stream named default; OpenObserve writes the gen_ai columns at ingest.",
+  "tags": [
+    "ai",
+    "llm",
+    "traces",
+    "cost"
+  ],
+  "alert_type": "scheduled",
+  "stream_type": "traces",
+  "stream_name": "default",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "sql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": "SELECT SUM(gen_ai_usage_cost) AS cost_usd, COUNT(*) AS calls FROM \"default\" WHERE gen_ai_response_model IS NOT NULL AND (gen_ai_operation_name IS NULL OR gen_ai_operation_name IN ('chat', 'text_completion', 'generate_content', 'embeddings')) HAVING SUM(gen_ai_usage_cost) > 50",
+    "promql": null,
+    "promql_condition": null,
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": null
+  },
+  "trigger_condition": {
+    "period": 60,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 15,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "LLM spend {cost_usd} USD over {calls} calls in the last hour",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

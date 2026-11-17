@@ -1,0 +1,53 @@
+{
+  "name": "aws_alb_high_5xx_rate",
+  "title": "ALB 5xx error rate above 5%",
+  "severity": "critical",
+  "description": "More than 5% of an Application Load Balancer's requests got a 5xx (load balancer or target) in the last 10 minutes, with at least 100 requests. Users are seeing server errors. Deploys can cause short spikes.",
+  "tags": [
+    "aws",
+    "cloudwatch",
+    "cloudwatch_metrics",
+    "alb",
+    "aws-cloudwatch"
+  ],
+  "alert_type": "scheduled",
+  "stream_type": "logs",
+  "stream_name": "cloudwatch_metrics",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "sql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": "SELECT res AS load_balancer, account_id, region, sum(CASE WHEN metric_name IN ('HTTPCode_ELB_5XX_Count', 'HTTPCode_Target_5XX_Count') THEN s ELSE 0 END) AS errors_5xx, sum(CASE WHEN metric_name = 'RequestCount' THEN s ELSE 0 END) AS requests FROM (SELECT dimensions_loadbalancer AS res, metric_name, account_id, region, timestamp, max(value_sum) AS s FROM \"cloudwatch_metrics\" WHERE namespace = 'AWS/ApplicationELB' AND metric_name IN ('RequestCount', 'HTTPCode_ELB_5XX_Count', 'HTTPCode_Target_5XX_Count') AND dimensions_loadbalancer IS NOT NULL GROUP BY res, metric_name, account_id, region, timestamp) AS t GROUP BY load_balancer, account_id, region HAVING sum(CASE WHEN metric_name = 'RequestCount' THEN s ELSE 0 END) >= 100 AND sum(CASE WHEN metric_name IN ('HTTPCode_ELB_5XX_Count', 'HTTPCode_Target_5XX_Count') THEN s ELSE 0 END) > 0.05 * sum(CASE WHEN metric_name = 'RequestCount' THEN s ELSE 0 END)",
+    "promql": null,
+    "promql_condition": null,
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": null
+  },
+  "trigger_condition": {
+    "period": 10,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 30,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "ALB {load_balancer} ({account_id}/{region}) {errors_5xx} 5xx of {requests} requests",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

@@ -82,7 +82,7 @@ PACKS_OWNED = sorted(set(GROUP_PACK.values()) | set(SERVICE_PACK.values()))
 
 # Hand-authored packs. The mappings above are edited by humans, and a typo that
 # pointed one at "k8s" would silently delete 86 curated alerts on the next run.
-PACKS_NEVER_TOUCHED = {"k8s", "openobserve", "apm"}
+PACKS_NEVER_TOUCHED = {"k8s", "openobserve", "apm", "ai", "opentelemetry"}
 assert not (set(PACKS_OWNED) & PACKS_NEVER_TOUCHED), (
     "a pack mapping targets a hand-authored pack, which this script deletes: "
     f"{sorted(set(PACKS_OWNED) & PACKS_NEVER_TOUCHED)}"

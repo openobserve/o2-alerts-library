@@ -1,0 +1,53 @@
+{
+  "name": "aws_ec2_status_check_failed",
+  "title": "EC2 instance failing status checks",
+  "severity": "critical",
+  "description": "An EC2 instance failed its StatusCheckFailed check in at least 2 one-minute datapoints within 10 minutes. The instance or its host is broken. Stopping or terminating instances can also trip it. A datapoint delivered twice counts once (one row per instance and minute).",
+  "tags": [
+    "aws",
+    "cloudwatch",
+    "cloudwatch_metrics",
+    "ec2",
+    "aws-cloudwatch"
+  ],
+  "alert_type": "scheduled",
+  "stream_type": "logs",
+  "stream_name": "cloudwatch_metrics",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "sql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": "SELECT instance, account_id, region, count(*) AS failing_minutes FROM (SELECT dimensions_instanceid AS instance, account_id, region, timestamp, max(value_max) AS v FROM \"cloudwatch_metrics\" WHERE namespace = 'AWS/EC2' AND metric_name = 'StatusCheckFailed' AND dimensions_instanceid IS NOT NULL GROUP BY instance, account_id, region, timestamp) AS t WHERE v >= 1 GROUP BY instance, account_id, region HAVING count(*) >= 2",
+    "promql": null,
+    "promql_condition": null,
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": null
+  },
+  "trigger_condition": {
+    "period": 10,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 30,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "EC2 {instance} ({account_id}/{region}) failed status checks in {failing_minutes} datapoints",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

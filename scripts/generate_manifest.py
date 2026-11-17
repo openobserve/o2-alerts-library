@@ -46,6 +46,7 @@ PACKS_MD = ROOT / "PACKS.md"
 # Prose, not data: one line per pack saying what it covers. A pack with no
 # entry still renders — it just has nothing to say yet.
 PACK_BLURB = {
+    "ai": "LLM and AI agent apps from OpenTelemetry gen_ai spans — errors, latency, tokens, spend",
     "applications": "Application services with their own metrics endpoints",
     "ci-cd": "Jenkins, ArgoCD, FluxCD, GitLab CI, Spinnaker",
     "cloud-providers": "AWS CloudWatch, Azure, Google Cloud, DigitalOcean",
@@ -57,6 +58,7 @@ PACK_BLURB = {
     "network-and-security": "CoreDNS, SSL/TLS, cert-manager, Vault, Keycloak, Cilium, WireGuard",
     "observability": "Prometheus, Thanos, Loki, Tempo, Mimir, Cortex, Jaeger, OpenTelemetry",
     "openobserve": "OpenObserve self-monitoring",
+    "opentelemetry": "OpenTelemetry Collector data — hosts, Docker, PostgreSQL, AWS CloudWatch metric streams, GitHub Actions logs",
     "orchestrators": "Kubernetes (kube-state-metrics), Nomad, Consul, etcd, OpenStack",
     "proxies-and-service-mesh": "Nginx, HAProxy, Traefik, Envoy, Istio, Linkerd, Caddy",
     "runtimes": "JVM, Go, Python, Ruby, PHP-FPM, Sidekiq",

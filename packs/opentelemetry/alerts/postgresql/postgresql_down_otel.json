@@ -1,0 +1,56 @@
+{
+  "name": "postgresql_down_otel",
+  "title": "PostgreSQL down",
+  "severity": "critical",
+  "description": "The OpenTelemetry Collector sent PostgreSQL metrics for this instance 10 minutes ago and has sent none since. The database may be down or unreachable, or the collector may have stopped.",
+  "tags": [
+    "otel-collector",
+    "postgresql",
+    "postgresql-receiver"
+  ],
+  "alert_type": "scheduled",
+  "stream_type": "metrics",
+  "stream_name": "postgresql_database_count",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "count by (service_instance_id) (postgresql_database_count offset 10m) unless count by (service_instance_id) (postgresql_database_count)",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | instance: {service_instance_id}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

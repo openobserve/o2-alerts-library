@@ -1,0 +1,52 @@
+{
+  "name": "github_actions_job_errors",
+  "title": "GitHub Actions job errors",
+  "severity": "warning",
+  "description": "A workflow run's job logs contain an ##[error] line, so at least one step failed. Steps with continue-on-error also log ##[error]. Failed runs are sent only when the workflow's sender job runs with if: always().",
+  "tags": [
+    "github",
+    "github-actions",
+    "ci-cd",
+    "githubactions"
+  ],
+  "alert_type": "scheduled",
+  "stream_type": "logs",
+  "stream_name": "githubactions",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "sql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": "SELECT run_id, count(DISTINCT job_id) AS failed_jobs, max(split_part(split_part(log, '##[error]', 2), chr(10), 1)) AS error_message FROM \"githubactions\" WHERE log LIKE '%##[error]%' GROUP BY run_id",
+    "promql": null,
+    "promql_condition": null,
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": null
+  },
+  "trigger_condition": {
+    "period": 60,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 15,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "Run {run_id}: {failed_jobs} job(s) with errors, e.g. {error_message}",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

@@ -1,0 +1,53 @@
+{
+  "name": "llm_tool_agent_failures",
+  "title": "Tool or agent failed 5+ times in 15 minutes",
+  "severity": "warning",
+  "description": "A tool call or agent run failed 5 or more times in the last 15 minutes (execute_tool, invoke_agent or invoke_workflow spans with status ERROR). Tools that report not-found as an error can trigger it. Needs LLM spans in the traces stream named default; OpenObserve writes the gen_ai columns at ingest.",
+  "tags": [
+    "ai",
+    "llm",
+    "traces",
+    "agents",
+    "tools"
+  ],
+  "alert_type": "scheduled",
+  "stream_type": "traces",
+  "stream_name": "default",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "sql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": "SELECT gen_ai_operation_name, gen_ai_tool_name, gen_ai_agent_name, COUNT(*) AS failures FROM \"default\" WHERE span_status = 'ERROR' AND gen_ai_operation_name IN ('execute_tool', 'invoke_agent', 'invoke_workflow') GROUP BY gen_ai_operation_name, gen_ai_tool_name, gen_ai_agent_name HAVING COUNT(*) >= 5",
+    "promql": null,
+    "promql_condition": null,
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": null
+  },
+  "trigger_condition": {
+    "period": 15,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "{gen_ai_operation_name} tool={gen_ai_tool_name} agent={gen_ai_agent_name}: {failures} failures",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

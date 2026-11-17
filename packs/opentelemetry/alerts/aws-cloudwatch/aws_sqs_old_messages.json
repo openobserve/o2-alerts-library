@@ -1,0 +1,53 @@
+{
+  "name": "aws_sqs_old_messages",
+  "title": "SQS oldest message older than 15 minutes",
+  "severity": "warning",
+  "description": "Every datapoint in the last 20 minutes showed a message older than 15 minutes in an SQS queue, so consumers are stuck or too slow. Queues whose name contains dlq or dead letter are left out, because messages stay there by design.",
+  "tags": [
+    "aws",
+    "cloudwatch",
+    "cloudwatch_metrics",
+    "sqs",
+    "aws-cloudwatch"
+  ],
+  "alert_type": "scheduled",
+  "stream_type": "logs",
+  "stream_name": "cloudwatch_metrics",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "sql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": "SELECT dimensions_queuename AS queue, account_id, region, min(value_max) AS min_age_s, max(value_max) AS max_age_s FROM \"cloudwatch_metrics\" WHERE namespace = 'AWS/SQS' AND metric_name = 'ApproximateAgeOfOldestMessage' AND dimensions_queuename IS NOT NULL AND lower(dimensions_queuename) NOT LIKE '%dlq%' AND lower(dimensions_queuename) NOT LIKE '%dead%letter%' GROUP BY queue, account_id, region HAVING min(value_max) > 900",
+    "promql": null,
+    "promql_condition": null,
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": null
+  },
+  "trigger_condition": {
+    "period": 20,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "SQS {queue} ({account_id}/{region}) oldest message {max_age_s}s",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

@@ -1,0 +1,52 @@
+{
+  "name": "llm_token_burn_high",
+  "title": "Service used over 2M tokens in an hour",
+  "severity": "info",
+  "description": "A service used more than 2,000,000 tokens on model calls in the last 60 minutes. Works when pricing is missing; catches prompt bloat and agent loops. Tune the threshold to your normal hourly use. Needs LLM spans in the traces stream named default; OpenObserve writes the gen_ai columns at ingest.",
+  "tags": [
+    "ai",
+    "llm",
+    "traces",
+    "tokens"
+  ],
+  "alert_type": "scheduled",
+  "stream_type": "traces",
+  "stream_name": "default",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "sql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": "SELECT service_name, SUM(gen_ai_usage_total_tokens) AS tokens FROM \"default\" WHERE gen_ai_response_model IS NOT NULL AND (gen_ai_operation_name IS NULL OR gen_ai_operation_name IN ('chat', 'text_completion', 'generate_content', 'embeddings')) GROUP BY service_name HAVING SUM(gen_ai_usage_total_tokens) > 2000000",
+    "promql": null,
+    "promql_condition": null,
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": null
+  },
+  "trigger_condition": {
+    "period": 60,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 15,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{service_name}* used {tokens} tokens in the last hour",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

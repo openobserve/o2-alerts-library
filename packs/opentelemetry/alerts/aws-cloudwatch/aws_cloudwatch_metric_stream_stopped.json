@@ -1,0 +1,53 @@
+{
+  "name": "aws_cloudwatch_metric_stream_stopped",
+  "title": "CloudWatch metric stream stopped",
+  "severity": "critical",
+  "description": "No rows reached the cloudwatch_metrics stream in the last 30 minutes. Firehose delivery has probably failed (for example a rotated passcode or a wrong endpoint), and every other CloudWatch alert has gone quiet. The query returns one row while data arrives; the alert fires when it returns none.",
+  "tags": [
+    "aws",
+    "cloudwatch",
+    "cloudwatch_metrics",
+    "metric-stream",
+    "aws-cloudwatch"
+  ],
+  "alert_type": "scheduled",
+  "stream_type": "logs",
+  "stream_name": "cloudwatch_metrics",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "sql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": "SELECT count(*) AS datapoints FROM \"cloudwatch_metrics\" HAVING count(*) > 0",
+    "promql": null,
+    "promql_condition": null,
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": null
+  },
+  "trigger_condition": {
+    "period": 30,
+    "operator": "<",
+    "threshold": 1,
+    "frequency": 15,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "No CloudWatch datapoints in the last 30 minutes",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}

@@ -1,0 +1,56 @@
+{
+  "name": "docker_stopped_reporting",
+  "title": "Docker container metrics stopped arriving",
+  "severity": "warning",
+  "description": "Container metrics arrived 15 minutes ago and none have arrived since, from any host. The Docker daemon may be down, every container may have stopped, or the OpenTelemetry Collector may have stopped. Docker stats data carries no host label, so this alert cannot see one host stopping while others keep reporting.",
+  "tags": [
+    "otel-collector",
+    "docker",
+    "docker-stats"
+  ],
+  "alert_type": "scheduled",
+  "stream_type": "metrics",
+  "stream_name": "container_cpu_utilization",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "promql",
+    "conditions": {
+      "version": 2,
+      "conditions": {
+        "filterType": "group",
+        "logicalOperator": "AND",
+        "conditions": []
+      }
+    },
+    "sql": null,
+    "promql": "count(container_cpu_utilization offset 15m) unless count(container_cpu_utilization)",
+    "promql_condition": {
+      "column": "value",
+      "operator": ">",
+      "value": 0,
+      "ignore_case": false
+    },
+    "aggregation": null,
+    "vrl_function": null,
+    "search_event_type": null,
+    "multi_time_range": []
+  },
+  "trigger_condition": {
+    "period": 5,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 5,
+    "cron": "",
+    "frequency_type": "minutes",
+    "silence": 60,
+    "timezone": "UTC",
+    "tolerance_in_secs": null,
+    "align_time": true
+  },
+  "context_attributes": {},
+  "row_template": "*{alert_name}* | no container metrics in the last 15 minutes",
+  "row_template_type": "String",
+  "enabled": true,
+  "tz_offset": 0,
+  "creates_incident": false
+}
