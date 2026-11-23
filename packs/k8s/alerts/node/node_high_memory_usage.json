@@ -17,7 +17,7 @@
       }
     },
     "sql": null,
-    "promql": "floor(system_memory_utilization{state='used'} * 10000) / 100",
+    "promql": "floor(k8s_node_memory_working_set / (k8s_node_memory_working_set + k8s_node_memory_available) * 10000) / 100",
     "promql_condition": {
       "column": "value",
       "operator": ">=",
