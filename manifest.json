@@ -13929,7 +13929,7 @@
     "k8s_node_memory_usage"
    ],
    "path": "packs/k8s/alerts/node/node_critical_memory_usage.json",
-   "content_hash": "270c025373f6"
+   "content_hash": "1034e8dbe47d"
   },
   {
    "id": "k8s/node_disk_pressure",
@@ -13992,7 +13992,7 @@
    "category": "node",
    "title": "Node High Memory Usage",
    "severity": "warning",
-   "description": "Warning: Node memory utilization exceeds 85%, approaching OOM conditions. Review memory-intensive workloads.",
+   "description": "Warning: Node memory utilization exceeds 80%, approaching OOM conditions. Review memory-intensive workloads.",
    "stream": "k8s_node_memory_usage",
    "stream_type": "metrics",
    "alert_type": "scheduled",
@@ -14001,7 +14001,7 @@
     "k8s_node_memory_usage"
    ],
    "path": "packs/k8s/alerts/node/node_high_memory_usage.json",
-   "content_hash": "da5727792cee"
+   "content_hash": "dbffd0053ae6"
   },
   {
    "id": "k8s/node_memory_pressure",
