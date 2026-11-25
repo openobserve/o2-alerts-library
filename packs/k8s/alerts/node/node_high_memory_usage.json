@@ -17,7 +17,7 @@
       }
     },
     "sql": null,
-    "promql": "floor(system_memory_utilization{state='used'} * 10000) / 100",
+    "promql": "floor(k8s_node_memory_working_set / (k8s_node_memory_working_set + k8s_node_memory_available) * 10000) / 100",
     "promql_condition": {
       "column": "value",
       "operator": ">=",
@@ -47,7 +47,7 @@
   "context_attributes": {},
   "row_template": "*ClusterName:* {k8s_cluster} | Node: {k8s_node_name} | Memory: {value}%",
   "row_template_type": "String",
-  "description": "Warning: Node memory utilization exceeds 85%, approaching OOM conditions. Review memory-intensive workloads.",
+  "description": "Warning: Node memory utilization exceeds 80%, approaching OOM conditions. Review memory-intensive workloads.",
   "enabled": true,
   "tz_offset": 0,
   "last_triggered_at": 1778933495264754,
